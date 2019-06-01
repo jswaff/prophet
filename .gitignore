@@ -1,0 +1,12 @@
+logfile.txt
+*.a
+*.exe
+*.stackdump
+
+### Jetbrains ###
+.idea
+
+build
+prophet4
+prophet4_test
+
