@@ -16,7 +16,7 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 * Use a proper test harness, e.g. GoogleTest or the like.  The release binary should not contain the test code.  Prophet3 uses assertions exclusively, and all the test code is built into the binary (even though it can't be executed when compiled with the NDEBUG flag).
 * Make use of memory leak detectors such as Valgrind on each release.
 * Produce a static library containing the move generation, evaluation, and search related functions.  It will not include the opening book related code or the Xboard protocol related code.  The intent is to modularize the core functionality for inclusion in other projects.
-* Retire SQLite.  It never felt like a relational database was a good fit for the opening book.  Repalce with a Key-Value store type database, possibly LMDB.
+* Retire SQLite.  It never felt like a relational database was a good fit for the opening book.  Replace with a Key-Value store type database, possibly LMDB.
 
 
 ## Status
