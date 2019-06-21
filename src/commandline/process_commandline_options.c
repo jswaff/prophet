@@ -9,7 +9,7 @@
 void process_commandline_options(int UNUSED(argc), const char** UNUSED(argv))
 {
     // just some temp code
-    position pos;
+    /*position pos;
     reset_pos(&pos);
 
     printf("running perft.\n");
@@ -19,6 +19,6 @@ void process_commandline_options(int UNUSED(argc), const char** UNUSED(argv))
         int32_t elapsed = milli_timer() - start_time;
         printf("depth %d - nodes: %ld - rate: %ld n/s\n", i, nodes, 
             nodes * 1000 / (elapsed+1)); // avoid div by 0 
-    }
+    }*/
 
 }

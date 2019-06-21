@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <prophet/commandline.h>
+#include <prophet/command.h>
 
 extern void init();
 
@@ -13,14 +14,22 @@ extern void init();
  */
 int main(int argc, const char** argv)
 {
+    int retval = 0;
+
     setbuf(stdin, NULL);
     setbuf(stdout, NULL);
 
     printf("Hello!  This is the Prophet4 Chess Engine.\n\n");
 
+    // TODO: return val
     init();
+
+    // TODO: return val
     process_commandline_options(argc, argv);
 
+    retval = command_loop();
 
-	return 0;
+    printf("exiting with value: %d\n", retval);
+
+	return retval;
 }

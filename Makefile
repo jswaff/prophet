@@ -12,7 +12,7 @@ LIB_STRIPPED_SOURCES=$(patsubst $(SRC_DIR)/%,%,$(LIB_SOURCES))
 LIB_SRC_OBJECTS=$(patsubst %.c,$(SRC_BUILD_DIR)/%.o,$(LIB_STRIPPED_SOURCES))
 
 # source files for executable 
-EXE_SRC_DIRS=$(SRC_DIR)/commandline $(SRC_DIR)/prophet4
+EXE_SRC_DIRS=$(SRC_DIR)/command $(SRC_DIR)/commandline $(SRC_DIR)/prophet4
 EXE_SOURCES=$(foreach d,$(EXE_SRC_DIRS),$(wildcard $(d)/*.c))
 EXE_STRIPPED_SOURCES=$(patsubst $(SRC_DIR)/%,%,$(EXE_SOURCES))
 EXE_SRC_OBJECTS=$(patsubst %.c,$(SRC_BUILD_DIR)/%.o,$(EXE_STRIPPED_SOURCES))
