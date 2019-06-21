@@ -6,10 +6,13 @@ int parse_command(user_command_t* cmd, const char* input)
 {
     int retval = 0;
 
+    // TODO: split input up by spaces
+
+    // TODO: consider using array of function pointers
+
     if (!strcmp("exit", input))
     {
         cmd->cmd_func = &command_exit;
-        // TODO: give exit status
     }
 
 
