@@ -2,7 +2,7 @@
 #include <prophet/commandline.h>
 #include <prophet/command.h>
 
-extern void init();
+extern int init();
 
 /**
  * \brief Main entry point.
@@ -21,15 +21,25 @@ int main(int argc, const char** argv)
 
     printf("Hello!  This is the Prophet4 Chess Engine.\n\n");
 
-    // TODO: return val
-    init();
+    retval = init();
+    if (0 != retval)
+    {
+        goto done;
+    }
 
-    // TODO: return val
-    process_commandline_options(argc, argv);
+    retval = process_commandline_options(argc, argv);
+    if (0 != retval)
+    {
+        goto done;
+    }
 
     retval = command_loop();
 
-    printf("exiting with value: %d\n", retval);
+done:
+    if (0 != retval)
+    {
+        printf("exiting with value: %d\n", retval);
+    }
 
 	return retval;
 }

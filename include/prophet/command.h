@@ -9,15 +9,22 @@ extern "C" {
 
 typedef struct user_command user_command_t;
 
-typedef int (*cmd_func_t)(const user_command_t*, int* exit_status);
+typedef int (*cmd_func_t)(const char*, int*);
 
 struct user_command
 {
-    char* base_cmd;
+    char* cmd;
     cmd_func_t cmd_func;
 };
 
-
+/**
+ * \brief Execute the command loop.
+ *
+ * Repeatedly reads, parses, and executes user commands until a command sets
+ * the exit status flag.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
 int command_loop();
 
 

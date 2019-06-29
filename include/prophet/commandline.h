@@ -8,7 +8,15 @@ extern "C" {
 #endif    //__cplusplus
 
 
-void process_commandline_options(int argc, const char** argv);
+/**
+ * \brief Parse command line options.
+ * 
+ * \param argc          Number of arguments.
+ * \param argv          List of arguments.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int process_commandline_options(int argc, const char** argv);
 
 
 // make this header C++ friendly.

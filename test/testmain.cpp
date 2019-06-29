@@ -5,7 +5,7 @@
 using namespace std;
 
 extern "C" {
-    extern void init();
+    extern int init();
 }
 
 GTEST_API_ int main(int argc, char* argv[])

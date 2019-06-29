@@ -11,7 +11,12 @@ extern void init_knight_movegen();
 extern void init_bishop_movegen();
 extern void init_rook_movegen();
 
-void init()
+/**
+ * \brief Initialize the program.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int init()
 {
     if (!initialized) {
         init_bitmaps();
@@ -24,4 +29,6 @@ void init()
     }
 
     initialized = true;
+
+    return 0;
 }

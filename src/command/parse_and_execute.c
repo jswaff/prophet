@@ -3,6 +3,15 @@
 
 #include "command_internal.h"
 
+/**
+ * \brief Parse the user input into a command and execute the command.
+ *
+ * \param input         The user entered input
+ * \param exit_status   Pointer to receive exit status.  A non-zero 
+ *                      status indicates the program should exit.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
 int parse_and_execute(const char* input, int* exit_status)
 {
     int retval = 0;
@@ -24,11 +33,11 @@ int parse_and_execute(const char* input, int* exit_status)
     }
 
     // execute the command
-    retval = user_cmd->cmd_func(user_cmd, exit_status);
+    retval = user_cmd->cmd_func(input, exit_status);
 
 
 cleanup_user_command:
-    free(user_cmd->base_cmd);
+    free(user_cmd->cmd);
     free(user_cmd);
 
     return retval;

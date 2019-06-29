@@ -6,6 +6,14 @@
 
 #define MAX_INPUT_SZ 256
 
+/**
+ * \brief Execute the command loop.
+ *
+ * Repeatedly reads, parses, and executes user commands until a command sets
+ * the exit status flag.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
 int command_loop()
 {
     int retval = 0;
