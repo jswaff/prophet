@@ -4,7 +4,7 @@
 #include <prophet/parameters.h>
 
 /**
- * \brief Default command handler - does nothing!
+ * \brief Execute the no op command - does nothing!
  * 
  * \param input         The user entered input (unused)
  * \param exit_status   Pointer to receive exit status.  A non-zero 
@@ -15,8 +15,6 @@
 int command_no_op(const char* UNUSED(input), int* exit_status)
 {
     *exit_status = 0;
-    
-    printf("unknown command\n");
     
     return 0;
 }

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <prophet/error_codes.h>
+
 #include "command_internal.h"
 
 #define MAX_INPUT_SZ 256
@@ -21,7 +23,7 @@ int command_loop()
     char* input = (char*)malloc(MAX_INPUT_SZ);
     if (NULL == input)
     {
-        return 1;
+        return P4_ERROR_CMD_INPUT_BUFFER;
     }
 
     int exit_status;

@@ -1,5 +1,7 @@
 #include <string.h>
+#include <stdio.h>
 
+#include <prophet/error_codes.h>
 #include <prophet/parameters.h>
 
 #include "command_internal.h"
@@ -20,6 +22,10 @@ struct function_table_entry function_table[] = {
 /**
  * \brief Parse a command
  * 
+ * Parse the user input and attempt to map it to a command.  Note that failure
+ * to map the input to a command does not generate a failure return code.  In 
+ * this case the input is mapped to the no-op command.
+ *
  * \param cmd           Pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
  *
@@ -33,7 +39,7 @@ int parse_command(user_command_t* cmd, const char* input)
     cmd->cmd = strdup(input);
     if (NULL == cmd->cmd)
     {
-        return 1;
+        return P4_ERROR_CMD_PARSE_CMD_COPY;
     }    
 
     // set the function
@@ -50,12 +56,8 @@ int parse_command(user_command_t* cmd, const char* input)
         }
     }
 
-
-    // unknown - map to no-op
-    if (NULL == cmd->cmd_func)
-    {
-        cmd->cmd_func = &command_no_op;
-    }
+    printf("unknown command: %s\n", input);
+    cmd->cmd_func = &command_no_op;
 
 done:
     return retval;

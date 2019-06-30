@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include <prophet/command.h>
+#include <prophet/error_codes.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
 #include <prophet/position/position.h>
@@ -30,7 +31,7 @@ int command_perft(const char* input, int* exit_status)
     // advance the base command pointer past the "perft " substring
     if (1 != sscanf(input + 6, "%d", &depth))
     {
-        return 1;
+        return P4_ERROR_CMD_PERFT_DEPTH;
     }
 
     // TODO: other positions
