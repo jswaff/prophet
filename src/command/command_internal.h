@@ -32,6 +32,19 @@ int parse_and_execute(const char* input, int* exit_status);
 int parse_command(user_command_t* user_cmd, const char* input);
 
 /**
+ * \brief Execute the db (drawboard) command.
+ *
+ * Draw the board to stdin.
+ *
+ * \param input         The user entered input
+ * \param exit_status   Pointer to receive exit status.  A non-zero
+ *                      status indicates the program should exit.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int command_db(const char* input, int* exit_status);
+
+/**
  * \brief Execute the exit command.
  * 
  * \param input         The user entered input

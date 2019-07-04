@@ -15,6 +15,7 @@ struct function_table_entry
 
 /* a table of command->function mappings */
 struct function_table_entry function_table[] = {
+    {"db", command_db},
     {"perft", command_perft},
     {"exit", command_exit}
 };
