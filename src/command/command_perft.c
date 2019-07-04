@@ -43,7 +43,7 @@ int command_perft(const char* input, int* exit_status)
         int32_t start_time = milli_timer();
         uint64_t nodes = perft(&pos, i);
         int32_t elapsed = milli_timer() - start_time;
-        printf("depth %d - nodes: %ld - rate: %ld kn/s\n", i, nodes, 
+        printf("depth %d - nodes: %llu - rate: %llu kn/s\n", i, nodes,
             nodes / (elapsed+1)); // avoid div by 0 
     }
 

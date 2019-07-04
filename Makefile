@@ -10,6 +10,7 @@ LIB_SRC_DIRS=$(SRC_DIR) $(SRC_DIR)/hash $(SRC_DIR)/movegen \
 LIB_SOURCES=$(foreach d,$(LIB_SRC_DIRS),$(wildcard $(d)/*.c))
 LIB_STRIPPED_SOURCES=$(patsubst $(SRC_DIR)/%,%,$(LIB_SOURCES))
 LIB_SRC_OBJECTS=$(patsubst %.c,$(SRC_BUILD_DIR)/%.o,$(LIB_STRIPPED_SOURCES))
+#$(info $(LIB_SRC_OBJECTS))
 
 # source files for executable 
 EXE_SRC_DIRS=$(SRC_DIR)/command $(SRC_DIR)/commandline $(SRC_DIR)/prophet4
@@ -29,19 +30,19 @@ GTEST_OBJ=$(TEST_BUILD_DIR)/gtest-all.o
 
 # compiler flags
 COMMON_INCLUDES= -I $(CURDIR)/include
-COMMON_CFLAGS= -Wall -Werror -Wextra
+COMMON_CFLAGS= -Wall -Werror -Wextra -fno-common
 CFLAGS = $(COMMON_INCLUDES) $(COMMON_CFLAGS) -O3 -DNDEBUG
 #CFLAGS = $(COMMON_INCLUDES) $(COMMON_CFLAGS) -g -O0
 TEST_CXXFLAGS= $(COMMON_INCLUDES) $(COMMON_CFLAGS) -I $(GTEST_DIR) -I $(GTEST_DIR)/include
 
-COMMON_LIBS = -lpthread
-LIBS = -L. -lprophet4lib $(COMMON_LIBS)
+COMMON_LIBS = -lpthread -lm
+LIBS = -lprophet4lib $(COMMON_LIBS)
 
 # phony targets
 .PHONY: ALL clean test
 
 ALL: $(EXE_SRC_OBJECTS) libprophet4lib.a
-	$(CC) $(CFLAGS) -lm -o prophet4 $(EXE_SRC_OBJECTS) $(LIBS)
+	$(CC) $(CFLAGS) -o prophet4 -L. $(EXE_SRC_OBJECTS) $(LIBS)
 
 # source build objects
 $(SRC_BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -63,7 +64,7 @@ $(GTEST_OBJ): $(GTEST_DIR)/src/gtest-all.cc
 
 
 libprophet4lib.a: $(LIB_SRC_OBJECTS) 
-	ar rcs libprophet4lib.a $(LIB_SRC_OBJECTS)
+	ar -rcsv libprophet4lib.a $(LIB_SRC_OBJECTS)
 
 test: $(LIB_SRC_OBJECTS) $(TEST_OBJECTS) $(GTEST_OBJ)
 	@$(CXX) $(TEST_CXXFLAGS) \
