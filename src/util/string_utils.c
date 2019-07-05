@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <prophet/util/string_utils.h>
@@ -9,8 +10,9 @@
 /**
  * \brief Convert a string to a square.
  *
- * The string should have a length of two.  The first character should be a letter A-H (lower or upper),
- * and the second a number 1-8.  E.g. A1, b2, e3 are all valid.
+ * The string should have a length of two.  The first character should be a 
+ * letter A-H (lower or upper),and the second a number 1-8.  E.g. A1, b2, e3 
+ * are all valid.
  *
  * \param str_sq   The string to convert.
  *
@@ -40,4 +42,30 @@ square_t str_to_sq(const char *str_sq)
     }
 
     return (square_t)sq;
+}
+
+/**
+ * \brief Convert a square to a string.
+ *
+ * Returns a pointer to a null-terminated byte string.  The returned  pointer
+ * must be passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param sq        The square to convert
+ *
+ * \return A null terminated byte string.
+ */ 
+char* sq_to_str(square_t sq)
+{
+    if (sq < 0 || sq > 63)
+        return NULL;
+    
+    char* buf = (char*)malloc(3 * sizeof(char));
+
+    buf[0] = 'a' + get_file(sq);
+    buf[1] = '0' + (8 - get_rank(sq));
+    buf[2] = 0;
+
+    return buf;
 }
