@@ -35,6 +35,21 @@ square_t str_to_sq(const char *str_sq);
  */ 
 char* sq_to_str(square_t sq);
 
+/**
+ * \brief Convert a position into a string.
+ *
+ * Returns a pointer to a null-terminated byte string.  The returned pointer
+ * must be passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param pos       A pointer to a chess position.
+ *
+ * \return A null terminated byte string.
+ */
+char* pos_to_str(const position* pos);
+
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }

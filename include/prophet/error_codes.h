@@ -34,6 +34,12 @@ extern "C" {
  */
 #define P4_ERROR_CMD_PERFT_DEPTH                0x0005
 
+/**
+ * \brief This error is thrown by command_db() when the pos_to_str()
+ * function returns a NULL pointer.
+ */
+#define P4_ERROR_CMD_DB_POS_TO_STR              0x0006
+
 
 // make this header C++ friendly.
 #ifdef     __cplusplus
