@@ -41,6 +41,13 @@ extern "C" {
 #define P4_ERROR_CMD_DB_POS_TO_STR              0x0006
 
 
+/**
+ * \brief This error is thrown by xboard_ping() when the N parameter
+ * of the command is missing.
+ */
+#define P4_ERROR_CMD_XBOARD_PING                0x0100
+
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }

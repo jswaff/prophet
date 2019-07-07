@@ -1,10 +1,12 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
 
 #include "command_internal.h"
+#include "xboard/xboard-internal.h"
 
 /* structure mapping a command to a function */
 struct function_table_entry
@@ -15,6 +17,13 @@ struct function_table_entry
 
 /* a table of command->function mappings */
 struct function_table_entry function_table[] = {
+
+    /* xboard protocol */
+    {"xboard", command_no_op},
+    {"ping", xboard_ping},
+    {"quit", command_exit},
+
+    /* custom commands */
     {"db", command_db},
     {"perft", command_perft},
     {"exit", command_exit}
