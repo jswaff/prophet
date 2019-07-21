@@ -6,7 +6,7 @@
 #include <prophet/parameters.h>
 
 #include "command_internal.h"
-#include "xboard/xboard-internal.h"
+#include "xboard/xboard_internal.h"
 
 /* structure mapping a command to a function */
 struct function_table_entry
@@ -19,14 +19,50 @@ struct function_table_entry
 struct function_table_entry function_table[] = {
 
     /* xboard protocol */
-    {"xboard", command_no_op},
+    {"accepted", command_no_op},
+    {"analyze", command_no_op},
+    {"bk", command_no_op},
+    {"computer", command_no_op},
+    {"cores", command_no_op},
+    {"draw", command_no_op},
+    {"easy", command_no_op},
+    {"force", command_no_op},
+    {"go", command_no_op},
+    {"hard", command_no_op},
+    {"hint", command_no_op},
+    {"ics", command_no_op},
+    {"level", command_no_op},
+    {"memory", command_no_op},
+    {"name", command_no_op},
+    {"new", xboard_new},
+    {"nopost", command_no_op},
+    {"nps", command_no_op},
+    {"otim", command_no_op},
     {"ping", xboard_ping},
+    {"playother", command_no_op},
+    {"post", command_no_op},
+    {"protover", command_no_op},
     {"quit", command_exit},
+    {"random", command_no_op},
+    {"rating", command_no_op},
+    {"rejected", command_no_op},
+    {"remove", command_no_op},
+    {"result", command_no_op},
+    {"sd", command_no_op},
+    {"setboard", command_no_op},
+    {"st", command_no_op},
+    {"time", command_no_op},
+    {"undo", command_no_op},
+    {"usermove", command_no_op},
+    {"variant", command_no_op},
+    {"xboard", command_no_op},
+    {"?", command_no_op},
 
     /* custom commands */
     {"db", command_db},
-    {"perft", command_perft},
-    {"exit", command_exit}
+    {"eval", command_no_op}, 
+    {"exit", command_exit},
+    {"perft", command_perft}
 };
 
 /**

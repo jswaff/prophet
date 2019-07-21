@@ -8,6 +8,8 @@
 #include <prophet/position/position.h>
 #include <prophet/util/p4time.h>
 
+extern position gpos;
+
 /**
  * \brief Execute the perft command.
  * 
@@ -34,14 +36,11 @@ int command_perft(const char* input, int* exit_status)
         return P4_ERROR_CMD_PERFT_DEPTH;
     }
 
-    // TODO: other positions
-    position pos;
-    reset_pos(&pos);
 
     printf("running perft depth %d.\n", depth);
     for (int i=1; i <= depth; i++) {
         int32_t start_time = milli_timer();
-        uint64_t nodes = perft(&pos, i);
+        uint64_t nodes = perft(&gpos, i);
         int32_t elapsed = milli_timer() - start_time;
         printf("depth %d - nodes: %lu - rate: %lu kn/s\n", i, nodes,
             nodes / (elapsed+1)); // avoid div by 0 

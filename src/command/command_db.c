@@ -8,6 +8,8 @@
 #include <prophet/position/position.h>
 #include <prophet/util/string_utils.h>
 
+extern position gpos;
+
 /**
  * \brief Execute the db (drawboard) command.
  *
@@ -23,11 +25,8 @@ int command_db(const char* UNUSED(input), int* exit_status)
 {
     *exit_status = 0;
 
-    // TODO: other positions
-    position pos;
-    reset_pos(&pos);
 
-    char* buf = pos_to_str(&pos);
+    char* buf = pos_to_str(&gpos);
     if (NULL == buf)
     {
         return P4_ERROR_CMD_DB_POS_TO_STR;
