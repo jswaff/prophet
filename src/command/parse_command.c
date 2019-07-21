@@ -26,8 +26,8 @@ struct function_table_entry function_table[] = {
     {"cores", command_no_op},
     {"draw", command_no_op},
     {"easy", command_no_op},
-    {"force", command_no_op},
-    {"go", command_no_op},
+    {"force", command_no_op}, // 2
+    {"go", command_no_op}, // 3
     {"hard", command_no_op},
     {"hint", command_no_op},
     {"ics", command_no_op},
@@ -41,19 +41,19 @@ struct function_table_entry function_table[] = {
     {"ping", xboard_ping},
     {"playother", command_no_op},
     {"post", command_no_op},
-    {"protover", command_no_op},
+    {"protover", command_no_op}, // 1
     {"quit", command_exit},
     {"random", command_no_op},
     {"rating", command_no_op},
     {"rejected", command_no_op},
-    {"remove", command_no_op},
-    {"result", command_no_op},
+    {"remove", command_no_op}, // 8
+    {"result", command_no_op}, // 4
     {"sd", command_no_op},
-    {"setboard", command_no_op},
+    {"setboard", command_no_op}, // 6
     {"st", command_no_op},
     {"time", command_no_op},
-    {"undo", command_no_op},
-    {"usermove", command_no_op},
+    {"undo", command_no_op}, // 7
+    {"usermove", command_no_op}, // 5
     {"variant", command_no_op},
     {"xboard", command_no_op},
     {"?", command_no_op},
