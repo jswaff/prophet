@@ -101,7 +101,8 @@ TEST(pos_test, reset_pos)
 TEST(pos_test, set_pos) {
 
     position pos;
-    ASSERT_TRUE(set_pos(&pos,"8/7p/5k2/5p2/p1p2P2/Pr1pPK2/1P1R3P/8 b - - 12 47"));
+    ASSERT_TRUE(
+        set_pos(&pos,"8/7p/5k2/5p2/p1p2P2/Pr1pPK2/1P1R3P/8 b - - 12 47"));
 
     EXPECT_EQ(pos.player, BLACK);
     EXPECT_EQ(pos.ep_sq, NO_SQUARE);
@@ -162,20 +163,24 @@ TEST(pos_test, set_pos) {
     }
 
     //  verify bitmaps
-    EXPECT_EQ(pos.white_pawns, squares_to_bitmap(F4, A3, E3, B2, H2, NO_SQUARE));
+    EXPECT_EQ(pos.white_pawns, 
+        squares_to_bitmap(F4, A3, E3, B2, H2, NO_SQUARE));
     EXPECT_EQ(pos.white_rooks, square_to_bitmap(D2));
     EXPECT_EQ(pos.white_knights, 0U);
     EXPECT_EQ(pos.white_bishops, 0U);
     EXPECT_EQ(pos.white_queens, 0U);
-    EXPECT_EQ(pos.white_pieces, pos.white_pawns | pos.white_rooks | pos.white_knights | pos.white_bishops |
+    EXPECT_EQ(pos.white_pieces, pos.white_pawns | pos.white_rooks | 
+        pos.white_knights | pos.white_bishops |
         pos.white_queens | square_to_bitmap(pos.white_king));
 
-    EXPECT_EQ(pos.black_pawns, squares_to_bitmap(H7, F5, A4, C4, D3, NO_SQUARE));
+    EXPECT_EQ(pos.black_pawns, 
+        squares_to_bitmap(H7, F5, A4, C4, D3, NO_SQUARE));
     EXPECT_EQ(pos.black_rooks, square_to_bitmap(B3));
     EXPECT_EQ(pos.black_knights, 0U);
     EXPECT_EQ(pos.black_bishops, 0U);
     EXPECT_EQ(pos.black_queens, 0U);
-    EXPECT_EQ(pos.black_pieces, pos.black_pawns | pos.black_rooks | pos.black_knights | pos.black_bishops |
+    EXPECT_EQ(pos.black_pieces, pos.black_pawns | pos.black_rooks | 
+        pos.black_knights | pos.black_bishops |
         pos.black_queens | square_to_bitmap(pos.black_king));
 
     // verify piece counts
@@ -203,7 +208,8 @@ TEST(pos_test, set_pos) {
 
     // second position
     position pos2;
-    ASSERT_TRUE(set_pos(&pos2,"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"));
+    ASSERT_TRUE(set_pos(&pos2,
+        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"));
 
     EXPECT_EQ(pos2.player, BLACK);
     EXPECT_EQ(pos2.ep_sq, E3);

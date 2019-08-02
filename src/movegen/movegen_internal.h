@@ -11,7 +11,8 @@ extern "C" {
 typedef square_t (*dir_func_t)(square_t);
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's bishops?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * bishops?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -35,7 +36,8 @@ bool attacked_by_king(const position* p, square_t sq, color_t player);
 
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's knights?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * knights?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -46,7 +48,8 @@ bool attacked_by_king(const position* p, square_t sq, color_t player);
 bool attacked_by_knight(const position* p, square_t sq, color_t player);
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's pawns?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * pawns?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -58,7 +61,8 @@ bool attacked_by_pawn(const position* p, square_t sq, color_t player);
 
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's queens?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * queens?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -69,7 +73,8 @@ bool attacked_by_pawn(const position* p, square_t sq, color_t player);
 bool attacked_by_queen(const position* p, square_t sq, color_t player);
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's rooks?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * rooks?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -82,8 +87,9 @@ bool attacked_by_rook(const position* p, square_t sq, color_t player);
 /**
  * \brief Generate pseudo-legal bishop moves
  *
- * Moves are placed contiguously beginning at the memory location pointed to by \p m.
- * It is assumed there is enough memory allocated to contain all generated moves.
+ * Moves are placed contiguously beginning at the memory location pointed to 
+ * by \p m.  It is assumed there is enough memory allocated to contain all 
+ * generated moves.
  *
  * \param m             Pointer to a move stack
  * \param p             A chess position
@@ -93,13 +99,15 @@ bool attacked_by_rook(const position* p, square_t sq, color_t player);
  * \return  Move pointer one greater than the last move added.
  */
 move* gen_bishop_moves(move* m, const position* p, bool caps, bool noncaps);
-move* gen_bishop_moves_from_sq(move* m, const position* p, square_t from, bool caps, bool noncaps);
+move* gen_bishop_moves_from_sq(
+    move* m, const position* p, square_t from, bool caps, bool noncaps);
 
 /**
  * \brief Generate pseudo-legal king moves
  *
- * Moves are placed contiguously beginning at the memory location pointed to by \p m.
- * It is assumed there is enough memory allocated to contain all generated moves.
+ * Moves are placed contiguously beginning at the memory location pointed to 
+ * by \p m.  It is assumed there is enough memory allocated to contain all 
+ * generated moves.
  *
  * \param m             Pointer to a move stack
  * \param p             A chess position
@@ -109,14 +117,16 @@ move* gen_bishop_moves_from_sq(move* m, const position* p, square_t from, bool c
  * \return  Move pointer one greater than the last move added.
  */
 move* gen_king_moves(move* m, const position* p, bool caps, bool noncaps);
-move* gen_king_moves_from_sq(move* m, const position* p, square_t from, bool caps, bool noncaps);
+move* gen_king_moves_from_sq(
+    move* m, const position* p, square_t from, bool caps, bool noncaps);
 
 
 /**
  * \brief Generate pseudo-legal knight moves
  *
- * Moves are placed contiguously beginning at the memory location pointed to by \p m.
- * It is assumed there is enough memory allocated to contain all generated moves.
+ * Moves are placed contiguously beginning at the memory location pointed to 
+ * by \p m. It is assumed there is enough memory allocated to contain all 
+ * generated moves.
  *
  * \param m             Pointer to a move stack
  * \param p             A chess position
@@ -126,13 +136,15 @@ move* gen_king_moves_from_sq(move* m, const position* p, square_t from, bool cap
  * \return  Move pointer one greater than the last move added.
  */
 move* gen_knight_moves(move* m, const position* p, bool caps, bool noncaps);
-move* gen_knight_moves_from_sq(move* m, const position* p, square_t from, bool caps, bool noncaps);
+move* gen_knight_moves_from_sq(
+    move* m, const position* p, square_t from, bool caps, bool noncaps);
 
 /**
  * \brief Generate pseudo-legal pawn moves
  *
- * Moves are placed contiguously beginning at the memory location pointed to by \p m.
- * It is assumed there is enough memory allocated to contain all generated moves.
+ * Moves are placed contiguously beginning at the memory location pointed to 
+ * by \p m. It is assumed there is enough memory allocated to contain all 
+ * generated moves.
  *
  * \param m             Pointer to a move stack
  * \param p             A chess position
@@ -147,8 +159,9 @@ move* gen_pawn_moves(move* m, const position* p, bool caps, bool noncaps);
 /**
  * \brief Generate pseudo-legal queen moves
  *
- * Moves are placed contiguously beginning at the memory location pointed to by \p m.
- * It is assumed there is enough memory allocated to contain all generated moves.
+ * Moves are placed contiguously beginning at the memory location pointed to 
+ * by \p m. It is assumed there is enough memory allocated to contain all 
+ * generated moves.
  *
  * \param m             Pointer to a move stack
  * \param p             A chess position
@@ -158,14 +171,16 @@ move* gen_pawn_moves(move* m, const position* p, bool caps, bool noncaps);
  * \return  Move pointer one greater than the last move added.
  */
 move* gen_queen_moves(move* m, const position* p, bool caps, bool noncaps);
-move* gen_queen_moves_from_sq(move* m, const position* p, square_t from, bool caps, bool noncaps);
+move* gen_queen_moves_from_sq(
+    move* m, const position* p, square_t from, bool caps, bool noncaps);
 
 
 /**
  * \brief Generate pseudo-legal rook moves
  *
- * Moves are placed contiguously beginning at the memory location pointed to by \p m.
- * It is assumed there is enough memory allocated to contain all generated moves.
+ * Moves are placed contiguously beginning at the memory location pointed to 
+ * by \p m. It is assumed there is enough memory allocated to contain all 
+ * generated moves.
  *
  * \param m             Pointer to a move stack
  * \param p             A chess position
@@ -175,7 +190,8 @@ move* gen_queen_moves_from_sq(move* m, const position* p, square_t from, bool ca
  * \return  Move pointer one greater than the last move added.
  */
 move* gen_rook_moves(move* m, const position* p, bool caps, bool noncaps);
-move* gen_rook_moves_from_sq(move* m, const position* p, square_t from, bool caps, bool noncaps);
+move* gen_rook_moves_from_sq(
+    move* m, const position* p, square_t from, bool caps, bool noncaps);
 
 /**
  * \brief Get bishop moves
@@ -250,14 +266,15 @@ uint64_t get_rook_moves(const position* p, square_t from, uint64_t targets);
  *
  * \return  The next move pointer
  */
-move* add_move(move* m, const position* p, piece_t piece, square_t from, square_t to);
+move* add_move(
+    move* m, const position* p, piece_t piece, square_t from, square_t to);
 
 /**
  * \brief Get the set of target squares
  *
- * If \p caps is true, the targets include the opposite player's pieces.  If \p noncaps
- * is set, targets includes all empty squares.  Note the two options are not mutually
- * exclusive.
+ * If \p caps is true, the targets include the opposite player's pieces.  If 
+ * \p noncaps is set, targets includes all empty squares.  Note the two 
+ * options are not mutually exclusive.
  *
  * \param p             A pointer to a chess position
  * \param caps          If capture targets should be included
@@ -269,10 +286,11 @@ uint64_t get_target_squares(const position* p, bool caps, bool noncaps);
 
 
 /**
- * \brief Generate a moves mask in one direction based on the set of occupied squares
+ * \brief Generate a moves mask in one direction based on the set of occupied 
+ * squares
  *
- * From the square \p sq, add all squares in one direction until the edge of the board or
- * until an occupied square is encountered.
+ * From the square \p sq, add all squares in one direction until the edge of 
+ * the board or until an occupied square is encountered.
  *
  * \param sq            The square to start from
  * \param occupied      The set of occupied squares
@@ -286,13 +304,16 @@ uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func);
 /**
  * \brief Count the number of capture and non-capture moves
  *
- * The memory range is iterated, beginning with \p startp and ending with \p endp - 1.
- * Some slots may contain an invalid move (BADMOVE).  These "moves" are not counted.
+ * The memory range is iterated, beginning with \p startp and ending with 
+ * \p endp - 1. Some slots may contain an invalid move (BADMOVE).  These 
+ * "moves" are not counted.
  *
  * \param startp        The starting address of a list of moves (inclusive)
  * \param endp          The ending address of a list of moves (exclusive)
- * \param caps          A pointer to an integer to receive the number of captures
- * \param noncaps       A pointer to an integer to receive the number of noncaptures
+ * \param caps          A pointer to an integer to receive the number of 
+ *                      captures
+ * \param noncaps       A pointer to an integer to receive the number of 
+ *                      noncaptures
  */
 void num_moves(move* startp, move* endp, int* caps, int* noncaps);
 

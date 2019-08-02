@@ -41,6 +41,18 @@ int xboard_new(const char* input, int* exit_status);
  */
 int xboard_ping(const char* input, int* exit_status);
 
+/**
+ * \brief Execute the xboard protover command 
+ * 
+ * Respond to the protover command by printing a list of supported features.  
+ *
+ * \param input         The user entered input 
+ * \param exit_status   Pointer to receive exit status.  A non-zero 
+ *                      status indicates the program should exit.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int xboard_protover(const char* input, int* exit_status);
 
 
 // make this header C++ friendly.

@@ -8,8 +8,8 @@
 /**
  * \brief Undo (reverse) a move.
  *
- * The move should be the last move played over the board.  No verification is done to ensure the
- * position is left in a legal state.
+ * The move should be the last move played over the board.  No verification 
+ * is done to ensure the position is left in a legal state.
  *
  * \param p         A pointer to a chess position
  * \param u         A pointer to the undo information
@@ -29,50 +29,73 @@ void undo_move(position* p, const undo* u)
     move mv = u->mv;
     assert(abs((int)u->captured) == (int)get_captured_piece(mv));
 
-    // remove the moving piece from the destination square
+    /* remove the moving piece from the destination square */
     square_t to_sq = get_to_sq(mv);
     square_t from_sq = get_from_sq(mv);
     piece_t piece = get_piece(mv);
 
-    if (p->piece[to_sq] != NO_PIECE) {
+    if (p->piece[to_sq] != NO_PIECE) 
+    {
         remove_piece(p, to_sq);
     }
 
-    // place the moving piece on from_sq
+    /* place the moving piece on from_sq */
     add_piece(p, piece * (p->player==WHITE ? 1 : -1), from_sq);
-    if (piece == KING) {
-        if (p->player == WHITE) {
+    if (piece == KING) 
+    {
+        if (p->player == WHITE) 
+        {
             p->white_king = from_sq;
-        } else {
+        } 
+        else 
+        {
             p->black_king = from_sq;
         }
     }
 
-    // restore the captured piece
-    if (is_capture(mv)) {
-        if (is_epcapture(mv)) {
-            if (p->player==BLACK) {
+    /* restore the captured piece */
+    if (is_capture(mv)) 
+    {
+        if (is_epcapture(mv)) 
+        {
+            if (p->player==BLACK) 
+            {
                 add_piece(p, PAWN, (square_t)(p->ep_sq-8));
-            } else {
+            } 
+            else 
+            {
                 add_piece(p, -PAWN, (square_t)(p->ep_sq+8));
             }
-        } else {
+        } 
+        else 
+        {
             add_piece(p, u->captured, to_sq);
         }
-    } else if (is_castle(mv)) {
-        if (from_sq == E1) {
-            if (to_sq == G1) {
+    } 
+    else if (is_castle(mv)) 
+    {
+        if (from_sq == E1) 
+        {
+            if (to_sq == G1) 
+            {
                 remove_piece(p, F1);
                 add_piece(p, ROOK, H1);
-            } else {
+            } 
+            else 
+            {
                 remove_piece(p, D1);
                 add_piece(p, ROOK, A1);
             }
-        } else {
-            if (to_sq == G8) {
+        } 
+        else 
+        {
+            if (to_sq == G8) 
+            {
                 remove_piece(p, F8);
                 add_piece(p, -ROOK, H8);
-            } else {
+            } 
+            else 
+            {
                 remove_piece(p, D8);
                 add_piece(p, -ROOK, A8);
             }

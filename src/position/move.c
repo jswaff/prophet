@@ -26,7 +26,8 @@ move to_move(piece_t piece, square_t from, square_t to)
  *
  * \return - the move
  */
-move to_capture(piece_t piece, square_t from, square_t to, piece_t captured_piece)
+move to_capture(
+    piece_t piece, square_t from, square_t to, piece_t captured_piece)
 {
     move mv = from | (to << 6) | (piece << 12);
     set_capture(&mv, captured_piece);
@@ -188,9 +189,12 @@ bool is_castle(move mv)
 int32_t get_move_score(move mv)
 {
     int32_t score = ((mv >> 32) & 0x7FFFFFFF);
-    if ((mv >> 63) & 1) {
+    if ((mv >> 63) & 1) 
+    {
         return -score;
-    } else {
+    } 
+    else 
+    {
         return score;
     }
 }
@@ -203,13 +207,16 @@ int32_t get_move_score(move mv)
  */
 void set_move_score(move* m, int32_t score)
 {
-    // clear high order bits
+    /* clear high order bits */
     *m &= 0xFFFFFFFF;
 
-    // now set score
-    if (score >= 0) {
+    /* now set score */
+    if (score >= 0) 
+    {
         *m |= ((uint64_t)score)<<32;
-    } else {
+    } 
+    else 
+    {
         *m |= ((uint64_t)-score)<<32;
         *m |= ((uint64_t)1)<<63;
     }

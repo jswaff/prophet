@@ -11,8 +11,9 @@ extern "C" {
 /**
  * \brief Test two positions for equality
  *
- * In strict mode, each member must be equal.  In non-strict mode, that is relaxed
- * somewhat - the fifty move counter and move counter are not required to be equal.
+ * In strict mode, each member must be equal.  In non-strict mode, that is 
+ * relaxed somewhat - the fifty move counter and move counter are not required 
+ * to be equal.
  *
  * \param p1        A pointer to a chess position
  * \param p2        A pointer to a second chess position
@@ -44,8 +45,8 @@ piece_t remove_piece(position* p, square_t sq);
 /**
  * \brief Create a 64 bit hash signature of a chess position
  *
- * Note this is not a fast operation.  It would be more performant to incrementally update the
- * hash signature as moves are made on the board.
+ * Note this is not a fast operation.  It would be more performant to 
+ * incrementally update the hash signature as moves are made on the board.
  *
  * \param pos       A pointer to a chess position
  *
@@ -57,8 +58,8 @@ uint64_t build_hash_key(const position* pos);
 /**
  * \brief Create a 64 bit hash signature of the pawns in a chess position.
  *
- * Note this is not a fast operation.  It would be more performant to incrementally update the
- * hash signature as pawn moves are made on the board.
+ * Note this is not a fast operation.  It would be more performant to 
+ * incrementally update the hash signature as pawn moves are made on the board.
  *
  * \param pos       A pointer to a chess position
  *
@@ -71,7 +72,8 @@ uint64_t build_pawn_key(const position* pos);
  *
  * This would most commonly be used as a runtime check when in debug mode.
  *
- * All errors found are logged.  Execution is not stopped on the first error found.
+ * All errors found are logged.  Execution is not stopped on the first error 
+ * found.
  *
  * \param pos       The position to verify
  *

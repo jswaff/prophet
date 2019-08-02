@@ -21,24 +21,33 @@
  */
 square_t str_to_sq(const char *str_sq)
 {
-    if (strlen(str_sq) != 2) {
+    if (strlen(str_sq) != 2) 
+    {
         return NO_SQUARE;
     }
     int sq;
 
-    // the first character should be a-h or A-H
-    if (str_sq[0] >= 'a' && str_sq[0] <= 'h') {
+    /* the first character should be a-h or A-H */
+    if (str_sq[0] >= 'a' && str_sq[0] <= 'h') 
+    {
         sq = str_sq[0] - 'a';
-    } else if (str_sq[0] >= 'A' && str_sq[0] <= 'H') {
+    } 
+    else if (str_sq[0] >= 'A' && str_sq[0] <= 'H') 
+    {
         sq = str_sq[0] - 'A';
-    } else {
+    } 
+    else 
+    {
         return NO_SQUARE;
     }
 
-    // the second character should be a digit 1-8
-    if (str_sq[1] >= '1' && str_sq[1] <= '8') {
+    /* the second character should be a digit 1-8 */
+    if (str_sq[1] >= '1' && str_sq[1] <= '8') 
+    {
         sq += 8*(8-(str_sq[1]-'0'));
-    } else {
+    } 
+    else 
+    {
         return NO_SQUARE;
     }
 
@@ -89,9 +98,14 @@ char* pos_to_str(const position* pos)
     char* buf = (char*)malloc(255 * sizeof(char));
 
     strcpy(buf, "");
-    for (int r=0; r<8; r++) { // each rank
-        for (int f=0; f<8; f++) { // each file
-            switch(pos->piece[get_square((rank_t)r, (file_t)f)]) {
+    for (int r=0; r<8; r++) 
+    { 
+        /* each rank */
+        for (int f=0; f<8; f++) 
+        { 
+            /* each file */
+            switch(pos->piece[get_square((rank_t)r, (file_t)f)]) 
+            {
                 case NO_PIECE: strcat(buf, "- "); break;
                 case PAWN: strcat(buf, "P "); break;
                 case -PAWN: strcat(buf, "p "); break;
@@ -108,20 +122,28 @@ char* pos_to_str(const position* pos)
             }
         }
 
-        // print the player to move on the 6th rank
-        if (r == RANK_6) {
-            if (pos->player == WHITE) {
+        /* print the player to move on the 6th rank */
+        if (r == RANK_6) 
+        {
+            if (pos->player == WHITE) 
+            {
                 strcat(buf, "   white to move");
-            } else {
+            } 
+            else 
+            {
                 strcat(buf, "   black to move");
             }
         }
 
-        // print the en passant square
-        else if (r == RANK_5) {
-            if (pos->ep_sq == NO_SQUARE) {
+        /* print the en passant square */
+        else if (r == RANK_5) 
+        {
+            if (pos->ep_sq == NO_SQUARE) 
+            {
                 strcat(buf, "   no ep");
-            } else {
+            } 
+            else 
+            {
                 strcat(buf, "   ep sq: ");
                 char* ep_buf = sq_to_str(pos->ep_sq);
                 strcat(buf, ep_buf);
@@ -129,9 +151,11 @@ char* pos_to_str(const position* pos)
             }
         }
 
-        // print castling rights
-        else if (r == RANK_4) {
-            if (pos->castling_rights) {
+        /* print castling rights */
+        else if (r == RANK_4) 
+        {
+            if (pos->castling_rights) 
+            {
                 strcat(buf, "   castling rights: ");
                 if (can_castle_wk(pos))
                     strcat(buf, "K");
@@ -141,7 +165,9 @@ char* pos_to_str(const position* pos)
                     strcat(buf, "k");
                 if (can_castle_bq(pos))
                     strcat(buf, "q");
-            } else {
+            } 
+            else 
+            {
                 strcat(buf, "   no castling rights");
             }
         }

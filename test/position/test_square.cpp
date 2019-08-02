@@ -7,31 +7,48 @@ TEST(bitmap_test, squares_to_bitmap)
     EXPECT_EQ(squares_to_bitmap(NO_SQUARE), (uint64_t)0x00);
     EXPECT_EQ(squares_to_bitmap(A8, NO_SQUARE), (uint64_t)0x01);
     EXPECT_EQ(squares_to_bitmap(B8, NO_SQUARE), (uint64_t)0x02);
-    EXPECT_EQ(squares_to_bitmap(B8, C8, D8, NO_SQUARE), (uint64_t)0x0E);  // 2 + 4 + 8
+    // 2 + 4 + 8
+    EXPECT_EQ(squares_to_bitmap(B8, C8, D8, NO_SQUARE), (uint64_t)0x0E);  
 }
 
 TEST(square_test, file_to_bitmap)
 {
-    EXPECT_EQ(file_to_bitmap(FILE_A), squares_to_bitmap(A1, A2, A3, A4, A5, A6, A7, A8, NO_SQUARE));
-    EXPECT_EQ(file_to_bitmap(FILE_B), squares_to_bitmap(B1, B2, B3, B4, B5, B6, B7, B8, NO_SQUARE));
-    EXPECT_EQ(file_to_bitmap(FILE_C), squares_to_bitmap(C1, C2, C3, C4, C5, C6, C7, C8, NO_SQUARE));
-    EXPECT_EQ(file_to_bitmap(FILE_D), squares_to_bitmap(D1, D2, D3, D4, D5, D6, D7, D8, NO_SQUARE));
-    EXPECT_EQ(file_to_bitmap(FILE_E), squares_to_bitmap(E1, E2, E3, E4, E5, E6, E7, E8, NO_SQUARE));
-    EXPECT_EQ(file_to_bitmap(FILE_F), squares_to_bitmap(F1, F2, F3, F4, F5, F6, F7, F8, NO_SQUARE));
-    EXPECT_EQ(file_to_bitmap(FILE_G), squares_to_bitmap(G1, G2, G3, G4, G5, G6, G7, G8, NO_SQUARE));
-    EXPECT_EQ(file_to_bitmap(FILE_H), squares_to_bitmap(H1, H2, H3, H4, H5, H6, H7, H8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_A), 
+        squares_to_bitmap(A1, A2, A3, A4, A5, A6, A7, A8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_B), 
+        squares_to_bitmap(B1, B2, B3, B4, B5, B6, B7, B8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_C), 
+        squares_to_bitmap(C1, C2, C3, C4, C5, C6, C7, C8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_D), 
+        squares_to_bitmap(D1, D2, D3, D4, D5, D6, D7, D8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_E), 
+        squares_to_bitmap(E1, E2, E3, E4, E5, E6, E7, E8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_F), 
+        squares_to_bitmap(F1, F2, F3, F4, F5, F6, F7, F8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_G), 
+        squares_to_bitmap(G1, G2, G3, G4, G5, G6, G7, G8, NO_SQUARE));
+    EXPECT_EQ(file_to_bitmap(FILE_H), 
+        squares_to_bitmap(H1, H2, H3, H4, H5, H6, H7, H8, NO_SQUARE));
 }
 
 TEST(square_test, rank_to_bitmap)
 {
-    EXPECT_EQ(rank_to_bitmap(RANK_1), squares_to_bitmap(A1, B1, C1, D1, E1, F1, G1, H1, NO_SQUARE));
-    EXPECT_EQ(rank_to_bitmap(RANK_2), squares_to_bitmap(A2, B2, C2, D2, E2, F2, G2, H2, NO_SQUARE));
-    EXPECT_EQ(rank_to_bitmap(RANK_3), squares_to_bitmap(A3, B3, C3, D3, E3, F3, G3, H3, NO_SQUARE));
-    EXPECT_EQ(rank_to_bitmap(RANK_4), squares_to_bitmap(A4, B4, C4, D4, E4, F4, G4, H4, NO_SQUARE));
-    EXPECT_EQ(rank_to_bitmap(RANK_5), squares_to_bitmap(A5, B5, C5, D5, E5, F5, G5, H5, NO_SQUARE));
-    EXPECT_EQ(rank_to_bitmap(RANK_6), squares_to_bitmap(A6, B6, C6, D6, E6, F6, G6, H6, NO_SQUARE));
-    EXPECT_EQ(rank_to_bitmap(RANK_7), squares_to_bitmap(A7, B7, C7, D7, E7, F7, G7, H7, NO_SQUARE));
-    EXPECT_EQ(rank_to_bitmap(RANK_8), squares_to_bitmap(A8, B8, C8, D8, E8, F8, G8, H8, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_1), 
+        squares_to_bitmap(A1, B1, C1, D1, E1, F1, G1, H1, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_2), 
+        squares_to_bitmap(A2, B2, C2, D2, E2, F2, G2, H2, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_3), 
+        squares_to_bitmap(A3, B3, C3, D3, E3, F3, G3, H3, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_4), 
+        squares_to_bitmap(A4, B4, C4, D4, E4, F4, G4, H4, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_5), 
+        squares_to_bitmap(A5, B5, C5, D5, E5, F5, G5, H5, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_6), 
+        squares_to_bitmap(A6, B6, C6, D6, E6, F6, G6, H6, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_7), 
+        squares_to_bitmap(A7, B7, C7, D7, E7, F7, G7, H7, NO_SQUARE));
+    EXPECT_EQ(rank_to_bitmap(RANK_8), 
+        squares_to_bitmap(A8, B8, C8, D8, E8, F8, G8, H8, NO_SQUARE));
 }
 
 TEST(square_test, get_rank)

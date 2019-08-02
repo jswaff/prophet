@@ -30,7 +30,7 @@ int parse_and_execute(const char* input, int* exit_status)
         return P4_ERROR_CMD_USER_CMD_BUFFER;
     }
 
-    // clear the structure
+    /* clear the structure */
     memset(user_cmd, 0, sizeof(user_command_t));
 
     retval = parse_command(user_cmd, input);
@@ -39,7 +39,7 @@ int parse_and_execute(const char* input, int* exit_status)
         goto cleanup_user_command;
     }
 
-    // execute the command
+    /* execute the command */
     if (0 != user_cmd->cmd_func(input, exit_status))
     {
         printf("unable to execute command: %s\n", input);

@@ -41,7 +41,7 @@ struct function_table_entry function_table[] = {
     {"ping", xboard_ping},
     {"playother", command_no_op},
     {"post", command_no_op},
-    {"protover", command_no_op}, // 1
+    {"protover", xboard_protover},
     {"quit", command_exit},
     {"random", command_no_op},
     {"rating", command_no_op},
@@ -81,14 +81,14 @@ int parse_command(user_command_t* cmd, const char* input)
 {
     int retval = 0;
 
-    // set the command
+    /* set the command */
     cmd->cmd = strdup(input);
     if (NULL == cmd->cmd)
     {
         return P4_ERROR_CMD_PARSE_CMD_COPY;
     }    
 
-    // set the function
+    /* set the function */
     int nfuncs = sizeof(function_table) / sizeof(struct function_table_entry);
 
     for (int i=0; i<nfuncs; i++)

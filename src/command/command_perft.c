@@ -30,7 +30,7 @@ int command_perft(const char* input, int* exit_status)
 
     int depth;
 
-    // advance the base command pointer past the "perft " substring
+    /* advance the base command pointer past the "perft " substring */
     if (1 != sscanf(input + 6, "%d", &depth))
     {
         return P4_ERROR_CMD_PERFT_DEPTH;

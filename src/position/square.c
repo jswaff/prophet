@@ -27,7 +27,8 @@ uint64_t squares_to_bitmap(square_t sq, ...)
     va_list sqs;
     va_start(sqs, sq);
 
-    while (sq >= 0 && sq < 64) {
+    while (sq >= 0 && sq < 64) 
+    {
         val |= (uint64_t)1 << sq;
         sq = va_arg(sqs, int);
     }
@@ -269,7 +270,8 @@ square_t west(square_t sq)
 square_t northeast(square_t sq)
 {
     assert((sq >= A8 && sq <= H1) || sq == NO_SQUARE);
-    if (sq == NO_SQUARE || get_rank(sq) == RANK_8 || get_file(sq) == FILE_H) return NO_SQUARE;
+    if (sq == NO_SQUARE || get_rank(sq) == RANK_8 || get_file(sq) == FILE_H) 
+        return NO_SQUARE;
     return (square_t)(sq - 7);
 }
 
@@ -286,7 +288,8 @@ square_t northeast(square_t sq)
 square_t southeast(square_t sq)
 {
     assert((sq >= A8 && sq <= H1) || sq == NO_SQUARE);
-    if (sq == NO_SQUARE || get_rank(sq) == RANK_1 || get_file(sq) == FILE_H) return NO_SQUARE;
+    if (sq == NO_SQUARE || get_rank(sq) == RANK_1 || get_file(sq) == FILE_H) 
+        return NO_SQUARE;
     return (square_t)(sq + 9);
 }
 
@@ -303,7 +306,8 @@ square_t southeast(square_t sq)
 square_t southwest(square_t sq)
 {
     assert((sq >= A8 && sq <= H1) || sq == NO_SQUARE);
-    if (sq == NO_SQUARE || get_rank(sq) == RANK_1 || get_file(sq) == FILE_A) return NO_SQUARE;
+    if (sq == NO_SQUARE || get_rank(sq) == RANK_1 || get_file(sq) == FILE_A) 
+        return NO_SQUARE;
     return (square_t)(sq + 7);
 }
 
@@ -320,7 +324,8 @@ square_t southwest(square_t sq)
 square_t northwest(square_t sq)
 {
     assert((sq >= A8 && sq <= H1) || sq == NO_SQUARE);
-    if (sq == NO_SQUARE || get_rank(sq) == RANK_8 || get_file(sq) == FILE_A) return NO_SQUARE;
+    if (sq == NO_SQUARE || get_rank(sq) == RANK_8 || get_file(sq) == FILE_A) 
+        return NO_SQUARE;
     return (square_t)(sq - 9);
 }
 
@@ -370,17 +375,23 @@ static dir_t get_dir_slow(square_t from, square_t to)
     int32_t f_diff = get_file(from) - get_file(to);
     int32_t r_diff = get_rank(from) - get_rank(to);
 
-    if (f_diff == 0) {
-        // same file
+    if (f_diff == 0) 
+    {
+        /* same file */
         if (r_diff < 0) return SOUTH;
         if (r_diff > 0) return NORTH;
-    } else if (f_diff < 0) {
-        // from is west of to
+    } 
+    else if (f_diff < 0) 
+    {
+        /* from is west of to */
         if (r_diff == 0) return EAST;
         if (r_diff == f_diff) return SOUTHEAST;
         if (r_diff == -f_diff) return NORTHEAST;
-    } else { // f_diff > 0
-        // from is east of to
+    } 
+    else 
+    { 
+        /* f_diff > 0 */
+        /* from is east of to */
         if (r_diff == 0) return WEST;
         if (r_diff == f_diff) return NORTHWEST;
         if (r_diff == -f_diff) return SOUTHWEST;
@@ -391,19 +402,23 @@ static dir_t get_dir_slow(square_t from, square_t to)
 
 void init_squares()
 {
-    for (int i=0; i<8; i++) {
+    for (int i=0; i<8; i++) 
+    {
         bb_ranks[i] = 0;
         bb_files[i] = 0;
     }
 
-    for (int i=0; i<64; i++) {
+    for (int i=0; i<64; i++) 
+    {
         square_t sq = (square_t)i;
         bb_ranks[get_rank(sq)] |= square_to_bitmap(sq);
         bb_files[get_file(sq)] |= square_to_bitmap(sq);
     }
 
-    for (int i=0; i<64; i++) {
-        for (int j=0; j<64; j++) {
+    for (int i=0; i<64; i++) 
+    {
+        for (int j=0; j<64; j++) 
+        {
             direction_tbl[i][j] = get_dir_slow((square_t)i,(square_t)j);
         }
     }

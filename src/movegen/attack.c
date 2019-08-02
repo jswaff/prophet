@@ -25,7 +25,8 @@ bool attacked(const position* p, square_t sq, color_t player)
 }
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's bishops?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * bishops?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -39,7 +40,8 @@ bool attacked_by_bishop(const position* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    return get_bishop_moves(p, sq, (player==WHITE ? p->white_bishops : p->black_bishops)) > 0;
+    return get_bishop_moves(
+        p, sq, (player==WHITE ? p->white_bishops : p->black_bishops)) > 0;
 }
 
 /**
@@ -57,11 +59,14 @@ bool attacked_by_king(const position* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    return get_king_moves(sq, square_to_bitmap(player==WHITE ? p->white_king : p->black_king)) > 0;
+    return get_king_moves(
+        sq, square_to_bitmap(
+            player==WHITE ? p->white_king : p->black_king)) > 0;
 }
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's knights?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * knights?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -75,11 +80,13 @@ bool attacked_by_knight(const position* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    return get_knight_moves(sq, (player==WHITE ? p->white_knights : p->black_knights)) > 0;
+    return get_knight_moves(
+        sq, (player==WHITE ? p->white_knights : p->black_knights)) > 0;
 }
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's pawns?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * pawns?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -93,19 +100,27 @@ bool attacked_by_pawn(const position* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    if (player==WHITE) {
-        if (((p->white_pawns & ~file_to_bitmap(FILE_A)) >> 9) & square_to_bitmap(sq)) return true;
-        if (((p->white_pawns & ~file_to_bitmap(FILE_H)) >> 7) & square_to_bitmap(sq)) return true;
-    } else {
-        if (((p->black_pawns & ~file_to_bitmap(FILE_A)) << 7) & square_to_bitmap(sq)) return true;
-        if (((p->black_pawns & ~file_to_bitmap(FILE_H)) << 9) & square_to_bitmap(sq)) return true;
+    if (player==WHITE) 
+    {
+        if (((p->white_pawns & ~file_to_bitmap(FILE_A)) >> 9) & 
+            square_to_bitmap(sq)) return true;
+        if (((p->white_pawns & ~file_to_bitmap(FILE_H)) >> 7) & 
+            square_to_bitmap(sq)) return true;
+    } 
+    else 
+    {
+        if (((p->black_pawns & ~file_to_bitmap(FILE_A)) << 7) & 
+            square_to_bitmap(sq)) return true;
+        if (((p->black_pawns & ~file_to_bitmap(FILE_H)) << 9) & 
+            square_to_bitmap(sq)) return true;
     }
 
     return false;
 }
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's queens?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * queens?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -119,11 +134,13 @@ bool attacked_by_queen(const position* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    return get_queen_moves(p, sq, (player==WHITE ? p->white_queens : p->black_queens)) > 0;
+    return get_queen_moves(
+        p, sq, (player==WHITE ? p->white_queens : p->black_queens)) > 0;
 }
 
 /**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's rooks?
+ * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
+ * rooks?
  *
  * \param p         The chess position
  * \param sq        The square in question
@@ -137,5 +154,6 @@ bool attacked_by_rook(const position* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    return get_rook_moves(p, sq, (player==WHITE ? p->white_rooks : p->black_rooks)) > 0;
+    return get_rook_moves(
+        p, sq, (player==WHITE ? p->white_rooks : p->black_rooks)) > 0;
 }

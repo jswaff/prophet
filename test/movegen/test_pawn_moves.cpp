@@ -119,7 +119,8 @@ TEST(movegen_test, pawn_moves)
     EXPECT_TRUE(is_in_move_list(mv, moves, mp));
 
     // from black
-    set_pos(&pos, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+    set_pos(&pos, 
+        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     mp = gen_pawn_moves(moves, &pos, true, true);
 
     EXPECT_EQ(mp - moves, 16);
@@ -185,7 +186,8 @@ TEST(movegen_test, pawn_captures)
     EXPECT_TRUE(is_in_move_list(mv, moves, mp));
 
     // from black
-    set_pos(&pos, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+    set_pos(&pos, 
+        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     mp = gen_pawn_moves(moves, &pos, true, false);
 
     EXPECT_EQ(mp - moves, 0);
@@ -206,7 +208,8 @@ TEST(movegen_test, pawn_noncaptures)
     EXPECT_TRUE(is_in_move_list(to_move(PAWN, E5, E6), moves, mp));
 
     // from black
-    set_pos(&pos, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+    set_pos(&pos, 
+        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     mp = gen_pawn_moves(moves, &pos, false, true);
 
     EXPECT_EQ(mp - moves, 16);

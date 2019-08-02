@@ -21,10 +21,10 @@ int xboard_ping(const char* input, int* exit_status)
 
     int n;
 
-    // advance the base command pointer past the "ping " substring
+    /* advance the base command pointer past the "ping " substring */
     if (1 != sscanf(input + 5, "%d", &n))
     {
-        return P4_ERROR_CMD_XBOARD_PING;
+        return P4_ERROR_CMD_XBOARD_PING_MISSING_N;
     }
 
     printf("pong %d\n", n);

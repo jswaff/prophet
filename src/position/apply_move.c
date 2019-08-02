@@ -13,12 +13,14 @@ static void remove_rook_castling_availability(position *p, square_t sq);
 /**
  * \brief Apply a chess move to a chess position.
  *
- * Apply a move to the position.  The move should be legal (no verification is performed).
- * Records the information necessary to undo this move to restore the original position.
+ * Apply a move to the position.  The move should be legal (no verification is 
+ * performed). Records the information necessary to undo this move to restore 
+ * the original position.
  *
  * \param p         A pointer to a chess position
  * \param m         The move to apply
- * \param u         A pointer to an undo structure to receive the undo information.
+ * \param u         A pointer to an undo structure to receive the undo 
+ *                  information.
  */
 void apply_move(position* p, move m, undo* u)
 {
@@ -27,14 +29,14 @@ void apply_move(position* p, move m, undo* u)
     assert(verify_pos(p));
     assert(u);
 
-    // capture information to undo move
+    /* capture information to undo move */
     u->mv = m;
     u->hash_key = p->hash_key;
     u->ep_sq = p->ep_sq;
     u->fifty_counter = p->fifty_counter;
     u->castling_rights = p->castling_rights;
 
-    // clear current values
+    /* clear current values */
     p->hash_key ^= zkeys.ptm[p->player];
     p->hash_key ^= zkeys.ep[p->ep_sq];
     p->hash_key ^= zkeys.casting_rights[p->castling_rights];
@@ -42,23 +44,26 @@ void apply_move(position* p, move m, undo* u)
     p->player = opposite_player(p->player);
     p->move_counter++;
 
-    if (is_capture(m)) {
+    if (is_capture(m)) 
+    {
         p->fifty_counter = 0;
         u->captured = remove_captured_piece(p, m);
-    } else {
+    } 
+    else 
+    {
         p->fifty_counter++;
         u->captured = NO_PIECE;
     }
     assert(abs((int)u->captured) == (int)get_captured_piece(m));
 
-    // this could get reset
+    /* this could get reset */
     p->ep_sq = NO_SQUARE;
 
     add_piece_to_destination(p, m);
     remove_castling_availability(p, m);
     remove_piece(p, get_from_sq(m));
 
-    // add in current values
+    /* add in current values */
     p->hash_key ^= zkeys.ptm[p->player];
     p->hash_key ^= zkeys.ep[p->ep_sq];
     p->hash_key ^= zkeys.casting_rights[p->castling_rights];
@@ -71,16 +76,23 @@ static piece_t remove_captured_piece(position* p, move m)
     assert(is_capture(m));
     piece_t captured;
 
-    if (is_epcapture(m)) {
-        // remove pawn
-        if (p->player==WHITE) { // black WAS on move
+    if (is_epcapture(m)) 
+    {
+        /* remove pawn */
+        if (p->player==WHITE) 
+        { 
+            /* black WAS on move */
             captured = remove_piece(p, north(p->ep_sq));
             assert(captured == PAWN);
-        } else {
+        } 
+        else 
+        {
             captured = remove_piece(p, south(p->ep_sq));
             assert((int)captured == -PAWN);
         }
-    } else {
+    } 
+    else 
+    {
         captured = remove_piece(p, get_to_sq(m));
     }
 
@@ -90,7 +102,8 @@ static piece_t remove_captured_piece(position* p, move m)
 }
 
 /**
- * \brief Add the moving piece to the destination square and apply special rules.
+ * \brief Add the moving piece to the destination square and apply special 
+ * rules.
  *
  * The moving piece is added to the destination square.
  *
@@ -113,12 +126,16 @@ static void add_piece_to_destination(position* p, move m)
 
     add_piece(p, piece, to_sq);
 
-    switch (piece) {
+    switch (piece) 
+    {
         case PAWN:
             p->fifty_counter = 0;
-            if (to_sq == north(north(from_sq))) {
+            if (to_sq == north(north(from_sq))) 
+            {
                 p->ep_sq = north(from_sq);
-            } else if (get_rank(to_sq) == RANK_8) {
+            } 
+            else if (get_rank(to_sq) == RANK_8) 
+            {
                 assert(get_promopiece(m) != NO_PIECE);
                 remove_piece(p, to_sq);
                 add_piece(p, get_promopiece(m), to_sq);
@@ -126,9 +143,12 @@ static void add_piece_to_destination(position* p, move m)
             break;
         case -PAWN:
             p->fifty_counter = 0;
-            if (to_sq == south(south(from_sq))) {
+            if (to_sq == south(south(from_sq))) 
+            {
                 p->ep_sq = south(from_sq);
-            } else if (get_rank(to_sq) == RANK_1) {
+            } 
+            else if (get_rank(to_sq) == RANK_1) 
+            {
                 assert(get_promopiece(m) != NO_PIECE);
                 remove_piece(p, to_sq);
                 add_piece(p, -get_promopiece(m), to_sq);
@@ -137,13 +157,17 @@ static void add_piece_to_destination(position* p, move m)
         case KING:
             p->white_king = to_sq;
             // move rook if this is a castle
-            if (from_sq == E1) {
-                if (to_sq == G1) {
+            if (from_sq == E1) 
+            {
+                if (to_sq == G1) 
+                {
                     assert(is_castle(m));
                     p->fifty_counter = 0;
                     remove_piece(p, H1);
                     add_piece(p, ROOK, F1);
-                } else if (to_sq == C1) {
+                } 
+                else if (to_sq == C1) 
+                {
                     assert(is_castle(m));
                     p->fifty_counter = 0;
                     remove_piece(p, A1);
@@ -153,13 +177,17 @@ static void add_piece_to_destination(position* p, move m)
             break;
         case -KING:
             p->black_king = to_sq;
-            if (from_sq == E8) {
-                if (to_sq == G8) {
+            if (from_sq == E8) 
+            {
+                if (to_sq == G8) 
+                {
                     assert(is_castle(m));
                     p->fifty_counter = 0;
                     remove_piece(p, H8);
                     add_piece(p, -ROOK, F8);
-                } else if (to_sq == C8) {
+                } 
+                else if (to_sq == C8) 
+                {
                     assert(is_castle(m));
                     p->fifty_counter = 0;
                     remove_piece(p, A8);
@@ -172,33 +200,46 @@ static void add_piece_to_destination(position* p, move m)
 
 static void remove_castling_availability(position* p, move mv)
 {
-    // if capturing a rook remove its castling availability
-    if (is_capture(mv)) {
+    /* if capturing a rook remove its castling availability */
+    if (is_capture(mv)) 
+    {
         square_t to_sq = get_to_sq(mv);
         remove_rook_castling_availability(p, to_sq);
     }
 
-    // if a rook or king is moving, remove their castling availability.
+    /* if a rook or king is moving, remove their castling availability. */
     square_t from_sq = get_from_sq(mv);
     int32_t piece = p->piece[from_sq];
-    if (piece == KING) {
+    if (piece == KING) 
+    {
         p->castling_rights &= CASTLE_BLACK;
-    } else if (piece == -KING) {
+    } 
+    else if (piece == -KING) 
+    {
         p->castling_rights &= CASTLE_WHITE;
-    } else if (piece == ROOK || piece == -ROOK) {
+    } 
+    else if (piece == ROOK || piece == -ROOK) 
+    {
         remove_rook_castling_availability(p, from_sq);
     }
 }
 
 static void remove_rook_castling_availability(position *p, square_t sq)
 {
-    if (sq == A1) {
+    if (sq == A1) 
+    {
         p->castling_rights &= CASTLE_NOT_WQ;
-    } else if (sq == H1) {
+    } 
+    else if (sq == H1) 
+    {
         p->castling_rights &= CASTLE_NOT_WK;
-    } else if (sq == A8) {
+    } 
+    else if (sq == A8) 
+    {
         p->castling_rights &= CASTLE_NOT_BQ;
-    } else if (sq == H8) {
+    } 
+    else if (sq == H8) 
+    {
         p->castling_rights &= CASTLE_NOT_BK;
     }
 }

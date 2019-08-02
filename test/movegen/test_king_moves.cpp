@@ -48,7 +48,8 @@ TEST(movegen_test, king_moves_includes_castle)
     EXPECT_EQ(mp - moves, 5);
 
     EXPECT_TRUE(is_in_move_list(to_move(KING, E1, F2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KING, E1, F1), moves, mp)); // NOTE: illegal move
+    // NOTE: illegal move
+    EXPECT_TRUE(is_in_move_list(to_move(KING, E1, F1), moves, mp)); 
     EXPECT_TRUE(is_in_move_list(to_move(KING, E1, D1), moves, mp));
     EXPECT_TRUE(is_in_move_list(to_capture(KING, E1, D2, ROOK), moves, mp));
 

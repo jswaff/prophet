@@ -9,7 +9,7 @@
  */
 int32_t milli_timer()
 {
-    // TODO: ftime is obsolete.
+    /* TODO: ftime is obsolete. */
     struct timeb t;
     ftime(&t);
     return (t.time * 1000) + t.millitm;

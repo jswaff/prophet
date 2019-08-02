@@ -11,11 +11,15 @@ TEST(pos_test, add_piece)
 
     add_piece(&pos, PAWN, E4);
     EXPECT_EQ(pos.piece[E4], PAWN);
-    EXPECT_EQ(pos.white_pawns, squares_to_bitmap(A2, B2, C2, D2, E2, F2, G2, H2, E4, NO_SQUARE));
+    EXPECT_EQ(
+        pos.white_pawns, 
+        squares_to_bitmap(A2, B2, C2, D2, E2, F2, G2, H2, E4, NO_SQUARE));
 
     add_piece(&pos, -PAWN, E5);
     EXPECT_EQ(pos.piece[E5], -PAWN);
-    EXPECT_EQ(pos.black_pawns, squares_to_bitmap(A7, B7, C7, D7, E7, F7, G7, H7, E5, NO_SQUARE));
+    EXPECT_EQ(
+        pos.black_pawns, 
+        squares_to_bitmap(A7, B7, C7, D7, E7, F7, G7, H7, E5, NO_SQUARE));
 
 
     add_piece(&pos, KNIGHT, F3);

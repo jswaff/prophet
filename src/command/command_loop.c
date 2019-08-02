@@ -31,7 +31,7 @@ int command_loop()
     {
         fgets(input, MAX_INPUT_SZ, stdin);
 
-        // remove trailing newline
+        /* remove trailing newline */
         if ((strlen(input) > 0) && (input[strlen(input) - 1] == '\n'))
         {
             input[strlen(input) - 1] = '\0';

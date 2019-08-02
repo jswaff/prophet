@@ -18,7 +18,8 @@ extern void init_rook_movegen();
  */
 int init()
 {
-    if (!initialized) {
+    if (!initialized) 
+    {
         init_bitmaps();
         init_squares();
         init_zkeys();

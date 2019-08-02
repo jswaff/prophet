@@ -3,12 +3,14 @@
 /**
  * \brief Generate a 32 bit random number.
  *
- * The 32 bit random number generator below was taken from Crafty by Bob Hyatt.  This same algorithm is in GNU Chess.
+ * The 32 bit random number generator below was taken from Crafty by Bob Hyatt.
+ * This same algorithm is in GNU Chess.
  *
  * The following comments are from Crafty:
  *
- * A 32 bit random number generator. An implementation in C of the algorithm given by Knuth, the art of computer
- * programming, vol. 2, pp. 26-27. We use e=32, so we have to evaluate y(n) = y(n - 24) + y(n - 55) mod 2^32, which
+ * A 32 bit random number generator. An implementation in C of the algorithm 
+ * given by Knuth, the art of computer programming, vol. 2, pp. 26-27. We use 
+ * e=32, so we have to evaluate y(n) = y(n - 24) + y(n - 55) mod 2^32, which
  * is implicitly done by unsigned arithmetic.
  *
  * \return the 32 bit random number.
