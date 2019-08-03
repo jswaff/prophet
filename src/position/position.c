@@ -21,7 +21,7 @@ void reset_pos(position* p)
 {
     assert(p != 0);
 
-    set_pos(p,"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    set_pos(p, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
 
 /**
