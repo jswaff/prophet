@@ -1,10 +1,10 @@
 #ifndef _PRNG_H_
 #define _PRNG_H_
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 
 /**
@@ -23,9 +23,9 @@ uint32_t random32();
 uint64_t random64();
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _PRNG_H_ */

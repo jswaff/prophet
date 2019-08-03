@@ -3,10 +3,10 @@
 
 #include <prophet/position/position.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 /**
  * \brief Test two positions for equality
@@ -82,9 +82,9 @@ uint64_t build_pawn_key(const position* pos);
 bool verify_pos(const position* pos);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif 
 
 #endif /* ! defined _POS_INTERNAL_H_ */

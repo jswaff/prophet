@@ -3,10 +3,10 @@
 
 #include <prophet/movegen.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 typedef square_t (*dir_func_t)(square_t);
 
@@ -318,9 +318,9 @@ uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func);
 void num_moves(move* startp, move* endp, int* caps, int* noncaps);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif   
 
 #endif /* ! defined _MOVEGEN_INTERNAL_H_ */

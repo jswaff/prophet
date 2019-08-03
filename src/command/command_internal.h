@@ -3,11 +3,10 @@
 
 #include <prophet/command.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
-
+#endif  
 
 
 /**
@@ -85,9 +84,9 @@ int command_no_op(const char* input, int* exit_status);
 int command_perft(const char* input, int* exit_status);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _COMMAND_INTERNAL_H_ */

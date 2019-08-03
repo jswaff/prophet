@@ -3,10 +3,10 @@
 
 #include <prophet/command.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif   
 
 
 /**
@@ -55,9 +55,9 @@ int xboard_ping(const char* input, int* exit_status);
 int xboard_protover(const char* input, int* exit_status);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _COMMAND_INTERNAL_H_ */

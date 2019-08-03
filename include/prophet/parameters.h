@@ -1,20 +1,20 @@
 #ifndef _PARAMETERS_H_
 #define _PARAMETERS_H_
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 #ifdef   __GNUC__
 # define UNUSED(x) UNUSED_ ## x __attribute__((__unused__))
 #else
 # define UNUSED(X) UNUSED_ ## x
-#endif //__GNUC__
+#endif 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif    
 
 #endif /* ! defined _PARAMETERS_H_ */

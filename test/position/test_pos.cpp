@@ -57,21 +57,25 @@ TEST(pos_test, reset_pos)
     }
 
     // verify bitmaps
-    EXPECT_EQ(pos.white_pawns, squares_to_bitmap(A2, B2, C2, D2, E2, F2, G2, H2, NO_SQUARE));
+    EXPECT_EQ(pos.white_pawns, 
+        squares_to_bitmap(A2, B2, C2, D2, E2, F2, G2, H2, NO_SQUARE));
     EXPECT_EQ(pos.white_rooks, squares_to_bitmap(A1, H1, NO_SQUARE));
     EXPECT_EQ(pos.white_knights, squares_to_bitmap(B1, G1, NO_SQUARE));
     EXPECT_EQ(pos.white_bishops, squares_to_bitmap(C1, F1, NO_SQUARE));
     EXPECT_EQ(pos.white_queens, square_to_bitmap(D1));
-    EXPECT_EQ(pos.white_pieces, pos.white_pawns | pos.white_rooks | pos.white_knights | pos.white_bishops |
-        pos.white_queens | square_to_bitmap(pos.white_king));
+    EXPECT_EQ(pos.white_pieces, pos.white_pawns | pos.white_rooks | 
+        pos.white_knights | pos.white_bishops | pos.white_queens | 
+        square_to_bitmap(pos.white_king));
 
-    EXPECT_EQ(pos.black_pawns, squares_to_bitmap(A7, B7, C7, D7, E7, F7, G7, H7, NO_SQUARE));
+    EXPECT_EQ(pos.black_pawns, 
+        squares_to_bitmap(A7, B7, C7, D7, E7, F7, G7, H7, NO_SQUARE));
     EXPECT_EQ(pos.black_rooks, squares_to_bitmap(A8, H8, NO_SQUARE));
     EXPECT_EQ(pos.black_knights, squares_to_bitmap(B8, G8, NO_SQUARE));
     EXPECT_EQ(pos.black_bishops, squares_to_bitmap(C8, F8, NO_SQUARE));
     EXPECT_EQ(pos.black_queens, square_to_bitmap(D8));
-    EXPECT_EQ(pos.black_pieces, pos.black_pawns | pos.black_rooks | pos.black_knights | pos.black_bishops |
-        pos.black_queens | square_to_bitmap(pos.black_king));
+    EXPECT_EQ(pos.black_pieces, pos.black_pawns | pos.black_rooks | 
+        pos.black_knights | pos.black_bishops | pos.black_queens | 
+        square_to_bitmap(pos.black_king));
 
 
     // verify piece counts
@@ -98,8 +102,8 @@ TEST(pos_test, reset_pos)
     EXPECT_TRUE(verify_pos(&pos));
 }
 
-TEST(pos_test, set_pos) {
-
+TEST(pos_test, set_pos) 
+{
     position pos;
     ASSERT_TRUE(
         set_pos(&pos,"8/7p/5k2/5p2/p1p2P2/Pr1pPK2/1P1R3P/8 b - - 12 47"));
@@ -224,124 +228,11 @@ TEST(pos_test, set_pos) {
     EXPECT_TRUE(verify_pos(&pos2));
 }
 
-
-/*void test_is_empty_sq() {
+TEST(pos_test, is_empty_sq) 
+{
     position pos;
     reset_pos(&pos);
-    assert(is_empty_sq(&pos,D4));
-    assert(!is_empty_sq(&pos,D8));
-}*/
+    EXPECT_TRUE(is_empty_sq(&pos, D4));
+    EXPECT_TRUE(!is_empty_sq(&pos, D8));
+}
 
-/*void test_is_enemy_and_friendly_occupied() {
-    position pos;
-    reset_pos(&pos);
-    for (int32 sq=A8;sq <= H1; sq++) {
-        int32 piece = pos.piece[sq];
-
-        if (is_white_piece(piece)) {
-            assert(is_friendly_occupied(&pos,(square_t)sq,WHITE));
-            assert(!is_enemy_occupied(&pos,(square_t)sq,WHITE));
-        } else if (is_black_piece(piece)) {
-            assert(!is_friendly_occupied(&pos,(square_t)sq,WHITE));
-            assert(is_enemy_occupied(&pos,(square_t)sq,WHITE));
-        }
-    }
-
-    set_pos(&pos,"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
-    for (int32 sq=A8;sq <= H1; sq++) {
-        int32 piece = pos.piece[sq];
-
-        if (is_white_piece(piece)) {
-            assert(!is_friendly_occupied(&pos,(square_t)sq,BLACK));
-            assert(is_enemy_occupied(&pos,(square_t)sq,BLACK));
-        } else if (is_black_piece(piece)) {
-            assert(is_friendly_occupied(&pos,(square_t)sq,BLACK));
-            assert(!is_enemy_occupied(&pos,(square_t)sq,BLACK));
-        }
-    }
-}*/
-
-/*void test_flip_vertical() {
-    position pos;
-    position save_pos;
-
-    reset_pos(&pos);
-    memcpy(&save_pos,&pos,sizeof(position));
-    flip_board(&pos);
-    flip_board(&pos);
-    assert(equal_pos(&pos,&save_pos,true));
-
-    ///
-    set_pos(&pos,"7r/R6p/2K4P/5k1P/2p4n/5p2/8/8 w - - 0 1");
-    memcpy(&save_pos,&pos,sizeof(position));
-    flip_board(&pos);
-    flip_board(&pos);
-    assert(equal_pos(&pos,&save_pos,true));
-}*/
-
-/*void test_is_checkmate() {
-    position pos;
-
-    // Fool's mate!
-    set_pos(&pos,"rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq -");
-    assert(is_checkmate(&pos));
-
-    // Byrne vs Fischer
-    set_pos(&pos,"1Q6/5pk1/2p3p1/1p2N2p/1b5P/1bn5/2r3P1/2K5 w - -");
-    assert(is_checkmate(&pos));
-
-    // Simple mate with rook
-    set_pos(&pos,"3k2R1/8/3K4/8/8/8/8/8 b - -");
-    assert(is_checkmate(&pos));
-
-    // Starting position
-    reset_pos(&pos);
-    assert(!is_checkmate(&pos));
-
-    set_pos(&pos,"8/8/8/6K1/8/1Q6/p7/k7 b - -");
-    assert(!is_checkmate(&pos));
-}*/
-
-/*void test_is_stalemate() {
-    position pos;
-
-    // Burn vs Pilsbury, 1898
-    set_pos(&pos,"5k2/5P2/5K2/8/8/8/8/8 b - -");
-    assert(is_stalemate(&pos));
-
-    set_pos(&pos,"kb6/8/1K6/8/8/8/8/8 b - - ");
-    assert(!is_stalemate(&pos));
-    set_pos(&pos,"kb5R/8/1K6/8/8/8/8/8 b - - ");
-    assert(is_stalemate(&pos));
-
-    set_pos(&pos,"8/8/8/8/8/2K5/1R6/k7 b - -");
-    assert(is_stalemate(&pos));
-
-    set_pos(&pos,"8/8/8/6K1/8/1Q6/p7/k7 b - -");
-    assert(is_stalemate(&pos));
-
-    set_pos(&pos,"rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq -");
-    assert(!is_stalemate(&pos));
-}*/
-
-/*void test_is_zugzwang() {
-    position pos;
-    reset_pos(&pos);
-    assert(!is_zugzwang(&pos));
-
-    // just kings
-    set_pos(&pos,"7k/8/8/8/8/8/8/7K w - - ");
-    assert(is_zugzwang(&pos));
-
-    // single white bishop
-    set_pos(&pos,"7k/8/8/B7/8/8/8/7K b - - ");
-    assert(is_zugzwang(&pos));
-
-    // white pawn black knight
-    set_pos(&pos,"7k/8/8/n7/P7/8/8/7K b - - ");
-    assert(is_zugzwang(&pos));
-
-    // white rook black knight
-    set_pos(&pos,"7k/8/8/n7/R7/8/8/7K b - - ");
-    assert(!is_zugzwang(&pos));
-}*/

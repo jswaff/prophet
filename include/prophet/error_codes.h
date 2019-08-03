@@ -2,10 +2,10 @@
 #define _ERROR_CODES_H_
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 
 /**
@@ -60,9 +60,9 @@ extern "C" {
 #define P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED    0x0102
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _ERROR_CODES_H_ */

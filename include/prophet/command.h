@@ -2,10 +2,10 @@
 #define _COMMAND_H_
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 typedef struct user_command user_command_t;
 
@@ -28,9 +28,9 @@ struct user_command
 int command_loop();
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif   
 
 #endif /* ! defined _COMMAND_H_ */

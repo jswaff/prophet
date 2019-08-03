@@ -3,7 +3,7 @@
 
 #include <prophet/position/square.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
 #endif    //__cplusplus
@@ -50,7 +50,7 @@ char* sq_to_str(square_t sq);
 char* pos_to_str(const position* pos);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
 #endif    //__cplusplus

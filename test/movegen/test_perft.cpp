@@ -38,10 +38,10 @@ TEST(perft_test, ep_capture_checks_opponent)
 {
     EXPECT_EQ(
         test_case("8/8/1k6/2b5/2pP4/8/5K2/8 b - d3 0 1", 6), 
-        (uint64_t)1440467);
+            (uint64_t)1440467);
     EXPECT_EQ(
         test_case("8/5k2/8/2Pp4/2B5/1K6/8/8 w - d6 0 1", 6), 
-        (uint64_t)1440467);
+            (uint64_t)1440467);
 }
 
 TEST(perft_test, short_castle_gives_check)
@@ -64,20 +64,20 @@ TEST(perft_test, losing_castling_rights) // no pawns
 {
     EXPECT_EQ(
         test_case("r3k2r/1b4bq/8/8/8/8/7B/R3K2R w KQkq - 0 1", 4), 
-        (uint64_t)1274206);
+            (uint64_t)1274206);
     EXPECT_EQ(
         test_case("r3k2r/7b/8/8/8/8/1B4BQ/R3K2R b KQkq - 0 1", 4), 
-        (uint64_t)1274206);
+            (uint64_t)1274206);
 }
 
 TEST(perft_test, castling_prevented)
 {
     EXPECT_EQ(
         test_case("r3k2r/8/3Q4/8/8/5q2/8/R3K2R b KQkq - 0 1", 4), 
-        (uint64_t)1720476);
+            (uint64_t)1720476);
     EXPECT_EQ(
         test_case("r3k2r/8/5Q2/8/8/3q4/8/R3K2R w KQkq - 0 1", 4), 
-        (uint64_t)1720476);
+            (uint64_t)1720476);
 }
 
 TEST(perft_test, promote_out_of_check)
@@ -91,9 +91,11 @@ TEST(perft_test, promote_out_of_check)
 TEST(perft_test, discovered_check)
 {
     EXPECT_EQ(
-        test_case("8/8/1P2K3/8/2n5/1q6/8/5k2 b - - 0 1", 5), (uint64_t)1004658);
+        test_case("8/8/1P2K3/8/2n5/1q6/8/5k2 b - - 0 1", 5), 
+            (uint64_t)1004658);
     EXPECT_EQ(
-        test_case("5K2/8/1Q6/2N5/8/1p2k3/8/8 w - - 0 1", 5), (uint64_t)1004658);
+        test_case("5K2/8/1Q6/2N5/8/1p2k3/8/8 w - - 0 1", 5), 
+            (uint64_t)1004658);
 }
 
 TEST(perft_test, promote_to_give_check)
@@ -136,7 +138,8 @@ TEST(perft_test, perft_gauntlet)
 {
     EXPECT_EQ(
         test_case(
-            "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1", 3), 
+            "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1", 
+            3), 
         (uint64_t)97862);
     EXPECT_EQ(
         test_case(
@@ -144,7 +147,8 @@ TEST(perft_test, perft_gauntlet)
         (uint64_t)11030083L);
     EXPECT_EQ(
         test_case(
-            "r3k2r/Pppp1ppp/1b3nbN/nP6/BBP1P3/q4N2/Pp1P2PP/R2Q1RK1 w kq - 0 1", 5), 
+            "r3k2r/Pppp1ppp/1b3nbN/nP6/BBP1P3/q4N2/Pp1P2PP/R2Q1RK1 w kq - 0 1", 
+            5), 
         (uint64_t)15833292L);
     EXPECT_EQ(
         test_case(
@@ -152,7 +156,8 @@ TEST(perft_test, perft_gauntlet)
         (uint64_t)2103487);
     EXPECT_EQ(
         test_case(
-            "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10", 4),
+            "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10", 
+            4),
         (uint64_t)3894594L);
 }
 

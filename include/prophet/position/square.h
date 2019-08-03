@@ -4,12 +4,13 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
-enum square_t {
+enum square_t 
+{
     A8,B8,C8,D8,E8,F8,G8,H8,
     A7,B7,C7,D7,E7,F7,G7,H7,
     A6,B6,C6,D6,E6,F6,G6,H6,
@@ -283,9 +284,9 @@ bool is_dark_sq(square_t sq);
 bool is_diagonal(square_t sq1, square_t sq2);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _SQUARE_H_ */

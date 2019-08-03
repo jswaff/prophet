@@ -7,10 +7,10 @@
 #include <prophet/position/piece.h>
 #include <prophet/position/square.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 typedef uint64_t move;
 
@@ -35,7 +35,8 @@ move to_move(piece_t piece, square_t from, square_t to);
  *
  * \return - the move
  */
-move to_capture(piece_t piece, square_t from, square_t to, piece_t captured_piece);
+move to_capture(
+    piece_t piece, square_t from, square_t to, piece_t captured_piece);
 
 /**
  * \brief Set the promotion piece on an existing move.
@@ -167,9 +168,9 @@ void set_move_score(move* m, int32_t score);
 move clear_score(move mv);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _MOVE_H_ */

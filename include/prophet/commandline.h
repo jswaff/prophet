@@ -2,10 +2,10 @@
 #define _COMMANDLINE_H_
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 
 /**
@@ -19,9 +19,9 @@ extern "C" {
 int process_commandline_options(int argc, const char** argv);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _COMMANDLINE_H_ */

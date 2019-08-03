@@ -1,20 +1,19 @@
 #ifndef _ERROR_H_
 #define _ERROR_H_
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 /**
  * \brief Write an error message to stderr.
- *
  */
 void error(const char* format, ...);
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _ERROR_H_ */

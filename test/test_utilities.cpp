@@ -9,8 +9,10 @@
  */
 bool is_in_move_list(move mv, const move* start, const move* end)
 {
-    for (const move* mp=start; mp<end; mp++) {
-        if (clear_score(*mp) == clear_score(mv)) {
+    for (const move* mp=start; mp<end; mp++) 
+    {
+        if (clear_score(*mp) == clear_score(mv)) 
+        {
             return true;
         }
     }

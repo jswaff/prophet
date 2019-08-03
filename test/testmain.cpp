@@ -4,7 +4,8 @@
 
 using namespace std;
 
-extern "C" {
+extern "C" 
+{
     extern int init();
 }
 
@@ -15,15 +16,20 @@ GTEST_API_ int main(int argc, char* argv[])
 
     bool perft = false;
 
-    for (int i=1; i<argc; i++) {
-        if (!strcmp("perft", argv[i])) {
+    for (int i=1; i<argc; i++) 
+    {
+        if (!strcmp("perft", argv[i])) 
+        {
             perft = true;
         }
     }
 
-    if (perft) {
+    if (perft) 
+    {
         ::testing::GTEST_FLAG(filter) = "perft_test*";
-    } else {
+    } 
+    else 
+    {
         ::testing::GTEST_FLAG(filter) = "-perft_test*";
 
     }
