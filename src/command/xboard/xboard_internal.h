@@ -10,6 +10,21 @@ extern "C" {
 
 
 /**
+ * \brief Execute the xboard force command 
+ * 
+ * Set the engine to play neither color ("force mode"). Stop clocks. The engine
+ * should check that moves received in force mode are legal and made in the 
+ * proper turn, but should not think, ponder, or make moves of its own.
+ *
+ * \param input         The user entered input 
+ * \param exit_status   Pointer to receive exit status.  A non-zero 
+ *                      status indicates the program should exit.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int xboard_force(const char* input, int* exit_status);
+
+/**
  * \brief Execute the xboard new command 
  * 
  * Reset the board to the standard chess starting position. Set White on move. 

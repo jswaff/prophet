@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include <prophet/position/position.h>
 #include <prophet/command.h>
@@ -6,6 +7,7 @@
 #include <prophet/parameters.h>
 
 extern position gpos;
+extern bool force_mode;
 
 /**
  * \brief Execute the xboard new command 
@@ -23,11 +25,19 @@ extern position gpos;
  *
  * \returns 0 on successful execution, and non-zero on failure.
  */
-int xboard_new(const char* UNUSED(input), int* exit_status)
+int xboard_new(const char* input, int* exit_status)
 {
-    *exit_status = 0;
+    /* verify the command */
+    if (0 != strcmp("new", input))
+    {
+        return P4_ERROR_CMD_INCORRECT_COMMAND;
+    }
 
     reset_pos(&gpos);
+
+    force_mode = false;
+
+    *exit_status = 0;
 
     return 0;
 }

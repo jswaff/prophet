@@ -26,8 +26,6 @@ extern position gpos;
  */
 int command_perft(const char* input, int* exit_status)
 {
-    *exit_status = 0;
-
     int depth;
 
     /* advance the base command pointer past the "perft " substring */
@@ -45,6 +43,8 @@ int command_perft(const char* input, int* exit_status)
         printf("depth %d - nodes: %lu - rate: %lu kn/s\n", i, nodes,
             nodes / (elapsed+1)); // avoid div by 0 
     }
+
+    *exit_status = 0;
 
     return 0;
 }

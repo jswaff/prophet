@@ -28,6 +28,13 @@ extern "C" {
 #define P4_ERROR_CMD_PARSE_CMD_COPY                 0x0003
 
 
+/*
+ * \brief This error is thrown by any command handler when the handler
+ * was invoked with the incorrect command.  
+ * For example, if the "force" handler were invoked with "perft 3".
+ */
+#define P4_ERROR_CMD_INCORRECT_COMMAND              0x0004
+
 /**
  * \brief This error is thrown by command_perft() when the depth component
  * of the command is missing.

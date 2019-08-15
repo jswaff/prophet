@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
@@ -17,7 +18,17 @@
  */
 int xboard_protover(const char* input, int* exit_status)
 {
-    *exit_status = 0;
+    /* verify the command */
+    if (0 != strncmp("protover", input, 8))
+    {
+        return P4_ERROR_CMD_INCORRECT_COMMAND;
+    }
+
+    /* is the command long enough to contain an argument? */
+    if (strlen(input) < 10)
+    {
+        return P4_ERROR_CMD_XBOARD_PROTOVER_MISSING_N;   
+    }
 
     int n;
 
@@ -39,6 +50,8 @@ int xboard_protover(const char* input, int* exit_status)
         "edit=0 ics=0 level=0 name=0 nps=0 memory=1 playother=1 pause=0 "
         "resume=0 reuse=1 san=0 setboard=1 sigint=0 sigterm=0 smp=0 st=0 "
         "time=1 usermove=1 white=0 variants=\"normal\" done=1\n");
+
+    *exit_status = 0;
 
     return 0;
 }

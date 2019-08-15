@@ -21,10 +21,13 @@ extern position gpos;
  *
  * \returns 0 on successful execution, and non-zero on failure.
  */
-int command_db(const char* UNUSED(input), int* exit_status)
+int command_db(const char* input, int* exit_status)
 {
-    *exit_status = 0;
-
+    /* verify the command */
+    if (0 != strcmp("db", input))
+    {
+        return P4_ERROR_CMD_INCORRECT_COMMAND;
+    }
 
     char* buf = pos_to_str(&gpos);
     if (NULL == buf)
@@ -35,6 +38,8 @@ int command_db(const char* UNUSED(input), int* exit_status)
     printf("%s\n", buf);
 
     free(buf);
+
+    *exit_status = 0;
 
     return 0;
 }
