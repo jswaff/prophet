@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <string.h>
+
 #include <prophet/position/position.h>
 #include <prophet/error_codes.h>
 
@@ -19,18 +21,20 @@ TEST(xboard_test, xboard_new_incorrect_cmd)
 TEST(xboard_test, xboard_new)
 {
     // make sure the global position is not already in the initial position.
-    ASSERT_TRUE(set_pos(&gpos, "8/8/3bk3/8/8/2K3Q1/8/8 w - - 0 1"));
+    memset(&gpos, 0, sizeof(gpos));
 
     // and that we are in force mode
     xboard_force_mode = true;
 
-    int exit_status;
+    int exit_status = 1;
 
-    EXPECT_EQ(0, xboard_new("new", &exit_status));
+    ASSERT_EQ(0, xboard_new("new", &exit_status));
 
     // the global position should now be reset.
     position pos;
+    memset(&pos, 0, sizeof(pos));
     reset_pos(&pos);
+
     EXPECT_EQ(0, memcmp(&gpos, &pos, sizeof(position)));
 
     // we should not be in force mode

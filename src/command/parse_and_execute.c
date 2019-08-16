@@ -45,7 +45,6 @@ int parse_and_execute(const char* input, int* exit_status)
         printf("unable to execute command: %s\n", input);
     }
 
-
 cleanup_user_command:
     
     free(user_cmd->cmd);
