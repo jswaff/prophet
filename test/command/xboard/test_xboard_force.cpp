@@ -4,7 +4,7 @@
 
 #include "../../../src/command/xboard/xboard_internal.h"
 
-extern bool force_mode;
+extern bool xboard_force_mode;
 
 TEST(xboard_test, xboard_force_incorrect_cmd)
 {
@@ -17,11 +17,11 @@ TEST(xboard_test, xboard_force)
 {
     int exit_status;
 
-    force_mode = false;
+    xboard_force_mode = false;
 
     EXPECT_EQ(0, xboard_force("force", &exit_status));
 
-    EXPECT_TRUE(force_mode);
+    EXPECT_TRUE(xboard_force_mode);
 
     // the exit status should be "no".
     EXPECT_EQ(0, exit_status);

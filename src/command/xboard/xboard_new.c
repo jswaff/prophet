@@ -7,7 +7,7 @@
 #include <prophet/parameters.h>
 
 extern position gpos;
-extern bool force_mode;
+extern bool xboard_force_mode;
 
 /**
  * \brief Execute the xboard new command 
@@ -35,7 +35,7 @@ int xboard_new(const char* input, int* exit_status)
 
     reset_pos(&gpos);
 
-    force_mode = false;
+    xboard_force_mode = false;
 
     *exit_status = 0;
 

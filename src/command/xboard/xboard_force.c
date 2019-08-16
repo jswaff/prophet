@@ -5,7 +5,7 @@
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
 
-extern bool force_mode;
+extern bool xboard_force_mode;
 
 /**
  * \brief Execute the xboard force command 
@@ -30,7 +30,7 @@ int xboard_force(const char* input, int* exit_status)
 
     /* TODO: stop search */
     
-    force_mode = true;
+    xboard_force_mode = true;
 
     *exit_status = 0;
 
