@@ -25,6 +25,22 @@ extern "C" {
 int xboard_force(const char* input, int* exit_status);
 
 /**
+ * \brief Execute the xboard go command 
+ * 
+ * Leave force mode and set the engine to play the color that is on move. 
+ * Associate the engine's clock with the color that is on move, the opponent's 
+ * clock with the color that is not on move. Start the engine's clock. Start 
+ * thinking and eventually make a move.
+ *
+ * \param input         The user entered input 
+ * \param exit_status   Pointer to receive exit status.  A non-zero 
+ *                      status indicates the program should exit.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int xboard_go(const char* input, int* exit_status);
+
+/**
  * \brief Execute the xboard new command 
  * 
  * Reset the board to the standard chess starting position. Set White on move. 
