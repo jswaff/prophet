@@ -72,7 +72,7 @@ int command_no_op(const char* input, int* exit_status);
  * 
  * Command should be in the format "perft D", where D is depth.  The perft is
  * executed iteratively, starting with depth=1 and ending with depth=D.
- * The number of nodes and nodes-per-second are printed to stdin for each
+ * The number of nodes and nodes-per-second are printed to stdout for each
  * iteration.
  *
  * \param input         The user entered input

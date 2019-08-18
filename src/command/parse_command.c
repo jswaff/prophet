@@ -47,7 +47,7 @@ struct function_table_entry function_table[] = {
     {"rating", command_no_op},
     {"rejected", command_no_op},
     {"remove", command_no_op}, // 8
-    {"result", command_no_op}, // 4
+    {"result", xboard_result},
     {"sd", command_no_op},
     {"setboard", command_no_op}, // 6
     {"st", command_no_op},

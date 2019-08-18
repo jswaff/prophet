@@ -67,6 +67,18 @@ extern "C" {
 #define P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED    0x0102
 
 
+/**
+ * \brief This error is thrown by xboard_result() when the result is missing.
+ */
+#define P4_ERROR_CMD_XBOARD_RESULT_MISSING_RESULT   0x0103
+
+/**
+ * \brief This error is thrown by xboard_result() when the given result is 
+ * invalid.
+ */
+#define P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT   0x0104
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

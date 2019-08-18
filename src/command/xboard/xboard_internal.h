@@ -85,6 +85,17 @@ int xboard_ping(const char* input, int* exit_status);
  */
 int xboard_protover(const char* input, int* exit_status);
 
+/**
+ * \brief Execute the xboard result command 
+ * 
+ * \param input         The user entered input 
+ * \param exit_status   Pointer to receive exit status.  A non-zero 
+ *                      status indicates the program should exit.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int xboard_result(const char* input, int* exit_status);
+
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
