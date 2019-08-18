@@ -2,11 +2,27 @@
 #define _STRING_UTILS_H_
 
 #include <prophet/position/square.h>
+#include <prophet/position/position.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
 #endif    //__cplusplus
+
+/**
+ * \brief Convert a string to a move.
+ *
+ * The string should have length four, except for caslting moves, which should
+ * have a length of five.  SAN notation is not supported.  Proper formatting
+ * is two characters for the source square, followed by two characters for the
+ * destination square, followed by an optional promotion piece.
+ * Examples: e2e4, e7e8q, e1g1
+ *
+ * \param str_mv   The string to convert.
+ * 
+ * \return  The move if valid, or BADMOVE on failure.
+ */
+move str_to_move(const char* str_mv);
 
 /**
  * \brief Convert a string to a square.
@@ -19,7 +35,7 @@ extern "C" {
  *
  * \return  The square if valid, or NO_SQUARE on failure.
  */
-square_t str_to_sq(const char *str_sq);
+square_t str_to_sq(const char* str_sq);
 
 /**
  * \brief Convert a square to a string.

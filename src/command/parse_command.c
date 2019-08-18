@@ -53,7 +53,7 @@ struct function_table_entry function_table[] = {
     {"st", command_no_op},
     {"time", command_no_op},
     {"undo", command_no_op}, // 7
-    {"usermove", command_no_op}, // 5
+    {"usermove", xboard_usermove},
     {"variant", command_no_op},
     {"xboard", command_no_op},
     {"?", command_no_op},

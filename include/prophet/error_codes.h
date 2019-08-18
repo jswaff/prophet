@@ -79,6 +79,18 @@ extern "C" {
 #define P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT   0x0104
 
 
+/**
+ * \brief This error is thrown by xboard_usermove() when the move is missing.
+ */
+#define P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE   0x0105
+
+
+/**
+ * \brief This error is thrown by xboard_usermove() when the move is invalid.
+ */
+#define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE   0x0106
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

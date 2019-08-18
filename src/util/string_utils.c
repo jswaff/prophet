@@ -9,6 +9,24 @@
 #include <prophet/parameters.h>
 
 /**
+ * \brief Convert a string to a move.
+ *
+ * The string should have length four, except for caslting moves, which should
+ * have a length of five.  SAN notation is not supported.  Proper formatting
+ * is two characters for the source square, followed by two characters for the
+ * destination square, followed by an optional promotion piece.
+ * Examples: e2e4, e7e8q, e1g1
+ *
+ * \param str_mv   The string to convert.
+ * 
+ * \return  The move if valid, or BADMOVE on failure.
+ */
+move str_to_move(const char* UNUSED(str_mv))
+{
+    return BADMOVE;
+}
+
+/**
  * \brief Convert a string to a square.
  *
  * The string should have a length of two.  The first character should be a 
@@ -19,7 +37,7 @@
  *
  * \return  The square if valid, or NO_SQUARE on failure.
  */
-square_t str_to_sq(const char *str_sq)
+square_t str_to_sq(const char* str_sq)
 {
     if (strlen(str_sq) != 2) 
     {

@@ -96,6 +96,22 @@ int xboard_protover(const char* input, int* exit_status);
  */
 int xboard_result(const char* input, int* exit_status);
 
+/**
+ * \brief Execute the xboard usermove command 
+ * 
+ * If the move is illegal, print an error message; see the section "Commands 
+ * from the engine to xboard". If the move is legal and in turn, make it. If 
+ * not in force mode, stop the opponent's clock, start the engine's clock, 
+ * start thinking, and eventually make a move. 
+ *
+ * \param input         The user entered input 
+ * \param exit_status   Pointer to receive exit status.  A non-zero 
+ *                      status indicates the program should exit.
+ *
+ * \returns 0 on successful execution, and non-zero on failure.
+ */
+int xboard_usermove(const char* input, int* exit_status);
+
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
