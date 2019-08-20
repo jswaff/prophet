@@ -43,7 +43,7 @@ TEST(xboard_test, xboard_usermove_illegal_move)
         xboard_usermove("usermove e3e4", &exit_status));
 }
 
-TEST(xoard_test, xboard_usermove)
+TEST(xoard_test, DISABLED_xboard_usermove)
 {
     int exit_status;
 

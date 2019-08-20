@@ -1,7 +1,33 @@
 #include <gtest/gtest.h>
 
+#include <prophet/const.h>
 #include <prophet/position/position.h>
 #include <prophet/util/string_utils.h>
+
+TEST(string_utils_test, str_to_move)
+{
+    position pos;
+    reset_pos(&pos);
+
+    // legal moves from initial position
+    EXPECT_EQ(str_to_move("e2e4", &pos), to_move(PAWN, E2, E4));
+    EXPECT_EQ(str_to_move("b8a6", &pos), to_move(KNIGHT, B8, A6));
+
+    // no piece on source square
+    EXPECT_EQ(str_to_move("e3e4", &pos), BADMOVE);
+
+    // pawn promotions
+    set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
+    move mv = to_move(PAWN, A7, A8);
+    set_promopiece(&mv, QUEEN);
+    EXPECT_EQ(str_to_move("a7a8q", &pos), mv);
+
+    set_promopiece(&mv, ROOK);
+    EXPECT_EQ(str_to_move("a7a8r", &pos), mv);
+
+    // invalid move text
+    EXPECT_EQ(str_to_move("blah", &pos), BADMOVE);
+}
 
 TEST(string_utils_test, str_to_sq)
 {

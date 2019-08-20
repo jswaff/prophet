@@ -17,13 +17,73 @@
  * destination square, followed by an optional promotion piece.
  * Examples: e2e4, e7e8q, e1g1
  *
+ * Note, this routine does NOT validate move legality.
+ *
  * \param str_mv   The string to convert.
+ * \param pos      The chess position the move applies to.
  * 
  * \return  The move if valid, or BADMOVE on failure.
  */
-move str_to_move(const char* UNUSED(str_mv))
+move str_to_move(const char* str_mv, const position* pos)
 {
-    return BADMOVE;
+    /* sanity check the size of the string */
+    if (strlen(str_mv) < 4 || strlen(str_mv) > 5)
+    {
+        return BADMOVE;
+    }
+
+    /* convert the first two characters to the source square */
+    char str_sq1[3];
+    str_sq1[0] = str_mv[0];
+    str_sq1[1] = str_mv[1];
+    str_sq1[2] = 0;
+    square_t sq1 = str_to_sq(str_sq1);
+    if (NO_SQUARE == sq1)
+    {
+        return BADMOVE;
+    }
+
+    /* convert the next two characters to the destination square */
+    char str_sq2[3];
+    str_sq2[0] = str_mv[2];
+    str_sq2[1] = str_mv[3];
+    str_sq2[2] = 0;
+    square_t sq2 = str_to_sq(str_sq2);
+    if (NO_SQUARE == sq2)
+    {
+        return BADMOVE;
+    }
+
+    /* get the piece. */
+    piece_t mv_pc = abs(pos->piece[sq1]);
+    if (NO_PIECE == mv_pc)
+    {
+        return BADMOVE;
+    }
+
+    /* set the promotion piece, if there is one. */
+    piece_t promo_pc = NO_PIECE;
+    if (strlen(str_mv) == 5)
+    {
+        if (str_mv[4]=='q' || str_mv[4]=='Q')
+            promo_pc = QUEEN;
+        else if (str_mv[4]=='r' || str_mv[4]=='R')
+            promo_pc = ROOK;
+        else if (str_mv[4]=='b' || str_mv[4]=='B')
+            promo_pc = BISHOP;
+        else if (str_mv[4]=='n' || str_mv[4]=='N')
+            promo_pc = KNIGHT;
+        else return BADMOVE;
+    }
+
+    /* convert to a move and return */
+    move ret_mv = to_move(mv_pc, sq1, sq2);
+    if (NO_PIECE != promo_pc)
+    {
+        set_promopiece(&ret_mv, promo_pc);
+    }
+
+    return ret_mv;
 }
 
 /**

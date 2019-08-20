@@ -18,11 +18,14 @@ extern "C" {
  * destination square, followed by an optional promotion piece.
  * Examples: e2e4, e7e8q, e1g1
  *
+ * Note, this routine does NOT validate move legality.
+ *
  * \param str_mv   The string to convert.
+ * \param pos      The chess position the move applies to.
  * 
  * \return  The move if valid, or BADMOVE on failure.
  */
-move str_to_move(const char* str_mv);
+move str_to_move(const char* str_mv, const position* pos);
 
 /**
  * \brief Convert a string to a square.
