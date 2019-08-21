@@ -5,6 +5,7 @@
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
 #include <prophet/position/move.h>
+#include <prophet/util/legal.h>
 #include <prophet/util/string_utils.h>
 #include <prophet/parameters.h>
 
@@ -57,11 +58,21 @@ int xboard_usermove(const char* input, int* exit_status)
     }
 
     /* is the move legal? */
+    if (!is_legal_move(mv, &gpos))
+    {
+        return P4_ERROR_CMD_XBOARD_USERMOVE_ILLEGAL_MOVE;
+    }
 
-    /* TODO: apply move */
+    /* apply move */
+    undo u;
+    apply_move(&gpos, mv, &u);
 
-    /* TODO: if not in force mode, start thinking ... */
-  
+    /* if not in force mode, start thinking ... */
+    if (!xboard_force_mode)
+    {
+        /* TODO */
+    }
+
     *exit_status = 0;
 
     return 0;

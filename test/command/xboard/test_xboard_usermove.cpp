@@ -24,7 +24,7 @@ TEST(xboard_test, xboard_usermove_missing_move)
 
 }
 
-TEST(xboard_test, xboard_usermove_invalid_move)
+TEST(xboard_test, xboard_usermove_junk_move)
 {
     int exit_status;
 
@@ -33,7 +33,7 @@ TEST(xboard_test, xboard_usermove_invalid_move)
 
 }
 
-TEST(xboard_test, xboard_usermove_illegal_move)
+TEST(xboard_test, xboard_usermove_invalid_move)
 {
     int exit_status;
 
@@ -41,6 +41,16 @@ TEST(xboard_test, xboard_usermove_illegal_move)
 
     EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove e3e4", &exit_status));
+}
+
+TEST(xboard_test, xboard_usermove_illegal_move)
+{
+    int exit_status;
+
+    reset_pos(&gpos);
+
+    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_ILLEGAL_MOVE, 
+        xboard_usermove("usermove a7a5", &exit_status));
 }
 
 TEST(xoard_test, xboard_usermove)
