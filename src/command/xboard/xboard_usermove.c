@@ -44,17 +44,19 @@ int xboard_usermove(const char* input, int* exit_status)
 
     /* read the move */
     char str_mv[10];
-    if (1 != sscanf(input + 10, "%s", str_mv))
+    if (1 != sscanf(input + 9, "%s", str_mv))
     {
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE;
     }
 
-    /* attempt to parse the move */
-    move mv = str_to_move(str_mv);
+    /* parse the move */
+    move mv = str_to_move(str_mv, &gpos);
     if (BADMOVE == mv)
     {
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE;
     }
+
+    /* is the move legal? */
 
     /* TODO: apply move */
 
