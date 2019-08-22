@@ -23,7 +23,7 @@ extern "C" {
  * \param str_mv   The string to convert.
  * \param pos      The chess position the move applies to.
  * 
- * \return  The move if valid, or BADMOVE on failure.
+ * \return  The move if valid, or NO_MOVE on failure.
  */
 move str_to_move(const char* str_mv, const position* pos);
 

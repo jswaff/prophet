@@ -22,14 +22,14 @@
  * \param str_mv   The string to convert.
  * \param pos      The chess position the move applies to.
  * 
- * \return  The move if valid, or BADMOVE on failure.
+ * \return  The move if valid, or NO_MOVE on failure.
  */
 move str_to_move(const char* str_mv, const position* pos)
 {
     /* sanity check the size of the string */
     if (strlen(str_mv) < 4 || strlen(str_mv) > 5)
     {
-        return BADMOVE;
+        return NO_MOVE;
     }
 
     /* convert the first two characters to the source square */
@@ -40,7 +40,7 @@ move str_to_move(const char* str_mv, const position* pos)
     square_t sq1 = str_to_sq(str_sq1);
     if (NO_SQUARE == sq1)
     {
-        return BADMOVE;
+        return NO_MOVE;
     }
 
     /* convert the next two characters to the destination square */
@@ -51,14 +51,14 @@ move str_to_move(const char* str_mv, const position* pos)
     square_t sq2 = str_to_sq(str_sq2);
     if (NO_SQUARE == sq2)
     {
-        return BADMOVE;
+        return NO_MOVE;
     }
 
     /* get the piece. */
     piece_t mv_pc = abs(pos->piece[sq1]);
     if (NO_PIECE == mv_pc)
     {
-        return BADMOVE;
+        return NO_MOVE;
     }
 
     /* set the promotion piece, if there is one. */
@@ -73,7 +73,7 @@ move str_to_move(const char* str_mv, const position* pos)
             promo_pc = BISHOP;
         else if (str_mv[4]=='n' || str_mv[4]=='N')
             promo_pc = KNIGHT;
-        else return BADMOVE;
+        else return NO_MOVE;
     }
 
     /* convert to a move and return */

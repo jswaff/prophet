@@ -5,7 +5,7 @@
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
 
-extern bool xboard_force_mode;
+bool xboard_force_mode;
 
 /**
  * \brief Execute the xboard force command 

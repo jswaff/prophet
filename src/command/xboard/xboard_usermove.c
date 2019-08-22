@@ -52,7 +52,7 @@ int xboard_usermove(const char* input, int* exit_status)
 
     /* parse the move */
     move mv = str_to_move(str_mv, &gpos);
-    if (BADMOVE == mv)
+    if (NO_MOVE == mv)
     {
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE;
     }

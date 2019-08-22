@@ -5,7 +5,7 @@
 #include <prophet/util/legal.h>
 
 /**
- * Test that the test utility function to measure hamming distances is correct.
+ * Basic test of is_legal_move.
  */
 TEST(legal_test, is_legal_move_test)
 {

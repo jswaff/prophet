@@ -14,7 +14,7 @@ TEST(string_utils_test, str_to_move)
     EXPECT_EQ(str_to_move("b8a6", &pos), to_move(KNIGHT, B8, A6));
 
     // no piece on source square
-    EXPECT_EQ(str_to_move("e3e4", &pos), BADMOVE);
+    EXPECT_EQ(str_to_move("e3e4", &pos), NO_MOVE);
 
     // pawn promotions
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
@@ -26,7 +26,7 @@ TEST(string_utils_test, str_to_move)
     EXPECT_EQ(str_to_move("a7a8r", &pos), mv);
 
     // invalid move text
-    EXPECT_EQ(str_to_move("blah", &pos), BADMOVE);
+    EXPECT_EQ(str_to_move("blah", &pos), NO_MOVE);
 }
 
 TEST(string_utils_test, str_to_sq)

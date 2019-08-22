@@ -20,7 +20,7 @@ extern "C" {
 #define INF                        200000
 #define CHECKMATE                   65535
 #define DRAWSCORE                       0
-#define BADMOVE                         0U
+#define NO_MOVE                         0U
 
 
 /* make this header C++ friendly. */

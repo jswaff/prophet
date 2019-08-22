@@ -58,7 +58,7 @@ move* gen_pseudo_legal_moves(move* m, const position* p, bool caps, bool noncaps
  * A complete list of strictly legal moves.
  *
  * It is assumed that the move stack contains enough storage for all 
- * (pseudo-legal) moves generated.  The move list will contain BADMOVE for 
+ * (pseudo-legal) moves generated.  The move list will contain NO_MOVE for 
  * pseudo-legal moves that were analyzed and found to be illegal.
  *
  * Note this method is significantly slower than generating pseudo-legal moves!

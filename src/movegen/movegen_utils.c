@@ -99,7 +99,7 @@ uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func)
  * \brief Count the number of capture and non-capture moves
  *
  * The memory range is iterated, beginning with \p startp and ending with 
- * \p endp - 1. Some slots may contain an invalid move (BADMOVE).  These 
+ * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
  * "moves" are not counted.
  *
  * \param startp        The starting address of a list of moves (inclusive)
