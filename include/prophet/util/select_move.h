@@ -17,6 +17,8 @@ extern "C" {
  * Select a legal move from the given position.  If there are no legal moves,
  * NO_MOVE is returned.
  *
+ * This is a temporary implementation that just chooses a move at random.
+ *
  * \param pos           A pointer to the chess position.
  *
  * \returns a move to play, or NO_MOVE if there isn't one.

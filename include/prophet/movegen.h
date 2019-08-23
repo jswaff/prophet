@@ -73,6 +73,22 @@ move* gen_pseudo_legal_moves(move* m, const position* p, bool caps, bool noncaps
 move* gen_legal_moves(move* m, const position* p, bool caps, bool noncaps);
 
 /**
+ * \brief Count the number of capture and non-capture moves
+ *
+ * The memory range is iterated, beginning with \p startp and ending with 
+ * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
+ * "moves" are not counted.
+ *
+ * \param startp        The starting address of a list of moves (inclusive)
+ * \param endp          The ending address of a list of moves (exclusive)
+ * \param caps          A pointer to an integer to receive the number of 
+ *                      captures
+ * \param noncaps       A pointer to an integer to receive the number of 
+ *                      noncaptures
+ */
+void num_moves(move* startp, move* endp, int* caps, int* noncaps);
+
+/**
  * \brief Count all possible moves to a fixed depth.
  *
  * The term 'perft' was first introduced by Bob Hyatt of Cray Blitz and Crafty 

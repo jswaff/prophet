@@ -301,23 +301,6 @@ uint64_t get_target_squares(const position* p, bool caps, bool noncaps);
 uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func);
 
 
-/**
- * \brief Count the number of capture and non-capture moves
- *
- * The memory range is iterated, beginning with \p startp and ending with 
- * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
- * "moves" are not counted.
- *
- * \param startp        The starting address of a list of moves (inclusive)
- * \param endp          The ending address of a list of moves (exclusive)
- * \param caps          A pointer to an integer to receive the number of 
- *                      captures
- * \param noncaps       A pointer to an integer to receive the number of 
- *                      noncaptures
- */
-void num_moves(move* startp, move* endp, int* caps, int* noncaps);
-
-
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

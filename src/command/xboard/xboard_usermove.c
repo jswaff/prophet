@@ -6,6 +6,7 @@
 #include <prophet/error_codes.h>
 #include <prophet/position/move.h>
 #include <prophet/util/legal.h>
+#include <prophet/util/select_move.h>
 #include <prophet/util/string_utils.h>
 #include <prophet/parameters.h>
 
@@ -67,10 +68,13 @@ int xboard_usermove(const char* input, int* exit_status)
     undo u;
     apply_move(&gpos, mv, &u);
 
+    /* TODO: if the game is over by rule, print the result */
+
     /* if not in force mode, start thinking ... */
     if (!xboard_force_mode)
     {
-        /* TODO */
+        //move engine_mv = select(&gpos);
+        /* TODO: print "move MOVE" */
     }
 
     *exit_status = 0;

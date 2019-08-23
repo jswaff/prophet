@@ -4,6 +4,8 @@
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
+#include <prophet/util/select_move.h>
+
 
 extern bool xboard_force_mode;
 
@@ -31,7 +33,8 @@ int xboard_go(const char* input, int* exit_status)
 
     xboard_force_mode = false;
 
-    /* TODO: start search */
+//    move engine_mv = select(&gpos);
+    /* TODO: print "move MOVE" */
 
     *exit_status = 0;
 
