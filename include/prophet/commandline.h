@@ -14,7 +14,7 @@ extern "C" {
  * \param argc          Number of arguments.
  * \param argv          List of arguments.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int process_commandline_options(int argc, const char** argv);
 

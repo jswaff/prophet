@@ -14,7 +14,7 @@
  * Repeatedly reads, parses, and executes user commands until a command sets
  * the exit status flag.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int command_loop()
 {

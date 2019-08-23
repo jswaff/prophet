@@ -20,7 +20,7 @@ extern "C" {
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int xboard_force(const char* input, int* exit_status);
 
@@ -36,7 +36,7 @@ int xboard_force(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int xboard_go(const char* input, int* exit_status);
 
@@ -54,7 +54,7 @@ int xboard_go(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int xboard_new(const char* input, int* exit_status);
 
@@ -68,7 +68,7 @@ int xboard_new(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int xboard_ping(const char* input, int* exit_status);
 
@@ -81,7 +81,7 @@ int xboard_ping(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int xboard_protover(const char* input, int* exit_status);
 
@@ -92,7 +92,7 @@ int xboard_protover(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int xboard_result(const char* input, int* exit_status);
 
@@ -108,7 +108,7 @@ int xboard_result(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int xboard_usermove(const char* input, int* exit_status);
 

@@ -75,7 +75,7 @@ struct function_table_entry function_table[] = {
  * \param cmd           Pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int parse_command(user_command_t* cmd, const char* input)
 {

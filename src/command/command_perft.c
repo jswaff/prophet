@@ -22,7 +22,7 @@ extern position gpos;
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int command_perft(const char* input, int* exit_status)
 {

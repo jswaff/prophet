@@ -10,7 +10,7 @@ extern int init();
  * \param argc          Number of arguments.
  * \param argv          List of arguments.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int main(int argc, const char** argv)
 {

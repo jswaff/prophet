@@ -17,7 +17,7 @@ static bool is_in_move_list(move mv, const move* start, const move* end);
  * \param mv            The move to test.
  * \param pos           A pointer to the chess position.
  *
- * \returns true if legal, otherwise false.
+ * \return true if legal, otherwise false.
  */
 bool is_legal_move(move mv, const position* pos)
 {

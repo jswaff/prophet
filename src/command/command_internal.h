@@ -16,7 +16,7 @@ extern "C" {
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int parse_and_execute(const char* input, int* exit_status);
 
@@ -27,7 +27,7 @@ int parse_and_execute(const char* input, int* exit_status);
  * \param cmd           Pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int parse_command(user_command_t* user_cmd, const char* input);
 
@@ -40,7 +40,7 @@ int parse_command(user_command_t* user_cmd, const char* input);
  * \param exit_status   Pointer to receive exit status.  A non-zero
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int command_db(const char* input, int* exit_status);
 
@@ -51,7 +51,7 @@ int command_db(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int command_exit(const char* input, int* exit_status);
 
@@ -62,7 +62,7 @@ int command_exit(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int command_no_op(const char* input, int* exit_status);
 
@@ -79,7 +79,7 @@ int command_no_op(const char* input, int* exit_status);
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure.
  */
 int command_perft(const char* input, int* exit_status);
 

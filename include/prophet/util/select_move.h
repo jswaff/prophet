@@ -21,7 +21,7 @@ extern "C" {
  *
  * \param pos           A pointer to the chess position.
  *
- * \returns a move to play, or NO_MOVE if there isn't one.
+ * \return  a move to play, or NO_MOVE if there isn't one.
  */
 move select_move(const position* pos);
 

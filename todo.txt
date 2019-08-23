@@ -1,0 +1,20 @@
+put legal in movegenutils
+
+str_to_move doesn't correctly handle captures, castling moves, ep
+
+put movelist_contains in movegen_utils
+
+reorg - not sure some methods in movegenutils should be there.
+maybe a private utils.
+
+warnings
+does exit need to be a param?
+
+order of imports
+minimal and complete
+
+reported error
+
+lack of mating material
+
+how to further test xboard_usermove / xboard_go ?
