@@ -42,7 +42,8 @@ int parse_and_execute(const char* input, int* exit_status)
     /* execute the command */
     if (0 != user_cmd->cmd_func(input, exit_status))
     {
-        printf("unable to execute command: %s\n", input);
+        /* TODO: more descriptive reasons */
+        printf("Error (unknown command): %s\n", input);
     }
 
 cleanup_user_command:

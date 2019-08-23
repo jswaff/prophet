@@ -1,14 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <prophet/command.h>
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
+#include <prophet/movegen.h>
+#include <prophet/parameters.h>
 #include <prophet/position/move.h>
 #include <prophet/util/legal.h>
 #include <prophet/util/select_move.h>
 #include <prophet/util/string_utils.h>
-#include <prophet/parameters.h>
 
 extern position gpos;
 extern bool xboard_force_mode;
@@ -68,13 +70,31 @@ int xboard_usermove(const char* input, int* exit_status)
     undo u;
     apply_move(&gpos, mv, &u);
 
-    /* TODO: if the game is over by rule, print the result */
-
-    /* if not in force mode, start thinking ... */
-    if (!xboard_force_mode)
+    /* if the game is over by rule, print the result */
+    if (is_checkmate(&gpos)) 
     {
-        //move engine_mv = select(&gpos);
-        /* TODO: print "move MOVE" */
+        if (gpos.player == WHITE)
+        {
+            printf("0-1 {Black mates}\n");
+        }
+        else
+        {
+            printf("1-0 {White mates}\n");
+        }
+    }
+    else if (is_stalemate(&gpos))
+    {
+        printf("1/2-1/2 {Stalemate}\n");
+    }
+    /* TODO: draw by lack of mating material */
+    else if (!xboard_force_mode)
+    {
+        /* the game continues.  start thinking and (eventually) make a move. */
+        move engine_mv = select_move(&gpos);
+        apply_move(&gpos, engine_mv, &u);
+        char* str_engine_mv = move_to_str(engine_mv);
+        printf("move %s\n", str_engine_mv);
+        free(str_engine_mv);
     }
 
     *exit_status = 0;

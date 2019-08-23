@@ -73,7 +73,18 @@ move* gen_pseudo_legal_moves(move* m, const position* p, bool caps, bool noncaps
 move* gen_legal_moves(move* m, const position* p, bool caps, bool noncaps);
 
 /**
- * \brief Count the number of capture and non-capture moves
+ * \brief Count the number of legal moves possible in a position.
+ *
+ * \param pos           A chess position
+ * \param caps          Whether to include captures in the count
+ * \param noncaps       Whether to include noncaptures in the count
+ *
+ * \return - The number of legal moves.
+ */
+uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps);
+
+/**
+ * \brief Count the number of capture and non-capture moves in a list.
  *
  * The memory range is iterated, beginning with \p startp and ending with 
  * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
@@ -86,7 +97,27 @@ move* gen_legal_moves(move* m, const position* p, bool caps, bool noncaps);
  * \param noncaps       A pointer to an integer to receive the number of 
  *                      noncaptures
  */
-void num_moves(move* startp, move* endp, int* caps, int* noncaps);
+void num_moves_in_list(
+    const move* startp, const move* endp, int* caps, int* noncaps);
+
+/**
+ * \brief Has the current player been checkmated?
+ *
+ * \param pos           The chess position
+ *
+ * \return - true if the player has been checkmated, otherwise false.
+ */
+bool is_checkmate(const position* pos);
+
+/**
+ * \brief Has the current player been stalemated?
+ *
+ * \param pos           The chess position
+ *
+ * \return - true if the player has been stalemated, otherwise false.
+ */
+bool is_stalemate(const position* pos);
+
 
 /**
  * \brief Count all possible moves to a fixed depth.

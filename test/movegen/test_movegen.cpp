@@ -29,7 +29,7 @@ TEST(movegen_test, gen_legal_moves)
 
     mp = gen_legal_moves(moves, &pos, true, true);
     int caps; int noncaps;
-    num_moves(moves, mp, &caps, &noncaps);
+    num_moves_in_list(moves, mp, &caps, &noncaps);
     EXPECT_EQ(caps, 0);
     EXPECT_EQ(noncaps, 4);
 

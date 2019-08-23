@@ -39,7 +39,7 @@ uint64_t perft(position* pos, uint32_t depth)
     if (depth == 1) 
     {
         int caps; int noncaps;
-        num_moves(moves, endp, &caps, &noncaps);
+        num_moves_in_list(moves, endp, &caps, &noncaps);
         return caps + noncaps;
     }
 

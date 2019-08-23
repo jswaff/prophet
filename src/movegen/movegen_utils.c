@@ -1,6 +1,9 @@
 #include <assert.h>
 #include <stdint.h>
 
+#include <prophet/const.h>
+#include <prophet/parameters.h>
+
 #include "movegen_internal.h"
 
 /**
@@ -96,7 +99,32 @@ uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func)
 }
 
 /**
- * \brief Count the number of capture and non-capture moves
+ * \brief Count the number of legal moves possible in a position.
+ *
+ * \param pos           A chess position
+ * \param caps          Whether to include captures in the count
+ * \param noncaps       Whether to include noncaptures in the count
+ *
+ * \return - The number of legal moves.
+ */
+uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps)
+{
+    move moves[MAX_MOVES_PER_PLY];
+    move *endp = gen_legal_moves(moves, pos, caps, noncaps);
+
+    /* count the number of moves to choose from */
+    int num_caps, num_noncaps;
+    num_moves_in_list(moves, endp, &num_caps, &num_noncaps);
+
+    uint32_t nmoves = 0;
+    if (caps) nmoves += num_caps;
+    if (noncaps) nmoves += num_noncaps;
+
+    return nmoves;
+}
+
+/**
+ * \brief Count the number of capture and non-capture moves in a list.
  *
  * The memory range is iterated, beginning with \p startp and ending with 
  * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
@@ -109,11 +137,12 @@ uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func)
  * \param noncaps       A pointer to an integer to receive the number of 
  *                      noncaptures
  */
-void num_moves(move* startp, move* endp, int* caps, int* noncaps)
+void num_moves_in_list(
+    const move* startp, const move* endp, int* caps, int* noncaps)
 {
     *caps = 0; *noncaps = 0;
 
-    for (move* mp=startp; mp<endp; mp++) 
+    for (const move* mp=startp; mp<endp; mp++) 
     {
         if (*mp != 0) 
         {
@@ -132,8 +161,8 @@ void num_moves(move* startp, move* endp, int* caps, int* noncaps)
 /**
  * \brief Given position \p pos, is \p player in check?
  *
- * \param pos       The chess position
- * \param player    A player (white or black)
+ * \param pos           The chess position
+ * \param player        A player (white or black)
  *
  * \return - true if the player is in check, otherwise false.
  */
@@ -142,5 +171,41 @@ bool in_check(const position* pos, color_t player)
     square_t king_sq = player==WHITE ? pos->white_king : pos->black_king;
 
     return attacked(pos, king_sq, opposite_player(player));
+}
+
+
+/**
+ * \brief Has the current player been checkmated?
+ *
+ * \param pos           The chess position
+ *
+ * \return - true if the player has been checkmated, otherwise false.
+ */
+bool is_checkmate(const position* pos)
+{
+    if (in_check(pos, pos->player))
+    {
+        return num_legal_moves(pos, true, true) == 0;
+    } 
+
+    return false;
+}
+
+
+/**
+ * \brief Has the current player been stalemated?
+ *
+ * \param pos           The chess position
+ *
+ * \return - true if the player has been stalemated, otherwise false.
+ */
+bool is_stalemate(const position* pos)
+{
+    if (!in_check(pos, pos->player))
+    {
+        return num_legal_moves(pos, true, true) == 0;
+    } 
+
+    return false;
 }
 

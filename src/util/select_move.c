@@ -28,7 +28,7 @@ move select_move(const position* pos)
 
     /* count the number of moves to choose from */
     int num_caps, num_noncaps;
-    num_moves(moves, endp, &num_caps, &num_noncaps);
+    num_moves_in_list(moves, endp, &num_caps, &num_noncaps);
     int num_moves = num_caps + num_noncaps;
 
     if (num_moves == 0)
