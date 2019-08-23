@@ -132,10 +132,61 @@ square_t str_to_sq(const char* str_sq)
     return (square_t)sq;
 }
 
+
+/**
+ * \brief Convert a move to a string.
+ *
+ * Returns a pointer to a null-terminated byte string.  The returned pointer
+ * must be passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param mv        The move to convert
+ *
+ * \return A null terminated byte string.
+ */
+char* move_to_str(move mv)
+{
+    if (NO_MOVE == mv)
+    {
+        return NULL;
+    }
+
+    piece_t promo = get_promopiece(mv);
+    size_t str_mv_sz = (promo==NO_PIECE ? 5 : 6) * sizeof(char);
+
+    char* buf = (char*)malloc(str_mv_sz);
+
+    square_t from = get_from_sq(mv);
+    buf[0] = 'a' + get_file(from);
+    buf[1] = '0' + (8 - get_rank(from));
+
+    square_t to = get_to_sq(mv);
+    buf[2] = 'a' + get_file(to);
+    buf[3] = '0' + (8 - get_rank(to));
+
+    switch(promo)
+    {
+        case QUEEN:
+            buf[4] = 'q'; buf[5] = 0; break;
+        case ROOK:
+            buf[4] = 'r'; buf[5] = 0; break;
+        case BISHOP:
+            buf[4] = 'b'; buf[5] = 0; break;
+        case KNIGHT:
+            buf[4] = 'n'; buf[5] = 0; break;
+        default:
+            buf[4] = 0; break;
+    }
+
+    return buf;
+}
+
+
 /**
  * \brief Convert a square to a string.
  *
- * Returns a pointer to a null-terminated byte string.  The returned  pointer
+ * Returns a pointer to a null-terminated byte string.  The returned pointer
  * must be passed to free to avoid a memory leak.
  *
  * If an error occurs, a null pointer is returned.

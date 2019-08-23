@@ -37,6 +37,24 @@ TEST(string_utils_test, str_to_sq)
     EXPECT_EQ(str_to_sq("C5"), C5);
 }
 
+TEST(string_utils_test, mv_to_str)
+{
+    char* buf = move_to_str(to_move(PAWN, E2, E4));
+    EXPECT_NE(nullptr, buf);
+    EXPECT_EQ(strcmp(buf, "e2e4"), 0);
+    free(buf);
+
+    EXPECT_EQ(nullptr, move_to_str(NO_MOVE));
+
+    // promotion
+    move mv = to_move(PAWN, A7, A8);
+    set_promopiece(&mv, BISHOP);
+    buf = move_to_str(mv);
+    EXPECT_EQ(strcmp(buf, "a7a8b"), 0);
+    free(buf);
+}
+
+
 TEST(string_utils_test, sq_to_str)
 {
     char* buf = sq_to_str(E3);

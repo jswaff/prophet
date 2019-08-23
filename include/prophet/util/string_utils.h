@@ -41,9 +41,23 @@ move str_to_move(const char* str_mv, const position* pos);
 square_t str_to_sq(const char* str_sq);
 
 /**
+ * \brief Convert a move to a string.
+ *
+ * Returns a pointer to a null-terminated byte string.  The returned pointer
+ * must be passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param mv        The move to convert
+ *
+ * \return A null terminated byte string.
+ */
+char* move_to_str(move mv);
+
+/**
  * \brief Convert a square to a string.
  *
- * Returns a pointer to a null-terminated byte string.  The returned  pointer
+ * Returns a pointer to a null-terminated byte string.  The returned pointer
  * must be passed to free to avoid a memory leak.
  *
  * If an error occurs, a null pointer is returned.
