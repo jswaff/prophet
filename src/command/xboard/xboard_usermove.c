@@ -57,7 +57,7 @@ int xboard_usermove(const char* input)
     }
 
     /* apply move */
-    undo u;
+    undo_t u;
     apply_move(&gpos, mv, &u);
 
     /* if the game is over by rule, print the result */
@@ -84,6 +84,7 @@ int xboard_usermove(const char* input)
     {
         printf("1/2-1/2 {50 move rule}\n");   
     }
+    /* TODO: draw by rep */
     else if (!xboard_force_mode)
     {
         /* the game continues.  start thinking and (eventually) make a move.

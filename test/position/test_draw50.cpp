@@ -13,7 +13,7 @@ TEST(pos_test, draw_50)
     // move knights out and back in 25 times.  that will take the 50 move
     // counter to 25 x 4 = 100.  Only on the last move should the draw be
     // claimed.
-    undo u;
+    undo_t u;
     for (int i=0; i<25; i++)
     {
         apply_move(&pos, to_move(KNIGHT, G1, F3), &u);

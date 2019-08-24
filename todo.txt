@@ -1,5 +1,3 @@
-position_t
-
 how to further test xboard_usermove / xboard_go ?
 
 setboard
@@ -8,4 +6,4 @@ undo
 
 remove
 
-
+draw by rep

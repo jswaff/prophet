@@ -55,7 +55,7 @@ TEST(pos_test, build_hash_key_ep)
     uint64_t orig_key = build_hash_key(&pos);
 
     // move to E4
-    undo my_undo;
+    undo_t my_undo;
     apply_move(&pos, to_move(PAWN, E2, E4), &my_undo);
     uint64_t key1 = build_hash_key(&pos);
     EXPECT_NE(key1, orig_key);

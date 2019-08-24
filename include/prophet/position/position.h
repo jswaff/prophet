@@ -54,7 +54,7 @@ typedef struct
     uint64_t pawn_key;
 } position;
 
-typedef struct 
+typedef struct  
 {
     move_t mv;
     uint64_t hash_key;
@@ -62,7 +62,7 @@ typedef struct
     square_t ep_sq;
     uint32_t fifty_counter;
     uint32_t castling_rights;
-} undo;
+} undo_t;
 
 /**
  * \brief Reset a chess position to the initial position.
@@ -129,7 +129,7 @@ bool set_pos(position* pos, const char* fen);
  * \param u             a pointer to an undo structure to receive the undo 
  *                      information
  */
-void apply_move(position* pos, move_t m, undo* u);
+void apply_move(position* pos, move_t m, undo_t* u);
 
 
 /**
@@ -141,7 +141,7 @@ void apply_move(position* pos, move_t m, undo* u);
  * \param pos           a pointer to a chess position
  * \param u             a pointer to the undo information
  */
-void undo_move(position* pos, const undo* u);
+void undo_move(position* pos, const undo_t* u);
 
 
 static inline bool can_castle_wk(const position* pos) 

@@ -22,7 +22,7 @@ static void remove_rook_castling_availability(position *p, square_t sq);
  * \param u             a pointer to an undo structure to receive the undo 
  *                      information
  */
-void apply_move(position* pos, move_t m, undo* u)
+void apply_move(position* pos, move_t m, undo_t* u)
 {
     assert(pos);
     assert(clear_score(m));

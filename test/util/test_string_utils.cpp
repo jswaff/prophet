@@ -21,7 +21,7 @@ TEST(string_utils_test, str_to_move)
     // no piece on source square
     EXPECT_EQ(str_to_move("e3e4", &pos), NO_MOVE);
 
-    undo u;
+    undo_t u;
     apply_move(&pos, to_move(PAWN, E2, E4), &u);
 
     EXPECT_EQ(str_to_move("g8f6", &pos), to_move(KNIGHT, G8, F6));

@@ -6,7 +6,7 @@ TEST(pos_test, apply_move_sequence1)
 {
     position pos1;
     reset_pos(&pos1);
-    undo u;
+    undo_t u;
 
     move_t mv = to_move(PAWN, E2, E4);
     apply_move(&pos1, mv, &u);
@@ -116,7 +116,7 @@ TEST(pos_test, apply_move_sequence2)
 {
     position pos;
     set_pos(&pos,"r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
-    undo u;
+    undo_t u;
 
     EXPECT_TRUE(can_castle_wk(&pos));
     EXPECT_TRUE(can_castle_wq(&pos));

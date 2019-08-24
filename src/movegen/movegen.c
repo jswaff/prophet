@@ -61,7 +61,7 @@ move_t* gen_legal_moves(move_t* m, const position* p, bool caps, bool noncaps)
     memcpy(&cp, p, sizeof(position));
 
     move_t* endp = gen_pseudo_legal_moves(m, &cp, caps, noncaps);
-    undo u;
+    undo_t u;
 
     for (move_t* mp=m; mp<endp; mp++) 
     {

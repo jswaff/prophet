@@ -29,7 +29,7 @@ uint64_t perft(position* pos, uint32_t depth)
 {
     uint64_t nodes=0;
     move_t moves[MAX_MOVES_PER_PLY];
-    undo u;
+    undo_t u;
 
     move_t* endp = gen_legal_moves(moves, pos, true, true);
 

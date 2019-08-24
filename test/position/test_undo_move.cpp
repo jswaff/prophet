@@ -6,7 +6,7 @@ TEST(pos_test, undo_double_pawn_push)
 {
     position pos;
     reset_pos(&pos);
-    undo u;
+    undo_t u;
 
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));
@@ -22,7 +22,7 @@ TEST(pos_test, undo_capturing_promotion)
 {
     position pos;
     set_pos(&pos,"r7/1PK5/8/8/k7/8/8/8 w - -");
-    undo u;
+    undo_t u;
 
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));
@@ -39,7 +39,7 @@ TEST(pos_test, undo_ep)
 {
     position pos;
     set_pos(&pos,"k7/8/8/8/pP6/8/K7/8 b - b3");
-    undo u;
+    undo_t u;
 
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));
@@ -56,7 +56,7 @@ TEST(pos_test, undo_castle)
 {
     position pos;
     set_pos(&pos,"k7/8/8/8/8/8/8/4K2R w K -");
-    undo u;
+    undo_t u;
 
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));

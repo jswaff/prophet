@@ -12,7 +12,7 @@
  * \param pos           a pointer to a chess position
  * \param u             a pointer to the undo information
  */
-void undo_move(position* p, const undo* u)
+void undo_move(position* p, const undo_t* u)
 {
     assert(p);
     assert(p->move_counter > 0);

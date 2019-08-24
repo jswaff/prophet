@@ -36,7 +36,7 @@ int xboard_go(const char* input)
     /* start thinking and eventually make a move.  In this implementation we
      * move immediately. */
     move_t engine_mv = select_move(&gpos);
-    undo u;
+    undo_t u;
     apply_move(&gpos, engine_mv, &u);
     char* str_engine_mv = move_to_str(engine_mv);
     printf("move %s\n", str_engine_mv);
