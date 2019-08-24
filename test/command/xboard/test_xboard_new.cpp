@@ -11,9 +11,7 @@ extern bool xboard_force_mode;
 
 TEST(xboard_test, xboard_new_incorrect_cmd)
 {
-    int exit_status;
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, 
-        xboard_new("bla", &exit_status));
+    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_new("bla"));
 }
 
 TEST(xboard_test, xboard_new)
@@ -24,9 +22,7 @@ TEST(xboard_test, xboard_new)
     // and that we are in force mode
     xboard_force_mode = true;
 
-    int exit_status = 1;
-
-    ASSERT_EQ(0, xboard_new("new", &exit_status));
+    ASSERT_EQ(0, xboard_new("new"));
 
     // the global position should now be reset.
     position pos;
@@ -37,7 +33,4 @@ TEST(xboard_test, xboard_new)
 
     // we should not be in force mode
     EXPECT_FALSE(xboard_force_mode);
-
-    // the exit status should be "no".
-    EXPECT_EQ(0, exit_status);
 }

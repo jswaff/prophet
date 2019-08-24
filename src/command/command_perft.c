@@ -17,12 +17,10 @@ extern position gpos;
  * iteration.
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int command_perft(const char* input, int* exit_status)
+int command_perft(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("perft", input, 5))
@@ -47,8 +45,6 @@ int command_perft(const char* input, int* exit_status)
         printf("depth %d - nodes: %lu - rate: %lu kn/s\n", i, nodes,
             nodes / (elapsed+1)); /* avoid div by 0 */
     }
-
-    *exit_status = 0;
 
     return 0;
 }

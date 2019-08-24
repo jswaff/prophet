@@ -13,12 +13,10 @@ extern "C" {
  * \brief Parse the user input into a command and execute the command.
  *
  * \param input         the user entered input
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int parse_and_execute(const char* input, int* exit_status);
+int parse_and_execute(const char* input);
 
 
 /**
@@ -38,36 +36,30 @@ int parse_command(user_command_t* user_cmd, const char* input);
  * Draw the board to stdout.
  *
  * \param input         the user entered input
- * \param exit_status   Pointer to receive exit status.  A non-zero
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int command_db(const char* input, int* exit_status);
+int command_db(const char* input);
 
 
 /**
  * \brief Execute the exit command.
  * 
  * \param input         the user entered input
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int command_exit(const char* input, int* exit_status);
+int command_exit(const char* input);
 
 
 /**
  * \brief Default command handler - does nothing!
  * 
  * \param input         the user entered input
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int command_no_op(const char* input, int* exit_status);
+int command_no_op(const char* input);
 
 
 /**
@@ -79,12 +71,10 @@ int command_no_op(const char* input, int* exit_status);
  * iteration.
  *
  * \param input         the user entered input
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int command_perft(const char* input, int* exit_status);
+int command_perft(const char* input);
 
 
 /* make this header C++ friendly. */

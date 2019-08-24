@@ -22,12 +22,10 @@ extern bool xboard_force_mode;
  * start thinking, and eventually make a move. 
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_usermove(const char* input, int* exit_status)
+int xboard_usermove(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("usermove", input, 8))
@@ -94,8 +92,6 @@ int xboard_usermove(const char* input, int* exit_status)
         printf("move %s\n", str_engine_mv);
         free(str_engine_mv);
     }
-
-    *exit_status = 0;
 
     return 0;
 }

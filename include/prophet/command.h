@@ -9,7 +9,7 @@ extern "C" {
 
 typedef struct user_command user_command_t;
 
-typedef int (*cmd_func_t)(const char*, int*);
+typedef int (*cmd_func_t)(const char*);
 
 struct user_command
 {

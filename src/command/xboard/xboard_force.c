@@ -14,12 +14,10 @@ bool xboard_force_mode;
  * proper turn, but should not think, ponder, or make moves of its own.
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_force(const char* input, int* exit_status)
+int xboard_force(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("force", input))
@@ -30,8 +28,6 @@ int xboard_force(const char* input, int* exit_status)
     /* TODO: stop search */
     
     xboard_force_mode = true;
-
-    *exit_status = 0;
 
     return 0;
 }

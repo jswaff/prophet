@@ -8,12 +8,10 @@
  * \brief Execute the xboard result command 
  * 
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_result(const char* input, int* exit_status)
+int xboard_result(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("result", input, 6))
@@ -57,7 +55,5 @@ int xboard_result(const char* input, int* exit_status)
         return P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT;   
     }
   
-    *exit_status = 0;
-
     return 0;
 }

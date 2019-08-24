@@ -20,12 +20,10 @@ extern bool xboard_force_mode;
  * thinking and eventually make a move.
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_go(const char* input, int* exit_status)
+int xboard_go(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("go", input))
@@ -41,8 +39,6 @@ int xboard_go(const char* input, int* exit_status)
     char* str_engine_mv = move_to_str(engine_mv);
     printf("move %s\n", str_engine_mv);
     free(str_engine_mv);
-
-    *exit_status = 0;
 
     return 0;
 }

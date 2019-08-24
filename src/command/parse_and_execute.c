@@ -10,16 +10,12 @@
  * \brief Parse the user input into a command and execute the command.
  *
  * Note that failure to execute a command does not yield an error return code.
- * For this reason, it's important to check both the return code and the exit
- * status.
  *
  * \param input         the user entered input
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int parse_and_execute(const char* input, int* exit_status)
+int parse_and_execute(const char* input)
 {
     int retval = 0;
 
@@ -40,7 +36,7 @@ int parse_and_execute(const char* input, int* exit_status)
     }
 
     /* execute the command */
-    int cmd_retval = user_cmd->cmd_func(input, exit_status);
+    int cmd_retval = user_cmd->cmd_func(input);
     if (0 != cmd_retval)
     {
         /* TODO: translate error code to text descriptions */

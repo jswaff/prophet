@@ -14,12 +14,10 @@ extern position gpos;
  * Draw the board to stdout.
  *
  * \param input         the user entered input
- * \param exit_status   Pointer to receive exit status.  A non-zero
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int command_db(const char* input, int* exit_status)
+int command_db(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("db", input))
@@ -36,8 +34,6 @@ int command_db(const char* input, int* exit_status)
     printf("%s\n", buf);
 
     free(buf);
-
-    *exit_status = 0;
 
     return 0;
 }

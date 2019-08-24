@@ -17,12 +17,10 @@ extern "C" {
  * proper turn, but should not think, ponder, or make moves of its own.
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_force(const char* input, int* exit_status);
+int xboard_force(const char* input);
 
 
 /**
@@ -34,12 +32,10 @@ int xboard_force(const char* input, int* exit_status);
  * thinking and eventually make a move.
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_go(const char* input, int* exit_status);
+int xboard_go(const char* input);
 
 
 /**
@@ -53,12 +49,10 @@ int xboard_go(const char* input, int* exit_status);
  * search depth limit previously set by the sd command.  
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_new(const char* input, int* exit_status);
+int xboard_new(const char* input);
 
 
 /**
@@ -67,12 +61,10 @@ int xboard_new(const char* input, int* exit_status);
  * Respond to the ping N command with a pong N.  
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_ping(const char* input, int* exit_status);
+int xboard_ping(const char* input);
 
 
 /**
@@ -81,24 +73,20 @@ int xboard_ping(const char* input, int* exit_status);
  * Respond to the protover command by printing a list of supported features.  
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_protover(const char* input, int* exit_status);
+int xboard_protover(const char* input);
 
 
 /**
  * \brief Execute the xboard result command 
  * 
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_result(const char* input, int* exit_status);
+int xboard_result(const char* input);
 
 
 /**
@@ -110,12 +98,10 @@ int xboard_result(const char* input, int* exit_status);
  * start thinking, and eventually make a move. 
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_usermove(const char* input, int* exit_status);
+int xboard_usermove(const char* input);
 
 
 /**

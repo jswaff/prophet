@@ -18,12 +18,10 @@ extern bool xboard_force_mode;
  * search depth limit previously set by the sd command.  
  *
  * \param input         the user entered input 
- * \param exit_status   Pointer to receive exit status.  A non-zero 
- *                      status indicates the program should exit.
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int xboard_new(const char* input, int* exit_status)
+int xboard_new(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("new", input))
@@ -35,8 +33,5 @@ int xboard_new(const char* input, int* exit_status)
 
     xboard_force_mode = false;
 
-    *exit_status = 0;
-
     return 0;
 }
-
