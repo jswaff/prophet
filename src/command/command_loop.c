@@ -26,6 +26,7 @@ int command_loop()
         return P4_ERROR_CMD_INPUT_BUFFER;
     }
 
+    bool exit_status;
     do
     {
         fgets(input, MAX_INPUT_SZ, stdin);
@@ -36,9 +37,9 @@ int command_loop()
             input[strlen(input) - 1] = '\0';
         }
 
-        retval = parse_and_execute(input);
+        retval = parse_and_execute(input, &exit_status);
 
-    } while (retval == 0);
+    } while (retval == 0 && !exit_status);
 
 
     free(input);

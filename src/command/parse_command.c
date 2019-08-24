@@ -72,12 +72,14 @@ struct function_table_entry function_table[] = {
  *
  * \param cmd           pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
+ * \param exit_status   pointer to boolean to receive exit status
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int parse_command(user_command_t* cmd, const char* input)
+int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
 {
     int retval = 0;
+    *exit_status = false;
 
     /* set the command */
     cmd->cmd = strdup(input);
@@ -100,10 +102,19 @@ int parse_command(user_command_t* cmd, const char* input)
         }
     }
 
+
     /* Note - this error message is part of the xboard protocol */
     printf("Error (unknown command): %s\n", input);
     cmd->cmd_func = &command_no_op;
 
 done:
+
+    /* special case - if the command was mapped to the exit handler, set the
+     * exit_status flag. */
+    if (cmd->cmd_func == command_exit)
+    {
+        *exit_status = true;
+    }
+
     return retval;
 }

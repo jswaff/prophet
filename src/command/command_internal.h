@@ -3,6 +3,8 @@
 
 #include <prophet/command.h>
 
+#include <stdbool.h>
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
@@ -13,10 +15,11 @@ extern "C" {
  * \brief Parse the user input into a command and execute the command.
  *
  * \param input         the user entered input
+ * \param exit_status   pointer to boolean to receive exit status
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int parse_and_execute(const char* input);
+int parse_and_execute(const char* input, bool* exit_status);
 
 
 /**
@@ -24,10 +27,12 @@ int parse_and_execute(const char* input);
  * 
  * \param cmd           pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
+ * \param exit_status   pointer to boolean to receive exit status
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int parse_command(user_command_t* user_cmd, const char* input);
+int parse_command(
+    user_command_t* user_cmd, const char* input, bool* exit_status);
 
 
 /**

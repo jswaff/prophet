@@ -12,12 +12,14 @@
  * Note that failure to execute a command does not yield an error return code.
  *
  * \param input         the user entered input
+ * \param exit_status   pointer to boolean to receive exit status
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int parse_and_execute(const char* input)
+int parse_and_execute(const char* input, bool* exit_status)
 {
     int retval = 0;
+    *exit_status = false;
 
     user_command_t* user_cmd = (user_command_t*)malloc(sizeof(user_command_t));
 
@@ -29,7 +31,7 @@ int parse_and_execute(const char* input)
     /* clear the structure */
     memset(user_cmd, 0, sizeof(user_command_t));
 
-    retval = parse_command(user_cmd, input);
+    retval = parse_command(user_cmd, input, exit_status);
     if (0 != retval)
     {
         goto cleanup_user_command;
@@ -39,6 +41,7 @@ int parse_and_execute(const char* input)
     int cmd_retval = user_cmd->cmd_func(input);
     if (0 != cmd_retval)
     {
+        /* Note - this error message is part of the xboard protocol */
         /* TODO: translate error code to text descriptions */
         printf("Error (invocation failed with code %d): %s\n", cmd_retval, input);
     }
