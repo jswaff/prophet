@@ -33,6 +33,8 @@ int xboard_go(const char* input)
 
     xboard_force_mode = false;
 
+    /* start thinking and eventually make a move.  In this implementation we
+     * move immediately. */
     move_t engine_mv = select_move(&gpos);
     undo u;
     apply_move(&gpos, engine_mv, &u);

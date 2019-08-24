@@ -80,9 +80,14 @@ int xboard_usermove(const char* input)
     {
         printf("1/2-1/2 {Insufficient material}\n");
     }
+    else if (is_draw50(&gpos))
+    {
+        printf("1/2-1/2 {50 move rule}\n");   
+    }
     else if (!xboard_force_mode)
     {
-        /* the game continues.  start thinking and (eventually) make a move. */
+        /* the game continues.  start thinking and (eventually) make a move.
+         * in this initial implementation we move immediately. */
         move_t engine_mv = select_move(&gpos);
         apply_move(&gpos, engine_mv, &u);
         char* str_engine_mv = move_to_str(engine_mv);
