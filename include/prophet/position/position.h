@@ -180,6 +180,7 @@ static inline color_t opposite_player(color_t player)
     return player == WHITE ? BLACK : WHITE;
 }
 
+bool is_lack_of_mating_material(const position* pos);
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

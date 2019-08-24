@@ -76,7 +76,10 @@ int xboard_usermove(const char* input)
     {
         printf("1/2-1/2 {Stalemate}\n");
     }
-    /* TODO: draw by lack of mating material */
+    else if (is_lack_of_mating_material(&gpos))
+    {
+        printf("1/2-1/2 {Insufficient material}\n");
+    }
     else if (!xboard_force_mode)
     {
         /* the game continues.  start thinking and (eventually) make a move. */
