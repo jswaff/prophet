@@ -2,14 +2,14 @@
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
 #include <prophet/movegen.h>
-#include <prophet/parameters.h>
 #include <prophet/position/move.h>
-#include <prophet/util/select_move.h>
 #include <prophet/util/string_utils.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../command_internal.h"
 
 extern position gpos;
 extern bool xboard_force_mode;

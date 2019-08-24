@@ -1,22 +1,20 @@
-order of imports
-
 headers minimal and complete
-
-position_t
 
 double check "Error" printf
 
 put movelist_contains in movegen_utils
 
-str_to_move doesn't correctly handle captures, castling moves, ep
-
 errors vs. warnings
 
 does exit need to be a param?
 
+str_to_move doesn't correctly handle captures, castling moves, ep
+
 reported error
 
 lack of mating material
+
+position_t
 
 how to further test xboard_usermove / xboard_go ?
 

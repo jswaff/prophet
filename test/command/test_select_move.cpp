@@ -2,14 +2,11 @@
 
 #include <prophet/const.h>
 #include <prophet/movegen.h>
-#include <prophet/position/move.h>
 #include <prophet/position/position.h>
-#include <prophet/util/select_move.h>
 
-/**
- * Basic test of select.
- */
-TEST(select_move_test, basic_test)
+#include "../../src/command/command_internal.h"
+
+TEST(command_test, select_move)
 {
     position pos;
     reset_pos(&pos);

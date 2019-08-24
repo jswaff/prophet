@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 
 #include <prophet/movegen.h>
-#include <prophet/position/position.h>
-
 
 TEST(movegen_utils_test, is_legal_move)
 {

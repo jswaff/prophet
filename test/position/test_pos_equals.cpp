@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <prophet/position/position.h>
 #include <prophet/position/piece.h>
 
 #include "../../src/position/position_internal.h"

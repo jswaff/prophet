@@ -2,6 +2,7 @@
 #define _POS_H_
 
 #include <prophet/position/move.h>
+#include <prophet/position/piece.h>
 #include <prophet/position/square.h>
 
 #include <assert.h>

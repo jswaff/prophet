@@ -1,6 +1,8 @@
 #ifndef _PRNG_H_
 #define _PRNG_H_
 
+#include <stdint.h>
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {

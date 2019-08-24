@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <prophet/position/position.h>
-
 #include "../../src/movegen/movegen_internal.h"
 
 
