@@ -49,7 +49,8 @@ bool in_check(const position* pos, color_t player);
  *
  * \return - A move pointer one greater than the last move produced.
  */
-move* gen_pseudo_legal_moves(move* m, const position* p, bool caps, bool noncaps);
+move* gen_pseudo_legal_moves(
+    move* m, const position* p, bool caps, bool noncaps);
 
 
 /**
@@ -117,6 +118,32 @@ bool is_checkmate(const position* pos);
  * \return - true if the player has been stalemated, otherwise false.
  */
 bool is_stalemate(const position* pos);
+
+/**
+ * \brief Test move legality.
+ *
+ * Test that a move is legal in a given position.
+ *
+ * \param mv            The move to test.
+ * \param pos           A pointer to the chess position.
+ *
+ * \return true if legal, otherwise false.
+ */
+bool is_legal_move(move mv, const position* pos);
+
+/**
+ * \brief Test if a move is a member of a list.
+ *
+ * Determine if a chess move is contained within a list of moves. The score 
+ * portion of the move is ignored.
+ *
+ * \param mv            The move to look for
+ * \param start         A pointer to the start of a move list
+ * \param end           A pointer one past the end of a move list
+ *
+ * \return true if the move is contained in the list, otherwise false.
+ */
+bool is_in_move_list(move mv, const move* start, const move* end);
 
 
 /**

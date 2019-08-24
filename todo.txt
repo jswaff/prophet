@@ -1,8 +1,6 @@
-put legal in movegenutils
+put movelist_contains in movegen_utils
 
 str_to_move doesn't correctly handle captures, castling moves, ep
-
-put movelist_contains in movegen_utils
 
 reorg - not sure some methods in movegenutils should be there.
 maybe a private utils.
@@ -18,3 +16,10 @@ reported error
 lack of mating material
 
 how to further test xboard_usermove / xboard_go ?
+
+setboard
+
+undo
+
+remove
+

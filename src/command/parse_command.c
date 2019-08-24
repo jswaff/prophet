@@ -46,13 +46,13 @@ struct function_table_entry function_table[] = {
     {"random", command_no_op},
     {"rating", command_no_op},
     {"rejected", command_no_op},
-    {"remove", command_no_op}, // 8
+    {"remove", command_no_op},
     {"result", xboard_result},
     {"sd", command_no_op},
-    {"setboard", command_no_op}, // 6
+    {"setboard", command_no_op},
     {"st", command_no_op},
     {"time", command_no_op},
-    {"undo", command_no_op}, // 7
+    {"undo", command_no_op},
     {"usermove", xboard_usermove},
     {"variant", command_no_op},
     {"xboard", command_no_op},
