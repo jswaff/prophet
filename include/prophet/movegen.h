@@ -22,6 +22,7 @@ extern "C" {
  */
 bool attacked(const position* pos, square_t sq, color_t player);
 
+
 /**
  * \brief Given position \p pos, is \p player in check?
  *
@@ -31,6 +32,7 @@ bool attacked(const position* pos, square_t sq, color_t player);
  * \return true if the player is in check, otherwise false
  */
 bool in_check(const position* pos, color_t player);
+
 
 /**
  * \brief Generate a list of pseudo-legal moves.
@@ -51,6 +53,7 @@ bool in_check(const position* pos, color_t player);
  */
 move_t* gen_pseudo_legal_moves(
     move_t* m, const position* pos, bool caps, bool noncaps);
+
 
 /**
  * \brief Generate a list of legal moves.
@@ -73,6 +76,7 @@ move_t* gen_pseudo_legal_moves(
 move_t* gen_legal_moves(
     move_t* m, const position* pos, bool caps, bool noncaps);
 
+
 /**
  * \brief Count the number of legal moves possible in a position.
  *
@@ -83,6 +87,7 @@ move_t* gen_legal_moves(
  * \return the number of legal moves
  */
 uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps);
+
 
 /**
  * \brief Count the number of capture and non-capture moves in a list.
@@ -101,6 +106,7 @@ uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps);
 void num_moves_in_list(
     const move_t* startp, const move_t* endp, int* caps, int* noncaps);
 
+
 /**
  * \brief Has the current player been checkmated?
  *
@@ -110,6 +116,7 @@ void num_moves_in_list(
  */
 bool is_checkmate(const position* pos);
 
+
 /**
  * \brief Has the current player been stalemated?
  *
@@ -118,6 +125,7 @@ bool is_checkmate(const position* pos);
  * \return true if the player has been stalemated, otherwise false
  */
 bool is_stalemate(const position* pos);
+
 
 /**
  * \brief Test move legality.
@@ -130,6 +138,7 @@ bool is_stalemate(const position* pos);
  * \return true if legal, otherwise false
  */
 bool is_legal_move(move_t mv, const position* pos);
+
 
 /**
  * \brief Test if a move is a member of a list.

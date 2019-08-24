@@ -2,12 +2,12 @@
 #define _STRING_UTILS_H_
 
 #include <prophet/position/position.h>
-#include <prophet/position/square.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
 #endif    //__cplusplus
+
 
 /**
  * \brief Convert a string to a move.
@@ -27,6 +27,7 @@ extern "C" {
  */
 move_t str_to_move(const char* str_mv, const position* pos);
 
+
 /**
  * \brief Convert a string to a square.
  *
@@ -39,6 +40,7 @@ move_t str_to_move(const char* str_mv, const position* pos);
  * \return the square if valid, or NO_SQUARE on failure
  */
 square_t str_to_sq(const char* str_sq);
+
 
 /**
  * \brief Convert a move to a string.
@@ -54,6 +56,7 @@ square_t str_to_sq(const char* str_sq);
  */
 char* move_to_str(move_t mv);
 
+
 /**
  * \brief Convert a square to a string.
  *
@@ -67,6 +70,7 @@ char* move_to_str(move_t mv);
  * \return a null terminated string
  */ 
 char* sq_to_str(square_t sq);
+
 
 /**
  * \brief Convert a position into a string.

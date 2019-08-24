@@ -2,7 +2,6 @@
 #define _COMMAND_INTERNAL_H_
 
 #include <prophet/command.h>
-#include <prophet/position/position.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -32,6 +31,7 @@ int parse_and_execute(const char* input, int* exit_status);
  */
 int parse_command(user_command_t* user_cmd, const char* input);
 
+
 /**
  * \brief Execute the db (drawboard) command.
  *
@@ -45,6 +45,7 @@ int parse_command(user_command_t* user_cmd, const char* input);
  */
 int command_db(const char* input, int* exit_status);
 
+
 /**
  * \brief Execute the exit command.
  * 
@@ -55,6 +56,7 @@ int command_db(const char* input, int* exit_status);
  * \return 0 on successful execution, and non-zero on failure
  */
 int command_exit(const char* input, int* exit_status);
+
 
 /**
  * \brief Default command handler - does nothing!
@@ -83,20 +85,6 @@ int command_no_op(const char* input, int* exit_status);
  * \return 0 on successful execution, and non-zero on failure
  */
 int command_perft(const char* input, int* exit_status);
-
-/**
- * \brief Select a move.
- *
- * Select a legal move from the given position.  If there are no legal moves,
- * NO_MOVE is returned.
- *
- * This is a temporary implementation that just chooses a move at random.
- *
- * \param pos           a pointer to the chess position
- *
- * \return a move to play, or NO_MOVE if there isn't one
- */
-move_t select_move(const position* pos);
 
 
 /* make this header C++ friendly. */

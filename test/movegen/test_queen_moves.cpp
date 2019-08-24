@@ -2,6 +2,7 @@
 
 #include "../../src/movegen/movegen_internal.h"
 
+
 TEST(movegen_test, queen_moves_initial_pos)
 {
     position pos;

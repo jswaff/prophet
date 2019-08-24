@@ -1,9 +1,7 @@
-#include <gtest/gtest.h>
-
-#include <string.h>
-
-#include <prophet/position/position.h>
 #include <prophet/error_codes.h>
+
+#include <gtest/gtest.h>
+#include <string.h>
 
 #include "../../../src/command/xboard/xboard_internal.h"
 

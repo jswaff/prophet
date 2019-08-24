@@ -1,4 +1,3 @@
-#include <prophet/parameters.h>
 #include <prophet/position/square.h>
 
 #include <assert.h>

@@ -1,12 +1,11 @@
-#include <gtest/gtest.h>
-
 #include <prophet/const.h>
 #include <prophet/movegen.h>
-#include <prophet/position/position.h>
 
-#include "../../src/command/command_internal.h"
+#include <gtest/gtest.h>
 
-TEST(command_test, select_move)
+#include "../../../src/command/xboard/xboard_internal.h"
+
+TEST(xboard_test, select_move)
 {
     position pos;
     reset_pos(&pos);

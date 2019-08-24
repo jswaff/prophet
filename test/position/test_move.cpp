@@ -1,7 +1,7 @@
-#include <gtest/gtest.h>
-
 #include <prophet/const.h>
 #include <prophet/position/move.h>
+
+#include <gtest/gtest.h>
 
 TEST(move_test, to_move)
 {

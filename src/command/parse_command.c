@@ -1,7 +1,5 @@
 #include <prophet/error_codes.h>
-#include <prophet/parameters.h>
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 

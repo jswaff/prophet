@@ -1,5 +1,4 @@
 #include <prophet/hash.h>
-#include <prophet/position/piece.h>
 
 #include <assert.h>
 

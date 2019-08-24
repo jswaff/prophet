@@ -1,5 +1,3 @@
-headers minimal and complete
-
 double check "Error" printf
 
 put movelist_contains in movegen_utils

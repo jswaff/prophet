@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <prophet/position/position.h>
-
 #include "../../src/position/position_internal.h"
 
 TEST(pos_test, apply_move_sequence1)

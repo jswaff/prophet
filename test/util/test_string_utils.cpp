@@ -1,8 +1,8 @@
-#include <gtest/gtest.h>
-
 #include <prophet/const.h>
 #include <prophet/position/position.h>
 #include <prophet/util/string_utils.h>
+
+#include <gtest/gtest.h>
 
 TEST(string_utils_test, str_to_move)
 {

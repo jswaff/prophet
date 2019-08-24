@@ -18,15 +18,18 @@ static inline bool is_white_piece(int32_t piece)
     return piece > NO_PIECE;
 }
 
+
 static inline bool is_black_piece(int32_t piece) 
 {
     return piece < NO_PIECE;
 }
 
+
 static inline bool is_not_white_piece(int32_t piece) 
 {
     return piece <= NO_PIECE;
 }
+
 
 static inline bool is_not_black_piece(int32_t piece) 
 {

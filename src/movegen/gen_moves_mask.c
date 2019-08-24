@@ -1,7 +1,6 @@
 #include <prophet/const.h>
 
 #include <assert.h>
-#include <stdint.h>
 
 #include "movegen_internal.h"
 

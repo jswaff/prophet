@@ -25,6 +25,7 @@ typedef uint64_t move_t;
  */
 move_t to_move(piece_t piece, square_t from, square_t to);
 
+
 /**
  * \brief Create a capturing move
  *
@@ -38,6 +39,7 @@ move_t to_move(piece_t piece, square_t from, square_t to);
 move_t to_capture(
     piece_t piece, square_t from, square_t to, piece_t captured_piece);
 
+
 /**
  * \brief Set the promotion piece on an existing move.
  *
@@ -45,6 +47,7 @@ move_t to_capture(
  * \param promo         the piece the promoted pawn should be converted to
  */
 void set_promopiece(move_t* mv, piece_t promo);
+
 
 /**
  * \brief Set the captured piece on an existing move.
@@ -54,6 +57,7 @@ void set_promopiece(move_t* mv, piece_t promo);
  */
 void set_capture(move_t* mv, piece_t captured_piece);
 
+
 /**
  * \brief Set the en-passant capture indicator on an existing move.
  *
@@ -61,12 +65,14 @@ void set_capture(move_t* mv, piece_t captured_piece);
  */
 void set_epcapture(move_t* mv);
 
+
 /**
  * \brief Set the castle indicator on an existing move.
  *
  * \param  mv           a pointer to an existing move
  */
 void set_castle(move_t* mv);
+
 
 /**
  * \brief Get the "from" square from a move.
@@ -77,6 +83,7 @@ void set_castle(move_t* mv);
  */
 square_t get_from_sq(move_t mv);
 
+
 /**
  * \brief Get the "to" square from a move.
  *
@@ -85,6 +92,7 @@ square_t get_from_sq(move_t mv);
  * \return the to square
  */
 square_t get_to_sq(move_t mv);
+
 
 /**
  * \brief Get the moving piece from a move.
@@ -95,6 +103,7 @@ square_t get_to_sq(move_t mv);
  */
 piece_t get_piece(move_t mv);
 
+
 /**
  * \brief Get the captured piece from a move.
  *
@@ -103,6 +112,7 @@ piece_t get_piece(move_t mv);
  * \return the captured piece
  */
 piece_t get_captured_piece(move_t mv);
+
 
 /**
  * \brief Get the promotion piece from a move.
@@ -113,6 +123,7 @@ piece_t get_captured_piece(move_t mv);
  */
 piece_t get_promopiece(move_t mv);
 
+
 /**
  * \brief Is move \p mv a capturing move?
  *
@@ -121,6 +132,7 @@ piece_t get_promopiece(move_t mv);
  * \return true if the move is a capturing move, otherwise false
  */
 bool is_capture(move_t mv);
+
 
 /**
  * \brief Is move \p mv an en-passant move?
@@ -131,6 +143,7 @@ bool is_capture(move_t mv);
  */
 bool is_epcapture(move_t mv);
 
+
 /**
  * \brief Is move \p mv a castling move?
  *
@@ -139,6 +152,7 @@ bool is_epcapture(move_t mv);
  * \return true if the move is a castling move, otherwise false
  */
 bool is_castle(move_t mv);
+
 
 /**
  * \brief Get the score from a move.
@@ -149,6 +163,7 @@ bool is_castle(move_t mv);
  */
 int32_t get_move_score(move_t mv);
 
+
 /**
  * \brief Set the score for a move
  *
@@ -156,6 +171,7 @@ int32_t get_move_score(move_t mv);
  * \param score         the score
  */
 void set_move_score(move_t* m, int32_t score);
+
 
 /**
  * \brief Given a move \p mv, create an equivalent move without a score.

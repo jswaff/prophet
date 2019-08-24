@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <prophet/position/piece.h>
-
 #include "../../src/position/position_internal.h"
 
 TEST(pos_test, reset_pos)

@@ -1,6 +1,4 @@
-#include <prophet/command.h>
 #include <prophet/error_codes.h>
-#include <prophet/parameters.h>
 #include <prophet/position/position.h>
 #include <prophet/util/string_utils.h>
 

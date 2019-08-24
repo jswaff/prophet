@@ -1,7 +1,5 @@
 #include <prophet/position/position.h>
 
-#include <stdbool.h>
-#include <stdint.h>
 
 /**
  * \brief Test two positions for equality

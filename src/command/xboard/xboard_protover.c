@@ -1,6 +1,5 @@
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
-#include <prophet/parameters.h>
 
 #include <stdio.h>
 #include <string.h>

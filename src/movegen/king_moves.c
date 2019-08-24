@@ -1,8 +1,5 @@
 #include <assert.h>
-#include <stdbool.h>
-#include <stdint.h>
 
-#include <prophet/position/position.h>
 #include <prophet/util/bitmap.h>
 
 #include "movegen_internal.h"

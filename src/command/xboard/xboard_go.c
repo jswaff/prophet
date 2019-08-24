@@ -2,12 +2,11 @@
 #include <prophet/error_codes.h>
 #include <prophet/util/string_utils.h>
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "../command_internal.h"
+#include "xboard_internal.h"
 
 extern position gpos;
 extern bool xboard_force_mode;

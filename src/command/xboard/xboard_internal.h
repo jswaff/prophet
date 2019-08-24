@@ -1,6 +1,8 @@
 #ifndef _XBOARD_INTERNAL_H_
 #define _XBOARD_INTERNAL_H_
 
+#include <prophet/position/position.h>
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
@@ -22,6 +24,7 @@ extern "C" {
  */
 int xboard_force(const char* input, int* exit_status);
 
+
 /**
  * \brief Execute the xboard go command 
  * 
@@ -37,6 +40,7 @@ int xboard_force(const char* input, int* exit_status);
  * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_go(const char* input, int* exit_status);
+
 
 /**
  * \brief Execute the xboard new command 
@@ -56,6 +60,7 @@ int xboard_go(const char* input, int* exit_status);
  */
 int xboard_new(const char* input, int* exit_status);
 
+
 /**
  * \brief Execute the xboard ping command 
  * 
@@ -68,6 +73,7 @@ int xboard_new(const char* input, int* exit_status);
  * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_ping(const char* input, int* exit_status);
+
 
 /**
  * \brief Execute the xboard protover command 
@@ -82,6 +88,7 @@ int xboard_ping(const char* input, int* exit_status);
  */
 int xboard_protover(const char* input, int* exit_status);
 
+
 /**
  * \brief Execute the xboard result command 
  * 
@@ -92,6 +99,7 @@ int xboard_protover(const char* input, int* exit_status);
  * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_result(const char* input, int* exit_status);
+
 
 /**
  * \brief Execute the xboard usermove command 
@@ -108,6 +116,21 @@ int xboard_result(const char* input, int* exit_status);
  * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_usermove(const char* input, int* exit_status);
+
+
+/**
+ * \brief Select a move.
+ *
+ * Select a legal move from the given position.  If there are no legal moves,
+ * NO_MOVE is returned.
+ *
+ * This is a temporary implementation that just chooses a move at random.
+ *
+ * \param pos           a pointer to the chess position
+ *
+ * \return a move to play, or NO_MOVE if there isn't one
+ */
+move_t select_move(const position* pos);
 
 
 /* make this header C++ friendly. */

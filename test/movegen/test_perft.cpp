@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include <prophet/movegen.h>
+
+#include <gtest/gtest.h>
 
 static uint64_t test_case(const char *fen, int depth);
 

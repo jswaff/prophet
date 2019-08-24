@@ -2,8 +2,6 @@
 #define _POS_H_
 
 #include <prophet/position/move.h>
-#include <prophet/position/piece.h>
-#include <prophet/position/square.h>
 
 #include <assert.h>
 #include <stdbool.h>
@@ -118,6 +116,7 @@ void reset_pos(position* pos);
  */
 bool set_pos(position* pos, const char* fen);
 
+
 /**
  * \brief Apply a chess move to a chess position.
  *
@@ -132,6 +131,7 @@ bool set_pos(position* pos, const char* fen);
  */
 void apply_move(position* pos, move_t m, undo* u);
 
+
 /**
  * \brief Undo (reverse) a move.
  *
@@ -143,31 +143,37 @@ void apply_move(position* pos, move_t m, undo* u);
  */
 void undo_move(position* pos, const undo* u);
 
+
 static inline bool can_castle_wk(const position* pos) 
 {
     return pos->castling_rights & CASTLE_WK;
 }
+
 
 static inline bool can_castle_wq(const position* pos) 
 {
     return pos->castling_rights & CASTLE_WQ;
 }
 
+
 static inline bool can_castle_bk(const position* pos) 
 {
     return pos->castling_rights & CASTLE_BK;
 }
+
 
 static inline bool can_castle_bq(const position* pos) 
 {
     return pos->castling_rights & CASTLE_BQ;
 }
 
+
 static inline bool is_empty_sq(const position* pos, square_t sq) 
 {
     assert(sq >= A8 && sq <= H1);
     return pos->piece[sq] == NO_PIECE;
 }
+
 
 static inline color_t opposite_player(color_t player) 
 {

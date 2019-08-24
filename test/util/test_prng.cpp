@@ -1,6 +1,7 @@
+#include <prophet/util/prng.h>
+
 #include <gtest/gtest.h>
 
-#include <prophet/util/prng.h>
 
 static int hamming_distance(uint64_t x, uint64_t y);
 

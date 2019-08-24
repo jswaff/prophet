@@ -1,6 +1,6 @@
-#include <assert.h>
-
 #include <prophet/util/bitmap.h>
+
+#include <assert.h>
 
 static uint32_t get_lsb_slow(uint64_t val);
 static uint32_t get_msb_slow(uint64_t val);

@@ -1,9 +1,7 @@
 #include <prophet/const.h>
 #include <prophet/movegen.h>
-#include <prophet/position/position.h>
 
 #include <assert.h>
-#include <stdint.h>
 
 /**
  * \brief Count the number of legal moves possible in a position.

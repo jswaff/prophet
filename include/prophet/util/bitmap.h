@@ -15,6 +15,7 @@ extern "C" {
 */
 uint32_t popcnt(uint64_t val);
 
+
 /**
  * \brief Get the least significant bit set in a 64 bit value.
  *
@@ -29,6 +30,7 @@ uint32_t popcnt(uint64_t val);
  */
 uint32_t get_lsb(uint64_t val);
 
+
 /**
  * \brief Get the most significant bit set in a 64 bit value.
  *
@@ -42,6 +44,7 @@ uint32_t get_lsb(uint64_t val);
  * \return the bit position of the most significant bit
  */
 uint32_t get_msb(uint64_t val);
+
 
 /**
  * \brief Isolate a single bit in a 64 bit value.
@@ -62,6 +65,7 @@ uint32_t get_msb(uint64_t val);
  * \return a 64 bit value isolating a single bit
  */
 uint64_t isolate_bit(uint64_t val, uint32_t index);
+
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

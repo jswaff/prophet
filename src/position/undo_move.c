@@ -1,8 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <prophet/position/position.h>
-
 #include "position_internal.h"
 
 /**

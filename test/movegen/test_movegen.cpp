@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include <prophet/movegen.h>
+
+#include <gtest/gtest.h>
 
 TEST(movegen_test, gen_pseudo_legal_moves)
 {

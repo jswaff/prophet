@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdint.h>
 
 #include <prophet/const.h>
 

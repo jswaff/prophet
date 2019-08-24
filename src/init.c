@@ -1,7 +1,5 @@
 #include <prophet/position/position.h>
 
-#include <stdbool.h>
-
 bool initialized = false;
 
 extern void init_bitmaps();

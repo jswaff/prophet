@@ -1,7 +1,7 @@
-#include <gtest/gtest.h>
-
 #include <prophet/error_codes.h>
-#include <prophet/position/position.h>
+#include <prophet/movegen.h>
+
+#include <gtest/gtest.h>
 
 #include "../../src/command/command_internal.h"
 

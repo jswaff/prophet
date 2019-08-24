@@ -1,9 +1,6 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdint.h>
-
 #include <prophet/util/error.h>
-#include <prophet/position/position.h>
+
+#include <assert.h>
 
 #include "position_internal.h"
 

@@ -38,6 +38,7 @@ static inline uint64_t square_to_bitmap(int sq)
     return (uint64_t)1 << sq;
 }
 
+
 /**
  * \brief Create a bitmap representation of a list of squares.
  *
@@ -48,6 +49,7 @@ static inline uint64_t square_to_bitmap(int sq)
  * \return a bitmap (bitboard) representation of the squares
  */
 uint64_t squares_to_bitmap(square_t sq, ...);
+
 
 /**
  * \brief Create a bitmap representation of a file (8 squares).
@@ -71,6 +73,7 @@ uint64_t file_to_bitmap(file_t f);
  */
 uint64_t rank_to_bitmap(rank_t r);
 
+
 /**
  * \brief Get the direction from one square to another.
  *
@@ -88,6 +91,7 @@ uint64_t rank_to_bitmap(rank_t r);
  */
 dir_t get_dir(square_t from, square_t to);
 
+
 /**
  * \brief Get the rank a square occupies.
  *
@@ -96,6 +100,7 @@ dir_t get_dir(square_t from, square_t to);
  * \return the rank the square occupies
  */
 rank_t get_rank(square_t sq);
+
 
 /**
  * \brief Get the file a square occupies.
@@ -116,6 +121,7 @@ file_t get_file(square_t sq);
  * \return the square
  */
 square_t get_square(rank_t rank, file_t file);
+
 
 /**
  * \brief Get the rank distance between two squares.
@@ -155,6 +161,7 @@ uint32_t file_distance(square_t sq1, square_t sq2);
  */
 uint32_t distance(square_t sq1, square_t sq2);
 
+
 /**
  * \brief Get the next square to the north
  *
@@ -193,6 +200,7 @@ square_t south(square_t sq);
  */
 square_t east(square_t sq);
 
+
 /**
  * \brief Get the next square to the west
  *
@@ -205,6 +213,7 @@ square_t east(square_t sq);
  */
 square_t west(square_t sq);
 
+
 /**
  * \brief Get the next square to the northeast
  *
@@ -216,6 +225,7 @@ square_t west(square_t sq);
  * \return the next square
  */
 square_t northeast(square_t sq);
+
 
 /**
  * \brief Get the next square to the southeast
@@ -242,6 +252,7 @@ square_t southeast(square_t sq);
  */
 square_t southwest(square_t sq);
 
+
 /**
  * \brief Get the next square to the northwest
  *
@@ -253,6 +264,7 @@ square_t southwest(square_t sq);
  * \return the next square
  */
 square_t northwest(square_t sq);
+
 
 /**
  * \brief Is a square a light colored square?
@@ -272,6 +284,7 @@ bool is_light_sq(square_t sq);
  * \return true if the square is dark colored, otherwise false
  */
 bool is_dark_sq(square_t sq);
+
 
 /**
  * \brief Are two squares on the same diagonal?

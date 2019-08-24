@@ -1,5 +1,4 @@
 #include <prophet/hash.h>
-#include <prophet/position/piece.h>
 #include <prophet/position/position.h>
 #include <prophet/util/bitmap.h>
 

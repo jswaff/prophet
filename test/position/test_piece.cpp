@@ -1,6 +1,7 @@
+#include <prophet/position/piece.h>
+
 #include <gtest/gtest.h>
 
-#include <prophet/position/piece.h>
 
 TEST(piece_test, is_white_piece)
 {

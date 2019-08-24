@@ -1,5 +1,4 @@
 #include <prophet/const.h>
-#include <prophet/position/move.h>
 #include <prophet/position/position.h>
 
 #include <assert.h>

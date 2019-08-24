@@ -1,10 +1,7 @@
 #include <prophet/const.h>
-#include <prophet/parameters.h>
 #include <prophet/position/position.h>
 #include <prophet/util/string_utils.h>
 
-#include <stdbool.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 

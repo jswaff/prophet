@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdbool.h>
 
 #include "movegen_internal.h"
 

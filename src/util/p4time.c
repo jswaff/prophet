@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <sys/timeb.h>
-#include <time.h>
 
 /**
  * \brief Return the number of milliseconds since epoch.

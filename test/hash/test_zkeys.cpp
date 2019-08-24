@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include <prophet/hash.h>
+
+#include <gtest/gtest.h>
 
 TEST(hash_test, zkeys_initialized)
 {

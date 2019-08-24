@@ -1,10 +1,7 @@
 #include <prophet/const.h>
 #include <prophet/movegen.h>
-#include <prophet/parameters.h>
-#include <prophet/position/move.h>
 #include <prophet/position/position.h>
 
-#include <stdbool.h>
 #include <stdlib.h>
 
 
