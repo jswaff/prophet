@@ -1,14 +1,8 @@
-double check "Error" printf
-
-put movelist_contains in movegen_utils
-
 errors vs. warnings
 
 does exit need to be a param?
 
 str_to_move doesn't correctly handle captures, castling moves, ep
-
-reported error
 
 lack of mating material
 

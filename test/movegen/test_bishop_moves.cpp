@@ -23,25 +23,25 @@ TEST(movegen_test, bishop_moves)
 
     EXPECT_EQ(mp - moves, 18);
 
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, F6), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, F4), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, G3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, H2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, D4), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, C3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, B2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, A1), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, D6), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_capture(BISHOP, E5, C7, PAWN), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, F6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, F4), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, G3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, H2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, D4), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, C3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, B2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, A1), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, D6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_capture(BISHOP, E5, C7, PAWN), moves, mp));
 
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, F5), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, G6), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, H7), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_capture(BISHOP, E4, D3, PAWN), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, D5), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, C6), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, B7), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, A8), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, F5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, G6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, H7), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_capture(BISHOP, E4, D3, PAWN), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, D5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, C6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, B7), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, A8), moves, mp));
 }
 
 TEST(movegen_test, bishop_captures)
@@ -54,8 +54,8 @@ TEST(movegen_test, bishop_captures)
 
     EXPECT_EQ(mp - moves, 2);
 
-    EXPECT_TRUE(is_in_move_list(to_capture(BISHOP, E5, C7, PAWN), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_capture(BISHOP, E4, D3, PAWN), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_capture(BISHOP, E5, C7, PAWN), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_capture(BISHOP, E4, D3, PAWN), moves, mp));
 }
 
 TEST(movegen_test, bishop_noncaptures)
@@ -68,21 +68,21 @@ TEST(movegen_test, bishop_noncaptures)
 
     EXPECT_EQ(mp - moves, 16);
 
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, F6), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, F4), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, G3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, H2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, D4), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, C3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, B2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, A1), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E5, D6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, F6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, F4), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, G3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, H2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, D4), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, C3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, B2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, A1), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E5, D6), moves, mp));
 
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, F5), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, G6), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, H7), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, D5), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, C6), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, B7), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP, E4, A8), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, F5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, G6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, H7), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, D5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, C6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, B7), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP, E4, A8), moves, mp));
 }

@@ -24,16 +24,16 @@ TEST(movegen_test, rook_moves)
 
     EXPECT_EQ(mp - moves, 10);
 
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F4), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F5), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F1), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, G2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, H2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, E2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, D2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, C2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_capture(ROOK, F2, B2, ROOK), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F4), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F1), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, G2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, H2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, E2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, D2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, C2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_capture(ROOK, F2, B2, ROOK), moves, mp));
 }
 
 TEST(movegen_test, rook_captures)
@@ -46,7 +46,7 @@ TEST(movegen_test, rook_captures)
 
     EXPECT_EQ(mp - moves, 1);
 
-    EXPECT_TRUE(is_in_move_list(to_capture(ROOK, F2, B2, ROOK), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_capture(ROOK, F2, B2, ROOK), moves, mp));
 }
 
 TEST(movegen_test, rook_noncaptures)
@@ -59,13 +59,13 @@ TEST(movegen_test, rook_noncaptures)
 
     EXPECT_EQ(mp - moves, 9);
 
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F4), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F5), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, F1), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, G2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, H2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, E2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, D2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(ROOK, F2, C2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F4), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, F1), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, G2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, H2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, E2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, D2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(ROOK, F2, C2), moves, mp));
 }

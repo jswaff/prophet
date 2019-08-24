@@ -100,7 +100,8 @@ int parse_command(user_command_t* cmd, const char* input)
         }
     }
 
-    printf("unknown command: %s\n", input);
+    /* Note - this error message is part of the xboard protocol */
+    printf("Error (unknown command): %s\n", input);
     cmd->cmd_func = &command_no_op;
 
 done:

@@ -12,10 +12,10 @@ TEST(movegen_test, knight_moves_initial_pos)
 
     EXPECT_EQ(mp - moves, 4);
 
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, B1, A3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, B1, C3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, G1, F3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, G1, H3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, B1, A3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, B1, C3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, G1, F3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, G1, H3), moves, mp));
 }
 
 TEST(movegen_test, knight_moves_captures)
@@ -28,7 +28,7 @@ TEST(movegen_test, knight_moves_captures)
 
     EXPECT_EQ(mp - moves, 1);
 
-    EXPECT_TRUE(is_in_move_list(to_capture(KNIGHT, E4, F6, PAWN), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_capture(KNIGHT, E4, F6, PAWN), moves, mp));
 }
 
 TEST(movegen_test, knight_moves_noncaptures)
@@ -41,10 +41,10 @@ TEST(movegen_test, knight_moves_noncaptures)
 
     EXPECT_EQ(mp - moves, 6);
 
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, E4, G5), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, E4, G3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, E4, F2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, E4, D2), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, E4, C3), moves, mp));
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, E4, C5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, E4, G5), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, E4, G3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, E4, F2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, E4, D2), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, E4, C3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, E4, C5), moves, mp));
 }

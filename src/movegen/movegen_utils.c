@@ -127,7 +127,7 @@ bool is_legal_move(move_t mv, const position* pos)
     move_t moves[MAX_MOVES_PER_PLY];
     move_t* endp = gen_legal_moves(moves, pos, true, true);
 
-    return is_in_move_list(mv, moves, endp);
+    return move_list_contains(mv, moves, endp);
 }
 
 /**
@@ -142,7 +142,7 @@ bool is_legal_move(move_t mv, const position* pos)
  *
  * \return true if the move is contained in the list, otherwise false
  */
-bool is_in_move_list(move_t mv, const move_t* start, const move_t* end)
+bool move_list_contains(move_t mv, const move_t* start, const move_t* end)
 {
     for (const move_t* mp=start; mp<end; mp++) 
     {

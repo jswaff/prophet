@@ -40,10 +40,11 @@ int parse_and_execute(const char* input, int* exit_status)
     }
 
     /* execute the command */
-    if (0 != user_cmd->cmd_func(input, exit_status))
+    int cmd_retval = user_cmd->cmd_func(input, exit_status);
+    if (0 != cmd_retval)
     {
-        /* TODO: more descriptive reasons */
-        printf("Error (unknown command): %s\n", input);
+        /* TODO: translate error code to text descriptions */
+        printf("Error (invocation failed with code %d): %s\n", cmd_retval, input);
     }
 
 cleanup_user_command:

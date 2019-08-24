@@ -32,10 +32,10 @@ TEST(movegen_test, gen_legal_moves)
     set_pos(&pos, 
         "rnb1k2r/ppq1n3/2pppp2/6pp/2PP3N/P2BP3/2PB1PPP/R2Q1RK1 w kq - -");
     mp = gen_legal_moves(moves, &pos, true, true);
-    EXPECT_TRUE(is_in_move_list(to_move(KNIGHT, H4, G6), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(KNIGHT, H4, G6), moves, mp));
 
     set_pos(&pos,
         "r2r2k1/1p2p1b1/1pp1b1pp/4P2n/PP3p1p/2P2N2/5PP1/R3KBNR b KQ b3 -");
     mp = gen_legal_moves(moves, &pos, true, true);
-    EXPECT_TRUE(is_in_move_list(to_move(BISHOP,E6,B3), moves, mp));
+    EXPECT_TRUE(move_list_contains(to_move(BISHOP,E6,B3), moves, mp));
 }
