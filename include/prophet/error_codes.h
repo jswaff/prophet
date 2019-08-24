@@ -92,15 +92,11 @@ extern "C" {
 
 
 /**
- * \brief This error is thrown by xboard_usermove() when the move is invalid.
+ * \brief This error is thrown by xboard_usermove() when the move is invalid
+ * or illegal.
  */
 #define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE   0x0106
 
-
-/**
- * \brief This error is thrown by xboard_usermove() when the move is illegal.
- */
-#define P4_ERROR_CMD_XBOARD_USERMOVE_ILLEGAL_MOVE   0x0107
 
 
 /* make this header C++ friendly. */

@@ -1,8 +1,6 @@
-position_t
-
-str_to_move doesn't correctly handle captures, castling moves, ep
-
 lack of mating material
+
+position_t
 
 how to further test xboard_usermove / xboard_go ?
 

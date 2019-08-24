@@ -9,12 +9,44 @@ TEST(string_utils_test, str_to_move)
     position pos;
     reset_pos(&pos);
 
-    // legal moves from initial position
+    // invalid move text
+    EXPECT_EQ(str_to_move("blah", &pos), NO_MOVE);
+
+    // legal move from initial position
     EXPECT_EQ(str_to_move("e2e4", &pos), to_move(PAWN, E2, E4));
-    EXPECT_EQ(str_to_move("b8a6", &pos), to_move(KNIGHT, B8, A6));
+
+    // illegal move - wrong color
+    EXPECT_EQ(str_to_move("b8a6", &pos), NO_MOVE);
 
     // no piece on source square
     EXPECT_EQ(str_to_move("e3e4", &pos), NO_MOVE);
+
+    undo u;
+    apply_move(&pos, to_move(PAWN, E2, E4), &u);
+
+    EXPECT_EQ(str_to_move("g8f6", &pos), to_move(KNIGHT, G8, F6));
+    apply_move(&pos, to_move(KNIGHT, G8, F6), &u);
+
+    // illegal move - source occupied
+    EXPECT_EQ(str_to_move("b1d2", &pos), NO_MOVE);
+
+    EXPECT_EQ(str_to_move("d2d4", &pos), to_move(PAWN, D2, D4));
+    apply_move(&pos, to_move(PAWN, D2, D4), &u);
+
+    // capture
+    EXPECT_EQ(str_to_move("f6e4", &pos), to_capture(KNIGHT, F6, E4, PAWN));
+
+    // en passant
+    set_pos(&pos, "4k3/8/8/8/3pP3/8/7p/R3K3 b Q e3");
+    move_t expected = to_capture(PAWN, D4, E3, PAWN);
+    set_epcapture(&expected);
+    EXPECT_EQ(str_to_move("d4e3", &pos), expected);
+    apply_move(&pos, expected, &u);
+
+    // castle
+    expected = to_move(KING, E1, C1);
+    set_castle(&expected);
+    EXPECT_EQ(str_to_move("e1c1", &pos), expected);
 
     // pawn promotions
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
@@ -25,8 +57,6 @@ TEST(string_utils_test, str_to_move)
     set_promopiece(&mv, ROOK);
     EXPECT_EQ(str_to_move("a7a8r", &pos), mv);
 
-    // invalid move text
-    EXPECT_EQ(str_to_move("blah", &pos), NO_MOVE);
 }
 
 TEST(string_utils_test, str_to_sq)

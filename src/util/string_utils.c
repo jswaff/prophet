@@ -1,5 +1,5 @@
 #include <prophet/const.h>
-#include <prophet/position/position.h>
+#include <prophet/movegen.h>
 #include <prophet/util/string_utils.h>
 
 #include <stdlib.h>
@@ -51,13 +51,6 @@ move_t str_to_move(const char* str_mv, const position* pos)
         return NO_MOVE;
     }
 
-    /* get the piece. */
-    piece_t mv_pc = abs(pos->piece[sq1]);
-    if (NO_PIECE == mv_pc)
-    {
-        return NO_MOVE;
-    }
-
     /* set the promotion piece, if there is one. */
     piece_t promo_pc = NO_PIECE;
     if (strlen(str_mv) == 5)
@@ -73,14 +66,25 @@ move_t str_to_move(const char* str_mv, const position* pos)
         else return NO_MOVE;
     }
 
-    /* convert to a move and return */
-    move_t ret_mv = to_move(mv_pc, sq1, sq2);
-    if (NO_PIECE != promo_pc)
-    {
-        set_promopiece(&ret_mv, promo_pc);
-    }
 
-    return ret_mv;
+    /* get the list of legal moves */
+    move_t moves[MAX_MOVES_PER_PLY];
+    move_t *endp = gen_legal_moves(moves, pos, true, true);
+
+    /* look for a move in the legal move list that matches the source square,
+     * destination square, and if applicable the promotion piece. */
+
+    for (move_t* mp = moves; mp<endp; mp++)
+    {
+        if (get_from_sq(*mp) == sq1 && get_to_sq(*mp) == sq2
+          && get_promopiece(*mp) == promo_pc)
+        {
+            return *mp;
+        }
+    }      
+
+
+    return NO_MOVE;
 }
 
 /**

@@ -38,7 +38,7 @@ TEST(xboard_test, xboard_usermove_illegal_move)
 {
     reset_pos(&gpos);
 
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_ILLEGAL_MOVE, 
+    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove a7a5"));
 }
 

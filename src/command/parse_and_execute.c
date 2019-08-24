@@ -41,7 +41,9 @@ int parse_and_execute(const char* input, bool* exit_status)
     int cmd_retval = user_cmd->cmd_func(input);
     if (0 != cmd_retval)
     {
-        /* Note - this error message is part of the xboard protocol */
+        /* Note - this error message is part of the xboard protocol.  If 
+         * another protocol is added in the future, push this into a protocol
+         * specific error handler. */
         /* TODO: translate error code to text descriptions */
         printf("Error (invocation failed with code %d): %s\n", cmd_retval, input);
     }
