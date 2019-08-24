@@ -20,13 +20,11 @@ extern "C" {
  */
 #define P4_ERROR_CMD_USER_CMD_BUFFER                0x0002
 
-
 /**
  * \brief This error is thrown by parse_command() when memory to copy the
  * contents of the input buffer could not be allocated.
  */
 #define P4_ERROR_CMD_PARSE_CMD_COPY                 0x0003
-
 
 /*
  * \brief This error is thrown by any command handler when the handler
@@ -47,7 +45,6 @@ extern "C" {
  */
 #define P4_ERROR_CMD_DB_POS_TO_STR                  0x0006
 
-
 /**
  * \brief This error is thrown by xboard_ping() when the N parameter
  * of the command is missing.
@@ -66,7 +63,6 @@ extern "C" {
  */
 #define P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED    0x0102
 
-
 /**
  * \brief This error is thrown by xboard_result() when the result is missing.
  */
@@ -78,12 +74,10 @@ extern "C" {
  */
 #define P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT   0x0104
 
-
 /**
  * \brief This error is thrown by xboard_usermove() when the move is missing.
  */
 #define P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE   0x0105
-
 
 /**
  * \brief This error is thrown by xboard_usermove() when the move is invalid.

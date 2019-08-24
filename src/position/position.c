@@ -1,27 +1,26 @@
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <prophet/position/position.h>
-
 #include <prophet/hash.h>
 #include <prophet/position/piece.h>
+#include <prophet/position/position.h>
 #include <prophet/util/bitmap.h>
 #include <prophet/util/error.h>
 #include <prophet/util/string_utils.h>
+
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "position_internal.h"
 
 /**
  * \brief Reset a chess position to the initial position.
  *
- * \param p     A pointer to the chess position to reset
+ * \param pos           a pointer to the chess position to reset
  */
-void reset_pos(position* p)
+void reset_pos(position* pos)
 {
-    assert(p != 0);
+    assert(pos != 0);
 
-    set_pos(p, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    set_pos(pos, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
 
 /**
@@ -62,8 +61,8 @@ void reset_pos(position* p)
  *  6. Fullmove number: The number of the full move. It starts at 1, and is 
  *     incremented after Black's move.
  *
- * \param p     A pointer to the chess position to set
- * \param fen   The FEN description of the position
+ * \param pos           a pointer to the chess position to set
+ * \param fen           the FEN description of the position
  *
  * \return true if successful, false otherwise
  */

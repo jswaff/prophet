@@ -4,29 +4,28 @@
 
 #include <prophet/position/position.h>
 #include <prophet/util/bitmap.h>
-#include <prophet/parameters.h>
 
 #include "movegen_internal.h"
 
 static uint64_t king_moves[64];
 
-static move* add_castle(move* m, square_t from, square_t to);
+static move_t* add_castle(move_t* m, square_t from, square_t to);
 
 /**
  * \brief Generate pseudo-legal king moves
  *
  * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m. It is assumed there is enough memory allocated to contain all 
+ * by \p m.  It is assumed there is enough memory allocated to contain all 
  * generated moves.
  *
- * \param m             Pointer to a move stack
- * \param p             A chess position
- * \param caps          Whether capturing moves should be generated.
- * \param noncaps       Whether noncapturing moves should be generated.
+ * \param m             a pointer to a move stack
+ * \param p             a pointer to a chess position
+ * \param caps          whether capturing moves should be generated
+ * \param noncaps       whether noncapturing moves should be generated
  *
- * \return  Move pointer one greater than the last move added.
+ * \return move pointer one greater than the last move added
  */
-move* gen_king_moves(move* m, const position* p, bool caps, bool noncaps)
+move_t* gen_king_moves(move_t* m, const position* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 
@@ -35,8 +34,8 @@ move* gen_king_moves(move* m, const position* p, bool caps, bool noncaps)
     return gen_king_moves_from_sq(m, p, sq, caps, noncaps);
 }
 
-move* gen_king_moves_from_sq(
-    move* m, const position* p, square_t from, bool caps, bool noncaps)
+move_t* gen_king_moves_from_sq(
+    move_t* m, const position* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
@@ -87,20 +86,19 @@ move* gen_king_moves_from_sq(
 }
 
 /**
- * \brief Get king moves
+ * \brief Get king moves.
  *
- * \param p             Pointer to a chess position
- * \param from          The square the king is moving from
+ * \param from          the square the king is moving from
  * \param targets       target squares
  *
- * \return The subset of target squares the king can move to.
+ * \return the subset of target squares the king can move to
  */
 uint64_t get_king_moves(square_t from, uint64_t targets)
 {
     return king_moves[from] & targets;
 }
 
-static move* add_castle(move* m, square_t from, square_t to)
+static move_t* add_castle(move_t* m, square_t from, square_t to)
 {
     *m = to_move(KING, from, to);
     set_castle(m);

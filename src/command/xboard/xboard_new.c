@@ -1,10 +1,10 @@
-#include <stdio.h>
-#include <string.h>
-
-#include <prophet/position/position.h>
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
+#include <prophet/position/position.h>
+
+#include <stdio.h>
+#include <string.h>
 
 extern position gpos;
 extern bool xboard_force_mode;
@@ -19,11 +19,11 @@ extern bool xboard_force_mode;
  * Stop clocks. Do not ponder on this move, even if pondering is on. Remove any
  * search depth limit previously set by the sd command.  
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_new(const char* input, int* exit_status)
 {

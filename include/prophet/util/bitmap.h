@@ -11,7 +11,7 @@ extern "C" {
 /**
 * \brief Count the number of bits set in a 64 bit value.
 *
-* \return The number of bits set.
+* \return the number of bits set
 */
 uint32_t popcnt(uint64_t val);
 
@@ -23,9 +23,9 @@ uint32_t popcnt(uint64_t val);
  *
  * It is an error to call this function with a value of 0.
  *
- * \param val   The 64 bit value
+ * \param val           the 64 bit value
  *
- * \return the bit position of the least significant bit.
+ * \return the bit position of the least significant bit
  */
 uint32_t get_lsb(uint64_t val);
 
@@ -37,12 +37,11 @@ uint32_t get_lsb(uint64_t val);
  *
  * It is an error to call this function with a value of 0.
  *
- * \param val   The 64 bit value
+ * \param val           the 64 bit value
  *
- * \return the bit position of the most significant bit.
+ * \return the bit position of the most significant bit
  */
 uint32_t get_msb(uint64_t val);
-
 
 /**
  * \brief Isolate a single bit in a 64 bit value.
@@ -57,10 +56,10 @@ uint32_t get_msb(uint64_t val);
  * Passing an index greater than or equal to the number of bits set will yield 
  * a return value of 0.
  *
- * \param val       A 64 bit value
- * \param index     The index of the bit to isolate
+ * \param val           a 64 bit value
+ * \param index         the index of the bit to isolate
  *
- * \return A 64 bit value isolating a single bit.
+ * \return a 64 bit value isolating a single bit
  */
 uint64_t isolate_bit(uint64_t val, uint32_t index);
 

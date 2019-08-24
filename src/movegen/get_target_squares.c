@@ -2,7 +2,6 @@
 #include <stdint.h>
 
 #include <prophet/const.h>
-#include <prophet/parameters.h>
 
 #include "movegen_internal.h"
 
@@ -13,11 +12,11 @@
  * \p noncaps is set, targets includes all empty squares.  Note the two 
  * options are not mutually exclusive.
  *
- * \param p             A pointer to a chess position
- * \param caps          If capture targets should be included
- * \param noncaps       If non-capture targets should be included
+ * \param p             a pointer to a chess position
+ * \param caps          jf capture targets should be included
+ * \param noncaps       jf non-capture targets should be included
  *
- * \return The set of target squares
+ * \return the set of target squares
  */
 uint64_t get_target_squares(const position* p, bool caps, bool noncaps)
 {

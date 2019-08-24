@@ -12,7 +12,7 @@ extern "C" {
 /**
  * \brief Return the number of milliseconds since epoch.
  *
- * \return The number of milliseconds since epoch.
+ * \return the number of milliseconds since epoch
  */
 int32_t milli_timer();
 

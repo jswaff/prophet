@@ -1,8 +1,8 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 #include <prophet/error_codes.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "command_internal.h"
 
@@ -13,11 +13,11 @@
  * For this reason, it's important to check both the return code and the exit
  * status.
  *
- * \param input         The user entered input
+ * \param input         the user entered input
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int parse_and_execute(const char* input, int* exit_status)
 {

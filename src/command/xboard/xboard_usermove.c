@@ -1,16 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <prophet/command.h>
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
 #include <prophet/position/move.h>
-#include <prophet/util/legal.h>
 #include <prophet/util/select_move.h>
 #include <prophet/util/string_utils.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 extern position gpos;
 extern bool xboard_force_mode;
@@ -23,11 +22,11 @@ extern bool xboard_force_mode;
  * not in force mode, stop the opponent's clock, start the engine's clock, 
  * start thinking, and eventually make a move. 
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_usermove(const char* input, int* exit_status)
 {
@@ -54,7 +53,7 @@ int xboard_usermove(const char* input, int* exit_status)
     }
 
     /* parse the move */
-    move mv = str_to_move(str_mv, &gpos);
+    move_t mv = str_to_move(str_mv, &gpos);
     if (NO_MOVE == mv)
     {
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE;
@@ -90,7 +89,7 @@ int xboard_usermove(const char* input, int* exit_status)
     else if (!xboard_force_mode)
     {
         /* the game continues.  start thinking and (eventually) make a move. */
-        move engine_mv = select_move(&gpos);
+        move_t engine_mv = select_move(&gpos);
         apply_move(&gpos, engine_mv, &u);
         char* str_engine_mv = move_to_str(engine_mv);
         printf("move %s\n", str_engine_mv);

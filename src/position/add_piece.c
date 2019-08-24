@@ -1,16 +1,16 @@
-#include <assert.h>
-
 #include <prophet/hash.h>
 #include <prophet/position/piece.h>
+
+#include <assert.h>
 
 #include "position_internal.h"
 
 /**
  * \brief Add a piece to a chess position
  *
- * \param p         A pointer to a chess position
- * \param piece     The piece to add
- * \param sq        The square to add the piece to
+ * \param p             a pointer to a chess position
+ * \param piece         the piece to add
+ * \param sq            the square to add the piece to
  */
 void add_piece(position *p, int32_t piece, square_t sq)
 {

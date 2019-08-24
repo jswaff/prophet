@@ -11,8 +11,8 @@
  * The move should be the last move played over the board.  No verification 
  * is done to ensure the position is left in a legal state.
  *
- * \param p         A pointer to a chess position
- * \param u         A pointer to the undo information
+ * \param pos           a pointer to a chess position
+ * \param u             a pointer to the undo information
  */
 void undo_move(position* p, const undo* u)
 {
@@ -26,7 +26,7 @@ void undo_move(position* p, const undo* u)
     p->fifty_counter = u->fifty_counter;
     p->move_counter--;
 
-    move mv = u->mv;
+    move_t mv = u->mv;
     assert(abs((int)u->captured) == (int)get_captured_piece(mv));
 
     /* remove the moving piece from the destination square */

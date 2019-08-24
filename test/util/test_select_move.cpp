@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
 #include <prophet/const.h>
+#include <prophet/movegen.h>
 #include <prophet/position/move.h>
 #include <prophet/position/position.h>
-#include <prophet/util/legal.h>
 #include <prophet/util/select_move.h>
 
 /**
@@ -14,7 +14,7 @@ TEST(select_move_test, basic_test)
     position pos;
     reset_pos(&pos);
 
-    move mv = select_move(&pos);
+    move_t mv = select_move(&pos);
     EXPECT_NE(NO_MOVE, mv);
     EXPECT_TRUE(is_legal_move(mv, &pos));
 

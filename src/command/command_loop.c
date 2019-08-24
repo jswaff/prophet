@@ -1,8 +1,8 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 #include <prophet/error_codes.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "command_internal.h"
 
@@ -14,7 +14,7 @@
  * Repeatedly reads, parses, and executes user commands until a command sets
  * the exit status flag.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int command_loop()
 {

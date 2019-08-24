@@ -5,9 +5,9 @@
 
 #include "position_internal.h"
 
-static piece_t remove_captured_piece(position* p, move m);
-static void add_piece_to_destination(position* p, move m);
-static void remove_castling_availability(position* p, move mv);
+static piece_t remove_captured_piece(position* p, move_t m);
+static void add_piece_to_destination(position* p, move_t m);
+static void remove_castling_availability(position* p, move_t mv);
 static void remove_rook_castling_availability(position *p, square_t sq);
 
 /**
@@ -17,61 +17,61 @@ static void remove_rook_castling_availability(position *p, square_t sq);
  * performed). Records the information necessary to undo this move to restore 
  * the original position.
  *
- * \param p         A pointer to a chess position
- * \param m         The move to apply
- * \param u         A pointer to an undo structure to receive the undo 
- *                  information.
+ * \param pos           a pointer to a chess position
+ * \param m             the move to apply
+ * \param u             a pointer to an undo structure to receive the undo 
+ *                      information
  */
-void apply_move(position* p, move m, undo* u)
+void apply_move(position* pos, move_t m, undo* u)
 {
-    assert(p);
+    assert(pos);
     assert(clear_score(m));
-    assert(verify_pos(p));
+    assert(verify_pos(pos));
     assert(u);
 
     /* capture information to undo move */
     u->mv = m;
-    u->hash_key = p->hash_key;
-    u->ep_sq = p->ep_sq;
-    u->fifty_counter = p->fifty_counter;
-    u->castling_rights = p->castling_rights;
+    u->hash_key = pos->hash_key;
+    u->ep_sq = pos->ep_sq;
+    u->fifty_counter = pos->fifty_counter;
+    u->castling_rights = pos->castling_rights;
 
     /* clear current values */
-    p->hash_key ^= zkeys.ptm[p->player];
-    p->hash_key ^= zkeys.ep[p->ep_sq];
-    p->hash_key ^= zkeys.casting_rights[p->castling_rights];
+    pos->hash_key ^= zkeys.ptm[pos->player];
+    pos->hash_key ^= zkeys.ep[pos->ep_sq];
+    pos->hash_key ^= zkeys.casting_rights[pos->castling_rights];
 
-    p->player = opposite_player(p->player);
-    p->move_counter++;
+    pos->player = opposite_player(pos->player);
+    pos->move_counter++;
 
     if (is_capture(m)) 
     {
-        p->fifty_counter = 0;
-        u->captured = remove_captured_piece(p, m);
+        pos->fifty_counter = 0;
+        u->captured = remove_captured_piece(pos, m);
     } 
     else 
     {
-        p->fifty_counter++;
+        pos->fifty_counter++;
         u->captured = NO_PIECE;
     }
     assert(abs((int)u->captured) == (int)get_captured_piece(m));
 
     /* this could get reset */
-    p->ep_sq = NO_SQUARE;
+    pos->ep_sq = NO_SQUARE;
 
-    add_piece_to_destination(p, m);
-    remove_castling_availability(p, m);
-    remove_piece(p, get_from_sq(m));
+    add_piece_to_destination(pos, m);
+    remove_castling_availability(pos, m);
+    remove_piece(pos, get_from_sq(m));
 
     /* add in current values */
-    p->hash_key ^= zkeys.ptm[p->player];
-    p->hash_key ^= zkeys.ep[p->ep_sq];
-    p->hash_key ^= zkeys.casting_rights[p->castling_rights];
+    pos->hash_key ^= zkeys.ptm[pos->player];
+    pos->hash_key ^= zkeys.ep[pos->ep_sq];
+    pos->hash_key ^= zkeys.casting_rights[pos->castling_rights];
 
-    assert(verify_pos(p));
+    assert(verify_pos(pos));
 }
 
-static piece_t remove_captured_piece(position* p, move m)
+static piece_t remove_captured_piece(position* p, move_t m)
 {
     assert(is_capture(m));
     piece_t captured;
@@ -116,10 +116,10 @@ static piece_t remove_captured_piece(position* p, move m)
  *    - The king square is updated.
  *    - If it's a castle, the rook is moved.
  *
- * \param p         The chess position
- * \param m         A move being applied to the position
+ * \param pos           a pointer to a chess position
+ * \param m             a move being applied to the position
  */
-static void add_piece_to_destination(position* p, move m)
+static void add_piece_to_destination(position* p, move_t m)
 {
     square_t from_sq = get_from_sq(m), to_sq = get_to_sq(m);
     int32_t piece = p->piece[from_sq];
@@ -156,7 +156,7 @@ static void add_piece_to_destination(position* p, move m)
             break;
         case KING:
             p->white_king = to_sq;
-            // move rook if this is a castle
+            /* move rook if this is a castle */
             if (from_sq == E1) 
             {
                 if (to_sq == G1) 
@@ -198,7 +198,7 @@ static void add_piece_to_destination(position* p, move m)
     }
 }
 
-static void remove_castling_availability(position* p, move mv)
+static void remove_castling_availability(position* p, move_t mv)
 {
     /* if capturing a rook remove its castling availability */
     if (is_capture(mv)) 

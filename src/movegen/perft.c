@@ -1,10 +1,8 @@
+#include <prophet/const.h>
+#include <prophet/movegen.h>
+
 #include <assert.h>
 #include <stdbool.h>
-
-#include <prophet/const.h>
-
-#include "movegen_internal.h"
-
 
 /**
  * \brief Count all possible moves to a fixed depth.
@@ -23,18 +21,18 @@
  *
  * Reference: http://chessprogramming.wikispaces.com/Perft
  *
- * \param pos       The starting chess position
- * \param depth     The depth of the tree from this position.
+ * \param pos           a pointer to a chess position
+ * \param depth         the depth of the tree from this position
  *
- * \return - the number of moves generated
+ * \return the number of moves generated
  */
 uint64_t perft(position* pos, uint32_t depth)
 {
     uint64_t nodes=0;
-    move moves[MAX_MOVES_PER_PLY];
+    move_t moves[MAX_MOVES_PER_PLY];
     undo u;
 
-    move* endp = gen_legal_moves(moves, pos, true, true);
+    move_t* endp = gen_legal_moves(moves, pos, true, true);
 
     if (depth == 1) 
     {
@@ -43,7 +41,7 @@ uint64_t perft(position* pos, uint32_t depth)
         return caps + noncaps;
     }
 
-    for (move* mp=moves; mp<endp; mp++) 
+    for (move_t* mp=moves; mp<endp; mp++) 
     {
         if (*mp==0) continue; /* move purged as illegal */
         apply_move(pos, *mp, &u);

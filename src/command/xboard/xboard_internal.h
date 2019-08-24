@@ -1,8 +1,6 @@
 #ifndef _XBOARD_INTERNAL_H_
 #define _XBOARD_INTERNAL_H_
 
-#include <prophet/command.h>
-
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
@@ -16,11 +14,11 @@ extern "C" {
  * should check that moves received in force mode are legal and made in the 
  * proper turn, but should not think, ponder, or make moves of its own.
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_force(const char* input, int* exit_status);
 
@@ -32,11 +30,11 @@ int xboard_force(const char* input, int* exit_status);
  * clock with the color that is not on move. Start the engine's clock. Start 
  * thinking and eventually make a move.
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_go(const char* input, int* exit_status);
 
@@ -50,25 +48,24 @@ int xboard_go(const char* input, int* exit_status);
  * Stop clocks. Do not ponder on this move, even if pondering is on. Remove any
  * search depth limit previously set by the sd command.  
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_new(const char* input, int* exit_status);
-
 
 /**
  * \brief Execute the xboard ping command 
  * 
  * Respond to the ping N command with a pong N.  
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_ping(const char* input, int* exit_status);
 
@@ -77,22 +74,22 @@ int xboard_ping(const char* input, int* exit_status);
  * 
  * Respond to the protover command by printing a list of supported features.  
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_protover(const char* input, int* exit_status);
 
 /**
  * \brief Execute the xboard result command 
  * 
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_result(const char* input, int* exit_status);
 
@@ -104,11 +101,11 @@ int xboard_result(const char* input, int* exit_status);
  * not in force mode, stop the opponent's clock, start the engine's clock, 
  * start thinking, and eventually make a move. 
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_usermove(const char* input, int* exit_status);
 

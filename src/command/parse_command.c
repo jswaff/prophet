@@ -1,9 +1,9 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdbool.h>
-
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "command_internal.h"
 #include "xboard/xboard_internal.h"
@@ -72,10 +72,10 @@ struct function_table_entry function_table[] = {
  * to map the input to a command does not generate a failure return code.  In 
  * this case the input is mapped to the no-op command.
  *
- * \param cmd           Pointer to structure to receive parsed command
+ * \param cmd           pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int parse_command(user_command_t* cmd, const char* input)
 {

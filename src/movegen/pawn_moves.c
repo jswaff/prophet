@@ -1,34 +1,33 @@
+#include <prophet/position/position.h>
+#include <prophet/util/bitmap.h>
+
 #include <assert.h>
 #include <stdbool.h>
 
-#include <prophet/position/position.h>
-#include <prophet/util/bitmap.h>
-#include <prophet/parameters.h>
-
 #include "movegen_internal.h"
 
-static move* add_pawn_move(
-    move* m, square_t from, square_t to, piece_t captured_piece, 
+static move_t* add_pawn_move(
+    move_t* m, square_t from, square_t to, piece_t captured_piece, 
     bool epcapture);
-static move* add_promotion(
-    move* m, square_t from, square_t to, piece_t promopiece, 
+static move_t* add_promotion(
+    move_t* m, square_t from, square_t to, piece_t promopiece, 
     piece_t captured_piece);
 
 /**
  * \brief Generate pseudo-legal pawn moves
  *
  * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m.  It is assumed there is enough memory allocated to contain all 
+ * by \p m. It is assumed there is enough memory allocated to contain all 
  * generated moves.
  *
- * \param m             Pointer to a move stack
- * \param p             A chess position
- * \param caps          Whether capturing moves should be generated.
- * \param noncaps       Whether noncapturing moves should be generated.
+ * \param m             a pointer to a move stack
+ * \param p             a pointer to a chess position
+ * \param caps          whether capturing moves should be generated
+ * \param noncaps       whether noncapturing moves should be generated
  *
- * \return  Move pointer one greater than the last move added.
+ * \return move pointer one greater than the last move added
  */
-move* gen_pawn_moves(move* m, const position* p, bool caps, bool noncaps)
+move_t* gen_pawn_moves(move_t* m, const position* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 
@@ -162,17 +161,17 @@ move* gen_pawn_moves(move* m, const position* p, bool caps, bool noncaps)
  * If the move is a capture then the capture flag is set.  If it is a promotion 
  * then four moves are added.
  *
- * \param m                Pointer to a move stack
- * \param from             The square the pawn is moving from
- * \param to               The square the pawn is moving to
- * \param captured_piece   The captured piece.  May be NO_PIECE if not a 
- *                         capture.
- * \param epcapture        If the move is an en-passant capture
+ * \param m             pointer to a move stack
+ * \param from          the square the pawn is moving from
+ * \param to            the square the pawn is moving to
+ * \param captured_piece   the captured piece.  May be NO_PIECE if not a 
+ *                      capture.
+ * \param epcapture     if the move is an en-passant capture
  *
- * \return  Move pointer one greater than the last move added.
+ * \return move pointer one greater than the last move added.
  */
-static move* add_pawn_move(
-    move* m, square_t from, square_t to, piece_t captured_piece, 
+static move_t* add_pawn_move(
+    move_t* m, square_t from, square_t to, piece_t captured_piece, 
     bool epcapture)
 {
     rank_t r = get_rank(to);
@@ -206,17 +205,17 @@ static move* add_pawn_move(
  *
  * If the move is a capture then the capture flag is set.
  *
- * \param m                Pointer to a move stack
- * \param from             The square the pawn is moving from
- * \param to               The square the pawn is moving to
- * \param promopiece       The piece to promote the pawn to : Q/R/B/N
- * \param captured_piece   The captured piece.  May be NO_PIECE if not a 
- *                         capture.
+ * \param m             tointer to a move stack
+ * \param from          the square the pawn is moving from
+ * \param to            the square the pawn is moving to
+ * \param promopiece    the piece to promote the pawn to : Q/R/B/N
+ * \param captured_piece   the captured piece.  May be NO_PIECE if not a 
+ *                      capture.
  *
- * \return  Move pointer one greater than the last move added.
+ * \return move pointer one greater than the last move added
  */
-static move* add_promotion(
-    move* m, square_t from, square_t to, piece_t promopiece, 
+static move_t* add_promotion(
+    move_t* m, square_t from, square_t to, piece_t promopiece, 
     piece_t captured_piece)
 {
     *m = to_move(PAWN, from, to);

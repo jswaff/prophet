@@ -1,9 +1,9 @@
-#include <stdbool.h>
-#include <string.h>
-
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
+
+#include <stdbool.h>
+#include <string.h>
 
 bool xboard_force_mode;
 
@@ -14,11 +14,11 @@ bool xboard_force_mode;
  * should check that moves received in force mode are legal and made in the 
  * proper turn, but should not think, ponder, or make moves of its own.
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_force(const char* input, int* exit_status)
 {

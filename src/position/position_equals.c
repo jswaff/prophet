@@ -1,7 +1,7 @@
+#include <prophet/position/position.h>
+
 #include <stdbool.h>
 #include <stdint.h>
-
-#include <prophet/position/position.h>
 
 /**
  * \brief Test two positions for equality
@@ -10,11 +10,11 @@
  * relaxed somewhat - the fifty move counter and move counter are not required 
  * to be equal.
  *
- * \param p1        A pointer to a chess position
- * \param p2        A pointer to a second chess position
- * \param strict    strict mode
+ * \param p1            a pointer to a chess position
+ * \param p2            a pointer to a second chess position
+ * \param strict        strict mode
  *
- * \return      A boolean indicating if the positions are equal.
+ * \return a boolean indicating if the positions are equal
  */
 bool pos_equals(const position* p1, const position* p2, bool strict)
 {

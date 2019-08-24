@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
-#include <prophet/position/move.h>
 #include <prophet/const.h>
+#include <prophet/position/move.h>
 
 TEST(move_test, to_move)
 {
-    move mv = to_move(PAWN,E2,E4);
+    move_t mv = to_move(PAWN,E2,E4);
     EXPECT_EQ(get_piece(mv), PAWN);
     EXPECT_EQ(get_from_sq(mv), E2);
     EXPECT_EQ(get_to_sq(mv), E4);
@@ -17,7 +17,7 @@ TEST(move_test, to_move)
 
 TEST(move_test, set_promopiece)
 {
-    move mv = to_move(PAWN,B2,B1);
+    move_t mv = to_move(PAWN,B2,B1);
     EXPECT_EQ(get_piece(mv), PAWN);
     EXPECT_EQ(get_from_sq(mv), B2);
     EXPECT_EQ(get_to_sq(mv), B1);
@@ -67,7 +67,7 @@ TEST(move_test, set_promopiece)
 
 TEST(move_test, set_capture)
 {
-    move mv = to_move(BISHOP,F3,C6);
+    move_t mv = to_move(BISHOP,F3,C6);
     EXPECT_EQ(get_piece(mv), BISHOP);
     EXPECT_EQ(get_from_sq(mv), F3);
     EXPECT_EQ(get_to_sq(mv), C6);
@@ -90,7 +90,7 @@ TEST(move_test, set_capture)
 
 TEST(move_test, set_epcapture)
 {
-    move mv = to_move(PAWN,D4,C3);
+    move_t mv = to_move(PAWN,D4,C3);
     set_epcapture(&mv);
     EXPECT_EQ(get_piece(mv), PAWN);
     EXPECT_EQ(get_from_sq(mv), D4);
@@ -104,7 +104,7 @@ TEST(move_test, set_epcapture)
 
 TEST(move_test, set_castle)
 {
-    move mv = to_move(KING,E1,H1);
+    move_t mv = to_move(KING,E1,H1);
     set_castle(&mv);
     EXPECT_EQ(get_piece(mv), KING);
     EXPECT_EQ(get_from_sq(mv), E1);
@@ -117,7 +117,7 @@ TEST(move_test, set_castle)
 
 TEST(move_test, move_score)
 {
-    move mv = to_move(PAWN,E2,E4);
+    move_t mv = to_move(PAWN,E2,E4);
     EXPECT_EQ(get_move_score(mv), 0);
 
     set_move_score(&mv,100);
@@ -143,12 +143,12 @@ TEST(move_test, move_score)
 
 TEST(move_test, clear_score)
 {
-    move mv = to_move(PAWN,E2,E4);
+    move_t mv = to_move(PAWN,E2,E4);
     EXPECT_EQ(get_move_score(mv), 0);
 
     set_move_score(&mv, 100);
     EXPECT_EQ(get_move_score(mv), 100);
-    move cmv = clear_score(mv);
+    move_t cmv = clear_score(mv);
     EXPECT_EQ(get_move_score(cmv), 0);
 
     set_move_score(&mv, -CHECKMATE);

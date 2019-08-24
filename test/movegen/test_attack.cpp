@@ -4,8 +4,6 @@
 
 #include "../../src/movegen/movegen_internal.h"
 
-extern bool is_in_move_list(move mv, const move* start, const move* end);
-
 TEST(movegen_test, attacked_by_bishop)
 {
     position pos;

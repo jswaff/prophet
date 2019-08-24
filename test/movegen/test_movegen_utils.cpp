@@ -3,8 +3,18 @@
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
 
-extern bool is_in_move_list(move mv, const move* start, const move* end);
 
+TEST(movegen_utils_test, is_legal_move)
+{
+    position pos;
+    reset_pos(&pos);
+
+    move_t legal = to_move(PAWN, E2, E4);
+    EXPECT_TRUE(is_legal_move(legal, &pos));
+
+    move_t illegal = to_move(PAWN, E2, E5);
+    EXPECT_FALSE(is_legal_move(illegal, &pos));
+}
 
 TEST(movegen_utils_test, num_legal_moves)
 {

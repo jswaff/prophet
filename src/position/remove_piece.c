@@ -1,17 +1,17 @@
-#include <assert.h>
-
 #include <prophet/hash.h>
 #include <prophet/position/piece.h>
+
+#include <assert.h>
 
 #include "position_internal.h"
 
 /**
  * \brief Remove a piece from a chess position
  *
- * \param p         A pointer to a chess position
- * \param sq        The square to remove the piece from
+ * \param p             a pointer to a chess position
+ * \param sq            the square to remove the piece from
  *
- * \return          The piece that was removed
+ * \return the piece that was removed
  */
 piece_t remove_piece(position* p,square_t sq)
 {

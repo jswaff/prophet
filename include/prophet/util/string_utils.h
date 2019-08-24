@@ -1,8 +1,8 @@
 #ifndef _STRING_UTILS_H_
 #define _STRING_UTILS_H_
 
-#include <prophet/position/square.h>
 #include <prophet/position/position.h>
+#include <prophet/position/square.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -20,12 +20,12 @@ extern "C" {
  *
  * Note, this routine does NOT validate move legality.
  *
- * \param str_mv   The string to convert.
- * \param pos      The chess position the move applies to.
+ * \param str_mv        the string to convert
+ * \param pos           the chess position the move applies to
  * 
- * \return  The move if valid, or NO_MOVE on failure.
+ * \return the move if valid, or NO_MOVE on failure
  */
-move str_to_move(const char* str_mv, const position* pos);
+move_t str_to_move(const char* str_mv, const position* pos);
 
 /**
  * \brief Convert a string to a square.
@@ -34,51 +34,51 @@ move str_to_move(const char* str_mv, const position* pos);
  * letter A-H (lower or upper),and the second a number 1-8.  E.g. A1, b2, e3 
  * are all valid.
  *
- * \param str_sq   The string to convert.
+ * \param str_sq        the string to convert
  *
- * \return  The square if valid, or NO_SQUARE on failure.
+ * \return the square if valid, or NO_SQUARE on failure
  */
 square_t str_to_sq(const char* str_sq);
 
 /**
  * \brief Convert a move to a string.
  *
- * Returns a pointer to a null-terminated byte string.  The returned pointer
- * must be passed to free to avoid a memory leak.
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
  *
  * If an error occurs, a null pointer is returned.
  *
- * \param mv        The move to convert
+ * \param mv            the move to convert
  *
- * \return A null terminated byte string.
+ * \return a null terminated string
  */
-char* move_to_str(move mv);
+char* move_to_str(move_t mv);
 
 /**
  * \brief Convert a square to a string.
  *
- * Returns a pointer to a null-terminated byte string.  The returned pointer
- * must be passed to free to avoid a memory leak.
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
  *
  * If an error occurs, a null pointer is returned.
  *
- * \param sq        The square to convert
+ * \param sq            the square to convert
  *
- * \return A null terminated byte string.
+ * \return a null terminated string
  */ 
 char* sq_to_str(square_t sq);
 
 /**
  * \brief Convert a position into a string.
  *
- * Returns a pointer to a null-terminated byte string.  The returned pointer
- * must be passed to free to avoid a memory leak.
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
  *
  * If an error occurs, a null pointer is returned.
  *
- * \param pos       A pointer to a chess position.
+ * \param pos           a pointer to a chess position
  *
- * \return A null terminated byte string.
+ * \return a null terminated byte string
  */
 char* pos_to_str(const position* pos);
 

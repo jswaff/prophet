@@ -1,11 +1,11 @@
-#include <stdbool.h>
-#include <stdlib.h>
-
-#include <prophet/position/move.h>
-#include <prophet/position/position.h>
 #include <prophet/const.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
+#include <prophet/position/move.h>
+#include <prophet/position/position.h>
+
+#include <stdbool.h>
+#include <stdlib.h>
 
 
 /**
@@ -16,15 +16,15 @@
  *
  * This is a temporary implementation that just chooses a move at random.
  *
- * \param pos           A pointer to the chess position.
+ * \param pos           a pointer to the chess positions
  *
- * \return a move to play, or NO_MOVE if there isn't one.
+ * \return a move to play, or NO_MOVE if there isn't one
  */
-move select_move(const position* pos)
+move_t select_move(const position* pos)
 {
     /* generate legal moves */
-    move moves[MAX_MOVES_PER_PLY];
-    move *endp = gen_legal_moves(moves, pos, true, true);
+    move_t moves[MAX_MOVES_PER_PLY];
+    move_t *endp = gen_legal_moves(moves, pos, true, true);
 
     /* count the number of moves to choose from */
     int num_caps, num_noncaps;
@@ -43,7 +43,7 @@ move select_move(const position* pos)
     /* fetch the move from the stack.  since the list isn't contiguous, (it
      * contains some NO_MOVE entries), we need to iterate. */
     int i = 0;
-    for (move* mp = moves; mp < endp; mp++) 
+    for (move_t* mp = moves; mp < endp; mp++) 
     {
         if (*mp != NO_MOVE)
         {

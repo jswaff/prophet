@@ -22,9 +22,9 @@ static bool verify_hash_keys(const position* pos);
  * All errors found are logged.  Execution is not stopped on the first error 
  * found.
  *
- * \param pos       The position to verify
+ * \param pos       a pointer to the position to verify
  *
- * \return          boolean value indicating if the position is consistent.
+ * \return boolean value indicating if the position is consistent
  */
 bool verify_pos(const position* pos)
 {

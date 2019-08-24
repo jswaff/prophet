@@ -1,12 +1,12 @@
-#include <string.h>
-#include <stdio.h>
-
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
 #include <prophet/position/position.h>
 #include <prophet/util/p4time.h>
+
+#include <stdio.h>
+#include <string.h>
 
 extern position gpos;
 
@@ -18,11 +18,11 @@ extern position gpos;
  * The number of nodes and nodes-per-second are printed to stdout for each
  * iteration.
  *
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int command_perft(const char* input, int* exit_status)
 {

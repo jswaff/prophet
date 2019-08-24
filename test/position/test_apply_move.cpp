@@ -10,7 +10,7 @@ TEST(pos_test, apply_move_sequence1)
     reset_pos(&pos1);
     undo u;
 
-    move mv = to_move(PAWN, E2, E4);
+    move_t mv = to_move(PAWN, E2, E4);
     apply_move(&pos1, mv, &u);
     position pos2;
     set_pos(&pos2, 
@@ -126,7 +126,7 @@ TEST(pos_test, apply_move_sequence2)
     EXPECT_TRUE(can_castle_bq(&pos));
 
     // queenside black rook takes white rook removed qside castling options
-    move mv = to_capture(ROOK, A1, A8, ROOK);
+    move_t mv = to_capture(ROOK, A1, A8, ROOK);
     apply_move(&pos, mv, &u);
     EXPECT_TRUE(can_castle_wk(&pos));
     EXPECT_FALSE(can_castle_wq(&pos));

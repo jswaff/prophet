@@ -4,15 +4,13 @@
 
 #include "../../src/movegen/movegen_internal.h"
 
-extern bool is_in_move_list(move mv, const move* start, const move* end);
-
 
 TEST(movegen_test, pawn_moves_initial_position)
 {
     position pos;
     reset_pos(&pos);
 
-    move moves[20], *mp;
+    move_t moves[20], *mp;
 
     mp = gen_pawn_moves(moves, &pos, true, true);
 
@@ -62,7 +60,7 @@ TEST(movegen_test, pawn_moves)
 {
     position pos;
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
-    move moves[20], *mp, mv;
+    move_t moves[20], *mp, mv;
 
     mp = gen_pawn_moves(moves, &pos, true, true);
 
@@ -133,7 +131,7 @@ TEST(movegen_test, pawn_captures)
 {
     position pos;
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
-    move moves[20], *mp, mv;
+    move_t moves[20], *mp, mv;
 
     mp = gen_pawn_moves(moves, &pos, true, false);
 
@@ -197,7 +195,7 @@ TEST(movegen_test, pawn_noncaptures)
 {
     position pos;
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
-    move moves[20], *mp;
+    move_t moves[20], *mp;
 
     mp = gen_pawn_moves(moves, &pos, false, true);
 

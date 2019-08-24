@@ -1,6 +1,6 @@
-#include <stdbool.h>
-
 #include <prophet/position/position.h>
+
+#include <stdbool.h>
 
 bool initialized = false;
 

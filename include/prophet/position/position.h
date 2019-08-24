@@ -1,12 +1,12 @@
 #ifndef _POS_H_
 #define _POS_H_
 
+#include <prophet/position/move.h>
+#include <prophet/position/square.h>
+
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#include <prophet/position/square.h>
-#include <prophet/position/move.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -57,7 +57,7 @@ typedef struct
 
 typedef struct 
 {
-    move mv;
+    move_t mv;
     uint64_t hash_key;
     piece_t captured;
     square_t ep_sq;
@@ -68,9 +68,9 @@ typedef struct
 /**
  * \brief Reset a chess position to the initial position.
  *
- * \param p     A pointer to the chess position to reset
+ * \param pos           a pointer to the chess position to reset
  */
-void reset_pos(position* p);
+void reset_pos(position* pos);
 
 /**
  * \brief Set a chess position
@@ -110,12 +110,12 @@ void reset_pos(position* p);
  *  6. Fullmove number: The number of the full move. It starts at 1, and is 
  *     incremented after Black's move.
  *
- * \param p     A pointer to the chess position to set
- * \param fen   The FEN description of the position
+ * \param pos           a pointer to the chess position to set
+ * \param fen           the FEN description of the position
  *
  * \return true if successful, false otherwise
  */
-bool set_pos(position* p, const char* fen);
+bool set_pos(position* pos, const char* fen);
 
 /**
  * \brief Apply a chess move to a chess position.
@@ -124,12 +124,12 @@ bool set_pos(position* p, const char* fen);
  * performed). Records the information necessary to undo this move to restore 
  * the original position.
  *
- * \param p         A pointer to a chess position
- * \param m         The move to apply
- * \param u         A pointer to an undo structure to receive the undo 
- *                  information.
+ * \param pos           a pointer to a chess position
+ * \param m             the move to apply
+ * \param u             a pointer to an undo structure to receive the undo 
+ *                      information
  */
-void apply_move(position* p, move m, undo* u);
+void apply_move(position* pos, move_t m, undo* u);
 
 /**
  * \brief Undo (reverse) a move.
@@ -137,10 +137,10 @@ void apply_move(position* p, move m, undo* u);
  * The move should be the last move played over the board.  No verification 
  * is done to ensure the position is left in a legal state.
  *
- * \param p         A pointer to a chess position
- * \param u         A pointer to the undo information
+ * \param pos           a pointer to a chess position
+ * \param u             a pointer to the undo information
  */
-void undo_move(position* p, const undo* u);
+void undo_move(position* pos, const undo* u);
 
 static inline bool can_castle_wk(const position* pos) 
 {

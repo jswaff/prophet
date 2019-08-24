@@ -15,30 +15,30 @@ extern "C" {
  * relaxed somewhat - the fifty move counter and move counter are not required 
  * to be equal.
  *
- * \param p1        A pointer to a chess position
- * \param p2        A pointer to a second chess position
- * \param strict    strict mode
+ * \param p1            a pointer to a chess position
+ * \param p2            a pointer to a second chess position
+ * \param strict        strict mode
  *
- * \return      A boolean indicating if the positions are equal.
+ * \return a boolean indicating if the positions are equal
  */
 bool pos_equals(const position* p1, const position* p2, bool strict);
 
 /**
  * \brief Add a piece to a chess position
  *
- * \param p         A pointer to a chess position
- * \param piece     The piece to add
- * \param sq        The square to add the piece to
+ * \param p             a pointer to a chess position
+ * \param piece         the piece to add
+ * \param sq            the square to add the piece to
  */
 void add_piece(position* p, int32_t piece, square_t sq);
 
 /**
  * \brief Remove a piece from a chess position
  *
- * \param p         A pointer to a chess position
- * \param sq        The square to remove the piece from
+ * \param p             a pointer to a chess position
+ * \param sq            the square to remove the piece from
  *
- * \return          The piece that was removed
+ * \return the piece that was removed
  */
 piece_t remove_piece(position* p, square_t sq);
 
@@ -48,9 +48,9 @@ piece_t remove_piece(position* p, square_t sq);
  * Note this is not a fast operation.  It would be more performant to 
  * incrementally update the hash signature as moves are made on the board.
  *
- * \param pos       A pointer to a chess position
+ * \param pos           a pointer to a chess position
  *
- * \return  A 64 bit hash signature
+ * \return a 64 bit hash signature
  */
 uint64_t build_hash_key(const position* pos);
 
@@ -61,9 +61,9 @@ uint64_t build_hash_key(const position* pos);
  * Note this is not a fast operation.  It would be more performant to 
  * incrementally update the hash signature as pawn moves are made on the board.
  *
- * \param pos       A pointer to a chess position
+ * \param pos           a pointer to a chess position
  *
- * \return  A 64 bit hash signature
+ * \return a 64 bit hash signature
  */
 uint64_t build_pawn_key(const position* pos);
 
@@ -75,9 +75,9 @@ uint64_t build_pawn_key(const position* pos);
  * All errors found are logged.  Execution is not stopped on the first error 
  * found.
  *
- * \param pos       The position to verify
+ * \param pos           a pointer to the position to verify
  *
- * \return          boolean value indicating if the position is consistent.
+ * \return boolean value indicating if the position is consistent
  */
 bool verify_pos(const position* pos);
 

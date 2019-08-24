@@ -1,9 +1,10 @@
 #ifndef _MOVEGEN_H_
 #define _MOVEGEN_H_
 
-#include <stdbool.h>
-
 #include <prophet/position/position.h>
+
+#include <stdbool.h>
+#include <stdint.h>
 
 // make this header C++ friendly.
 #ifdef     __cplusplus
@@ -11,26 +12,25 @@ extern "C" {
 #endif    //__cplusplus
 
 /**
- * \brief Given position \p p, is square \p sq attacked by \p player?
+ * \brief Given position \p pos, is square \p sq attacked by \p player?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param pos           a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
-bool attacked(const position* p, square_t sq, color_t player);
+bool attacked(const position* pos, square_t sq, color_t player);
 
 /**
  * \brief Given position \p pos, is \p player in check?
  *
- * \param pos       The chess position
- * \param player    A player (white or black)
+ * \param pos           a pointer to a chess position
+ * \param player        a player (white or black)
  *
- * \return - true if the player is in check, otherwise false.
+ * \return true if the player is in check, otherwise false
  */
 bool in_check(const position* pos, color_t player);
-
 
 /**
  * \brief Generate a list of pseudo-legal moves.
@@ -42,16 +42,15 @@ bool in_check(const position* pos, color_t player);
  * It is assumed that the move stack contains enough storage for all moves 
  * generated.
  *
- * \param m         The start of a pre-allocated move stack.
- * \param p         The chess position
- * \param noncaps   If non-capturing moves should be generated
- * \param caps      If capturing moves should be generated
+ * \param m             the start of a pre-allocated move stack
+ * \param pos           a pointer to a chess position
+ * \param noncaps       if non-capturing moves should be generated
+ * \param caps          if capturing moves should be generated
  *
- * \return - A move pointer one greater than the last move produced.
+ * \return a move pointer one greater than the last move produced
  */
-move* gen_pseudo_legal_moves(
-    move* m, const position* p, bool caps, bool noncaps);
-
+move_t* gen_pseudo_legal_moves(
+    move_t* m, const position* pos, bool caps, bool noncaps);
 
 /**
  * \brief Generate a list of legal moves.
@@ -64,23 +63,24 @@ move* gen_pseudo_legal_moves(
  *
  * Note this method is significantly slower than generating pseudo-legal moves!
  *
- * \param m         The start of a pre-allocated move stack.
- * \param p         The chess position
- * \param noncaps   If non-capturing moves should be generated
- * \param caps      If capturing moves should be generated
+ * \param m             the start of a pre-allocated move stack.
+ * \param pos           a pointer to a chess position
+ * \param noncaps       if non-capturing moves should be generated
+ * \param caps          if capturing moves should be generated
  *
- * \return - A move pointer one greater than the last move produced.
+ * \return a move pointer one greater than the last move produced
  */
-move* gen_legal_moves(move* m, const position* p, bool caps, bool noncaps);
+move_t* gen_legal_moves(
+    move_t* m, const position* pos, bool caps, bool noncaps);
 
 /**
  * \brief Count the number of legal moves possible in a position.
  *
- * \param pos           A chess position
- * \param caps          Whether to include captures in the count
- * \param noncaps       Whether to include noncaptures in the count
+ * \param pos           a pointer to a chess position
+ * \param caps          whether to include captures in the count
+ * \param noncaps       whether to include noncaptures in the count
  *
- * \return - The number of legal moves.
+ * \return the number of legal moves
  */
 uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps);
 
@@ -91,31 +91,31 @@ uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps);
  * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
  * "moves" are not counted.
  *
- * \param startp        The starting address of a list of moves (inclusive)
- * \param endp          The ending address of a list of moves (exclusive)
- * \param caps          A pointer to an integer to receive the number of 
+ * \param startp        the starting address of a list of moves (inclusive)
+ * \param endp          the ending address of a list of moves (exclusive)
+ * \param caps          a pointer to an integer to receive the number of 
  *                      captures
- * \param noncaps       A pointer to an integer to receive the number of 
+ * \param noncaps       a pointer to an integer to receive the number of 
  *                      noncaptures
  */
 void num_moves_in_list(
-    const move* startp, const move* endp, int* caps, int* noncaps);
+    const move_t* startp, const move_t* endp, int* caps, int* noncaps);
 
 /**
  * \brief Has the current player been checkmated?
  *
- * \param pos           The chess position
+ * \param pos           a pointer to a chess position
  *
- * \return - true if the player has been checkmated, otherwise false.
+ * \return true if the player has been checkmated, otherwise false
  */
 bool is_checkmate(const position* pos);
 
 /**
  * \brief Has the current player been stalemated?
  *
- * \param pos           The chess position
+ * \param pos           a pointer to a chess position
  *
- * \return - true if the player has been stalemated, otherwise false.
+ * \return true if the player has been stalemated, otherwise false
  */
 bool is_stalemate(const position* pos);
 
@@ -124,12 +124,12 @@ bool is_stalemate(const position* pos);
  *
  * Test that a move is legal in a given position.
  *
- * \param mv            The move to test.
- * \param pos           A pointer to the chess position.
+ * \param mv            the move to test
+ * \param pos           a pointer to a chess position
  *
- * \return true if legal, otherwise false.
+ * \return true if legal, otherwise false
  */
-bool is_legal_move(move mv, const position* pos);
+bool is_legal_move(move_t mv, const position* pos);
 
 /**
  * \brief Test if a move is a member of a list.
@@ -137,13 +137,13 @@ bool is_legal_move(move mv, const position* pos);
  * Determine if a chess move is contained within a list of moves. The score 
  * portion of the move is ignored.
  *
- * \param mv            The move to look for
- * \param start         A pointer to the start of a move list
- * \param end           A pointer one past the end of a move list
+ * \param mv            the move to look for
+ * \param start         a pointer to the start of a move list
+ * \param end           a pointer one past the end of a move list
  *
- * \return true if the move is contained in the list, otherwise false.
+ * \return true if the move is contained in the list, otherwise false
  */
-bool is_in_move_list(move mv, const move* start, const move* end);
+bool is_in_move_list(move_t mv, const move_t* start, const move_t* end);
 
 
 /**
@@ -163,10 +163,10 @@ bool is_in_move_list(move mv, const move* start, const move* end);
  *
  * Reference: http://chessprogramming.wikispaces.com/Perft
  *
- * \param pos       The starting chess position
- * \param depth     The depth of the tree from this position.
+ * \param pos           a pointer to a chess position
+ * \param depth         the depth of the tree from this position
  *
- * \return - the number of moves generated
+ * \return the number of moves generated
  */
 uint64_t perft(position* pos, uint32_t depth);
 

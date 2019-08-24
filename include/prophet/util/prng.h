@@ -10,7 +10,7 @@ extern "C" {
 /**
  * \brief Generate a 32 bit random number.
  *
- * \return the 32 bit random number.
+ * \return the 32 bit random number
  */
 uint32_t random32();
 
@@ -18,7 +18,7 @@ uint32_t random32();
 /**
  * \brief Generate a 64 bit random number.
  *
- * \return The 64 bit random number.
+ * \return the 64 bit random number
  */
 uint64_t random64();
 

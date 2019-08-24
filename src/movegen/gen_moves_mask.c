@@ -1,8 +1,7 @@
+#include <prophet/const.h>
+
 #include <assert.h>
 #include <stdint.h>
-
-#include <prophet/const.h>
-#include <prophet/parameters.h>
 
 #include "movegen_internal.h"
 
@@ -13,11 +12,11 @@
  * From the square \p sq, add all squares in one direction until the edge of 
  * the board or until an occupied square is encountered.
  *
- * \param sq            The square to start from
- * \param occupied      The set of occupied squares
- * \param dir_func      A function giving the next square for a given direction
+ * \param sq            the square to start from
+ * \param occupied      the set of occupied squares
+ * \param dir_func      a function giving the next square for a given direction
  *
- * \return  The set of squares that can be moved to.
+ * \return the set of squares that can be moved to
  */
 uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func)
 {

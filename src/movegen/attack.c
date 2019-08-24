@@ -4,22 +4,22 @@
 #include "movegen_internal.h"
 
 /**
- * \brief Given position \p p, is square \p sq attacked by \p player?
+ * \brief Given position \p pos, is square \p sq attacked by \p player?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param pos           a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
-bool attacked(const position* p, square_t sq, color_t player)
+bool attacked(const position* pos, square_t sq, color_t player)
 {
-    if (attacked_by_pawn(p, sq, player)) return true;
-    if (attacked_by_knight(p, sq, player)) return true;
-    if (attacked_by_king(p, sq, player)) return true;
-    if (attacked_by_rook(p, sq, player)) return true;
-    if (attacked_by_bishop(p, sq, player)) return true;
-    if (attacked_by_queen(p, sq, player)) return true;
+    if (attacked_by_pawn(pos, sq, player)) return true;
+    if (attacked_by_knight(pos, sq, player)) return true;
+    if (attacked_by_king(pos, sq, player)) return true;
+    if (attacked_by_rook(pos, sq, player)) return true;
+    if (attacked_by_bishop(pos, sq, player)) return true;
+    if (attacked_by_queen(pos, sq, player)) return true;
 
     return false;
 }
@@ -28,11 +28,11 @@ bool attacked(const position* p, square_t sq, color_t player)
  * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
  * bishops?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param p             a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
 bool attacked_by_bishop(const position* p, square_t sq, color_t player)
 {
@@ -47,11 +47,11 @@ bool attacked_by_bishop(const position* p, square_t sq, color_t player)
 /**
  * \brief Given position \p p, is square \p sq attacked by \p player 's king?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param p             a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
 bool attacked_by_king(const position* p, square_t sq, color_t player)
 {
@@ -68,11 +68,11 @@ bool attacked_by_king(const position* p, square_t sq, color_t player)
  * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
  * knights?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param p             a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
 bool attacked_by_knight(const position* p, square_t sq, color_t player)
 {
@@ -88,11 +88,11 @@ bool attacked_by_knight(const position* p, square_t sq, color_t player)
  * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
  * pawns?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param p             a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
 bool attacked_by_pawn(const position* p, square_t sq, color_t player)
 {
@@ -122,11 +122,11 @@ bool attacked_by_pawn(const position* p, square_t sq, color_t player)
  * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
  * queens?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param p             a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
 bool attacked_by_queen(const position* p, square_t sq, color_t player)
 {
@@ -142,11 +142,11 @@ bool attacked_by_queen(const position* p, square_t sq, color_t player)
  * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
  * rooks?
  *
- * \param p         The chess position
- * \param sq        The square in question
- * \param player    The attacking player
+ * \param p             a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
  *
- * \return - boolean indicating if there is an attack.
+ * \return boolean indicating if there is an attack
  */
 bool attacked_by_rook(const position* p, square_t sq, color_t player)
 {

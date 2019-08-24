@@ -1,25 +1,25 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
 #include <prophet/position/position.h>
 #include <prophet/util/string_utils.h>
 
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 extern position gpos;
 
 /**
  * \brief Execute the db (drawboard) command.
  *
- * Draw the board to stdin.
+ * Draw the board to stdout.
  *
- * \param input         The user entered input
+ * \param input         the user entered input
  * \param exit_status   Pointer to receive exit status.  A non-zero
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int command_db(const char* input, int* exit_status)
 {

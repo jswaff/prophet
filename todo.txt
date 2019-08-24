@@ -1,15 +1,18 @@
+order of imports
+
+headers minimal and complete
+
+position_t
+
+double check "Error" printf
+
 put movelist_contains in movegen_utils
 
 str_to_move doesn't correctly handle captures, castling moves, ep
 
-reorg - not sure some methods in movegenutils should be there.
-maybe a private utils.
+errors vs. warnings
 
-warnings
 does exit need to be a param?
-
-order of imports
-minimal and complete
 
 reported error
 
@@ -22,4 +25,6 @@ setboard
 undo
 
 remove
+
+finish "result"
 

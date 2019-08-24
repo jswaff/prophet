@@ -2,6 +2,7 @@
 #define _PIECE_H_
 
 #include <stdbool.h>
+#include <stdint.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

@@ -18,7 +18,7 @@ TEST(string_utils_test, str_to_move)
 
     // pawn promotions
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
-    move mv = to_move(PAWN, A7, A8);
+    move_t mv = to_move(PAWN, A7, A8);
     set_promopiece(&mv, QUEEN);
     EXPECT_EQ(str_to_move("a7a8q", &pos), mv);
 
@@ -47,7 +47,7 @@ TEST(string_utils_test, mv_to_str)
     EXPECT_EQ(nullptr, move_to_str(NO_MOVE));
 
     // promotion
-    move mv = to_move(PAWN, A7, A8);
+    move_t mv = to_move(PAWN, A7, A8);
     set_promopiece(&mv, BISHOP);
     buf = move_to_str(mv);
     EXPECT_EQ(strcmp(buf, "a7a8b"), 0);

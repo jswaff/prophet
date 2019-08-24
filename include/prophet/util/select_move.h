@@ -19,11 +19,11 @@ extern "C" {
  *
  * This is a temporary implementation that just chooses a move at random.
  *
- * \param pos           A pointer to the chess position.
+ * \param pos           a pointer to the chess position
  *
- * \return  a move to play, or NO_MOVE if there isn't one.
+ * \return a move to play, or NO_MOVE if there isn't one
  */
-move select_move(const position* pos);
+move_t select_move(const position* pos);
 
 
 /* make this header C++ friendly. */

@@ -13,7 +13,7 @@
  * e=32, so we have to evaluate y(n) = y(n - 24) + y(n - 55) mod 2^32, which
  * is implicitly done by unsigned arithmetic.
  *
- * \return the 32 bit random number.
+ * \return the 32 bit random number
  */
 uint32_t random32()
 {
@@ -65,7 +65,7 @@ uint32_t random32()
 /**
  * \brief Generate a 64 bit random number.
  *
- * \return The 64 bit random number.
+ * \return the 64 bit random number
  */
 uint64_t random64()
 {

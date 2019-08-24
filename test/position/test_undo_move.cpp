@@ -11,7 +11,7 @@ TEST(pos_test, undo_double_pawn_push)
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));
 
-    move mv = to_move(PAWN, E2, E4);
+    move_t mv = to_move(PAWN, E2, E4);
     apply_move(&pos, mv, &u);
     undo_move(&pos, &u);
 
@@ -27,7 +27,7 @@ TEST(pos_test, undo_capturing_promotion)
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));
 
-    move mv = to_capture(PAWN, B7, A8, ROOK);
+    move_t mv = to_capture(PAWN, B7, A8, ROOK);
     set_promopiece(&mv, QUEEN);
     apply_move(&pos, mv, &u);
     undo_move(&pos, &u);
@@ -44,7 +44,7 @@ TEST(pos_test, undo_ep)
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));
 
-    move mv = to_capture(PAWN, A4, B3, PAWN);
+    move_t mv = to_capture(PAWN, A4, B3, PAWN);
     set_epcapture(&mv);
     apply_move(&pos, mv, &u);
     undo_move(&pos, &u);
@@ -61,7 +61,7 @@ TEST(pos_test, undo_castle)
     position save_pos;
     memcpy(&save_pos, &pos, sizeof(position));
 
-    move mv = to_move(KING, E1, G1);
+    move_t mv = to_move(KING, E1, G1);
     set_castle(&mv);
     apply_move(&pos, mv, &u);
     undo_move(&pos, &u);

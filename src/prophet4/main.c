@@ -1,16 +1,17 @@
-#include <stdio.h>
-#include <prophet/commandline.h>
 #include <prophet/command.h>
+#include <prophet/commandline.h>
+
+#include <stdio.h>
 
 extern int init();
 
 /**
  * \brief Main entry point.
  *
- * \param argc          Number of arguments.
- * \param argv          List of arguments.
+ * \param argc          number of arguments
+ * \param argv          list of arguments
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int main(int argc, const char** argv)
 {

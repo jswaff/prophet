@@ -1,18 +1,18 @@
-#include <stdio.h>
-#include <string.h>
-
 #include <prophet/command.h>
 #include <prophet/error_codes.h>
 #include <prophet/parameters.h>
 
+#include <stdio.h>
+#include <string.h>
+
 /**
  * \brief Execute the xboard result command 
  * 
- * \param input         The user entered input 
+ * \param input         the user entered input 
  * \param exit_status   Pointer to receive exit status.  A non-zero 
  *                      status indicates the program should exit.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_result(const char* input, int* exit_status)
 {

@@ -1,5 +1,5 @@
-#include <prophet/position/position.h>
 #include <prophet/hash.h>
+#include <prophet/position/position.h>
 
 position gpos;
 

@@ -1,9 +1,9 @@
+#include <prophet/position/position.h>
+#include <prophet/util/bitmap.h>
+
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#include <prophet/position/position.h>
-#include <prophet/util/bitmap.h>
 
 #include "movegen_internal.h"
 
@@ -13,17 +13,17 @@ static uint64_t knight_moves[64];
  * \brief Generate pseudo-legal knight moves
  *
  * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m.  It is assumed there is enough memory allocated to contain all 
+ * by \p m. It is assumed there is enough memory allocated to contain all 
  * generated moves.
  *
- * \param m             Pointer to a move stack
- * \param p             A chess position
- * \param caps          Whether capturing moves should be generated.
- * \param noncaps       Whether noncapturing moves should be generated.
+ * \param m             a pointer to a move stack
+ * \param p             a pointer to a chess position
+ * \param caps          whether capturing moves should be generated
+ * \param noncaps       whether noncapturing moves should be generated
  *
- * \return  Move pointer one greater than the last move added.
+ * \return move pointer one greater than the last move added
  */
-move* gen_knight_moves(move* m, const position* p, bool caps, bool noncaps)
+move_t* gen_knight_moves(move_t* m, const position* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_knights : p->black_knights;
@@ -38,8 +38,8 @@ move* gen_knight_moves(move* m, const position* p, bool caps, bool noncaps)
     return m;
 }
 
-move* gen_knight_moves_from_sq(
-    move* m, const position* p, square_t from, bool caps, bool noncaps)
+move_t* gen_knight_moves_from_sq(
+    move_t* m, const position* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
@@ -59,13 +59,12 @@ move* gen_knight_moves_from_sq(
 }
 
 /**
- * \brief Get knight moves
+ * \brief Get knight moves.
  *
- * \param p             Pointer to a chess position
- * \param from          The square the knight is moving from
+ * \param from          the square the knight is moving from
  * \param targets       target squares
  *
- * \return The subset of target squares the knight can move to.
+ * \return the subset of target squares the knight can move to
  */
 uint64_t get_knight_moves(square_t from, uint64_t targets)
 {
