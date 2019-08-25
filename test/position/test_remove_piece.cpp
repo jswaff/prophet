@@ -5,7 +5,7 @@
 
 TEST(pos_test, remove_piece)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     remove_piece(&pos,E2);

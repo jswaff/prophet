@@ -4,12 +4,12 @@
 
 #include "position_internal.h"
 
-static bool verify_pos_kings(const position* pos);
-static bool verify_pos_ep(const position* pos);
-static bool verify_piece_counts(const position* pos);
-static bool verify_bitmaps(const position* pos);
-static bool verify_castling_rights(const position* pos);
-static bool verify_hash_keys(const position* pos);
+static bool verify_pos_kings(const position_t* pos);
+static bool verify_pos_ep(const position_t* pos);
+static bool verify_piece_counts(const position_t* pos);
+static bool verify_bitmaps(const position_t* pos);
+static bool verify_castling_rights(const position_t* pos);
+static bool verify_hash_keys(const position_t* pos);
 
 /**
  * \brief Verify the internal consistency of a position.
@@ -23,7 +23,7 @@ static bool verify_hash_keys(const position* pos);
  *
  * \return boolean value indicating if the position is consistent
  */
-bool verify_pos(const position* pos)
+bool verify_pos(const position_t* pos)
 {
     assert(pos);
 
@@ -68,7 +68,7 @@ bool verify_pos(const position* pos)
     return retval;
 }
 
-static bool verify_pos_kings(const position* pos)
+static bool verify_pos_kings(const position_t* pos)
 {
     bool retval = true;
 
@@ -129,7 +129,7 @@ static bool verify_pos_kings(const position* pos)
     return retval;
 }
 
-static bool verify_pos_ep(const position* pos)
+static bool verify_pos_ep(const position_t* pos)
 {
     bool retval = true;
 
@@ -170,7 +170,7 @@ static bool verify_pos_ep(const position* pos)
     return retval;
 }
 
-static bool verify_piece_counts(const position* pos)
+static bool verify_piece_counts(const position_t* pos)
 {
     bool retval = true;
 
@@ -292,7 +292,7 @@ static bool verify_piece_counts(const position* pos)
     return retval;
 }
 
-static bool verify_bitmaps(const position* pos)
+static bool verify_bitmaps(const position_t* pos)
 {
     bool retval = true;
 
@@ -410,7 +410,7 @@ static bool verify_bitmaps(const position* pos)
     return retval;
 }
 
-static bool verify_castling_rights(const position* pos)
+static bool verify_castling_rights(const position_t* pos)
 {
     bool retval = true;
 
@@ -470,7 +470,7 @@ static bool verify_castling_rights(const position* pos)
     return retval;
 }
 
-static bool verify_hash_keys(const position* pos)
+static bool verify_hash_keys(const position_t* pos)
 {
     bool retval = true;
 

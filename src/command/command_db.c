@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern position gpos;
+extern position_t gpos;
 
 /**
  * \brief Execute the db (drawboard) command.

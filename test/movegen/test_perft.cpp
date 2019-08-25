@@ -12,7 +12,7 @@ static uint64_t test_case(const char *fen, int depth);
  */
 TEST(perft_test, perft_initial_pos)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     EXPECT_EQ(perft(&pos, 1), (uint64_t)20);
@@ -163,7 +163,7 @@ TEST(perft_test, perft_gauntlet)
 
 static uint64_t test_case(const char *fen, int depth)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos, fen);
     return perft(&pos, depth);
 }

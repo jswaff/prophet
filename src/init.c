@@ -11,7 +11,7 @@ extern void init_knight_movegen();
 extern void init_bishop_movegen();
 extern void init_rook_movegen();
 
-extern position gpos;
+extern position_t gpos;
 
 /**
  * \brief Initialize the program.

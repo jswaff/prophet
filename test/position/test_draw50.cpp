@@ -5,7 +5,7 @@
 
 TEST(pos_test, draw_50)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     EXPECT_FALSE(is_draw50(&pos));

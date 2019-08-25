@@ -14,7 +14,7 @@
  *
  * \return a boolean indicating if the positions are equal
  */
-bool pos_equals(const position* p1, const position* p2, bool strict)
+bool pos_equals(const position_t* p1, const position_t* p2, bool strict)
 {
     for (int32_t sq=0; sq<64; sq++) 
     {

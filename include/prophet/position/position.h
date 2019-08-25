@@ -52,7 +52,7 @@ typedef struct
     uint64_t black_pieces;
     uint64_t hash_key;
     uint64_t pawn_key;
-} position;
+} position_t;
 
 typedef struct  
 {
@@ -69,7 +69,7 @@ typedef struct
  *
  * \param pos           a pointer to the chess position to reset
  */
-void reset_pos(position* pos);
+void reset_pos(position_t* pos);
 
 /**
  * \brief Set a chess position
@@ -114,7 +114,7 @@ void reset_pos(position* pos);
  *
  * \return true if successful, false otherwise
  */
-bool set_pos(position* pos, const char* fen);
+bool set_pos(position_t* pos, const char* fen);
 
 
 /**
@@ -129,7 +129,7 @@ bool set_pos(position* pos, const char* fen);
  * \param u             a pointer to an undo structure to receive the undo 
  *                      information
  */
-void apply_move(position* pos, move_t m, undo_t* u);
+void apply_move(position_t* pos, move_t m, undo_t* u);
 
 
 /**
@@ -141,34 +141,34 @@ void apply_move(position* pos, move_t m, undo_t* u);
  * \param pos           a pointer to a chess position
  * \param u             a pointer to the undo information
  */
-void undo_move(position* pos, const undo_t* u);
+void undo_move(position_t* pos, const undo_t* u);
 
 
-static inline bool can_castle_wk(const position* pos) 
+static inline bool can_castle_wk(const position_t* pos) 
 {
     return pos->castling_rights & CASTLE_WK;
 }
 
 
-static inline bool can_castle_wq(const position* pos) 
+static inline bool can_castle_wq(const position_t* pos) 
 {
     return pos->castling_rights & CASTLE_WQ;
 }
 
 
-static inline bool can_castle_bk(const position* pos) 
+static inline bool can_castle_bk(const position_t* pos) 
 {
     return pos->castling_rights & CASTLE_BK;
 }
 
 
-static inline bool can_castle_bq(const position* pos) 
+static inline bool can_castle_bq(const position_t* pos) 
 {
     return pos->castling_rights & CASTLE_BQ;
 }
 
 
-static inline bool is_empty_sq(const position* pos, square_t sq) 
+static inline bool is_empty_sq(const position_t* pos, square_t sq) 
 {
     assert(sq >= A8 && sq <= H1);
     return pos->piece[sq] == NO_PIECE;
@@ -181,13 +181,13 @@ static inline color_t opposite_player(color_t player)
 }
 
 
-static inline bool is_draw50(const position* pos)
+static inline bool is_draw50(const position_t* pos)
 {
     return pos->fifty_counter >= 100;
 }
 
 
-bool is_lack_of_mating_material(const position* pos);
+bool is_lack_of_mating_material(const position_t* pos);
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

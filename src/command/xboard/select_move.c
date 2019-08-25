@@ -17,7 +17,7 @@
  *
  * \return a move to play, or NO_MOVE if there isn't one
  */
-move_t select_move(const position* pos)
+move_t select_move(const position_t* pos)
 {
     /* generate legal moves */
     move_t moves[MAX_MOVES_PER_PLY];

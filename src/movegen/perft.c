@@ -25,7 +25,7 @@
  *
  * \return the number of moves generated
  */
-uint64_t perft(position* pos, uint32_t depth)
+uint64_t perft(position_t* pos, uint32_t depth)
 {
     uint64_t nodes=0;
     move_t moves[MAX_MOVES_PER_PLY];

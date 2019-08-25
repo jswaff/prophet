@@ -12,7 +12,7 @@
  *
  * \return the number of legal moves
  */
-uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps)
+uint32_t num_legal_moves(const position_t* pos, bool caps, bool noncaps)
 {
     move_t moves[MAX_MOVES_PER_PLY];
     move_t *endp = gen_legal_moves(moves, pos, caps, noncaps);
@@ -71,7 +71,7 @@ void num_moves_in_list(
  *
  * \return true if the player is in check, otherwise false
  */
-bool in_check(const position* pos, color_t player)
+bool in_check(const position_t* pos, color_t player)
 {
     square_t king_sq = player==WHITE ? pos->white_king : pos->black_king;
 
@@ -85,7 +85,7 @@ bool in_check(const position* pos, color_t player)
  *
  * \return true if the player has been checkmated, otherwise false
  */
-bool is_checkmate(const position* pos)
+bool is_checkmate(const position_t* pos)
 {
     if (in_check(pos, pos->player))
     {
@@ -102,7 +102,7 @@ bool is_checkmate(const position* pos)
  *
  * \return true if the player has been stalemated, otherwise false
  */
-bool is_stalemate(const position* pos)
+bool is_stalemate(const position_t* pos)
 {
     if (!in_check(pos, pos->player))
     {
@@ -122,7 +122,7 @@ bool is_stalemate(const position* pos)
  *
  * \return true if legal, otherwise false
  */
-bool is_legal_move(move_t mv, const position* pos)
+bool is_legal_move(move_t mv, const position_t* pos)
 {
     move_t moves[MAX_MOVES_PER_PLY];
     move_t* endp = gen_legal_moves(moves, pos, true, true);

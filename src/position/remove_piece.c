@@ -12,7 +12,7 @@
  *
  * \return the piece that was removed
  */
-piece_t remove_piece(position* p,square_t sq)
+piece_t remove_piece(position_t* p,square_t sq)
 {
     assert(p != 0);
     assert(sq >= A8 && sq <= H1);

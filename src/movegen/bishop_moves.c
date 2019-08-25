@@ -33,7 +33,8 @@ static void init_moves_database();
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_bishop_moves(move_t* m, const position* p, bool caps, bool noncaps)
+move_t* gen_bishop_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_bishops : p->black_bishops;
@@ -49,7 +50,7 @@ move_t* gen_bishop_moves(move_t* m, const position* p, bool caps, bool noncaps)
 }
 
 move_t* gen_bishop_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps)
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
@@ -77,7 +78,8 @@ move_t* gen_bishop_moves_from_sq(
  *
  * \return the subset of target squares the bishop can move to
  */
-uint64_t get_bishop_moves(const position* p, square_t from, uint64_t targets)
+uint64_t get_bishop_moves(
+    const position_t* p, square_t from, uint64_t targets)
 {
     assert(p);
     assert(from >= A8 && from <= H1);

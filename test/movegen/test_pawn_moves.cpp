@@ -5,7 +5,7 @@
 
 TEST(movegen_test, pawn_moves_initial_position)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t moves[20], *mp;
@@ -56,7 +56,7 @@ TEST(movegen_test, pawn_moves_initial_position)
 
 TEST(movegen_test, pawn_moves)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
     move_t moves[20], *mp, mv;
 
@@ -127,7 +127,7 @@ TEST(movegen_test, pawn_moves)
 
 TEST(movegen_test, pawn_captures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
     move_t moves[20], *mp, mv;
 
@@ -191,7 +191,7 @@ TEST(movegen_test, pawn_captures)
 
 TEST(movegen_test, pawn_noncaptures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos, "2b1k3/PP6/8/3pP3/4P3/8/6P1/4K3 w - d6 0 1");
     move_t moves[20], *mp;
 

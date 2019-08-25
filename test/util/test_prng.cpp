@@ -68,7 +68,7 @@ static int hamming_distance(uint64_t x, uint64_t y)
 {
     int dist = 0;
 
-    uint64_t val = x ^y;
+    uint64_t val = x ^ y;
 
     while (val != (uint64_t)0) {
         ++dist;

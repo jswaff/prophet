@@ -6,7 +6,7 @@
 #include "../../../src/command/xboard/xboard_internal.h"
 
 
-extern position gpos;
+extern position_t gpos;
 extern bool xboard_force_mode;
 
 TEST(xboard_test, xboard_new_incorrect_cmd)
@@ -25,11 +25,11 @@ TEST(xboard_test, xboard_new)
     ASSERT_EQ(0, xboard_new("new"));
 
     // the global position should now be reset.
-    position pos;
+    position_t pos;
     memset(&pos, 0, sizeof(pos));
     reset_pos(&pos);
 
-    EXPECT_EQ(0, memcmp(&gpos, &pos, sizeof(position)));
+    EXPECT_EQ(0, memcmp(&gpos, &pos, sizeof(position_t)));
 
     // we should not be in force mode
     EXPECT_FALSE(xboard_force_mode);

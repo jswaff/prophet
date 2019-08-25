@@ -5,7 +5,7 @@
 
 #include "../../src/command/command_internal.h"
 
-extern position gpos;
+extern position_t gpos;
 
 TEST(command_test, command_perft_incorrect_cmd)
 {

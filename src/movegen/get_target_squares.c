@@ -17,7 +17,7 @@
  *
  * \return the set of target squares
  */
-uint64_t get_target_squares(const position* p, bool caps, bool noncaps)
+uint64_t get_target_squares(const position_t* p, bool caps, bool noncaps)
 {
     uint64_t targets = 0;
 

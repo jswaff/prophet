@@ -4,7 +4,7 @@
 
 TEST(movegen_test, bishop_moves_initial_pos)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t moves[10];
@@ -15,7 +15,7 @@ TEST(movegen_test, bishop_moves_initial_pos)
 
 TEST(movegen_test, bishop_moves)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"4k3/2p3P1/8/4B3/4B3/3p1P2/8/4K3 w - - 0 1");
 
     move_t moves[20];
@@ -46,7 +46,7 @@ TEST(movegen_test, bishop_moves)
 
 TEST(movegen_test, bishop_captures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"4k3/2p3P1/8/4B3/4B3/3p1P2/8/4K3 w - - 0 1");
 
     move_t moves[20];
@@ -60,7 +60,7 @@ TEST(movegen_test, bishop_captures)
 
 TEST(movegen_test, bishop_noncaptures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"4k3/2p3P1/8/4B3/4B3/3p1P2/8/4K3 w - - 0 1");
 
     move_t moves[20];

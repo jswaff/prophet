@@ -4,13 +4,13 @@
 
 TEST(pos_test, apply_move_sequence1)
 {
-    position pos1;
+    position_t pos1;
     reset_pos(&pos1);
     undo_t u;
 
     move_t mv = to_move(PAWN, E2, E4);
     apply_move(&pos1, mv, &u);
-    position pos2;
+    position_t pos2;
     set_pos(&pos2, 
         "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     EXPECT_TRUE(pos_equals(&pos1, &pos2, true));
@@ -114,7 +114,7 @@ TEST(pos_test, apply_move_sequence1)
 // this test more focused on castling rights
 TEST(pos_test, apply_move_sequence2)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
     undo_t u;
 

@@ -16,7 +16,7 @@
  *
  * \return a 64 bit hash signature
  */
-uint64_t build_hash_key(const position* pos)
+uint64_t build_hash_key(const position_t* pos)
 {
     uint64_t hkey = 0;
 
@@ -57,7 +57,7 @@ uint64_t build_hash_key(const position* pos)
  *
  * \return a 64 bit hash signature
  */
-uint64_t build_pawn_key(const position* pos)
+uint64_t build_pawn_key(const position_t* pos)
 {
     uint64_t pkey = 0;
 

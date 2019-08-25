@@ -20,7 +20,7 @@ extern "C" {
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked(const position* pos, square_t sq, color_t player);
+bool attacked(const position_t* pos, square_t sq, color_t player);
 
 
 /**
@@ -31,7 +31,7 @@ bool attacked(const position* pos, square_t sq, color_t player);
  *
  * \return true if the player is in check, otherwise false
  */
-bool in_check(const position* pos, color_t player);
+bool in_check(const position_t* pos, color_t player);
 
 
 /**
@@ -52,7 +52,7 @@ bool in_check(const position* pos, color_t player);
  * \return a move pointer one greater than the last move produced
  */
 move_t* gen_pseudo_legal_moves(
-    move_t* m, const position* pos, bool caps, bool noncaps);
+    move_t* m, const position_t* pos, bool caps, bool noncaps);
 
 
 /**
@@ -74,7 +74,7 @@ move_t* gen_pseudo_legal_moves(
  * \return a move pointer one greater than the last move produced
  */
 move_t* gen_legal_moves(
-    move_t* m, const position* pos, bool caps, bool noncaps);
+    move_t* m, const position_t* pos, bool caps, bool noncaps);
 
 
 /**
@@ -86,7 +86,7 @@ move_t* gen_legal_moves(
  *
  * \return the number of legal moves
  */
-uint32_t num_legal_moves(const position* pos, bool caps, bool noncaps);
+uint32_t num_legal_moves(const position_t* pos, bool caps, bool noncaps);
 
 
 /**
@@ -114,7 +114,7 @@ void num_moves_in_list(
  *
  * \return true if the player has been checkmated, otherwise false
  */
-bool is_checkmate(const position* pos);
+bool is_checkmate(const position_t* pos);
 
 
 /**
@@ -124,7 +124,7 @@ bool is_checkmate(const position* pos);
  *
  * \return true if the player has been stalemated, otherwise false
  */
-bool is_stalemate(const position* pos);
+bool is_stalemate(const position_t* pos);
 
 
 /**
@@ -137,7 +137,7 @@ bool is_stalemate(const position* pos);
  *
  * \return true if legal, otherwise false
  */
-bool is_legal_move(move_t mv, const position* pos);
+bool is_legal_move(move_t mv, const position_t* pos);
 
 
 /**
@@ -177,7 +177,7 @@ bool move_list_contains(move_t mv, const move_t* start, const move_t* end);
  *
  * \return the number of moves generated
  */
-uint64_t perft(position* pos, uint32_t depth);
+uint64_t perft(position_t* pos, uint32_t depth);
 
 
 // make this header C++ friendly.

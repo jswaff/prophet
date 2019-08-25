@@ -14,7 +14,7 @@
  *
  * \param pos           a pointer to the chess position to reset
  */
-void reset_pos(position* pos)
+void reset_pos(position_t* pos)
 {
     assert(pos != 0);
 
@@ -64,7 +64,7 @@ void reset_pos(position* pos)
  *
  * \return true if successful, false otherwise
  */
-bool set_pos(position* pos, const char* fen)
+bool set_pos(position_t* pos, const char* fen)
 {
     char* my_fen = strdup(fen), *fen_part;
     /* keep the original to free the memory allocated by strdup before 

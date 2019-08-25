@@ -5,7 +5,7 @@
 
 TEST(movegen_test, rook_moves_initial_pos)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t moves[10];
@@ -16,7 +16,7 @@ TEST(movegen_test, rook_moves_initial_pos)
 
 TEST(movegen_test, rook_moves)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k1p2/8/3K4/8/1R3r2/8 b - - 0 1");
 
     move_t moves[20];
@@ -38,7 +38,7 @@ TEST(movegen_test, rook_moves)
 
 TEST(movegen_test, rook_captures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k1p2/8/3K4/8/1R3r2/8 b - - 0 1");
 
     move_t moves[10];
@@ -51,7 +51,7 @@ TEST(movegen_test, rook_captures)
 
 TEST(movegen_test, rook_noncaptures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k1p2/8/3K4/8/1R3r2/8 b - - 0 1");
 
     move_t moves[20];

@@ -5,7 +5,7 @@
 
 TEST(pos_test, draw_material)
 {
-    position pos;
+    position_t pos;
 
     // no material
     set_pos(&pos, "kb6/8/1K6/8/8/8/8/8 b - - ");

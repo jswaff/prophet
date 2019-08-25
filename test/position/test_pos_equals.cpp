@@ -4,10 +4,10 @@
 
 TEST(pos_test, pos_equals)
 {
-    position pos1;
+    position_t pos1;
     reset_pos(&pos1);
 
-    position pos2;
+    position_t pos2;
     reset_pos(&pos2);
 
     EXPECT_TRUE(pos_equals(&pos1, &pos2, true));

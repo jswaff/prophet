@@ -4,7 +4,7 @@
 
 TEST(movegen_test, gen_pseudo_legal_moves)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
     move_t moves[50], *mp;
 
@@ -19,7 +19,7 @@ TEST(movegen_test, gen_pseudo_legal_moves)
 
 TEST(movegen_test, gen_legal_moves)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"7k/4Bp1p/8/8/8/8/8/1K4R1 b - - 0 1");
     move_t moves[50], *mp;
 

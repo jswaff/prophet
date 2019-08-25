@@ -18,7 +18,7 @@
  * \return true if the position is drawn by lack of mating material, otherwise 
  * false.
  */
-bool is_lack_of_mating_material(const position* pos)
+bool is_lack_of_mating_material(const position_t* pos)
 {
     /* if there are any pawns, rooks, or queens on the board, it is not drawn
      * for lack of material. */

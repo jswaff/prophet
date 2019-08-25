@@ -6,7 +6,7 @@
 
 TEST(string_utils_test, str_to_move)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     // invalid move text
@@ -105,7 +105,7 @@ TEST(string_utils_test, sq_to_str)
 
 TEST(string_utils_test, pos_to_str_initial_pos)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     char expected[] = 
@@ -129,7 +129,7 @@ TEST(string_utils_test, pos_to_str_initial_pos)
 
 TEST(string_utils_test, pos_to_str)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b - e3 0 1");
 
     char expected[] =

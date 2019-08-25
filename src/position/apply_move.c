@@ -5,10 +5,10 @@
 
 #include "position_internal.h"
 
-static piece_t remove_captured_piece(position* p, move_t m);
-static void add_piece_to_destination(position* p, move_t m);
-static void remove_castling_availability(position* p, move_t mv);
-static void remove_rook_castling_availability(position *p, square_t sq);
+static piece_t remove_captured_piece(position_t* p, move_t m);
+static void add_piece_to_destination(position_t* p, move_t m);
+static void remove_castling_availability(position_t* p, move_t mv);
+static void remove_rook_castling_availability(position_t* p, square_t sq);
 
 /**
  * \brief Apply a chess move to a chess position.
@@ -22,7 +22,7 @@ static void remove_rook_castling_availability(position *p, square_t sq);
  * \param u             a pointer to an undo structure to receive the undo 
  *                      information
  */
-void apply_move(position* pos, move_t m, undo_t* u)
+void apply_move(position_t* pos, move_t m, undo_t* u)
 {
     assert(pos);
     assert(clear_score(m));
@@ -71,7 +71,7 @@ void apply_move(position* pos, move_t m, undo_t* u)
     assert(verify_pos(pos));
 }
 
-static piece_t remove_captured_piece(position* p, move_t m)
+static piece_t remove_captured_piece(position_t* p, move_t m)
 {
     assert(is_capture(m));
     piece_t captured;
@@ -119,7 +119,7 @@ static piece_t remove_captured_piece(position* p, move_t m)
  * \param pos           a pointer to a chess position
  * \param m             a move being applied to the position
  */
-static void add_piece_to_destination(position* p, move_t m)
+static void add_piece_to_destination(position_t* p, move_t m)
 {
     square_t from_sq = get_from_sq(m), to_sq = get_to_sq(m);
     int32_t piece = p->piece[from_sq];
@@ -198,7 +198,7 @@ static void add_piece_to_destination(position* p, move_t m)
     }
 }
 
-static void remove_castling_availability(position* p, move_t mv)
+static void remove_castling_availability(position_t* p, move_t mv)
 {
     /* if capturing a rook remove its castling availability */
     if (is_capture(mv)) 
@@ -224,7 +224,7 @@ static void remove_castling_availability(position* p, move_t mv)
     }
 }
 
-static void remove_rook_castling_availability(position *p, square_t sq)
+static void remove_rook_castling_availability(position_t* p, square_t sq)
 {
     if (sq == A1) 
     {

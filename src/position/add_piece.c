@@ -11,7 +11,7 @@
  * \param piece         the piece to add
  * \param sq            the square to add the piece to
  */
-void add_piece(position *p, int32_t piece, square_t sq)
+void add_piece(position_t *p, int32_t piece, square_t sq)
 {
     assert(piece != NO_PIECE);
     assert(sq >= 0 && sq < 64);

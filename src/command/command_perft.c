@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-extern position gpos;
+extern position_t gpos;
 
 /**
  * \brief Execute the perft command.

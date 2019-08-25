@@ -18,7 +18,8 @@
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_queen_moves(move_t* m, const position* p, bool caps, bool noncaps)
+move_t* gen_queen_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_queens : p->black_queens;
@@ -34,7 +35,7 @@ move_t* gen_queen_moves(move_t* m, const position* p, bool caps, bool noncaps)
 }
 
 move_t* gen_queen_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps)
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
@@ -62,7 +63,7 @@ move_t* gen_queen_moves_from_sq(
  *
  * \return the subset of target squares the queen can move to
  */
-uint64_t get_queen_moves(const position* p, square_t from, uint64_t targets)
+uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets)
 {
     return get_rook_moves(p, from, targets) | 
            get_bishop_moves(p, from, targets);

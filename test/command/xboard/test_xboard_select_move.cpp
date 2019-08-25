@@ -7,7 +7,7 @@
 
 TEST(xboard_test, select_move)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t mv = select_move(&pos);

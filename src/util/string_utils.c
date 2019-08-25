@@ -21,7 +21,7 @@
  * 
  * \return the move if valid, or NO_MOVE on failure
  */
-move_t str_to_move(const char* str_mv, const position* pos)
+move_t str_to_move(const char* str_mv, const position_t* pos)
 {
     /* sanity check the size of the string */
     if (strlen(str_mv) < 4 || strlen(str_mv) > 5)
@@ -220,7 +220,7 @@ char* sq_to_str(square_t sq)
  *
  * \return a null terminated byte string
  */
-char* pos_to_str(const position* pos)
+char* pos_to_str(const position_t* pos)
 {
     char* buf = (char*)malloc(255 * sizeof(char));
 

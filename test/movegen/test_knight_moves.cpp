@@ -4,7 +4,7 @@
 
 TEST(movegen_test, knight_moves_initial_pos)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t moves[10];
@@ -20,7 +20,7 @@ TEST(movegen_test, knight_moves_initial_pos)
 
 TEST(movegen_test, knight_moves_captures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"4k3/8/3P1p2/8/4N3/8/8/4K3 w - - 0 1");
 
     move_t moves[10];
@@ -33,7 +33,7 @@ TEST(movegen_test, knight_moves_captures)
 
 TEST(movegen_test, knight_moves_noncaptures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"4k3/8/3P1p2/8/4N3/8/8/4K3 w - - 0 1");
 
     move_t moves[10];

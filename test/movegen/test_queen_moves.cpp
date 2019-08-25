@@ -5,7 +5,7 @@
 
 TEST(movegen_test, queen_moves_initial_pos)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t moves[10];
@@ -16,7 +16,7 @@ TEST(movegen_test, queen_moves_initial_pos)
 
 TEST(movegen_test, queen_moves)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos, "8/8/3bk3/8/8/2K3Q1/8/8 w - - 0 1");
 
     move_t moves[20];
@@ -46,7 +46,7 @@ TEST(movegen_test, queen_moves)
 
 TEST(movegen_test, queen_captures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3bk3/8/8/2K3Q1/8/8 w - - 0 1");
 
     move_t moves[20];
@@ -59,7 +59,7 @@ TEST(movegen_test, queen_captures)
 
 TEST(movegen_test, queen_noncaptures)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3bk3/8/8/2K3Q1/8/8 w - - 0 1");
 
     move_t moves[20];

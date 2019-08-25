@@ -21,7 +21,7 @@
  * \return a move pointer one greater than the last move produced
  */
 move_t* gen_pseudo_legal_moves(
-    move_t* m, const position* pos, bool caps, bool noncaps)
+    move_t* m, const position_t* pos, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 
@@ -53,12 +53,13 @@ move_t* gen_pseudo_legal_moves(
  *
  * \return a move pointer one greater than the last move produced
  */
-move_t* gen_legal_moves(move_t* m, const position* p, bool caps, bool noncaps)
+move_t* gen_legal_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 
-    position cp;
-    memcpy(&cp, p, sizeof(position));
+    position_t cp;
+    memcpy(&cp, p, sizeof(position_t));
 
     move_t* endp = gen_pseudo_legal_moves(m, &cp, caps, noncaps);
     undo_t u;

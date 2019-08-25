@@ -21,7 +21,7 @@ extern "C" {
  *
  * \return a boolean indicating if the positions are equal
  */
-bool pos_equals(const position* p1, const position* p2, bool strict);
+bool pos_equals(const position_t* p1, const position_t* p2, bool strict);
 
 /**
  * \brief Add a piece to a chess position
@@ -30,7 +30,7 @@ bool pos_equals(const position* p1, const position* p2, bool strict);
  * \param piece         the piece to add
  * \param sq            the square to add the piece to
  */
-void add_piece(position* p, int32_t piece, square_t sq);
+void add_piece(position_t* p, int32_t piece, square_t sq);
 
 /**
  * \brief Remove a piece from a chess position
@@ -40,7 +40,7 @@ void add_piece(position* p, int32_t piece, square_t sq);
  *
  * \return the piece that was removed
  */
-piece_t remove_piece(position* p, square_t sq);
+piece_t remove_piece(position_t* p, square_t sq);
 
 /**
  * \brief Create a 64 bit hash signature of a chess position
@@ -52,7 +52,7 @@ piece_t remove_piece(position* p, square_t sq);
  *
  * \return a 64 bit hash signature
  */
-uint64_t build_hash_key(const position* pos);
+uint64_t build_hash_key(const position_t* pos);
 
 
 /**
@@ -65,7 +65,7 @@ uint64_t build_hash_key(const position* pos);
  *
  * \return a 64 bit hash signature
  */
-uint64_t build_pawn_key(const position* pos);
+uint64_t build_pawn_key(const position_t* pos);
 
 /**
  * \brief Verify the internal consistency of a position.
@@ -79,7 +79,7 @@ uint64_t build_pawn_key(const position* pos);
  *
  * \return boolean value indicating if the position is consistent
  */
-bool verify_pos(const position* pos);
+bool verify_pos(const position_t* pos);
 
 
 /* make this header C++ friendly. */

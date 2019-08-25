@@ -4,7 +4,7 @@
 
 TEST(pos_test, reset_pos)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     EXPECT_EQ(pos.player, WHITE);
@@ -101,7 +101,7 @@ TEST(pos_test, reset_pos)
 
 TEST(pos_test, set_pos) 
 {
-    position pos;
+    position_t pos;
     ASSERT_TRUE(
         set_pos(&pos,"8/7p/5k2/5p2/p1p2P2/Pr1pPK2/1P1R3P/8 b - - 12 47"));
 
@@ -117,7 +117,6 @@ TEST(pos_test, set_pos)
     // test kings
     EXPECT_EQ(pos.black_king, F6);
     EXPECT_EQ(pos.white_king, F3);
-
 
     // test piece placement
     for (int32_t sq=A8;sq<=G7;sq++) {
@@ -208,7 +207,7 @@ TEST(pos_test, set_pos)
     EXPECT_TRUE(verify_pos(&pos));
 
     // second position
-    position pos2;
+    position_t pos2;
     ASSERT_TRUE(set_pos(&pos2,
         "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"));
 
@@ -227,7 +226,7 @@ TEST(pos_test, set_pos)
 
 TEST(pos_test, is_empty_sq) 
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
     EXPECT_TRUE(is_empty_sq(&pos, D4));
     EXPECT_TRUE(!is_empty_sq(&pos, D8));

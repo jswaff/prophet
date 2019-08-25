@@ -20,7 +20,7 @@ typedef square_t (*dir_func_t)(square_t);
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_bishop(const position* p, square_t sq, color_t player);
+bool attacked_by_bishop(const position_t* p, square_t sq, color_t player);
 
 
 /**
@@ -32,7 +32,7 @@ bool attacked_by_bishop(const position* p, square_t sq, color_t player);
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_king(const position* p, square_t sq, color_t player);
+bool attacked_by_king(const position_t* p, square_t sq, color_t player);
 
 
 /**
@@ -45,7 +45,7 @@ bool attacked_by_king(const position* p, square_t sq, color_t player);
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_knight(const position* p, square_t sq, color_t player);
+bool attacked_by_knight(const position_t* p, square_t sq, color_t player);
 
 
 /**
@@ -58,7 +58,7 @@ bool attacked_by_knight(const position* p, square_t sq, color_t player);
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_pawn(const position* p, square_t sq, color_t player);
+bool attacked_by_pawn(const position_t* p, square_t sq, color_t player);
 
 
 /**
@@ -71,7 +71,7 @@ bool attacked_by_pawn(const position* p, square_t sq, color_t player);
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_queen(const position* p, square_t sq, color_t player);
+bool attacked_by_queen(const position_t* p, square_t sq, color_t player);
 
 
 /**
@@ -84,7 +84,7 @@ bool attacked_by_queen(const position* p, square_t sq, color_t player);
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_rook(const position* p, square_t sq, color_t player);
+bool attacked_by_rook(const position_t* p, square_t sq, color_t player);
 
 
 /**
@@ -101,9 +101,10 @@ bool attacked_by_rook(const position* p, square_t sq, color_t player);
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_bishop_moves(move_t* m, const position* p, bool caps, bool noncaps);
+move_t* gen_bishop_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps);
 move_t* gen_bishop_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps);
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -120,9 +121,10 @@ move_t* gen_bishop_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_king_moves(move_t* m, const position* p, bool caps, bool noncaps);
+move_t* gen_king_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps);
 move_t* gen_king_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps);
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -139,9 +141,10 @@ move_t* gen_king_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_knight_moves(move_t* m, const position* p, bool caps, bool noncaps);
+move_t* gen_knight_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps);
 move_t* gen_knight_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps);
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -158,7 +161,8 @@ move_t* gen_knight_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_pawn_moves(move_t* m, const position* p, bool caps, bool noncaps);
+move_t* gen_pawn_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps);
 
 
 /**
@@ -175,9 +179,10 @@ move_t* gen_pawn_moves(move_t* m, const position* p, bool caps, bool noncaps);
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_queen_moves(move_t* m, const position* p, bool caps, bool noncaps);
+move_t* gen_queen_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps);
 move_t* gen_queen_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps);
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -194,9 +199,10 @@ move_t* gen_queen_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_rook_moves(move_t* m, const position* p, bool caps, bool noncaps);
+move_t* gen_rook_moves(
+    move_t* m, const position_t* p, bool caps, bool noncaps);
 move_t* gen_rook_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps);
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 /**
  * \brief Get bishop moves.
@@ -207,7 +213,8 @@ move_t* gen_rook_moves_from_sq(
  *
  * \return the subset of target squares the bishop can move to
  */
-uint64_t get_bishop_moves(const position* p, square_t from, uint64_t targets);
+uint64_t get_bishop_moves(
+    const position_t* p, square_t from, uint64_t targets);
 
 
 /**
@@ -241,7 +248,7 @@ uint64_t get_knight_moves(square_t from, uint64_t targets);
  *
  * \return the subset of target squares the queen can move to
  */
-uint64_t get_queen_moves(const position* p, square_t from, uint64_t targets);
+uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets);
 
 
 /**
@@ -253,7 +260,7 @@ uint64_t get_queen_moves(const position* p, square_t from, uint64_t targets);
  *
  * \return the subset of target squares the rook can move to
  */
-uint64_t get_rook_moves(const position* p, square_t from, uint64_t targets);
+uint64_t get_rook_moves(const position_t* p, square_t from, uint64_t targets);
 
 
 /**
@@ -270,7 +277,7 @@ uint64_t get_rook_moves(const position* p, square_t from, uint64_t targets);
  * \return the next move pointer
  */
 move_t* add_move(
-    move_t* m, const position* p, piece_t piece, square_t from, square_t to);
+    move_t* m, const position_t* p, piece_t piece, square_t from, square_t to);
 
 
 /**
@@ -286,7 +293,7 @@ move_t* add_move(
  *
  * \return the set of target squares
  */
-uint64_t get_target_squares(const position* p, bool caps, bool noncaps);
+uint64_t get_target_squares(const position_t* p, bool caps, bool noncaps);
 
 
 /**

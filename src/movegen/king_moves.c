@@ -22,7 +22,7 @@ static move_t* add_castle(move_t* m, square_t from, square_t to);
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_king_moves(move_t* m, const position* p, bool caps, bool noncaps)
+move_t* gen_king_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 
@@ -32,7 +32,7 @@ move_t* gen_king_moves(move_t* m, const position* p, bool caps, bool noncaps)
 }
 
 move_t* gen_king_moves_from_sq(
-    move_t* m, const position* p, square_t from, bool caps, bool noncaps)
+    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);

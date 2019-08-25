@@ -25,7 +25,7 @@ static move_t* add_promotion(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_pawn_moves(move_t* m, const position* p, bool caps, bool noncaps)
+move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 

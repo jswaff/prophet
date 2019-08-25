@@ -4,7 +4,7 @@
 
 TEST(movegen_test, king_moves_initial_position)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t moves[10];
@@ -15,7 +15,7 @@ TEST(movegen_test, king_moves_initial_position)
 
 TEST(movegen_test, king_moves_mostly_open)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k4/2n1P3/8/8/3rP3/R3K2R b KQ - 0 1");
 
     move_t moves[20];
@@ -34,7 +34,7 @@ TEST(movegen_test, king_moves_mostly_open)
 
 TEST(movegen_test, king_moves_includes_castle)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k4/2n1P3/8/8/3rP3/RN2K2R w KQ - 0 1");
 
     move_t moves[20];
@@ -55,7 +55,7 @@ TEST(movegen_test, king_moves_includes_castle)
 
 TEST(movegen_test, king_moves_in_a_corner_white)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"k7/8/8/8/8/8/8/7K w - - 0 1");
 
     move_t moves[10];
@@ -70,7 +70,7 @@ TEST(movegen_test, king_moves_in_a_corner_white)
 
 TEST(movegen_test, king_moves_in_a_corner_black)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"k7/8/8/8/8/8/8/7K b - - 0 1");
 
     move_t moves[10];
@@ -85,7 +85,7 @@ TEST(movegen_test, king_moves_in_a_corner_black)
 
 TEST(movegen_test, king_moves_cannot_castle_while_in_check)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"3k4/8/8/2N1P3/7q/8/4P3/R3K2R w KQ - 0 1");
 
     move_t moves[10];
@@ -102,7 +102,7 @@ TEST(movegen_test, king_moves_cannot_castle_while_in_check)
 
 TEST(movegen_test, king_moves_cannot_castle_through_check)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"r3k2r/8/8/8/8/5Q2/8/4K3 b kq - 0 1");
 
     move_t moves[20];
@@ -122,7 +122,7 @@ TEST(movegen_test, king_moves_cannot_castle_through_check)
 
 TEST(movegen_test, king_moves_captures_only_black)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k4/2n1P3/8/8/3rP3/R3K2R b KQ - 0 1");
 
     move_t moves[20];
@@ -134,7 +134,7 @@ TEST(movegen_test, king_moves_captures_only_black)
 
 TEST(movegen_test, king_moves_captures_only_white)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k4/2n1P3/8/8/3rP3/R3K2R w KQ - 0 1");
 
     move_t moves[20];
@@ -146,7 +146,7 @@ TEST(movegen_test, king_moves_captures_only_white)
 
 TEST(movegen_test, king_moves_noncaptures_only_black)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k4/2n1P3/8/8/3rP3/R3K2R b KQ - 0 1");
 
     move_t moves[20];
@@ -163,7 +163,7 @@ TEST(movegen_test, king_moves_noncaptures_only_black)
 
 TEST(movegen_test, king_moves_noncaptures_only_white)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/8/3k4/2n1P3/8/8/3rP3/R3K2R w KQ - 0 1");
 
     move_t moves[20];

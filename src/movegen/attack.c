@@ -11,7 +11,7 @@
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked(const position* pos, square_t sq, color_t player)
+bool attacked(const position_t* pos, square_t sq, color_t player)
 {
     if (attacked_by_pawn(pos, sq, player)) return true;
     if (attacked_by_knight(pos, sq, player)) return true;
@@ -33,7 +33,7 @@ bool attacked(const position* pos, square_t sq, color_t player)
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_bishop(const position* p, square_t sq, color_t player)
+bool attacked_by_bishop(const position_t* p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -52,7 +52,7 @@ bool attacked_by_bishop(const position* p, square_t sq, color_t player)
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_king(const position* p, square_t sq, color_t player)
+bool attacked_by_king(const position_t* p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -73,7 +73,7 @@ bool attacked_by_king(const position* p, square_t sq, color_t player)
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_knight(const position* p, square_t sq, color_t player)
+bool attacked_by_knight(const position_t* p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -93,7 +93,7 @@ bool attacked_by_knight(const position* p, square_t sq, color_t player)
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_pawn(const position* p, square_t sq, color_t player)
+bool attacked_by_pawn(const position_t* p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -127,7 +127,7 @@ bool attacked_by_pawn(const position* p, square_t sq, color_t player)
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_queen(const position* p, square_t sq, color_t player)
+bool attacked_by_queen(const position_t* p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -147,7 +147,7 @@ bool attacked_by_queen(const position* p, square_t sq, color_t player)
  *
  * \return boolean indicating if there is an attack
  */
-bool attacked_by_rook(const position* p, square_t sq, color_t player)
+bool attacked_by_rook(const position_t* p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);

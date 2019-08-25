@@ -4,7 +4,7 @@
 
 TEST(pos_test, add_piece)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     add_piece(&pos, PAWN, E4);

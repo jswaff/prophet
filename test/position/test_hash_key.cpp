@@ -4,7 +4,7 @@
 
 TEST(pos_test, build_hash_key)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     uint64_t orig_key = build_hash_key(&pos);
@@ -49,7 +49,7 @@ TEST(pos_test, build_hash_key)
 
 TEST(pos_test, build_hash_key_ep)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     uint64_t orig_key = build_hash_key(&pos);
@@ -75,7 +75,7 @@ TEST(pos_test, build_hash_key_ep)
 
 TEST(pos_test, build_pawn_key)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     uint64_t orig_key = build_pawn_key(&pos);

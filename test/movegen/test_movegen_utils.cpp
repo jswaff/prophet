@@ -5,7 +5,7 @@
 
 TEST(movegen_utils_test, num_legal_moves)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     EXPECT_EQ(20U, num_legal_moves(&pos, true, true));
@@ -19,7 +19,7 @@ TEST(movegen_utils_test, num_legal_moves)
 
 TEST(movegen_utils_test, num_moves_in_list)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos, "8/6bb/8/8/R1pP2k1/4P3/P7/K7 b - d3");
 
     move_t moves[MAX_MOVES_PER_PLY];
@@ -40,7 +40,7 @@ TEST(movegen_utils_test, num_moves_in_list)
 
 TEST(movegen_utils_test, in_check)
 {
-    position pos;
+    position_t pos;
 
     reset_pos(&pos);
     EXPECT_FALSE(in_check(&pos, WHITE));
@@ -59,7 +59,7 @@ TEST(movegen_utils_test, in_check)
 
 TEST(movegen_utils_test, is_checkmate)
 {
-    position pos;
+    position_t pos;
 
     reset_pos(&pos);
     EXPECT_FALSE(is_checkmate(&pos));
@@ -75,7 +75,7 @@ TEST(movegen_utils_test, is_checkmate)
 
 TEST(movegen_utils_test, is_stalemate)
 {
-    position pos;
+    position_t pos;
 
     reset_pos(&pos);
     EXPECT_FALSE(is_checkmate(&pos));
@@ -90,7 +90,7 @@ TEST(movegen_utils_test, is_stalemate)
 
 TEST(movegen_utils_test, is_legal_move)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     move_t legal = to_move(PAWN, E2, E4);

@@ -4,7 +4,7 @@
 
 #include "../../../src/command/xboard/xboard_internal.h"
 
-extern position gpos;
+extern position_t gpos;
 extern bool xboard_force_mode;
 
 TEST(xboard_test, xboard_usermove_incorrect_cmd)

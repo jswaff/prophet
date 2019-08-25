@@ -4,7 +4,7 @@
 
 #include <string.h>
 
-extern position gpos;
+extern position_t gpos;
 extern bool xboard_force_mode;
 
 /**

@@ -4,7 +4,7 @@
 
 TEST(movegen_test, attacked_by_bishop)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/1r3k2/8/3bB3/8/8/8/3K4 b - - 0 1");
 
     uint64_t white_map=0, black_map=0;
@@ -33,7 +33,7 @@ TEST(movegen_test, attacked_by_bishop)
 
 TEST(movegen_test, attacked_by_king)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"3k4/8/8/3n4/3K4/8/8/8 w - - 0 1");
 
     uint64_t white_map=0, black_map=0;
@@ -61,7 +61,7 @@ TEST(movegen_test, attacked_by_king)
 
 TEST(movegen_test, attacked_by_knight)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"3k4/8/8/3n4/3N4/8/8/3K4 w - - 0 1");
 
     uint64_t white_map=0, black_map=0;
@@ -88,7 +88,7 @@ TEST(movegen_test, attacked_by_knight)
 
 TEST(movegen_test, attacked_by_pawn)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"3k4/8/8/3p4/3P3P/8/8/3K4 w - - 0 1");
 
     for (int32_t sq=A8; sq<=H1; sq++) 
@@ -105,7 +105,7 @@ TEST(movegen_test, attacked_by_pawn)
 
 TEST(movegen_test, attacked_by_queen)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/1r3k2/8/3qQ3/8/8/8/3K4 b - - 0 1");
 
     uint64_t white_map=0, black_map=0;
@@ -137,7 +137,7 @@ TEST(movegen_test, attacked_by_queen)
 
 TEST(movegen_test, attacked_by_rook)
 {
-    position pos;
+    position_t pos;
     set_pos(&pos,"8/1r3k2/8/3p4/3P3P/8/1P6/3K4 b - - 0 1");
 
     uint64_t white_map=0, black_map=0;
