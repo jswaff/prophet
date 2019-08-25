@@ -90,6 +90,16 @@ int xboard_result(const char* input);
 
 
 /**
+ * \brief Execute the xboard setboard command 
+ * 
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_setboard(const char* input);
+
+
+/**
  * \brief Execute the xboard usermove command 
  * 
  * If the move is illegal, print an error message; see the section "Commands 

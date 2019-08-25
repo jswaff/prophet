@@ -98,6 +98,17 @@ extern "C" {
 #define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE   0x0106
 
 
+/**
+ * \brief This error is thrown by xboard_setboard() when the FEN is missing
+ */
+#define P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN    0x0107
+
+
+/**
+ * \brief This error is thrown by xboard_setboard() when the FEN is invalid
+ */
+#define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN    0x0108
+
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

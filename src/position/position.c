@@ -207,6 +207,7 @@ bool set_pos(position_t* pos, const char* fen)
 
     free(fen_ptr);
 
-    return true;
+    /* it appears we've set everything up, but is the position valid? */
+    return verify_pos(pos);
 }
 

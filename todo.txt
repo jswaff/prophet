@@ -1,5 +1,3 @@
-setboard
-
 undo
 
 remove

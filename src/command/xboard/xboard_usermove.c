@@ -1,4 +1,3 @@
-#include <prophet/command.h>
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
 #include <prophet/movegen.h>

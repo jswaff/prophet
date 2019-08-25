@@ -1,4 +1,3 @@
-#include <prophet/command.h>
 #include <prophet/error_codes.h>
 #include <prophet/position/position.h>
 

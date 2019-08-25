@@ -224,6 +224,12 @@ TEST(pos_test, set_pos)
     EXPECT_TRUE(verify_pos(&pos2));
 }
 
+TEST(pos_test, set_pos_invalid)
+{
+    position_t pos;
+    EXPECT_FALSE(set_pos(&pos, "8/pppppppp/8/8/8/8/8/8 w KQkq 0 1"));
+}
+
 TEST(pos_test, is_empty_sq) 
 {
     position_t pos;
