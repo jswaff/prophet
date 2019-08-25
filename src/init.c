@@ -1,5 +1,8 @@
 #include <prophet/position/position.h>
 
+#include <stdlib.h>
+#include <time.h>
+
 bool initialized = false;
 
 extern void init_bitmaps();
@@ -22,6 +25,10 @@ int init()
 {
     if (!initialized) 
     {
+        /* initialize the random number generator */
+        time_t t;
+        srand((unsigned) time(&t));
+
         init_bitmaps();
         init_squares();
         init_zkeys();
