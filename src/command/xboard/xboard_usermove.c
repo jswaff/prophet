@@ -62,7 +62,7 @@ int xboard_usermove(const char* input)
     {
         return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
     }
-    apply_move(&gpos, mv, &gundos[gundo_ind]);
+    apply_move(&gpos, mv, gundos + gundo_ind);
     gundo_ind++;
 
     /* if the game is over by rule, print the result */
@@ -89,7 +89,10 @@ int xboard_usermove(const char* input)
     {
         printf("1/2-1/2 {50 move rule}\n");   
     }
-    /* TODO: draw by rep */
+    else if (is_draw_rep(&gpos, gundos))
+    {
+        printf("1/2-1/2 {Draw by repetition}\n");
+    }
     else if (!xboard_force_mode)
     {
         /* the game continues.  start thinking and (eventually) make a move.
@@ -99,7 +102,7 @@ int xboard_usermove(const char* input)
             return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
         }
         move_t engine_mv = select_move(&gpos);
-        apply_move(&gpos, engine_mv, &gundos[gundo_ind]);
+        apply_move(&gpos, engine_mv, gundos + gundo_ind);
         gundo_ind++;
         char* str_engine_mv = move_to_str(engine_mv);
         printf("move %s\n", str_engine_mv);

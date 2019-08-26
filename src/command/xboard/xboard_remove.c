@@ -33,10 +33,10 @@ int xboard_remove(const char* input)
     }
 
     gundo_ind--;
-    undo_move(&gpos, &gundos[gundo_ind]);
+    undo_move(&gpos, gundos + gundo_ind);
 
     gundo_ind--;
-    undo_move(&gpos, &gundos[gundo_ind]);
+    undo_move(&gpos, gundos + gundo_ind);
 
     return 0;
 }

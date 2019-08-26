@@ -35,6 +35,13 @@ bool verify_pos(const position_t* pos)
         retval = false;
     }
 
+    if (pos->fifty_counter > pos->move_counter)
+    {
+        error("fifty counter (%d) greater than move counter (%d).",
+            pos->fifty_counter, pos->move_counter);
+        retval = false;
+    }
+
     if (!verify_pos_kings(pos)) 
     {
         retval = false;

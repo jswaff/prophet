@@ -1,6 +1,19 @@
-DRY up code in usermove and go
+create a draw 50 test from FEN 
 
-draw by rep
+create a draw by rep test using a FEN with high move counter
+
+add game_move_counter that is initialized in set_pos. 
+let move_counter be initialized to 0
+
+add last_capture_ind that is reset where fifty_counter is.
+
+draw by rep should use last_capture_ind and move_counter.
+
+drawy by 50 should use fifty_counter.
+
+get rid of gundo_ind -- just use gpos.move_counter
+
+DRY up code in usermove and go
 
 wrap printf.  use a socket descriptor for an fprintf.
 create a socket pair for test methods and assert output.
