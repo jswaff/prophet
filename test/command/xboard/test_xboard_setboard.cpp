@@ -46,5 +46,5 @@ TEST(xboard_test, xboard_setboard)
     position_t pos;
     reset_pos(&pos);
 
-    EXPECT_EQ(0, memcmp(&gpos, &pos, sizeof(position_t)));
+    ASSERT_EQ(0, memcmp(&gpos, &pos, sizeof(position_t)));
 }

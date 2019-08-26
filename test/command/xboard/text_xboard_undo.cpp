@@ -34,6 +34,5 @@ TEST(xboard_test, xboard_undo)
     // attempting another undo would be an error
     EXPECT_EQ(P4_ERROR_GUNDO_INDEX_LB_VIOLATION,
         xboard_undo("undo"));
-
 }
 

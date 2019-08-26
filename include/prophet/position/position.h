@@ -109,6 +109,8 @@ void reset_pos(position_t* pos);
  *  6. Fullmove number: The number of the full move. It starts at 1, and is 
  *     incremented after Black's move.
  *
+ * If an error is encountered, the position remains unchanged.
+ * 
  * \param pos           a pointer to the chess position to set
  * \param fen           the FEN description of the position
  *

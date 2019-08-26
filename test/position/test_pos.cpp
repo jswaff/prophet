@@ -224,10 +224,31 @@ TEST(pos_test, set_pos)
     EXPECT_TRUE(verify_pos(&pos2));
 }
 
+TEST(pos_test, set_pos_initializes_all)
+{
+    position_t pos;
+    ASSERT_TRUE(set_pos(&pos, 
+        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
+
+    position_t pos2;
+    reset_pos(&pos2);
+
+    // if some member of position was uninitialized, valgrind would complain
+    // when the memory was read.
+    EXPECT_EQ(0, memcmp(&pos, &pos2, sizeof(position_t)));
+}
+
 TEST(pos_test, set_pos_invalid)
 {
     position_t pos;
-    EXPECT_FALSE(set_pos(&pos, "8/pppppppp/8/8/8/8/8/8 w KQkq 0 1"));
+    reset_pos(&pos);
+
+    ASSERT_FALSE(set_pos(&pos, "8/pppppppp/8/8/8/8/8/8 w KQkq 0 1"));
+
+    // the position should be left in the same state, not in a corrupted state.
+    position_t pos2;
+    reset_pos(&pos2);
+    EXPECT_EQ(0, memcmp(&pos, &pos2, sizeof(position_t)));
 }
 
 TEST(pos_test, is_empty_sq) 
@@ -237,4 +258,3 @@ TEST(pos_test, is_empty_sq)
     EXPECT_TRUE(is_empty_sq(&pos, D4));
     EXPECT_TRUE(!is_empty_sq(&pos, D8));
 }
-

@@ -3,7 +3,6 @@
 #include <prophet/util/error.h>
 #include <prophet/util/string_utils.h>
 
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -59,6 +58,8 @@ void reset_pos(position_t* pos)
  *  6. Fullmove number: The number of the full move. It starts at 1, and is 
  *     incremented after Black's move.
  *
+ * If an error is encountered, the position remains unchanged.
+ *
  * \param pos           a pointer to the chess position to set
  * \param fen           the FEN description of the position
  *
@@ -70,24 +71,14 @@ bool set_pos(position_t* pos, const char* fen)
     /* keep the original to free the memory allocated by strdup before 
      * exiting. */
     char* fen_ptr = my_fen; 
-    int32_t sq;
+    int32_t sq = A8;
 
-    for (sq=A8; sq<=H1; sq++) 
-    {
-        pos->piece[sq] = NO_PIECE;
-    }
-    sq = A8;
+    /* create a copy of the position in case of an error. */
+    position_t copypos;
+    memcpy(&copypos, pos, sizeof(position_t));
 
-    for (int32_t i=NO_PIECE;i<=KING;i++) 
-    {
-        pos->piece_counts[WHITE][i] = 0;
-        pos->piece_counts[BLACK][i] = 0;
-    }
-
-    pos->white_pawns = pos->white_knights = pos->white_bishops = 
-        pos->white_rooks = pos->white_queens = pos->white_pieces = 0;
-    pos->black_pawns = pos->black_knights = pos->black_bishops = 
-        pos->black_rooks = pos->black_queens = pos->black_pieces = 0;
+    /* initialization */
+    memset(pos, 0, sizeof(position_t));
 
     /* Part 1 - Piece Placement */
     fen_part = strtok(my_fen," ");
@@ -129,12 +120,18 @@ bool set_pos(position_t* pos, const char* fen)
             } else if (ch=='p') {
                 piece = -PAWN;
             }
-            assert(piece != NO_PIECE);
+            if (piece == NO_PIECE) 
+            {
+                goto restore_and_exit;
+            }
             add_piece(pos, piece, (square_t)sq);
             sq++;
         }
     }
-    assert(sq==64);
+    if (sq != 64)
+    {
+        goto restore_and_exit;
+    }
     
     /* Part 2 - Active Color */
     fen_part = strtok(NULL," ");
@@ -149,7 +146,7 @@ bool set_pos(position_t* pos, const char* fen)
     else 
     {
         error("active color - fen: %s\n", fen);
-        return false;
+        goto restore_and_exit;
     }
 
     /* Part 3 - Castling Availability */
@@ -157,7 +154,7 @@ bool set_pos(position_t* pos, const char* fen)
     if (!fen_part) 
     {
         error("castling availability - fen: %s\n", fen);
-        return false;
+        goto restore_and_exit;
     }
     pos->castling_rights = 0;
     if (strchr(fen_part,'K'))
@@ -174,7 +171,7 @@ bool set_pos(position_t* pos, const char* fen)
     if (!fen_part) 
     {
         error("en passant target square - fen: %s\n", fen);
-        return false;
+        goto restore_and_exit;
     }
     pos->ep_sq = str_to_sq(fen_part);
 
@@ -205,9 +202,17 @@ bool set_pos(position_t* pos, const char* fen)
     pos->hash_key = build_hash_key(pos);
     pos->pawn_key = build_pawn_key(pos);
 
+    /* it appears we've set everything up, but is the position valid? */
+    if (verify_pos(pos))
+    {
+       free(fen_ptr);
+       return true;
+    }
+
+restore_and_exit:
+    memcpy(pos, &copypos, sizeof(position_t));
     free(fen_ptr);
 
-    /* it appears we've set everything up, but is the position valid? */
-    return verify_pos(pos);
+    return false;
 }
 

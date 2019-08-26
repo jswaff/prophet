@@ -32,16 +32,12 @@ int xboard_setboard(const char* input)
     }
 
     /* set the board */
-    position_t savepos;
-    memcpy(&savepos, &gpos, sizeof(position_t));
-    if (!set_pos(&savepos, input + 9))
+    if (!set_pos(&gpos, input + 9))
     {
         printf("tellusererror Illegal position\n");
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN;
     }
 
-    /* success - set the game position */
-    memcpy(&gpos, &savepos, sizeof(position_t));
-
+    /* success */
     return 0;
 }
