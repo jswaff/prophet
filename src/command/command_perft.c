@@ -3,6 +3,7 @@
 #include <prophet/position/position.h>
 #include <prophet/util/p4time.h>
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -42,8 +43,8 @@ int command_perft(const char* input)
         int32_t start_time = milli_timer();
         uint64_t nodes = perft(&gpos, i);
         int32_t elapsed = milli_timer() - start_time;
-        printf("depth %d - nodes: %lu - rate: %lu kn/s\n", i, nodes,
-            nodes / (elapsed+1)); /* avoid div by 0 */
+        printf("depth %d - nodes: %" PRIu64 " - rate: %" PRIu64 " kn/s\n", 
+            i, nodes, nodes / (elapsed+1)); /* avoid div by 0 */
     }
 
     return 0;
