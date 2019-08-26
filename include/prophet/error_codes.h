@@ -111,17 +111,17 @@ extern "C" {
 
 
 /**
- * \brief This error is thrown by xboard_undo() when there is no more undo
- * information available. 
+ * \brief This error is thrown when a lower bound violation is detected
+ * on the game undo array.
  */
-#define P4_ERROR_CMD_XBOARD_UNDO_INDEX_LOWER_BOUND         0x0109
+#define P4_ERROR_GUNDO_INDEX_LB_VIOLATION                  0x0200
 
 
 /**
- * \brief This error is thrown by xboard_remove() when there is no more undo
- * information available. 
+ * \brief This error is thrown when a upper bound violation is detected
+ * on the game undo array.
  */
-#define P4_ERROR_CMD_XBOARD_REMOVE_INDEX_LOWER_BOUND       0x010A
+#define P4_ERROR_GUNDO_INDEX_UB_VIOLATION                  0x0201
 
 
 /* make this header C++ friendly. */

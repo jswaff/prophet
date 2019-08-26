@@ -28,26 +28,24 @@ TEST(xboard_test, xboard_usermove_junk_move)
 
 TEST(xboard_test, xboard_usermove_invalid_move)
 {
-    reset_pos(&gpos);
-
+    EXPECT_EQ(0, xboard_new("new"));
+    EXPECT_EQ(0, xboard_force("force"));
     EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove e3e4"));
 }
 
 TEST(xboard_test, xboard_usermove_illegal_move)
 {
-    reset_pos(&gpos);
-
+    EXPECT_EQ(0, xboard_new("new"));
+    EXPECT_EQ(0, xboard_force("force"));
     EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove a7a5"));
 }
 
 TEST(xoard_test, xboard_usermove_force_mode)
 {
-    reset_pos(&gpos);
-
-    xboard_force_mode = true;
-
+    EXPECT_EQ(0, xboard_new("new"));
+    EXPECT_EQ(0, xboard_force("force"));
     EXPECT_EQ(0, xboard_usermove("usermove e2e4"));
 
     // white should have moved, but not black (the engine)
@@ -56,10 +54,8 @@ TEST(xoard_test, xboard_usermove_force_mode)
 
 TEST(xoard_test, xboard_usermove_not_force_mode)
 {
-    reset_pos(&gpos);
-
-    xboard_force_mode = false;
-
+    ASSERT_EQ(0, xboard_new("new"));
+    ASSERT_FALSE(xboard_force_mode);
     EXPECT_EQ(0, xboard_usermove("usermove e2e4"));
 
     // white should have moved, and then the engine.
@@ -72,13 +68,11 @@ TEST(xoard_test, xboard_usermove_not_force_mode)
 
 TEST(xboard_test, xboard_usermove_move_ends_game)
 {
-    // set up a fools mate
-    reset_pos(&gpos);
-
-    undo_t u;
-    apply_move(&gpos, to_move(PAWN, F2, F3), &u);
-    apply_move(&gpos, to_move(PAWN, E7, E5), &u);
-    apply_move(&gpos, to_move(PAWN, G2, G4), &u);
+    ASSERT_EQ(0, xboard_new("new"));
+    ASSERT_EQ(0, xboard_force("force"));
+    ASSERT_EQ(0, xboard_usermove("usermove f2f3"));
+    ASSERT_EQ(0, xboard_usermove("usermove e7e5"));
+    ASSERT_EQ(0, xboard_usermove("usermove g2g4"));
 
     xboard_force_mode = false;
 

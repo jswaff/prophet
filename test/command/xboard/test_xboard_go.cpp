@@ -14,10 +14,8 @@ TEST(xboard_test, xboard_go_incorrect_cmd)
 
 TEST(xboard_test, xboard_go)
 {
-    reset_pos(&gpos);
-
-    xboard_force_mode = true;
-
+    EXPECT_EQ(0, xboard_new("new"));
+    EXPECT_EQ(0, xboard_force("force"));
     EXPECT_EQ(0, xboard_go("go"));
 
     // Note: in future versions we'll have to stop the search, or maye just

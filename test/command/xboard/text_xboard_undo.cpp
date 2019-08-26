@@ -32,7 +32,7 @@ TEST(xboard_test, xboard_undo)
     EXPECT_EQ(0, xboard_undo("undo"));
 
     // attempting another undo would be an error
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_UNDO_INDEX_LOWER_BOUND,
+    EXPECT_EQ(P4_ERROR_GUNDO_INDEX_LB_VIOLATION,
         xboard_undo("undo"));
 
 }

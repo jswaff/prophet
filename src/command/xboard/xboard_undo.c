@@ -29,11 +29,11 @@ int xboard_undo(const char* input)
 
     if (gundo_ind < 1)
     {
-        return P4_ERROR_CMD_XBOARD_UNDO_INDEX_LOWER_BOUND;
+        return P4_ERROR_GUNDO_INDEX_LB_VIOLATION;
     }
 
     gundo_ind--;
-    undo_move(&gpos, gundos + gundo_ind);
+    undo_move(&gpos, &gundos[gundo_ind]);
 
     return 0;
 }

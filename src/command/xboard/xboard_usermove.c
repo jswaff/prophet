@@ -58,6 +58,10 @@ int xboard_usermove(const char* input)
     }
 
     /* apply move */
+    if (gundo_ind >= MAX_HALF_MOVES_PER_GAME)
+    {
+        return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
+    }
     apply_move(&gpos, mv, &gundos[gundo_ind]);
     gundo_ind++;
 
@@ -90,6 +94,10 @@ int xboard_usermove(const char* input)
     {
         /* the game continues.  start thinking and (eventually) make a move.
          * in this initial implementation we move immediately. */
+        if (gundo_ind >= MAX_HALF_MOVES_PER_GAME)
+        {
+            return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
+        }
         move_t engine_mv = select_move(&gpos);
         apply_move(&gpos, engine_mv, &gundos[gundo_ind]);
         gundo_ind++;

@@ -29,7 +29,7 @@ int xboard_remove(const char* input)
 
     if (gundo_ind < 2)
     {
-        return P4_ERROR_CMD_XBOARD_REMOVE_INDEX_LOWER_BOUND;
+        return P4_ERROR_GUNDO_INDEX_LB_VIOLATION;
     }
 
     gundo_ind--;
