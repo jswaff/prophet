@@ -80,6 +80,19 @@ int xboard_protover(const char* input);
 
 
 /**
+ * \brief Execute the xboard remove command 
+ * 
+ * Undo the previous FULL move - one move for each player.  XBoard protocol 
+ * guarantees that this command will only be sent when the user is on move.
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_remove(const char* input);
+
+
+/**
  * \brief Execute the xboard result command 
  * 
  * \param input         the user entered input 
@@ -97,6 +110,19 @@ int xboard_result(const char* input);
  * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_setboard(const char* input);
+
+
+/**
+ * \brief Execute the xboard undo command 
+ * 
+ * Undo the previous move.  XBoard protocol guarantees that the engine will be
+ * in force mode before invoking this command.
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_undo(const char* input);
 
 
 /**

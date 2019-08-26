@@ -10,6 +10,8 @@
 #include "xboard_internal.h"
 
 extern position_t gpos;
+extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
+extern int gundo_ind;
 extern bool xboard_force_mode;
 
 /**
@@ -56,8 +58,8 @@ int xboard_usermove(const char* input)
     }
 
     /* apply move */
-    undo_t u;
-    apply_move(&gpos, mv, &u);
+    apply_move(&gpos, mv, &gundos[gundo_ind]);
+    gundo_ind++;
 
     /* if the game is over by rule, print the result */
     if (is_checkmate(&gpos)) 
@@ -89,7 +91,8 @@ int xboard_usermove(const char* input)
         /* the game continues.  start thinking and (eventually) make a move.
          * in this initial implementation we move immediately. */
         move_t engine_mv = select_move(&gpos);
-        apply_move(&gpos, engine_mv, &u);
+        apply_move(&gpos, engine_mv, &gundos[gundo_ind]);
+        gundo_ind++;
         char* str_engine_mv = move_to_str(engine_mv);
         printf("move %s\n", str_engine_mv);
         free(str_engine_mv);
