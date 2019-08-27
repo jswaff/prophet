@@ -1,4 +1,4 @@
-DRY up code in usermove and go
+RESULT 
 
 wrap printf.  use a socket descriptor for an fprintf.
 

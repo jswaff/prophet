@@ -154,6 +154,14 @@ int xboard_usermove(const char* input);
  */
 move_t select_move(const position_t* pos);
 
+/**
+ * \brief Select a move, and apply it to the game position.
+ *
+ * This initial implementation is synchronous, but future implementations will
+ * start a separate thread.
+ */
+int think_and_make_move();
+
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

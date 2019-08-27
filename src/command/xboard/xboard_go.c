@@ -1,16 +1,9 @@
-#include <prophet/const.h>
 #include <prophet/error_codes.h>
-#include <prophet/util/string_utils.h>
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "xboard_internal.h"
 
-extern position_t gpos;
-extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
-extern int gundo_ind;
 extern bool xboard_force_mode;
 
 /**
@@ -35,18 +28,5 @@ int xboard_go(const char* input)
 
     xboard_force_mode = false;
 
-    /* start thinking and eventually make a move.  In this implementation we
-     * move immediately. */
-    move_t engine_mv = select_move(&gpos);
-    if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME)
-    {
-        return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
-    }
-    apply_move(&gpos, engine_mv, gundos + gpos.move_counter);
-    char* str_engine_mv = move_to_str(engine_mv);
-    printf("move %s\n", str_engine_mv);
-    free(str_engine_mv);
-
-    return 0;
+    return think_and_make_move();
 }
-
