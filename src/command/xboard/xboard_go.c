@@ -37,13 +37,12 @@ int xboard_go(const char* input)
 
     /* start thinking and eventually make a move.  In this implementation we
      * move immediately. */
-    if (gundo_ind >= MAX_HALF_MOVES_PER_GAME)
+    move_t engine_mv = select_move(&gpos);
+    if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME)
     {
         return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
     }
-    move_t engine_mv = select_move(&gpos);
-    apply_move(&gpos, engine_mv, &gundos[gundo_ind]);
-    gundo_ind++;
+    apply_move(&gpos, engine_mv, gundos + gpos.move_counter);
     char* str_engine_mv = move_to_str(engine_mv);
     printf("move %s\n", str_engine_mv);
     free(str_engine_mv);

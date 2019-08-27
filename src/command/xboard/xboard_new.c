@@ -6,7 +6,6 @@
 
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
-extern int gundo_ind;
 extern bool xboard_force_mode;
 
 /**
@@ -35,7 +34,6 @@ int xboard_new(const char* input)
 
     /* clear the undo information */
     memset(gundos, 0, sizeof(gundos));
-    gundo_ind = 0;
 
     xboard_force_mode = false;
 

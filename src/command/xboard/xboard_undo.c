@@ -7,7 +7,7 @@
 
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
-extern int gundo_ind;
+
 
 /**
  * \brief Execute the xboard undo command 
@@ -27,13 +27,12 @@ int xboard_undo(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    if (gundo_ind < 1)
+    if (gpos.move_counter < 1)
     {
         return P4_ERROR_GUNDO_INDEX_LB_VIOLATION;
     }
 
-    gundo_ind--;
-    undo_move(&gpos, gundos + gundo_ind);
+    undo_move(&gpos, gundos + gpos.move_counter - 1);
 
     return 0;
 }

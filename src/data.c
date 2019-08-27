@@ -7,6 +7,5 @@ position_t gpos;
 
 /* undo information for the game position*/
 undo_t gundos[MAX_HALF_MOVES_PER_GAME];
-int gundo_ind;
 
 zobrist_keys zkeys;
