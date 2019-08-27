@@ -1,7 +1,3 @@
-create a draw 50 test from FEN 
-
-create a draw by rep test using a FEN with high move counter
-
 add game_move_counter that is initialized in set_pos. 
 let move_counter be initialized to 0
 

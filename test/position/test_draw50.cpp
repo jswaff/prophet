@@ -36,3 +36,18 @@ TEST(pos_test, draw_50)
     EXPECT_EQ(0U, pos.fifty_counter);
     EXPECT_FALSE(is_draw50(&pos));    
 }
+
+
+TEST(pos_test, draw_50_fen)
+{
+    position_t pos;
+    ASSERT_TRUE(
+        set_pos(&pos,"8/7p/5k2/5p2/p1p2P2/Pr1pPK2/1P1R3P/8 b - - 12 47"));
+
+    EXPECT_EQ(pos.fifty_counter, 12U);
+    EXPECT_FALSE(is_draw50(&pos));
+
+    ASSERT_TRUE(set_pos(&pos, "7k/7p/8/8/8/8/7P/7K w - - 100 200"));
+    EXPECT_EQ(pos.fifty_counter, 100U);
+    EXPECT_TRUE(is_draw50(&pos));    
+}
