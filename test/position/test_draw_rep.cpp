@@ -53,6 +53,7 @@ TEST(pos_test, draw_rep_fen)
 {
     position_t pos;
     undo_t undos[100];
+    memset(undos, 0, sizeof(undos));
 
     ASSERT_TRUE(
         set_pos(&pos,"7k/7p/8/8/8/8/7P/7K w - - 12 47"));
