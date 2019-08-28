@@ -13,7 +13,8 @@ extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 
 
 /**
- * \brief Select a move, and apply it to the game position.
+ * \brief Select a move, and apply it to the game position.  If the game is
+ * over, print the result.
  *
  * This initial implementation is synchronous, but future implementations will
  * start a separate thread.
@@ -30,7 +31,7 @@ int think_and_make_move()
     printf("move %s\n", str_engine_mv);
     free(str_engine_mv);
 
-    /* TODO: is the game over?  If so send the RESULT command */
+    endgame_check();
 
     return 0;
 }

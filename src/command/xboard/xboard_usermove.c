@@ -62,35 +62,8 @@ int xboard_usermove(const char* input)
     }
     apply_move(&gpos, mv, gundos + gpos.move_counter);
 
-    /* if the game is over by rule, print the result */
-    if (is_checkmate(&gpos)) 
-    {
-        if (gpos.player == WHITE)
-        {
-            printf("0-1 {Black mates}\n");
-        }
-        else
-        {
-            printf("1-0 {White mates}\n");
-        }
-    }
-    else if (is_stalemate(&gpos))
-    {
-        printf("1/2-1/2 {Stalemate}\n");
-    }
-    else if (is_lack_of_mating_material(&gpos))
-    {
-        printf("1/2-1/2 {Insufficient material}\n");
-    }
-    else if (is_draw50(&gpos))
-    {
-        printf("1/2-1/2 {50 move rule}\n");   
-    }
-    else if (is_draw_rep(&gpos, gundos))
-    {
-        printf("1/2-1/2 {Draw by repetition}\n");
-    }
-    else if (!xboard_force_mode)
+
+    if (!endgame_check() && !xboard_force_mode)
     {
         return think_and_make_move();
     }

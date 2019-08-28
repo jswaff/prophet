@@ -154,6 +154,7 @@ int xboard_usermove(const char* input);
  */
 move_t select_move(const position_t* pos);
 
+
 /**
  * \brief Select a move, and apply it to the game position.
  *
@@ -161,6 +162,14 @@ move_t select_move(const position_t* pos);
  * start a separate thread.
  */
 int think_and_make_move();
+
+
+/**
+ * \brief Check for an end-of-game condition and print RESULT if appropriate.
+ *
+ * \return true if the game is over, false otherwise.
+ */
+bool endgame_check();
 
 
 /* make this header C++ friendly. */

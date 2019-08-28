@@ -1,5 +1,3 @@
-RESULT 
-
 wrap printf.  use a socket descriptor for an fprintf.
 
 create a socket pair for test methods and assert output.
