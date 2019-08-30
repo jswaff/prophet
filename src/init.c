@@ -1,4 +1,7 @@
-#include <stdbool.h>
+#include <prophet/position/position.h>
+
+#include <stdlib.h>
+#include <time.h>
 
 bool initialized = false;
 
@@ -11,9 +14,21 @@ extern void init_knight_movegen();
 extern void init_bishop_movegen();
 extern void init_rook_movegen();
 
-void init()
+extern position_t gpos;
+
+/**
+ * \brief Initialize the program.
+ *
+ * \return 0 on successful execution, and non-zero on failure.
+ */
+int init()
 {
-    if (!initialized) {
+    if (!initialized) 
+    {
+        /* initialize the random number generator */
+        time_t t;
+        srand((unsigned) time(&t));
+
         init_bitmaps();
         init_squares();
         init_zkeys();
@@ -21,7 +36,10 @@ void init()
         init_king_movegen();
         init_knight_movegen();
         init_rook_movegen();
+        reset_pos(&gpos);
     }
 
     initialized = true;
+
+    return 0;
 }

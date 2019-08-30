@@ -1,26 +1,45 @@
-#include <stdio.h>
+#include <prophet/command.h>
 #include <prophet/commandline.h>
+#include <prophet/util/output.h>
 
-extern void init();
+extern int init();
 
 /**
  * \brief Main entry point.
  *
- * \param argc          Number of arguments.
- * \param argv          List of arguments.
+ * \param argc          number of arguments
+ * \param argv          list of arguments
  *
- * \returns 0 on successful execution, and non-zero on failure.
+ * \return 0 on successful execution, and non-zero on failure
  */
 int main(int argc, const char** argv)
 {
+    int retval = 0;
+
     setbuf(stdin, NULL);
     setbuf(stdout, NULL);
 
-    printf("Hello!  This is the Prophet4 Chess Engine.\n\n");
+    out(stdout, "Hello!  This is the Prophet4 Chess Engine.\n\n");
 
-    init();
-    process_commandline_options(argc, argv);
+    retval = init();
+    if (0 != retval)
+    {
+        goto done;
+    }
 
+    retval = process_commandline_options(argc, argv);
+    if (0 != retval)
+    {
+        goto done;
+    }
 
-	return 0;
+    retval = command_loop();
+
+done:
+    if (0 != retval)
+    {
+        out(stdout, "exiting with value: %d\n", retval);
+    }
+
+	return retval;
 }

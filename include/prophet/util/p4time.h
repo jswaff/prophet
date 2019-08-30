@@ -3,22 +3,23 @@
 
 #include <stdint.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
 
 /**
  * \brief Return the number of milliseconds since epoch.
  *
- * \return The number of milliseconds since epoch.
+ * \return the number of milliseconds since epoch
  */
 int32_t milli_timer();
 
-// make this header C++ friendly.
+
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _P4TIME_H_ */

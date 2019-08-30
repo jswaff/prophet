@@ -4,12 +4,13 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif    //__cplusplus
+#endif  
 
-enum square_t {
+enum square_t 
+{
     A8,B8,C8,D8,E8,F8,G8,H8,
     A7,B7,C7,D7,E7,F7,G7,H7,
     A6,B6,C6,D6,E6,F6,G6,H6,
@@ -37,16 +38,18 @@ static inline uint64_t square_to_bitmap(int sq)
     return (uint64_t)1 << sq;
 }
 
+
 /**
  * \brief Create a bitmap representation of a list of squares.
  *
  * Square A8 is the LSB, and square H1 the MSB
  *
- * \param  sq   A list of squares.  Should be terminated with NO_SQUARE.
+ * \param  sq           a list of squares. Should be terminated with NO_SQUARE.
  *
- * \return  A bitmap (bitboard) representation of the squares.
+ * \return a bitmap (bitboard) representation of the squares
  */
 uint64_t squares_to_bitmap(square_t sq, ...);
+
 
 /**
  * \brief Create a bitmap representation of a file (8 squares).
@@ -54,9 +57,9 @@ uint64_t squares_to_bitmap(square_t sq, ...);
  * FILE_A represents the 8 least significant bits.  FILE_H represents the
  * 8 most significant bits.
  *
- * \param f     A file
+ * \param f             a file
  *
- * \return  A bitmap representation of the file.
+ * \return a bitmap representation of the file
  */
 uint64_t file_to_bitmap(file_t f);
 
@@ -64,11 +67,12 @@ uint64_t file_to_bitmap(file_t f);
 /**
  * \brief Create a bitmap representation of a rank (8 squares).
  *
- * \param f     A rank
+ * \param f             a rank
  *
- * \return  A bitmap representation of the rank.
+ * \return a bitmap representation of the rank
  */
 uint64_t rank_to_bitmap(rank_t r);
+
 
 /**
  * \brief Get the direction from one square to another.
@@ -80,28 +84,30 @@ uint64_t rank_to_bitmap(rank_t r);
  *   get_dir(H8, A1) ==> SOUTHWEST
  *   get_dir(D7, E5) ==> NODIR
  *
- * \param from      The from square
- * \param to        The to square
+ * \param from          the from square
+ * \param to            the to square
  *
- * \return The direction of travel
+ * \return the direction of travel
  */
 dir_t get_dir(square_t from, square_t to);
+
 
 /**
  * \brief Get the rank a square occupies.
  *
- * \param sq        A square
+ * \param sq            a square
  *
- * \return The rank the square occupies.
+ * \return the rank the square occupies
  */
 rank_t get_rank(square_t sq);
+
 
 /**
  * \brief Get the file a square occupies.
  *
- * \param sq        A square
+ * \param sq            a square
  *
- * \return The file the square occupies.
+ * \return the file the square occupies
  */
 file_t get_file(square_t sq);
 
@@ -109,22 +115,23 @@ file_t get_file(square_t sq);
 /**
  * \brief Get the square that occupies a given rank and file.
  *
- * \param rank      A rank
- * \param file      A file
+ * \param rank          a rank
+ * \param file          a file
  *
- * \return The square
+ * \return the square
  */
 square_t get_square(rank_t rank, file_t file);
+
 
 /**
  * \brief Get the rank distance between two squares.
  *
  * Distance is returned as an absolute value.
  *
- * \param sq1       Square 1
- * \param sq2       Square 2
+ * \param sq1           square 1
+ * \param sq2           square 2
  *
- * \return  integer 0-7 representing the distance
+ * \return integer 0-7 representing the distance
  */
 uint32_t rank_distance(square_t sq1, square_t sq2);
 
@@ -134,10 +141,10 @@ uint32_t rank_distance(square_t sq1, square_t sq2);
  *
  * Distance is returned as an absolute value.
  *
- * \param sq1       Square 1
- * \param sq2       Square 2
+ * \param sq1           square 1
+ * \param sq2           square 2
  *
- * \return  integer 0-7 representing the distance
+ * \return integer 0-7 representing the distance
  */
 uint32_t file_distance(square_t sq1, square_t sq2);
 
@@ -147,12 +154,13 @@ uint32_t file_distance(square_t sq1, square_t sq2);
  *
  * Distance is defined as the greater of rank distance and file distance.
  *
- * \param sq1       Square 1
- * \param sq2       Square 2
+ * \param sq1           square 1
+ * \param sq2           square 2
  *
- * \return  integer 0-7 representing the distance
+ * \return integer 0-7 representing the distance
  */
 uint32_t distance(square_t sq1, square_t sq2);
+
 
 /**
  * \brief Get the next square to the north
@@ -160,7 +168,7 @@ uint32_t distance(square_t sq1, square_t sq2);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
@@ -173,7 +181,7 @@ square_t north(square_t sq);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
@@ -186,11 +194,12 @@ square_t south(square_t sq);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
 square_t east(square_t sq);
+
 
 /**
  * \brief Get the next square to the west
@@ -198,11 +207,12 @@ square_t east(square_t sq);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
 square_t west(square_t sq);
+
 
 /**
  * \brief Get the next square to the northeast
@@ -210,11 +220,12 @@ square_t west(square_t sq);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
 square_t northeast(square_t sq);
+
 
 /**
  * \brief Get the next square to the southeast
@@ -222,7 +233,7 @@ square_t northeast(square_t sq);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
@@ -235,11 +246,12 @@ square_t southeast(square_t sq);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
 square_t southwest(square_t sq);
+
 
 /**
  * \brief Get the next square to the northwest
@@ -247,18 +259,19 @@ square_t southwest(square_t sq);
  * The board is oriented with the black pieces to the north.  If the next
  * square would be off the board, NO_SQUARE is returned.
  *
- * \param sq        A square
+ * \param sq            a square
  *
  * \return the next square
  */
 square_t northwest(square_t sq);
 
+
 /**
  * \brief Is a square a light colored square?
  *
- * \param sq    A square
+ * \param sq            a square
  *
- * \return  true if the square is light colored, otherwise false
+ * \return true if the square is light colored, otherwise false
  */
 bool is_light_sq(square_t sq);
 
@@ -266,26 +279,27 @@ bool is_light_sq(square_t sq);
 /**
  * \brief Is a square a dark colored square?
  *
- * \param sq    A square
+ * \param sq            a square
  *
- * \return  true if the square is dark colored, otherwise false
+ * \return true if the square is dark colored, otherwise false
  */
 bool is_dark_sq(square_t sq);
+
 
 /**
  * \brief Are two squares on the same diagonal?
  *
- * \param sq1   A square
- * \param sq2   Another square
+ * \param sq1           a square
+ * \param sq2           another square
  *
- * \return true if the two squares are on the same diagonal, otherwise false.
+ * \return true if the two squares are on the same diagonal, otherwise false
  */
 bool is_diagonal(square_t sq1, square_t sq2);
 
 
-// make this header C++ friendly.
+/* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
-#endif    //__cplusplus
+#endif  
 
 #endif /* ! defined _SQUARE_H_ */

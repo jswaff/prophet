@@ -1,10 +1,7 @@
-logfile.txt
+*.log
 *.a
 *.exe
 *.stackdump
-
-### Jetbrains ###
-.idea
 
 build
 prophet4

@@ -1,13 +1,10 @@
 #include <gtest/gtest.h>
 
-#include <prophet/position/piece.h>
-#include <prophet/position/position.h>
-
 #include "../../src/position/position_internal.h"
 
 TEST(pos_test, build_hash_key)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     uint64_t orig_key = build_hash_key(&pos);
@@ -52,13 +49,13 @@ TEST(pos_test, build_hash_key)
 
 TEST(pos_test, build_hash_key_ep)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     uint64_t orig_key = build_hash_key(&pos);
 
     // move to E4
-    undo my_undo;
+    undo_t my_undo;
     apply_move(&pos, to_move(PAWN, E2, E4), &my_undo);
     uint64_t key1 = build_hash_key(&pos);
     EXPECT_NE(key1, orig_key);
@@ -78,7 +75,7 @@ TEST(pos_test, build_hash_key_ep)
 
 TEST(pos_test, build_pawn_key)
 {
-    position pos;
+    position_t pos;
     reset_pos(&pos);
 
     uint64_t orig_key = build_pawn_key(&pos);

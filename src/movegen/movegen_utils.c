@@ -1,115 +1,62 @@
+#include <prophet/const.h>
+#include <prophet/movegen.h>
+
 #include <assert.h>
-#include <stdint.h>
-
-#include "movegen_internal.h"
 
 /**
- * \brief Add a non-capturing move to a move list
+ * \brief Count the number of legal moves possible in a position.
  *
- * Creates a non-capturing move and adds it to a move list.
+ * \param pos           a pointer to a chess position
+ * \param caps          whether to include captures in the count
+ * \param noncaps       whether to include noncaptures in the count
  *
- * \param m         A pointer to a move to set
- * \param p         A pointer to a chess position
- * \param piece     The moving piece
- * \param from      The square the piece is moving from
- * \param to        The square the piece is moving to
- *
- * \return  The next move pointer
+ * \return the number of legal moves
  */
-move* add_move(move* m, const position* p, piece_t piece, square_t from, square_t to)
+uint32_t num_legal_moves(const position_t* pos, bool caps, bool noncaps)
 {
-    piece_t captured_piece = (piece_t)p->piece[to];
+    move_t moves[MAX_MOVES_PER_PLY];
+    move_t *endp = gen_legal_moves(moves, pos, caps, noncaps);
 
-    assert( (p->player==WHITE && is_not_white_piece(captured_piece))
-            || (p->player==BLACK && is_not_black_piece(captured_piece)));
+    /* count the number of moves to choose from */
+    int num_caps, num_noncaps;
+    num_moves_in_list(moves, endp, &num_caps, &num_noncaps);
 
-    *m = to_move(piece, from, to);
-    if (captured_piece != NO_PIECE) {
-        set_capture(m, captured_piece);
-    }
-    ++m;
+    uint32_t nmoves = 0;
+    if (caps) nmoves += num_caps;
+    if (noncaps) nmoves += num_noncaps;
 
-    return m;
+    return nmoves;
 }
 
 /**
- * \brief Get the set of target squares
+ * \brief Count the number of capture and non-capture moves in a list.
  *
- * If \p caps is true, the targets include the opposite player's pieces.  If \p noncaps
- * is set, targets includes all empty squares.  Note the two options are not mutually
- * exclusive.
+ * The memory range is iterated, beginning with \p startp and ending with 
+ * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
+ * "moves" are not counted.
  *
- * \param p             A pointer to a chess position
- * \param caps          If capture targets should be included
- * \param noncaps       If non-capture targets should be included
- *
- * \return The set of target squares
+ * \param startp        the starting address of a list of moves (inclusive)
+ * \param endp          the ending address of a list of moves (exclusive)
+ * \param caps          a pointer to an integer to receive the number of 
+ *                      captures
+ * \param noncaps       a pointer to an integer to receive the number of 
+ *                      noncaptures
  */
-uint64_t get_target_squares(const position* p, bool caps, bool noncaps)
-{
-    uint64_t targets = 0;
-
-    if (caps) {
-        targets = p->player == WHITE ? p->black_pieces : p->white_pieces;
-    }
-
-    if (noncaps) {
-        targets |= ~(p->white_pieces | p->black_pieces);
-    }
-
-    return targets;
-}
-
-/**
- * \brief Generate a moves mask in one direction based on the set of occupied squares
- *
- * From the square \p sq, add all squares in one direction until the edge of the board or
- * until an occupied square is encountered.
- *
- * \param sq            The square to start from
- * \param occupied      The set of occupied squares
- * \param dir_func      A function giving the next square for a given direction
- *
- * \return  The set of squares that can be moved to.
- */
-uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func)
-{
-    uint64_t mask = 0;
-
-    square_t to = dir_func(sq);
-
-    while (to != NO_SQUARE) {
-        uint64_t bb_to = square_to_bitmap(to);
-        mask |= bb_to;
-        if (bb_to & occupied) {
-            break;
-        }
-        to = dir_func(to);
-    }
-
-    return mask;
-}
-
-/**
- * \brief Count the number of capture and non-capture moves
- *
- * The memory range is iterated, beginning with \p startp and ending with \p endp - 1.
- * Some slots may contain an invalid move (BADMOVE).  These "moves" are not counted.
- *
- * \param startp        The starting address of a list of moves (inclusive)
- * \param endp          The ending address of a list of moves (exclusive)
- * \param caps          A pointer to an integer to receive the number of captures
- * \param noncaps       A pointer to an integer to receive the number of noncaptures
- */
-void num_moves(move* startp, move* endp, int* caps, int* noncaps)
+void num_moves_in_list(
+    const move_t* startp, const move_t* endp, int* caps, int* noncaps)
 {
     *caps = 0; *noncaps = 0;
 
-    for (move* mp=startp; mp<endp; mp++) {
-        if (*mp != 0) {
-            if (is_capture(*mp) || get_promopiece(*mp)) {
+    for (const move_t* mp=startp; mp<endp; mp++) 
+    {
+        if (*mp != 0) 
+        {
+            if (is_capture(*mp) || get_promopiece(*mp)) 
+            {
                 (*caps)++;
-            } else {
+            } 
+            else 
+            {
                 (*noncaps)++;
             }
         }
@@ -119,15 +66,91 @@ void num_moves(move* startp, move* endp, int* caps, int* noncaps)
 /**
  * \brief Given position \p pos, is \p player in check?
  *
- * \param pos       The chess position
- * \param player    A player (white or black)
+ * \param pos           a pointer to a chess position
+ * \param player        a player (white or black)
  *
- * \return - true if the player is in check, otherwise false.
+ * \return true if the player is in check, otherwise false
  */
-bool in_check(const position* pos, color_t player)
+bool in_check(const position_t* pos, color_t player)
 {
     square_t king_sq = player==WHITE ? pos->white_king : pos->black_king;
 
     return attacked(pos, king_sq, opposite_player(player));
 }
 
+/**
+ * \brief Has the current player been checkmated?
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if the player has been checkmated, otherwise false
+ */
+bool is_checkmate(const position_t* pos)
+{
+    if (in_check(pos, pos->player))
+    {
+        return num_legal_moves(pos, true, true) == 0;
+    } 
+
+    return false;
+}
+
+/**
+ * \brief Has the current player been stalemated?
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if the player has been stalemated, otherwise false
+ */
+bool is_stalemate(const position_t* pos)
+{
+    if (!in_check(pos, pos->player))
+    {
+        return num_legal_moves(pos, true, true) == 0;
+    } 
+
+    return false;
+}
+
+/**
+ * \brief Test move legality.
+ *
+ * Test that a move is legal in a given position.
+ *
+ * \param mv            the move to test
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if legal, otherwise false
+ */
+bool is_legal_move(move_t mv, const position_t* pos)
+{
+    move_t moves[MAX_MOVES_PER_PLY];
+    move_t* endp = gen_legal_moves(moves, pos, true, true);
+
+    return move_list_contains(mv, moves, endp);
+}
+
+/**
+ * \brief Test if a move is a member of a list.
+ *
+ * Determine if a chess move is contained within a list of moves. The score 
+ * portion of the move is ignored.
+ *
+ * \param mv            the move to look for
+ * \param start         a pointer to the start of a move list
+ * \param end           a pointer one past the end of a move list
+ *
+ * \return true if the move is contained in the list, otherwise false
+ */
+bool move_list_contains(move_t mv, const move_t* start, const move_t* end)
+{
+    for (const move_t* mp=start; mp<end; mp++) 
+    {
+        if (clear_score(*mp) == clear_score(mv)) 
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
