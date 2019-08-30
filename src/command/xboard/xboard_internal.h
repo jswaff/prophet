@@ -156,7 +156,10 @@ move_t select_move(const position_t* pos);
 
 
 /**
- * \brief Select a move, and apply it to the game position.
+ * \brief Select a move, and apply it to the game position.  If the game is
+ * over, print the result.
+ *
+ * This method should not be called if the game is already over.
  *
  * This initial implementation is synchronous, but future implementations will
  * start a separate thread.
