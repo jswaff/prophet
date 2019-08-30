@@ -1,10 +1,10 @@
 #include <prophet/error_codes.h>
 #include <prophet/position/position.h>
+#include <prophet/util/output.h>
 #include <prophet/util/string_utils.h>
 
-#include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern position_t gpos;
 
@@ -31,7 +31,7 @@ int command_db(const char* input)
         return P4_ERROR_CMD_DB_POS_TO_STR;
     }
 
-    printf("%s\n", buf);
+    out(stdout, "%s\n", buf);
 
     free(buf);
 

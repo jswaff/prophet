@@ -1,7 +1,6 @@
 #include <prophet/command.h>
 #include <prophet/commandline.h>
-
-#include <stdio.h>
+#include <prophet/util/output.h>
 
 extern int init();
 
@@ -20,7 +19,7 @@ int main(int argc, const char** argv)
     setbuf(stdin, NULL);
     setbuf(stdout, NULL);
 
-    printf("Hello!  This is the Prophet4 Chess Engine.\n\n");
+    out(stdout, "Hello!  This is the Prophet4 Chess Engine.\n\n");
 
     retval = init();
     if (0 != retval)
@@ -39,7 +38,7 @@ int main(int argc, const char** argv)
 done:
     if (0 != retval)
     {
-        printf("exiting with value: %d\n", retval);
+        out(stdout, "exiting with value: %d\n", retval);
     }
 
 	return retval;

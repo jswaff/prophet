@@ -1,6 +1,6 @@
 #include <prophet/error_codes.h>
+#include <prophet/util/output.h>
 
-#include <stdio.h>
 #include <string.h>
 
 #include "command_internal.h"
@@ -96,7 +96,7 @@ int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
     }
 
     /* Note - this error message is part of the xboard protocol */
-    printf("Error (unknown command): %s\n", input);
+    out(stdout, "Error (unknown command): %s\n", input);
     cmd->cmd_func = &command_no_op;
 
 done:

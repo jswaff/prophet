@@ -1,7 +1,7 @@
 #include <prophet/error_codes.h>
 #include <prophet/position/position.h>
+#include <prophet/util/output.h>
 
-#include <stdio.h>
 #include <string.h>
 
 extern position_t gpos;
@@ -34,7 +34,7 @@ int xboard_setboard(const char* input)
     /* set the board */
     if (!set_pos(&gpos, input + 9))
     {
-        printf("tellusererror Illegal position\n");
+        out(stdout, "tellusererror Illegal position\n");
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN;
     }
 

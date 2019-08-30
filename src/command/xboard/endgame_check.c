@@ -1,9 +1,9 @@
 #include <prophet/const.h>
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
+#include <prophet/util/output.h>
 
 #include <stdbool.h>
-#include <stdio.h>
 
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
@@ -49,7 +49,7 @@ bool endgame_check()
 
     if (result != 0)
     {
-        printf("%s\n", result);
+        out(stdout, "%s\n", result);
         return true;
     }
 

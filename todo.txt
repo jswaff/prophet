@@ -1,5 +1,3 @@
-wrap printf.  use a socket descriptor for an fprintf.
-
 create a socket pair for test methods and assert output.
 
 command line param for "random mode"

@@ -1,9 +1,9 @@
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
 #include <prophet/movegen.h>
+#include <prophet/util/output.h>
 #include <prophet/util/string_utils.h>
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "xboard_internal.h"
@@ -28,7 +28,7 @@ int think_and_make_move()
     }
     apply_move(&gpos, engine_mv, gundos + gpos.move_counter);
     char* str_engine_mv = move_to_str(engine_mv);
-    printf("move %s\n", str_engine_mv);
+    out(stdout, "move %s\n", str_engine_mv);
     free(str_engine_mv);
 
     endgame_check();

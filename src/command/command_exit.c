@@ -1,6 +1,6 @@
 #include <prophet/error_codes.h>
+#include <prophet/util/output.h>
 
-#include <stdio.h>
 #include <string.h>
 
 /**
@@ -18,7 +18,7 @@ int command_exit(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    printf("bye.\n");
+    out(stdout, "bye.\n");
 
     return 0;
 }

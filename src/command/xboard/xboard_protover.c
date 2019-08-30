@@ -1,6 +1,6 @@
 #include <prophet/error_codes.h>
+#include <prophet/util/output.h>
 
-#include <stdio.h>
 #include <string.h>
 
 /**
@@ -41,7 +41,7 @@ int xboard_protover(const char* input)
     }
 
     /* print the features that are supported and not supported */
-    printf(
+    out(stdout, 
         "feature analyze=0 colors=0 cores=0 draw=0 debug=1 edit=0 exclude=0 "
         "highlight=0 ics=0 memory=0 myname=\"Prophet4\" name=0 nps=0 "
         "playother=0 pause=0 ping=1 resume=0 reuse=1 san=0 setboard=1 "

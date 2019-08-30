@@ -1,10 +1,10 @@
 #include <prophet/error_codes.h>
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
+#include <prophet/util/output.h>
 #include <prophet/util/p4time.h>
 
 #include <inttypes.h>
-#include <stdio.h>
 #include <string.h>
 
 extern position_t gpos;
@@ -38,12 +38,13 @@ int command_perft(const char* input)
     }
 
 
-    printf("running perft depth %d.\n", depth);
+    out(stdout, "running perft depth %d.\n", depth);
     for (int i=1; i <= depth; i++) {
         int32_t start_time = milli_timer();
         uint64_t nodes = perft(&gpos, i);
         int32_t elapsed = milli_timer() - start_time;
-        printf("depth %d - nodes: %" PRIu64 " - rate: %" PRIu64 " kn/s\n", 
+        out(stdout, 
+            "depth %d - nodes: %" PRIu64 " - rate: %" PRIu64 " kn/s\n", 
             i, nodes, nodes / (elapsed+1)); /* avoid div by 0 */
     }
 

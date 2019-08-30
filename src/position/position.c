@@ -1,6 +1,6 @@
 #include <prophet/hash.h>
 #include <prophet/util/bitmap.h>
-#include <prophet/util/error.h>
+#include <prophet/util/output.h>
 #include <prophet/util/string_utils.h>
 
 #include <stdlib.h>

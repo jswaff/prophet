@@ -1,4 +1,4 @@
-#include <prophet/util/error.h>
+#include <prophet/util/output.h>
 
 #include <assert.h>
 

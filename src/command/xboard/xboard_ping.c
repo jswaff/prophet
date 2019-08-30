@@ -1,6 +1,6 @@
 #include <prophet/error_codes.h>
+#include <prophet/util/output.h>
 
-#include <stdio.h>
 #include <string.h>
 
 /**
@@ -33,7 +33,7 @@ int xboard_ping(const char* input)
         return P4_ERROR_CMD_XBOARD_PING_MISSING_N;
     }
 
-    printf("pong %d\n", n);
+    out(stdout, "pong %d\n", n);
   
     return 0;
 }

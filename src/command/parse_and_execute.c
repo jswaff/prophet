@@ -1,6 +1,6 @@
 #include <prophet/error_codes.h>
+#include <prophet/util/output.h>
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -45,7 +45,7 @@ int parse_and_execute(const char* input, bool* exit_status)
          * another protocol is added in the future, push this into a protocol
          * specific error handler. */
         /* TODO: translate error code to text descriptions */
-        printf("Error (invocation failed with code %d): %s\n", cmd_retval, input);
+        out(stdout, "Error (invocation failed with code %d): %s\n", cmd_retval, input);
     }
 
 cleanup_user_command:
