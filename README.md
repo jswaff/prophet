@@ -21,6 +21,10 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 
 ## Status
 
+8/30/19 - protocol handler complete.  Enough of the XBoard protocol has been implemented to play a complete game.  Move selection is completely random.  A 20,000 game match was run between identical copies of the program (which didn't take long since it moves instantly), and as predicted the outcome was almost exactly 50%.  Interestingly, 85% of the games resulted in a draw.
+
+The next area of focus will be implementing the evaluation routine, which gives a static analysis of a position.  This will be a direct port of the evaluator from Prophet3.  The evaluation needs a lot of work, but forward progress will come after the rewrite is complete.  Once the evaluator is in place I can make the engine just slightly smarter than a complete random mover.  I'm also considering a JNI integration with chess4j, as a proof of concept for future work.
+
 6/16/19 - move generator complete.  Google Test is being used for the test code.  Many tests have been added to validate all the functionality added thus far, including a wide variety of perft type functions to test move generation in a number of edge cases.  Perft numbers all check out.  Move gen speed is comparable to Prophet3, which is to be expected.  Valgrind has not found any memory leaks.
 
 The next step will be to add the scaffolding for the protocol handler decode-and-dispatch mechanism.  There will be one protocol handler that implements the XBoard protocol, and a smaller handler to add some custom commands.  Following that I will likely move on to the evaluation routines.
