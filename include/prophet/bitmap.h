@@ -1,7 +1,7 @@
 #ifndef _BITMAP_H_
 #define _BITMAP_H_
 
-#include <stdint.h>
+#include <prophet/position/square.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -49,7 +49,7 @@ uint32_t get_msb(uint64_t val);
 /**
  * \brief Isolate a single bit in a 64 bit value.
  *
- * The indexed is zero based, and works from the least significant bit to the 
+ * The index is zero based, and works from the least significant bit to the 
  * most.  For example, given a bitmap with bit pattern 11010:
  *
  *   isolate_bit(11010, 0) ==  2
@@ -65,6 +65,65 @@ uint32_t get_msb(uint64_t val);
  * \return a 64 bit value isolating a single bit
  */
 uint64_t isolate_bit(uint64_t val, uint32_t index);
+
+
+/**
+ * \brief Create a bitmap representation of a file (8 squares).
+ *
+ * \param f             a file
+ *
+ * \return a bitmap representation of the file
+ */
+uint64_t file_to_bitmap(file_t f);
+
+
+/**
+ * \brief Create a bitmap representation of a rank (8 squares).
+ *
+ * \param f             a rank
+ *
+ * \return a bitmap representation of the rank
+ */
+uint64_t rank_to_bitmap(rank_t r);
+
+/**
+ * \brief Return a bitmap representing a ray.
+ *
+ * Constructs a bitmap representing the sequence of squares starting from
+ * \p sq, in the direction of \p dir, to the edge of the board.
+ *
+ * \param sq            the starting square
+ * \param dir           the direction to travel in
+ *
+ * \return a bitmap representation of the ray
+ */
+uint64_t ray(square_t sq, dir_t dir);
+
+
+/**
+ * \brief Convert a square to a bitmap representing a file.
+ *
+ * The returned bitmap can be used as a mask for isolating squares on the
+ * file of the given square.
+ *
+ * \param sq            a square
+ *
+ * \return a bitmap
+ */
+uint64_t sq_to_file_bitmap(int32_t sq);
+
+
+/**
+ * \brief Convert a square to a bitmap representing a rank.
+ *
+ * The returned bitmap can be used as a mask for isolating squares on the
+ * rank of the given square.
+ *
+ * \param sq            a square
+ *
+ * \return a bitmap
+ */
+uint64_t sq_to_rank_bitmap(int32_t sq);
 
 
 /* make this header C++ friendly. */

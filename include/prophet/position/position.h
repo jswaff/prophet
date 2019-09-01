@@ -224,6 +224,16 @@ bool is_lack_of_mating_material(const position_t* pos);
 bool is_draw_rep(const position_t* pos, const undo_t* u);
 
 
+/**
+ * \brief Flip a position vertically.
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return a veritical mirror of the posiiton.
+ */
+position_t position_flip(const position_t* pos);
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

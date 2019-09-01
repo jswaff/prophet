@@ -1,4 +1,4 @@
-#include <prophet/util/bitmap.h>
+#include <prophet/bitmap.h>
 #include <prophet/util/prng.h>
 
 #include <assert.h>

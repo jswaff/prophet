@@ -1,3 +1,4 @@
+#include <prophet/bitmap.h>
 #include <prophet/position/square.h>
 
 #include <gtest/gtest.h>

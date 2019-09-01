@@ -1,4 +1,4 @@
-#include <prophet/util/bitmap.h>
+#include <prophet/bitmap.h>
 
 #include <assert.h>
 
@@ -8,23 +8,6 @@ static uint32_t get_msb_slow(uint64_t val);
 static uint32_t lsb[65536];
 static uint32_t msb[65536];
 
-/**
-* \brief Count the number of bits set in a 64 bit value.
-*
-* \return the number of bits set
-*/
-uint32_t popcnt(uint64_t val)
-{
-    uint32_t n = 0;
-
-    while (val) 
-    {
-        ++n;
-        val &= val-1;
-    }
-
-    return n;
-}
 
 /**
  * \brief Get the least significant bit set in a 64 bit value.
@@ -98,44 +81,6 @@ uint32_t get_msb(uint64_t val)
     return msb[(uint32_t)val];
 }
 
-/**
- * \brief Isolate a single bit in a 64 bit value.
- *
- * The indexed is zero based, and works from the least significant bit to the 
- * most.  For example, given a bitmap with bit pattern 11010:
- *
- *   isolate_bit(11010, 0) ==  2
- *   isolate_bit(11010, 1) ==  8
- *   isolate_bit(11010, 2) == 16
- *
- * Passing an index greater than or equal to the number of bits set will yield 
- * a return value of 0.
- *
- * \param val           a 64 bit value
- * \param index         the index of the bit to isolate
- *
- * \return a 64 bit value isolating a single bit
- */
-uint64_t isolate_bit(uint64_t val, uint32_t index)
-{
-    assert (index < 64);
-
-    uint32_t n = 0;
-    for (int i=0; i<64; i++) 
-    {
-        uint64_t b = (uint64_t)1 << i;
-        if (b & val) 
-        {
-            if (n == index) 
-            {
-                return b;
-            }
-            ++n;
-        }
-    }
-
-    return 0;
-}
 
 static uint32_t get_lsb_slow(uint64_t val)
 {
@@ -168,9 +113,9 @@ static uint32_t get_msb_slow(uint64_t val)
 }
 
 /**
- * \brief Initialize the bitmap functions.
+ * \brief Initialize the bitmap lsb/msb functions.
  */
-void init_bitmaps()
+void init_bitmap_lsb_msb()
 {
     lsb[0] = 0; msb[0] = 0;
     for (uint32_t i=1; i<65536; i++) 

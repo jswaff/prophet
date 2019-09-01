@@ -21,6 +21,23 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 
 ## Status
 
+9/24/19 - evaluator complete.  This is a verbatim "migration" of Prophet3's evaluator.  It was a little painful really, because the evaluation routines are clearly a major weakness in the program, but I think it's important to port everything over and run some comparisons before making any changes.
+
+I found the "random move selection" kind of fun, so a command line parameter was created to enable random mode.  Just start the program with the '-r' option.
+
+The next phase of the rewrite will be the search.  Before starting this phase I'm going to try a small side project.  I'm going to add a JNI layer to chess4j to enable it to call native code from Prophet4.  If it works out, this would have some implications for future development.  
+
+1) It may be easier to do some testing from the Java tier where we can use proper mocks without resorting to function pointers (the indirection probably slows the native code down anyway).
+
+2) If it works out really well I may be less inclined to implement some things in C, such as an opening book or PGN facilities.  Possibly not even pondering. 
+
+3) I've had in mind to do some distributed computing work (not to be confused with parallel processing).  Perhaps I could do this from the Java tier where there are more supporting libraries.  
+
+4) What about machine learning experiments?  Best done from a higher level language?
+
+Those are just some thoughts.  Since I'm not on a timeline and not getting paid to do this I have the luxury of playing around a little. :-)
+
+
 8/30/19 - protocol handler complete.  Enough of the XBoard protocol has been implemented to play a complete game.  Move selection is completely random.  A 20,000 game match was run between identical copies of the program (which didn't take long since it moves instantly), and as predicted the outcome was almost exactly 50%.  Interestingly, 85% of the games resulted in a draw.
 
 The next area of focus will be implementing the evaluation routine, which gives a static analysis of a position.  This will be a direct port of the evaluator from Prophet3.  The evaluation needs a lot of work, but forward progress will come after the rewrite is complete.  Once the evaluator is in place I can make the engine just slightly smarter than a complete random mover.  I'm also considering a JNI integration with chess4j, as a proof of concept for future work.

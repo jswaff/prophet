@@ -46,7 +46,8 @@ void add_piece(position_t *p, int32_t piece, square_t sq)
         }
         p->piece_counts[WHITE][piece]++;
         p->hash_key ^= zkeys.pieces[piece][WHITE][sq];
-    } else 
+    } 
+    else 
     {
         p->black_pieces |= bb_sq;
         if (piece == -PAWN) 

@@ -204,64 +204,6 @@ move_t* gen_rook_moves(
 move_t* gen_rook_moves_from_sq(
     move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
-/**
- * \brief Get bishop moves.
- *
- * \param p             a pointer to a chess position
- * \param from          The square the bishop is moving from
- * \param targets       target squares
- *
- * \return the subset of target squares the bishop can move to
- */
-uint64_t get_bishop_moves(
-    const position_t* p, square_t from, uint64_t targets);
-
-
-/**
- * \brief Get king moves.
- *
- * \param from          the square the king is moving from
- * \param targets       target squares
- *
- * \return the subset of target squares the king can move to
- */
-uint64_t get_king_moves(square_t from, uint64_t targets);
-
-
-/**
- * \brief Get knight moves.
- *
- * \param from          the square the knight is moving from
- * \param targets       target squares
- *
- * \return the subset of target squares the knight can move to
- */
-uint64_t get_knight_moves(square_t from, uint64_t targets);
-
-
-/**
- * \brief Get queen moves.
- *
- * \param p             a pointer to a chess position
- * \param from          the square the queen is moving from
- * \param targets       target squares
- *
- * \return the subset of target squares the queen can move to
- */
-uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets);
-
-
-/**
- * \brief Get rook moves.
- *
- * \param p             a pointer to a chess position
- * \param from          the square the rook is moving from
- * \param targets       target squares
- *
- * \return the subset of target squares the rook can move to
- */
-uint64_t get_rook_moves(const position_t* p, square_t from, uint64_t targets);
-
 
 /**
  * \brief Add a non-capturing move to a move list.
