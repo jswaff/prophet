@@ -1,6 +1,6 @@
+#include <prophet/bitmap.h>
 #include <prophet/hash.h>
 #include <prophet/position/position.h>
-#include <prophet/util/bitmap.h>
 
 #include <assert.h>
 #include <stdbool.h>

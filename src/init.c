@@ -5,7 +5,7 @@
 
 bool initialized = false;
 
-extern void init_bitmaps();
+extern void init_bitmap_lsb_msb();
 extern void init_squares();
 extern void init_zkeys();
 
@@ -29,7 +29,7 @@ int init()
         time_t t;
         srand((unsigned) time(&t));
 
-        init_bitmaps();
+        init_bitmap_lsb_msb();
         init_squares();
         init_zkeys();
         init_bishop_movegen();

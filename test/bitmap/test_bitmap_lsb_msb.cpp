@@ -1,20 +1,7 @@
-#include <prophet/util/bitmap.h>
+#include <prophet/bitmap.h>
 
 #include <gtest/gtest.h>
 
-
-TEST(bitmap_test, popcnt)
-{
-    EXPECT_EQ(popcnt(0), 0U);
-    EXPECT_EQ(popcnt(3), 2U);
-    EXPECT_EQ(popcnt(5), 2U);
-    EXPECT_EQ(popcnt(15), 4U);
-    EXPECT_EQ(popcnt(0xFF), 8U);
-    EXPECT_EQ(popcnt(0xF0F0), 8U);
-    EXPECT_EQ(popcnt(0x7777), 12U);
-    EXPECT_EQ(popcnt(0xFFFFFFFF), 32U);
-    EXPECT_EQ(popcnt(0xFFFFFFFFFFFFFFFF), 64U);
-}
 
 TEST(bitmap_test, get_lsb)
 {
@@ -36,14 +23,4 @@ TEST(bitmap_test, get_msb)
     EXPECT_EQ(get_msb(0xF000000000000000), 63U);
     EXPECT_EQ(get_msb(0x7000000000000000), 62U);
     EXPECT_EQ(get_msb(0x0FFFFFFFFFFFFFFF), 59U);
-}
-
-TEST(bitmap_test, isolate_bit)
-{
-    uint64_t mask = 26; // 11010
-
-    EXPECT_EQ(isolate_bit(mask, 0), (uint64_t)2);
-    EXPECT_EQ(isolate_bit(mask, 1), (uint64_t)8);
-    EXPECT_EQ(isolate_bit(mask, 2), (uint64_t)16);
-    EXPECT_EQ(isolate_bit(mask, 3), (uint64_t)0);
 }

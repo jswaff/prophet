@@ -1,5 +1,5 @@
+#include <prophet/bitmap.h>
 #include <prophet/hash.h>
-#include <prophet/util/bitmap.h>
 #include <prophet/util/output.h>
 #include <prophet/util/string_utils.h>
 
