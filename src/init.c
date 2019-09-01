@@ -6,6 +6,7 @@
 bool initialized = false;
 
 extern void init_bitmap_lsb_msb();
+extern void init_bitmap_file_rank();
 extern void init_squares();
 extern void init_zkeys();
 
@@ -30,6 +31,7 @@ int init()
         srand((unsigned) time(&t));
 
         init_bitmap_lsb_msb();
+        init_bitmap_file_rank();
         init_squares();
         init_zkeys();
         init_bishop_movegen();

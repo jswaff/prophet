@@ -67,6 +67,26 @@ uint32_t get_msb(uint64_t val);
 uint64_t isolate_bit(uint64_t val, uint32_t index);
 
 
+/**
+ * \brief Convert a square to a bitmap representing a file.
+ *
+ * \param sq            a square
+ *
+ * \return a bitmap
+ */
+uint64_t sq_to_file_bitmap(int32_t sq);
+
+
+/**
+ * \brief Convert a square to a bitmap representing a rank.
+ *
+ * \param sq            a square
+ *
+ * \return a bitmap
+ */
+uint64_t sq_to_rank_bitmap(int32_t sq);
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
