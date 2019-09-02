@@ -10,11 +10,23 @@ extern "C" {
 
 
 /* king safety terms */
-const int32_t king_safety_pawn_one_away          = -10;
-const int32_t king_safety_pawn_two_away          = -20;
-const int32_t king_safety_pawn_far_away          = -30;
-const int32_t king_safety_middle_open_file       = -50;
+static const int32_t king_safety_pawn_one_away       = -10;
+static const int32_t king_safety_pawn_two_away       = -20;
+static const int32_t king_safety_pawn_far_away       = -30;
+static const int32_t king_safety_middle_open_file    = -50;
 
+
+/**
+ * \brief Determine if a pawn is isolated.
+ *
+ * An isolated pawn is a pawn that has no friendly pawn on an adjacent file.
+ *
+ * \param pos           a pointer to a chess position
+ * \param pawn_sq       the pawn square
+ *
+ * \return true if the pawn is isolated, otherwise false.
+ */
+bool pawn_isolated(const position_t* pos, square_t pawn_sq);
 
 
 // make this header C++ friendly.
