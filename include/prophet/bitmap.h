@@ -1,7 +1,7 @@
 #ifndef _BITMAP_H_
 #define _BITMAP_H_
 
-#include <stdint.h>
+#include <prophet/position/square.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -65,6 +65,29 @@ uint32_t get_msb(uint64_t val);
  * \return a 64 bit value isolating a single bit
  */
 uint64_t isolate_bit(uint64_t val, uint32_t index);
+
+
+/**
+ * \brief Create a bitmap representation of a file (8 squares).
+ *
+ * FILE_A represents the 8 least significant bits.  FILE_H represents the
+ * 8 most significant bits.
+ *
+ * \param f             a file
+ *
+ * \return a bitmap representation of the file
+ */
+uint64_t file_to_bitmap(file_t f);
+
+
+/**
+ * \brief Create a bitmap representation of a rank (8 squares).
+ *
+ * \param f             a rank
+ *
+ * \return a bitmap representation of the rank
+ */
+uint64_t rank_to_bitmap(rank_t r);
 
 
 /**

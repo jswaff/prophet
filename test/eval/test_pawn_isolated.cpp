@@ -21,5 +21,13 @@ TEST(eval_test, pawn_isolated)
     */
 
     EXPECT_TRUE(pawn_isolated(&pos, A7));
-
+    EXPECT_FALSE(pawn_isolated(&pos, B5));
+    EXPECT_FALSE(pawn_isolated(&pos, B4));
+    EXPECT_FALSE(pawn_isolated(&pos, C4));
+    EXPECT_FALSE(pawn_isolated(&pos, C7));
+    EXPECT_FALSE(pawn_isolated(&pos, D6));
+    EXPECT_TRUE(pawn_isolated(&pos, E4));
+    EXPECT_FALSE(pawn_isolated(&pos, G7));
+    EXPECT_FALSE(pawn_isolated(&pos, H6));
+    EXPECT_TRUE(pawn_isolated(&pos, H5));
 }

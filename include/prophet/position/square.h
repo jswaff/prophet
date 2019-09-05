@@ -52,29 +52,6 @@ uint64_t squares_to_bitmap(square_t sq, ...);
 
 
 /**
- * \brief Create a bitmap representation of a file (8 squares).
- *
- * FILE_A represents the 8 least significant bits.  FILE_H represents the
- * 8 most significant bits.
- *
- * \param f             a file
- *
- * \return a bitmap representation of the file
- */
-uint64_t file_to_bitmap(file_t f);
-
-
-/**
- * \brief Create a bitmap representation of a rank (8 squares).
- *
- * \param f             a rank
- *
- * \return a bitmap representation of the rank
- */
-uint64_t rank_to_bitmap(rank_t r);
-
-
-/**
  * \brief Get the direction from one square to another.
  *
  * One of the eight compass directions, NORTH, NORTHEAST, etc will be returned,

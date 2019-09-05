@@ -1,3 +1,5 @@
+#include <prophet/bitmap.h>
+
 #include <assert.h>
 
 #include "movegen_internal.h"
