@@ -23,11 +23,11 @@ bool pawn_isolated(const position_t* pos, square_t pawn_sq)
 
     if (is_white_piece(pos->piece[pawn_sq]))
     {
-    	return !(bb_isolated[pawn_sq] & pos->white_pawns);
+        return !(bb_isolated[pawn_sq] & pos->white_pawns);
     }
     else /* black pawn */
     {
-		return !(bb_isolated[pawn_sq] & pos->black_pawns);
+        return !(bb_isolated[pawn_sq] & pos->black_pawns);
     }
 }
 
