@@ -15,6 +15,16 @@ static const int32_t king_safety_pawn_two_away       = -20;
 static const int32_t king_safety_pawn_far_away       = -30;
 static const int32_t king_safety_middle_open_file    = -50;
 
+/**
+ * \brief Determine if a pawn is doubled.
+ *
+ * \param pos           a pointer to a chess position
+ * \param pawn_sq       the pawn square
+ *
+ * \return true if the pawn is doubled, otherwise false.
+ */
+bool pawn_doubled(const position_t* pos, square_t pawn_sq);
+
 
 /**
  * \brief Determine if a pawn is isolated.
