@@ -7,6 +7,7 @@ bool initialized = false;
 
 extern void init_bitmap_lsb_msb();
 extern void init_bitmap_file_rank();
+extern void init_bitmap_ray();
 extern void init_squares();
 extern void init_zkeys();
 
@@ -16,6 +17,7 @@ extern void init_bishop_movegen();
 extern void init_rook_movegen();
 
 extern void init_pawn_isolated();
+extern void init_pawn_passed();
 
 extern position_t gpos;
 
@@ -41,6 +43,9 @@ int init()
         init_knight_movegen();
         init_rook_movegen();
         init_pawn_isolated();
+        init_bitmap_ray();
+        init_pawn_passed();
+        
         reset_pos(&gpos);
     }
 

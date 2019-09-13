@@ -89,6 +89,19 @@ uint64_t file_to_bitmap(file_t f);
  */
 uint64_t rank_to_bitmap(rank_t r);
 
+/**
+ * \brief Return a bitmap representing a ray.
+ *
+ * Constructs a bitmap representing the sequence of squares starting from
+ * \p sq, in the direction of \p dir, to the edge of the board.
+ *
+ * \param sq            the starting square
+ * \param dir           the direction to travel in
+ *
+ * \return a bitmap representation of the ray
+ */
+uint64_t ray(square_t sq, dir_t dir);
+
 
 /**
  * \brief Convert a square to a bitmap representing a file.

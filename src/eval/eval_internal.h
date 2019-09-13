@@ -39,6 +39,19 @@ bool pawn_doubled(const position_t* pos, square_t pawn_sq);
 bool pawn_isolated(const position_t* pos, square_t pawn_sq);
 
 
+/**
+ * \brief Determine if a pawn is passed.
+ *
+ * An passed pawn is a pawn that no enemy pawn can stop from queening.
+ *
+ * \param pos           a pointer to a chess position
+ * \param pawn_sq       the pawn square
+ *
+ * \return true if the pawn is passed, otherwise false.
+ */
+bool pawn_passed(const position_t* pos, square_t pawn_sq);
+
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }
