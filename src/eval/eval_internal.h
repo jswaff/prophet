@@ -20,6 +20,10 @@ static const int32_t passed_pawn                     =  20;
 static const int32_t isolated_pawn                   = -20;
 static const int32_t doubled_pawn                    = -10;
 
+/* knight terms */
+static const int32_t knight_tropism                  =  -2;
+
+
 /* pawn piece square table */
 static const int pawn_pst[64] = {
      0,  0,  0,  0,  0,  0,  0,  0,
@@ -30,6 +34,29 @@ static const int pawn_pst[64] = {
      3,  3,  3,  5,  5,  3,  3,  3,
      0,  0,  0, -3, -3,  0,  0,  0,
      0,  0,  0,  0,  0,  0,  0,  0 };
+
+
+/* knight piece square table */
+static const int knight_pst[64] = {
+     -5, -5, -5, -5, -5, -5, -5, -5,
+     -5,  0, 10, 10, 10, 10,  0, -5,
+     -5,  0, 15, 20, 20, 15,  0, -5,
+     -5,  5, 10, 15, 15, 10,  5, -5,
+     -5,  0, 10, 15, 15, 10,  5, -5,
+     -5,  0,  8,  0,  0,  8,  0, -5,
+     -5,  0,  0,  5,  5,  0,  0, -5,
+    -10,-10, -5, -5, -5, -5,-10,-10 };
+
+
+/**
+ * \brief Evaluate a single knight.
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square the knight is on
+ *
+ * \return a score for the knight.
+ */
+int32_t eval_knight(const position_t* pos, square_t sq);
 
 
 /**

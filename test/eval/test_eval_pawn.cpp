@@ -11,7 +11,7 @@ TEST(eval_test, eval_pawn)
     EXPECT_EQ(pawn_pst[E2], eval_pawn(&pos, E2));
 
     /* test the symmetry */
-    EXPECT_EQ(pawn_pst[E2], eval_pawn(&pos, E7));
+    EXPECT_EQ(eval_pawn(&pos, E2), eval_pawn(&pos, E7));
 }
 
 
