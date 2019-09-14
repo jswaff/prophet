@@ -24,16 +24,16 @@ static const int32_t doubled_pawn                    = -10;
 static const int32_t knight_tropism                  =  -2;
 
 
-/* pawn piece square table */
-static const int pawn_pst[64] = {
-     0,  0,  0,  0,  0,  0,  0,  0,
-    30, 30, 30, 30, 30, 30, 30, 30,
-    14, 14, 14, 18, 18, 14, 14, 14,
-     7,  7,  7, 10, 10,  7,  7,  7,
-     5,  5,  5,  7,  7,  5,  5,  5,
-     3,  3,  3,  5,  5,  3,  3,  3,
-     0,  0,  0, -3, -3,  0,  0,  0,
-     0,  0,  0,  0,  0,  0,  0,  0 };
+/* bishop piece square table */
+const int bishop_pst[64] = {
+      0, 0,  0,  0,  0,  0, 0, 0,
+      0, 7,  7,  7,  7,  7, 7, 0,
+      0, 7, 15, 15, 15, 15, 7, 0,
+      0, 7, 15, 20, 20, 15, 7, 0,
+      0, 7, 15, 20, 20, 15, 7, 0,
+      0, 7, 15, 15, 15, 15, 7, 0,
+      0, 7,  7,  7,  7,  7, 7, 0,
+      0, 0,  0,  0,  0,  0, 0, 0 };
 
 
 /* knight piece square table */
@@ -46,6 +46,30 @@ static const int knight_pst[64] = {
      -5,  0,  8,  0,  0,  8,  0, -5,
      -5,  0,  0,  5,  5,  0,  0, -5,
     -10,-10, -5, -5, -5, -5,-10,-10 };
+
+
+/* pawn piece square table */
+static const int pawn_pst[64] = {
+     0,  0,  0,  0,  0,  0,  0,  0,
+    30, 30, 30, 30, 30, 30, 30, 30,
+    14, 14, 14, 18, 18, 14, 14, 14,
+     7,  7,  7, 10, 10,  7,  7,  7,
+     5,  5,  5,  7,  7,  5,  5,  5,
+     3,  3,  3,  5,  5,  3,  3,  3,
+     0,  0,  0, -3, -3,  0,  0,  0,
+     0,  0,  0,  0,  0,  0,  0,  0 };
+
+
+
+/**
+ * \brief Evaluate a single bishop.
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square the bishop is on
+ *
+ * \return a score for the bishop.
+ */
+int32_t eval_bishop(const position_t* pos, square_t sq);
 
 
 /**
