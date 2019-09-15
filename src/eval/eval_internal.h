@@ -24,8 +24,11 @@ static const int32_t doubled_pawn                    = -10;
 static const int32_t knight_tropism                  =  -2;
 
 
+static const int32_t rook_on_7th                     =  50;
+static const int32_t connected_majors_on_7th         =  80;
+
 /* bishop piece square table */
-const int bishop_pst[64] = {
+static const int bishop_pst[64] = {
       0, 0,  0,  0,  0,  0, 0, 0,
       0, 7,  7,  7,  7,  7, 7, 0,
       0, 7, 15, 15, 15, 15, 7, 0,
@@ -81,6 +84,20 @@ int32_t eval_bishop(const position_t* pos, square_t sq);
  * \return a score for the knight.
  */
 int32_t eval_knight(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Evaluate a connected major on the 7th rank.
+ *
+ * A major piece is a rook or a queen.  For black, the "7th rank" is the
+ * "2nd rank".
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square the major piece is on
+ *
+ * \return a score 
+ */
+int32_t eval_major_on_7th(const position_t* pos, square_t sq);
 
 
 /**
