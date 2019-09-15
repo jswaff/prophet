@@ -9,7 +9,7 @@ TEST(eval_test, eval_major_on_7th)
     /* unconnected major on 7th (2nd) */
     ASSERT_TRUE(set_pos(&pos, "7k/8/8/8/8/8/r7/7K w - - 0 1"));
 
-    EXPECT_EQ(rook_on_7th, 
+    EXPECT_EQ(major_on_7th, 
         eval_major_on_7th(&pos, A2));
 
     /* move the king out */
@@ -23,10 +23,10 @@ TEST(eval_test, eval_connected_major_on_7th)
 
     /* connected major on 7th (2nd) */
     ASSERT_TRUE(set_pos(&pos, "7k/2Q2R2/8/8/8/8/r7/7K w - - 0 1"));
-    EXPECT_EQ(rook_on_7th + connected_majors_on_7th,
+    EXPECT_EQ(major_on_7th + connected_majors_on_7th,
         eval_major_on_7th(&pos, C7));
 
     /* the rook does not get the "connected" bonus */
-    EXPECT_EQ(rook_on_7th, eval_major_on_7th(&pos, F7));
+    EXPECT_EQ(major_on_7th, eval_major_on_7th(&pos, F7));
 
 }

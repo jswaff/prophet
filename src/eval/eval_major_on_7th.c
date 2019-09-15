@@ -32,7 +32,7 @@ int32_t eval_major_on_7th(const position_t* pos, square_t sq)
     {
         if (get_rank(sq)==RANK_7 && get_rank(pos->black_king)==RANK_8)
         {
-            score += rook_on_7th;
+            score += major_on_7th;
             if (rook_moves & (pos->white_rooks | pos->white_queens))
             {
                 score += connected_majors_on_7th;
@@ -43,7 +43,7 @@ int32_t eval_major_on_7th(const position_t* pos, square_t sq)
     {
         if (get_rank(sq)==RANK_2 && get_rank(pos->white_king)==RANK_1)
         {
-            score += rook_on_7th;
+            score += major_on_7th;
             if (rook_moves & (pos->black_rooks | pos->black_queens))
             {
                 score += connected_majors_on_7th;

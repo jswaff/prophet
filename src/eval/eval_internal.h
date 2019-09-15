@@ -24,7 +24,7 @@ static const int32_t doubled_pawn                    = -10;
 static const int32_t knight_tropism                  =  -2;
 
 
-static const int32_t rook_on_7th                     =  50;
+static const int32_t major_on_7th                    =  50;
 static const int32_t connected_majors_on_7th         =  80;
 
 /* bishop piece square table */
@@ -62,7 +62,16 @@ static const int pawn_pst[64] = {
      0,  0,  0, -3, -3,  0,  0,  0,
      0,  0,  0,  0,  0,  0,  0,  0 };
 
-
+/* queen piece square table */
+static const int queen_pst[64] = {
+    -1, -1, -1, -1, -1, -1, -1, -1,
+    -1,  0,  0,  0,  0,  0,  0, -1,
+    -1,  0,  1,  1,  1,  1,  0, -1,
+    -1,  0,  1,  2,  2,  1,  0, -1,
+    -1,  0,  1,  2,  2,  1,  0, -1,
+    -1,  0,  1,  1,  1,  1,  0, -1,
+    -1,  0,  0,  0,  0,  0,  0, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1 };
 
 /**
  * \brief Evaluate a single bishop.
@@ -109,6 +118,17 @@ int32_t eval_major_on_7th(const position_t* pos, square_t sq);
  * \return a score for the pawn.
  */
 int32_t eval_pawn(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Evaluate a single queen.
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square the queen is on
+ *
+ * \return a score for the bishop.
+ */
+int32_t eval_queen(const position_t* pos, square_t sq);
 
 
 /**
