@@ -8,7 +8,7 @@
  * \param pos           a pointer to a chess position
  * \param sq            the square the queen is on
  *
- * \return a score for the bishop.
+ * \return a score for the queen.
  */
 int32_t eval_queen(const position_t* pos, square_t sq)
 {

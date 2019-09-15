@@ -24,6 +24,13 @@ static const int32_t doubled_pawn                    = -10;
 static const int32_t knight_tropism                  =  -2;
 
 
+/* rook terms */
+/* an open file is a file with no pawns of either color */
+static const int32_t rook_open_file                  =  25;
+/* a half open file is one with enemy pawns but no friendly pawns */
+static const int32_t rook_half_open_file             =  15;
+
+
 static const int32_t major_on_7th                    =  50;
 static const int32_t connected_majors_on_7th         =  80;
 
@@ -62,6 +69,7 @@ static const int pawn_pst[64] = {
      0,  0,  0, -3, -3,  0,  0,  0,
      0,  0,  0,  0,  0,  0,  0,  0 };
 
+
 /* queen piece square table */
 static const int queen_pst[64] = {
     -1, -1, -1, -1, -1, -1, -1, -1,
@@ -72,6 +80,19 @@ static const int queen_pst[64] = {
     -1,  0,  1,  1,  1,  1,  0, -1,
     -1,  0,  0,  0,  0,  0,  0, -1,
     -1, -1, -1, -1, -1, -1, -1, -1 };
+
+
+/* rook piece square table */
+static const int rook_pst[64] = {
+     0,  0,  0,  0,  0,  0,  0,  0,
+     0,  0,  0,  0,  0,  0,  0,  0,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+     0,  0,  0,  0,  0,  0,  0,  0 };
+
 
 /**
  * \brief Evaluate a single bishop.
@@ -126,9 +147,20 @@ int32_t eval_pawn(const position_t* pos, square_t sq);
  * \param pos           a pointer to a chess position
  * \param sq            the square the queen is on
  *
- * \return a score for the bishop.
+ * \return a score for the queen.
  */
 int32_t eval_queen(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Evaluate a single rook.
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square the rook is on
+ *
+ * \return a score for the rook.
+ */
+int32_t eval_rook(const position_t* pos, square_t sq);
 
 
 /**
