@@ -8,6 +8,15 @@
 extern "C" {
 #endif  
 
+/* piece values */
+static const int32_t pawn_val = 100;
+static const int32_t knight_val = 300;
+static const int32_t bishop_val = 320;
+static const int32_t rook_val = 500;
+static const int32_t queen_val = 900;
+static const int32_t all_nonpawn_pieces_val = queen_val + rook_val*2 + 
+   bishop_val*2 + knight_val*2;
+
 
 /* king safety terms */
 static const int32_t king_safety_pawn_one_away       = -10;
@@ -15,24 +24,25 @@ static const int32_t king_safety_pawn_two_away       = -20;
 static const int32_t king_safety_pawn_far_away       = -30;
 static const int32_t king_safety_middle_open_file    = -50;
 
+
 /* pawn terms */
 static const int32_t passed_pawn                     =  20;
 static const int32_t isolated_pawn                   = -20;
 static const int32_t doubled_pawn                    = -10;
+
 
 /* knight terms */
 static const int32_t knight_tropism                  =  -2;
 
 
 /* rook terms */
-/* an open file is a file with no pawns of either color */
 static const int32_t rook_open_file                  =  25;
-/* a half open file is one with enemy pawns but no friendly pawns */
 static const int32_t rook_half_open_file             =  15;
 
 
 static const int32_t major_on_7th                    =  50;
 static const int32_t connected_majors_on_7th         =  80;
+
 
 /* bishop piece square table */
 static const int bishop_pst[64] = {
@@ -93,6 +103,19 @@ static const int rook_pst[64] = {
     -5,  0,  0,  0,  0,  0,  0, -5,
      0,  0,  0,  0,  0,  0,  0,  0 };
 
+
+/**
+ * \brief Scale a score by non-pawn material on the board.
+ *
+ * \param score         the score to scale
+ * \param material      the amount of non-pawn material on the board
+ *
+ * \return the scaled score.
+ */
+static inline int32_t eval_scale(int32_t score, int32_t material)
+{
+    return score * material / all_nonpawn_pieces_val;
+}
 
 /**
  * \brief Evaluate a single bishop.
