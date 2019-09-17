@@ -19,7 +19,7 @@ TEST(eval_test, eval_rook_7th_king_back_rank)
     position_t pos;
     ASSERT_TRUE(set_pos(&pos, "7k/2Q2R2/8/8/8/8/r7/7K w - - 0 1"));
     
-    EXPECT_EQ(rook_pst[F7] + major_on_7th,
+    EXPECT_EQ(rook_pst[F7] + major_on_7th + rook_open_file,
         eval_rook(&pos, F7));
 }
 
