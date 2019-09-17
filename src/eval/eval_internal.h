@@ -56,6 +56,32 @@ static const int bishop_pst[64] = {
       0, 0,  0,  0,  0,  0, 0, 0 };
 
 
+/* king piece square table for non-endgame.
+ * the idea is to encourage safety. */
+static const int king_pst[64] = {
+   -30,-30,-30,-30,-30,-30,-30,-30,
+   -30,-30,-30,-30,-30,-30,-30,-30,
+   -30,-30,-30,-30,-30,-30,-30,-30,
+   -30,-30,-30,-30,-30,-30,-30,-30,
+   -30,-30,-30,-30,-30,-30,-30,-30,
+   -20,-20,-20,-20,-20,-20,-20,-20,
+   -10,-10,-10,-10,-10,-10,-10,-10,
+     0, 10, 20,-25,  0,-25, 20,  0 };
+
+
+/* king piece square table for endgame.
+ * this table encourages centrality. */
+static const int king_endgame_pst[64] = {
+     0,  0,  0,  0,  0,  0,  0,  0,
+     0, 10, 10, 10, 10, 10, 10,  0,
+     0, 10, 20, 20, 20, 20, 10,  0,
+     0, 10, 20, 25, 25, 20, 10,  0,
+     0, 10, 20, 25, 25, 20, 10,  0,
+     0, 10, 20, 20, 20, 20, 10,  0,
+     0, 10, 10, 10, 10, 10, 10,  0,
+     0,  0,  0,  0,  0,  0,  0,  0 };
+
+
 /* knight piece square table */
 static const int knight_pst[64] = {
      -5, -5, -5, -5, -5, -5, -5, -5,
@@ -126,6 +152,33 @@ static inline int32_t eval_scale(int32_t score, int32_t material)
  * \return a score for the bishop.
  */
 int32_t eval_bishop(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Evaluate a single king.
+ * 
+ * TODO: separate endgame evaluation to another method.  Do not scale king
+ * safety in this function.  Instead, try to smooth the two scores based
+ * on material on the board.
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square the king is on
+ * \param enemy_np_mat  the enemy's non-pawn material
+ *
+ * \return a score for the king.
+ */
+int32_t eval_king(const position_t* pos, square_t sq, int enemy_np_mat);
+
+
+/**
+ * \brief Evaluate king safety for one side of the board.
+ *
+ * \param pos           a pointer to a chess position
+ * \param wtm           white to move?
+ *
+ * \return a score of the king safety for the player specified.
+ */
+int32_t eval_king_safety(const position_t* pos, bool wtm);
 
 
 /**
