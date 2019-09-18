@@ -1,9 +1,7 @@
 #include <prophet/bitmap.h>
+#include <prophet/movegen.h>
 
 #include "eval_internal.h"
-
-/* FIXME */
-#include "../movegen/movegen_internal.h"
 
 #include  <assert.h>
 
