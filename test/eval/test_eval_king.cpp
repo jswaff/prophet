@@ -8,7 +8,7 @@ TEST(eval_test, eval_king)
     ASSERT_TRUE(set_pos(&pos, 
         "rnbq1rk1/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQ1RK1 w - - 0 1"));
 
-    int32_t wk = eval_king(&pos, G1, all_nonpawn_pieces_val);
+    int32_t wk = eval_king(&pos, G1, all_nonpawn_pieces_val());
     EXPECT_EQ(
         king_pst[G1] + eval_king_safety(&pos, true), 
         wk);
@@ -16,7 +16,7 @@ TEST(eval_test, eval_king)
 
     EXPECT_EQ(
         king_pst[G1] + eval_king_safety(&pos, false),
-        eval_king(&pos, G8, all_nonpawn_pieces_val));
+        eval_king(&pos, G8, all_nonpawn_pieces_val()));
 }
 
 

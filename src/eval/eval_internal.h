@@ -14,9 +14,10 @@ static const int32_t knight_val = 300;
 static const int32_t bishop_val = 320;
 static const int32_t rook_val = 500;
 static const int32_t queen_val = 900;
-static const int32_t all_nonpawn_pieces_val = queen_val + rook_val*2 + 
-   bishop_val*2 + knight_val*2;
-
+static inline int32_t all_nonpawn_pieces_val()
+{
+  return  queen_val + rook_val*2 + bishop_val*2 + knight_val*2;
+}  
 
 /* king safety terms */
 static const int32_t king_safety_pawn_one_away       = -10;
@@ -140,7 +141,7 @@ static const int rook_pst[64] = {
  */
 static inline int32_t eval_scale(int32_t score, int32_t material)
 {
-    return score * material / all_nonpawn_pieces_val;
+    return score * material / all_nonpawn_pieces_val();
 }
 
 /**
@@ -167,7 +168,7 @@ int32_t eval_bishop(const position_t* pos, square_t sq);
  *
  * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq, int enemy_np_mat);
+int32_t eval_king(const position_t* pos, square_t sq, int32_t enemy_np_mat);
 
 
 /**

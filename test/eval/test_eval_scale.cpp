@@ -4,7 +4,7 @@
 
 TEST(eval_test, eval_scale_large_val)
 {
-	EXPECT_EQ(100, eval_scale(100, all_nonpawn_pieces_val));
+	EXPECT_EQ(100, eval_scale(100, all_nonpawn_pieces_val()));
 
 	// we expect the term to be scaled down progressivly as material is 
 	// removed from the board.
@@ -24,7 +24,7 @@ TEST(eval_test, eval_scale_large_val)
 
 TEST(eval_test, eval_scale_small_val)
 {
-	EXPECT_EQ(5, eval_scale(5, all_nonpawn_pieces_val));
+	EXPECT_EQ(5, eval_scale(5, all_nonpawn_pieces_val()));
 
 	// we expect the term to be scaled down progressivly as material is 
 	// removed from the board.
@@ -44,7 +44,7 @@ TEST(eval_test, eval_scale_small_val)
 
 TEST(eval_test, eval_scale_negative_val)
 {
-	EXPECT_EQ(-33, eval_scale(-33, all_nonpawn_pieces_val));
+	EXPECT_EQ(-33, eval_scale(-33, all_nonpawn_pieces_val()));
 
 	// we expect the term to be scaled down progressivly as material is 
 	// removed from the board.

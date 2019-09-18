@@ -2,8 +2,6 @@
 
 #include  <assert.h>
 
-static const int endgame_threshold = knight_val*2 + rook_val;
-
 /**
  * \brief Evaluate a single king.
  * 
@@ -17,10 +15,12 @@ static const int endgame_threshold = knight_val*2 + rook_val;
  *
  * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq, int enemy_np_mat)
+int32_t eval_king(const position_t* pos, square_t sq, int32_t enemy_np_mat)
 {
     assert(pos->piece[sq] == KING || pos->piece[sq] == -KING);
     assert(sq == pos->white_king || sq == pos->black_king);
+
+    const int endgame_threshold = knight_val*2 + rook_val;
 
     int32_t score = 0; 
 
