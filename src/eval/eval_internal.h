@@ -164,11 +164,10 @@ int32_t eval_bishop(const position_t* pos, square_t sq);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the king is on
- * \param enemy_np_mat  the enemy's non-pawn material
  *
  * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq, int32_t enemy_np_mat);
+int32_t eval_king(const position_t* pos, square_t sq);
 
 
 /**

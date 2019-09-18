@@ -11,11 +11,10 @@
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the king is on
- * \param enemy_np_mat  the enemy's non-pawn material
  *
  * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq, int32_t enemy_np_mat)
+int32_t eval_king(const position_t* pos, square_t sq)
 {
     assert(pos->piece[sq] == KING || pos->piece[sq] == -KING);
     assert(sq == pos->white_king || sq == pos->black_king);
@@ -26,6 +25,7 @@ int32_t eval_king(const position_t* pos, square_t sq, int32_t enemy_np_mat)
 
     if (is_white_piece(pos->piece[sq]))
     {
+        int32_t enemy_np_mat = eval_nonpawn_material(pos, false);
         if (enemy_np_mat >= endgame_threshold)
         {
             score = king_pst[sq];
@@ -38,6 +38,7 @@ int32_t eval_king(const position_t* pos, square_t sq, int32_t enemy_np_mat)
     }
     else
     {
+        int32_t enemy_np_mat = eval_nonpawn_material(pos, true);
         if (enemy_np_mat >= endgame_threshold)
         {
             score = king_pst[flip_rank[sq]];
