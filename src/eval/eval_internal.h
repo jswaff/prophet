@@ -8,6 +8,7 @@
 extern "C" {
 #endif  
 
+
 /* piece values */
 static const int32_t pawn_val = 100;
 static const int32_t knight_val = 300;
@@ -129,6 +130,10 @@ static const int rook_pst[64] = {
     -5,  0,  0,  0,  0,  0,  0, -5,
     -5,  0,  0,  0,  0,  0,  0, -5,
      0,  0,  0,  0,  0,  0,  0,  0 };
+
+
+/* define a generic signature for piece type eval functions */
+typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
 
 
 /**
@@ -274,6 +279,19 @@ bool pawn_isolated(const position_t* pos, square_t pawn_sq);
  * \return true if the pawn is passed, otherwise false.
  */
 bool pawn_passed(const position_t* pos, square_t pawn_sq);
+
+
+/**
+ * \brief Accumulate the score for a set of pieces.
+ *
+ * \param pos           a pointer to a chess position
+ * \param piece_map     a set of pieces to evaluate
+ * \param eval_func     the evaluation function to use for each piece
+ *
+ * \return the cumulative score.
+ */
+int32_t eval_accumulator(const position_t* pos, uint64_t piece_map, eval_func_t eval_func);
+
 
 
 // make this header C++ friendly.
