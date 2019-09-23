@@ -51,7 +51,7 @@ struct function_table_entry function_table[] = {
 
     /* custom commands */
     {"db", command_db},
-    {"eval", command_no_op}, 
+    {"eval", command_eval}, 
     {"exit", command_exit},
     {"perft", command_perft}
 };

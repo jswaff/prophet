@@ -58,6 +58,18 @@ int command_exit(const char* input);
 
 
 /**
+ * \brief Execute the eval command.
+ * 
+ * Evaluate the current position and print the score.
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int command_eval(const char* input);
+
+
+/**
  * \brief Default command handler - does nothing!
  * 
  * \param input         the user entered input
