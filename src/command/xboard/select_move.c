@@ -3,6 +3,7 @@
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
 
+#include <string.h>
 
 /**
  * \brief Select a move.
@@ -30,18 +31,29 @@ move_t select_move(const position_t* pos)
         return NO_MOVE;
     }
 
+    /* create a copy of the position that we can modify */
+    position_t copy_pos;
+    memcpy(&copy_pos, pos, sizeof(position_t));
+
     /* iterate over the move list, looking for the one with the highest
      * static evaluation */
     move_t best_mv = NO_MOVE;
     int32_t best_score = 0;
+    undo_t u;
 
     for (move_t* mp = moves; mp < endp; mp++) 
     {
-        int32_t score = eval(pos);
-        if (best_mv == NO_MOVE || score > best_score)
+        if (*mp != NO_MOVE)
         {
-            best_mv = *mp;
-            best_score = score;
+            apply_move(&copy_pos, *mp, &u);
+            int32_t score = -eval(&copy_pos);
+            undo_move(&copy_pos, &u);
+
+            if (best_mv == NO_MOVE || score > best_score)
+            {
+                best_mv = *mp;
+                best_score = score;
+            }
         }
     }
 
