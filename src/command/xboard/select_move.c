@@ -1,8 +1,7 @@
 #include <prophet/const.h>
+#include <prophet/eval.h>
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
-
-#include <stdlib.h>
 
 
 /**
@@ -10,8 +9,6 @@
  *
  * Select a legal move from the given position.  If there are no legal moves,
  * NO_MOVE is returned.
- *
- * This is a temporary implementation that just chooses a move at random.
  *
  * \param pos           a pointer to the chess positions
  *
@@ -33,25 +30,21 @@ move_t select_move(const position_t* pos)
         return NO_MOVE;
     }
 
-    /* choose a random move.  system rand isn't so great but this is temporary
-     * anyway. */
-    int mv_ind = rand() % num_moves;
+    /* iterate over the move list, looking for the one with the highest
+     * static evaluation */
+    move_t best_mv = NO_MOVE;
+    int32_t best_score = 0;
 
-    /* fetch the move from the stack.  since the list isn't contiguous, (it
-     * contains some NO_MOVE entries), we need to iterate. */
-    int i = 0;
     for (move_t* mp = moves; mp < endp; mp++) 
     {
-        if (*mp != NO_MOVE)
+        int32_t score = eval(pos);
+        if (best_mv == NO_MOVE || score > best_score)
         {
-            if (i == mv_ind)
-            {
-                return *mp;
-            }
-            i++;
+            best_mv = *mp;
+            best_score = score;
         }
     }
 
-    /* we should never get here. */
-    return NO_MOVE;
+    /* return the best move */
+    return best_mv;
 }
