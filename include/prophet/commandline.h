@@ -9,6 +9,12 @@ extern "C" {
 
 
 /**
+ * \brief Print command line options.
+ */
+void commandline_print_usage();
+
+
+/**
  * \brief Parse command line options.
  * 
  * \param argc          number of arguments
@@ -16,7 +22,7 @@ extern "C" {
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int process_commandline_options(int argc, const char** argv);
+int commandline_process_options(int argc, char* argv[]);
 
 
 /* make this header C++ friendly. */

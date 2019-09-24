@@ -1,5 +1,5 @@
+#include <prophet/bitmap.h>
 #include <prophet/position/position.h>
-#include <prophet/util/bitmap.h>
 
 /**
  * \brief Determine if a position is drawn by lack of mating material.

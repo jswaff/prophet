@@ -4,8 +4,6 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-static uint64_t bb_files[8];
-static uint64_t bb_ranks[8];
 static dir_t direction_tbl[64][64];
 
 static dir_t get_dir_slow(square_t from, square_t to);
@@ -35,37 +33,6 @@ uint64_t squares_to_bitmap(square_t sq, ...)
     va_end(sqs);
 
     return val;
-}
-
-/**
- * \brief Create a bitmap representation of a file (8 squares).
- *
- * FILE_A represents the 8 least significant bits.  FILE_H represents the
- * 8 most significant bits.
- *
- * \param f             a file
- *
- * \return a bitmap representation of the file
- */
-uint64_t file_to_bitmap(file_t f)
-{
-    assert(f >= FILE_A && f <= FILE_H);
-
-    return bb_files[f];
-}
-
-/**
- * \brief Create a bitmap representation of a rank (8 squares).
- *
- * \param f             a rank
- *
- * \return a bitmap representation of the rank
- */
-uint64_t rank_to_bitmap(rank_t r)
-{
-    assert(r >= RANK_8 && r <= RANK_1);
-
-    return bb_ranks[r];
 }
 
 /**
@@ -400,19 +367,6 @@ static dir_t get_dir_slow(square_t from, square_t to)
 
 void init_squares()
 {
-    for (int i=0; i<8; i++) 
-    {
-        bb_ranks[i] = 0;
-        bb_files[i] = 0;
-    }
-
-    for (int i=0; i<64; i++) 
-    {
-        square_t sq = (square_t)i;
-        bb_ranks[get_rank(sq)] |= square_to_bitmap(sq);
-        bb_files[get_file(sq)] |= square_to_bitmap(sq);
-    }
-
     for (int i=0; i<64; i++) 
     {
         for (int j=0; j<64; j++) 

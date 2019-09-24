@@ -12,7 +12,7 @@ extern int init();
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int main(int argc, const char** argv)
+int main(int argc, char* argv[])
 {
     int retval = 0;
 
@@ -27,7 +27,7 @@ int main(int argc, const char** argv)
         goto done;
     }
 
-    retval = process_commandline_options(argc, argv);
+    retval = commandline_process_options(argc, argv);
     if (0 != retval)
     {
         goto done;
