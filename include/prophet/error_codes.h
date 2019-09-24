@@ -9,7 +9,7 @@ extern "C" {
 
 
 /**
- * \brief This error is thrown by process_commandline_options() when an invalid
+ * \brief This error is thrown by commandline_process_options() when an invalid
 * command line option is encountered.
 */
 #define P4_ERROR_INVALID_COMMAND_LINE_OPTION               0x001

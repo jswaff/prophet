@@ -11,9 +11,6 @@ static uint64_t bb_ranks[8];
 /**
  * \brief Create a bitmap representation of a file (8 squares).
  *
- * FILE_A represents the 8 least significant bits.  FILE_H represents the
- * 8 most significant bits.
- *
  * \param f             a file
  *
  * \return a bitmap representation of the file

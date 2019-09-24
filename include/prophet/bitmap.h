@@ -49,7 +49,7 @@ uint32_t get_msb(uint64_t val);
 /**
  * \brief Isolate a single bit in a 64 bit value.
  *
- * The indexed is zero based, and works from the least significant bit to the 
+ * The index is zero based, and works from the least significant bit to the 
  * most.  For example, given a bitmap with bit pattern 11010:
  *
  *   isolate_bit(11010, 0) ==  2
@@ -69,9 +69,6 @@ uint64_t isolate_bit(uint64_t val, uint32_t index);
 
 /**
  * \brief Create a bitmap representation of a file (8 squares).
- *
- * FILE_A represents the 8 least significant bits.  FILE_H represents the
- * 8 most significant bits.
  *
  * \param f             a file
  *
@@ -106,6 +103,9 @@ uint64_t ray(square_t sq, dir_t dir);
 /**
  * \brief Convert a square to a bitmap representing a file.
  *
+ * The returned bitmap can be used as a mask for isolating squares on the
+ * file of the given square.
+ *
  * \param sq            a square
  *
  * \return a bitmap
@@ -115,6 +115,9 @@ uint64_t sq_to_file_bitmap(int32_t sq);
 
 /**
  * \brief Convert a square to a bitmap representing a rank.
+ *
+ * The returned bitmap can be used as a mask for isolating squares on the
+ * rank of the given square.
  *
  * \param sq            a square
  *

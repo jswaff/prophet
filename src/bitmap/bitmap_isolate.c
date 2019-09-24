@@ -5,7 +5,7 @@
 /**
  * \brief Isolate a single bit in a 64 bit value.
  *
- * The indexed is zero based, and works from the least significant bit to the 
+ * The index is zero based, and works from the least significant bit to the 
  * most.  For example, given a bitmap with bit pattern 11010:
  *
  *   isolate_bit(11010, 0) ==  2
