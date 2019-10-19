@@ -29,7 +29,11 @@ int command_loop()
     bool exit_status;
     do
     {
-        fgets(input, MAX_INPUT_SZ, stdin);
+        if (fgets(input, MAX_INPUT_SZ, stdin) == NULL)
+        {
+            retval = P4_ERROR_CMD_FGETS_FAILURE;
+            goto cleanup;
+        }
 
         /* remove trailing newline */
         if ((strlen(input) > 0) && (input[strlen(input) - 1] == '\n'))
@@ -41,6 +45,8 @@ int command_loop()
 
     } while (retval == 0 && !exit_status);
 
+
+cleanup:
 
     free(input);
 

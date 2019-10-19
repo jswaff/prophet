@@ -23,17 +23,24 @@ extern "C" {
 
 
 /**
+ * \brief This error is thrown by command_loop() when there was an error reading
+ * from stdin into the input buffer.
+ */
+#define P4_ERROR_CMD_FGETS_FAILURE                         0x0003
+
+
+/**
  * \brief This error is thrown by parse_and_execute() when memory for the
  * user command structure could not be allocated. 
  */
-#define P4_ERROR_CMD_USER_CMD_BUFFER                       0x0003
+#define P4_ERROR_CMD_USER_CMD_BUFFER                       0x0004
 
 
 /**
  * \brief This error is thrown by parse_command() when memory to copy the
  * contents of the input buffer could not be allocated.
  */
-#define P4_ERROR_CMD_PARSE_CMD_COPY                        0x0004
+#define P4_ERROR_CMD_PARSE_CMD_COPY                        0x0005
 
 
 /*
@@ -41,21 +48,21 @@ extern "C" {
  * was invoked with the incorrect command.  
  * For example, if the "force" handler were invoked with "perft 3".
  */
-#define P4_ERROR_CMD_INCORRECT_COMMAND                     0x0005
+#define P4_ERROR_CMD_INCORRECT_COMMAND                     0x0006
 
 
 /**
  * \brief This error is thrown by command_perft() when the depth component
  * of the command is missing.
  */
-#define P4_ERROR_CMD_PERFT_DEPTH                           0x0006
+#define P4_ERROR_CMD_PERFT_DEPTH                           0x0007
 
 
 /**
  * \brief This error is thrown by command_db() when the pos_to_str()
  * function returns a NULL pointer.
  */
-#define P4_ERROR_CMD_DB_POS_TO_STR                         0x0007
+#define P4_ERROR_CMD_DB_POS_TO_STR                         0x0008
 
 
 /**
