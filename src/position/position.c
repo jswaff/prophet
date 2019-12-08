@@ -215,4 +215,3 @@ restore_and_exit:
 
     return false;
 }
-

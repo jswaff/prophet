@@ -61,7 +61,7 @@ move_t select_move(const position_t* pos)
         if (*mp != NO_MOVE)
         {
             apply_move(&copy_pos, *mp, &u);
-            int32_t score = -eval(&copy_pos);
+            int32_t score = -eval(&copy_pos, false);
             undo_move(&copy_pos, &u);
 
             if (best_mv == NO_MOVE || score > best_score)

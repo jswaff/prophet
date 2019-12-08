@@ -15,7 +15,7 @@ TEST(eval_test, eval_initial_pos)
     position_t pos;
     reset_pos(&pos);
 
-    EXPECT_EQ(0, eval(&pos));
+    EXPECT_EQ(0, eval(&pos, false));
 }
 
 TEST(eval_test, eval_symmetry)
@@ -61,13 +61,13 @@ static void testcase_symmetry(const char* fen)
     position_t pos;
     ASSERT_TRUE(set_pos(&pos,fen));
     
-    int32_t score = eval(&pos);
+    int32_t score = eval(&pos, false);
 
     position_t flipped_pos = position_flip(&pos);
     
     // since the score is from the perspective of the player on move, it 
     // should be the same for the flipped position 
-    int32_t flipped_score = eval(&flipped_pos);
+    int32_t flipped_score = eval(&flipped_pos, false);
     EXPECT_EQ(score, flipped_score);
 
     // flip it back around and verify it's equal 

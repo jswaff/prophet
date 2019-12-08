@@ -25,7 +25,7 @@ int command_eval(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    int32_t score = eval(&gpos);
+    int32_t score = eval(&gpos, false);
 
     out(stdout, "eval score: %d\n", score);
 

@@ -21,11 +21,12 @@ extern "C" {
  * This method will not detect end-of-game scenarios such as checkmate or draw
  * by lack of material.
  *
- * \param pos           a pointer to a chess position
+ * \param pos             a pointer to a chess position
+ * \param material_only   if the evaluation should consider material only
  *
  * \return the score.
  */
-int32_t eval(const position_t* pos);
+int32_t eval(const position_t* pos, bool material_only);
 
 
 /**
