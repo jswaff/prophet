@@ -41,5 +41,5 @@ done:
         out(stdout, "exiting with value: %d\n", retval);
     }
 
-	return retval;
+    return retval;
 }

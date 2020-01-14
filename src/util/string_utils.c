@@ -8,7 +8,7 @@
 /**
  * \brief Convert a string to a move.
  *
- * The string should have length four, except for caslting moves, which should
+ * The string should have length four, except for castling moves, which should
  * have a length of five.  SAN notation is not supported.  Proper formatting
  * is two characters for the source square, followed by two characters for the
  * destination square, followed by an optional promotion piece.
