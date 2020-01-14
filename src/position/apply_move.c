@@ -36,12 +36,11 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     u->fifty_counter = pos->fifty_counter;
     u->castling_rights = pos->castling_rights;
 
-    /* clear current values */
+    /* swap player */
     pos->hash_key ^= zkeys.ptm[pos->player];
-    pos->hash_key ^= zkeys.ep[pos->ep_sq];
-    pos->hash_key ^= zkeys.casting_rights[pos->castling_rights];
-
     pos->player = opposite_player(pos->player);
+    pos->hash_key ^= zkeys.ptm[pos->player];
+    
     pos->move_counter++;
 
     if (is_capture(m)) 
@@ -56,17 +55,16 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     }
     assert(abs((int)u->captured) == (int)get_captured_piece(m));
 
-    /* this could get reset */
-    pos->ep_sq = NO_SQUARE;
+    /* clear EP square */
+    if (pos->ep_sq != NO_SQUARE) 
+    {
+        pos->hash_key ^= zkeys.ep[pos->ep_sq];
+        pos->ep_sq = NO_SQUARE;
+    }
 
     add_piece_to_destination(pos, m);
     remove_castling_availability(pos, m);
     remove_piece(pos, get_from_sq(m));
-
-    /* add in current values */
-    pos->hash_key ^= zkeys.ptm[pos->player];
-    pos->hash_key ^= zkeys.ep[pos->ep_sq];
-    pos->hash_key ^= zkeys.casting_rights[pos->castling_rights];
 
     assert(verify_pos(pos));
 }
@@ -133,6 +131,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
             if (to_sq == north(north(from_sq))) 
             {
                 p->ep_sq = north(from_sq);
+                p->hash_key ^= zkeys.ep[p->ep_sq];
             } 
             else if (get_rank(to_sq) == RANK_8) 
             {
@@ -146,6 +145,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
             if (to_sq == south(south(from_sq))) 
             {
                 p->ep_sq = south(from_sq);
+                p->hash_key ^= zkeys.ep[p->ep_sq];
             } 
             else if (get_rank(to_sq) == RANK_1) 
             {
@@ -200,6 +200,9 @@ static void add_piece_to_destination(position_t* p, move_t m)
 
 static void remove_castling_availability(position_t* p, move_t mv)
 {
+    /* clear current castling rights from hash key */
+    p->hash_key ^= zkeys.casting_rights[p->castling_rights];
+
     /* if capturing a rook remove its castling availability */
     if (is_capture(mv)) 
     {
@@ -222,6 +225,9 @@ static void remove_castling_availability(position_t* p, move_t mv)
     {
         remove_rook_castling_availability(p, from_sq);
     }
+
+    /* add current castling rights to hash key */
+    p->hash_key ^= zkeys.casting_rights[p->castling_rights];
 }
 
 static void remove_rook_castling_availability(position_t* p, square_t sq)

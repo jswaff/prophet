@@ -42,7 +42,9 @@ uint64_t build_hash_key(const position_t* pos)
     hkey ^= zkeys.casting_rights[pos->castling_rights];
 
     assert(pos->ep_sq <= NO_SQUARE);
-    hkey ^= zkeys.ep[pos->ep_sq];
+    if (pos->ep_sq != NO_SQUARE) {
+        hkey ^= zkeys.ep[pos->ep_sq];
+    }
 
     return hkey;
 }
