@@ -22,7 +22,7 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 ## Status
 
 ### 12/7/19
-Successfully integration with chess4j by loading as a static library.  This was just a proof-of-concept, where chess4j uses the P4 library for endpoint evaluation, but paves the way for using native code for search.
+Successful integration with chess4j by loading as a static library.  This was just a proof-of-concept, where chess4j uses the P4 library for endpoint evaluation, but paves the way for using native code for search.
 
 ### 9/24/19
 Evaluator complete.  This is a verbatim "migration" of Prophet3's evaluator.  It was a little painful really, because the evaluation routines are clearly a major weakness in the program, but I think it's important to port everything over and run some comparisons before making any changes.

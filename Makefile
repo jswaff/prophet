@@ -6,7 +6,7 @@ TEST_BUILD_DIR=$(BUILD_DIR)/test
 
 # source files for library
 LIB_SRC_DIRS=$(SRC_DIR) $(SRC_DIR)/bitmap $(SRC_DIR)/eval $(SRC_DIR)/hash \
-    $(SRC_DIR)/movegen $(SRC_DIR)/position $(SRC_DIR)/util
+    $(SRC_DIR)/movegen $(SRC_DIR)/position $(SRC_DIR)/search $(SRC_DIR)/util
 LIB_SOURCES=$(foreach d,$(LIB_SRC_DIRS),$(wildcard $(d)/*.c))
 LIB_STRIPPED_SOURCES=$(patsubst $(SRC_DIR)/%,%,$(LIB_SOURCES))
 LIB_SRC_OBJECTS=$(patsubst %.c,$(SRC_BUILD_DIR)/%.o,$(LIB_STRIPPED_SOURCES))
@@ -22,7 +22,8 @@ EXE_SRC_OBJECTS=$(patsubst %.c,$(SRC_BUILD_DIR)/%.o,$(EXE_STRIPPED_SOURCES))
 # test source files
 TEST_DIRS=$(TEST_DIR) $(TEST_DIR)/bitmap $(TEST_DIR)/command \
     $(TEST_DIR)/command/xboard $(TEST_DIR)/eval $(TEST_DIR)/hash \
-    $(TEST_DIR)/movegen $(TEST_DIR)/position $(TEST_DIR)/util
+    $(TEST_DIR)/movegen $(TEST_DIR)/position $(TEST_DIR)/search \
+    $(TEST_DIR)/util
 TEST_SOURCES=$(foreach d,$(TEST_DIRS),$(wildcard $(d)/*.cpp))
 STRIPPED_TEST_SOURCES=$(patsubst $(TEST_DIR)/%,%,$(TEST_SOURCES))
 TEST_OBJECTS=$(patsubst %.cpp,$(TEST_BUILD_DIR)/%.o,$(STRIPPED_TEST_SOURCES))
