@@ -21,8 +21,7 @@ extern "C" {
  * 
  * \return the score
  */
-int32_t search(const position_t* pos, int32_t depth, int32_t alpha, 
-    int32_t beta);
+int32_t search(position_t* pos, int32_t depth, int32_t alpha, int32_t beta);
 
 
 // make this header C++ friendly.
