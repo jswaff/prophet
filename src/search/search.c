@@ -48,18 +48,21 @@ static int32_t search_helper(position_t* pos, int ply, int32_t depth,
     }
 
     move_t moves[300];
-    move_t* endp = gen_legal_moves(moves, pos, true, true);
+    move_t* endp = gen_pseudo_legal_moves(moves, pos, true, true);
 
     move_t* mp;
     int num_moves_searched = 0;
     for (mp = moves; mp < endp; mp++)
     {
-        if (*mp == NO_MOVE)
-        {
-            continue;
-        }
         undo_t u;
         apply_move(pos, *mp, &u);
+
+        /* verify the move was legal */
+        if (in_check(pos, opposite_player(pos->player)))
+        {
+            undo_move(pos, &u);
+            continue;
+        }
 
         int32_t score = -search_helper(pos, ply+1, depth-1, -beta, -alpha, 
             stats);
