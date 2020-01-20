@@ -1,15 +1,17 @@
 #include <prophet/const.h>
 #include <prophet/eval.h>
 #include <prophet/movegen.h>
+#include <prophet/parameters.h>
 #include <prophet/search.h>
 
 #include  <assert.h>
+#include <string.h>
 
 static int32_t adjust_score_for_mate(const position_t* pos, int32_t score, 
     int num_moves_searched, int ply);
 
 static int32_t search_helper(position_t* pos, int ply, int32_t depth, 
-    int32_t alpha, int32_t beta);
+    int32_t alpha, int32_t beta, stats_t* stats);
 
 
 /**
@@ -19,19 +21,26 @@ static int32_t search_helper(position_t* pos, int ply, int32_t depth,
  * \param depth         the depth to search to
  * \param alpha         the lower bound
  * \param beta          the upper bound
+ * \param stats         structure for tracking search stats
  * 
  * \return the score
  */
-int32_t search(position_t* pos, int32_t depth, int32_t alpha, int32_t beta)
+int32_t search(position_t* pos, int32_t depth, int32_t alpha, int32_t beta,
+    stats_t* stats)
 {
-    return search_helper(pos, 0, depth, alpha, beta);
+    /* initialize the stats structure */
+    memset(stats, 0, sizeof(stats_t));
+
+    return search_helper(pos, 0, depth, alpha, beta, stats);
 }
 
 
 static int32_t search_helper(position_t* pos, int ply, int32_t depth, 
-    int32_t alpha, int32_t beta)
+    int32_t alpha, int32_t beta, stats_t* stats)
 {
     assert (depth >= 0);
+
+    stats->nodes++;
 
     if (depth == 0)
     {
@@ -52,13 +61,15 @@ static int32_t search_helper(position_t* pos, int ply, int32_t depth,
         undo_t u;
         apply_move(pos, *mp, &u);
 
-        int32_t score = -search_helper(pos, ply+1, depth-1, -beta, -alpha);
+        int32_t score = -search_helper(pos, ply+1, depth-1, -beta, -alpha, 
+            stats);
         ++num_moves_searched;
 
         undo_move(pos, &u);
 
         if (score >= beta)
         {
+            stats->fail_highs++;
             return beta;
         }
         if (score > alpha)
