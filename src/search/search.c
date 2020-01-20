@@ -11,7 +11,7 @@ static int32_t adjust_score_for_mate(const position_t* pos, int32_t score,
     int num_moves_searched, int ply);
 
 static int32_t search_helper(position_t* pos, int ply, int32_t depth, 
-    int32_t alpha, int32_t beta, stats_t* stats);
+    int32_t alpha, int32_t beta, move_t* move_stack, stats_t* stats);
 
 
 /**
@@ -21,22 +21,23 @@ static int32_t search_helper(position_t* pos, int ply, int32_t depth,
  * \param depth         the depth to search to
  * \param alpha         the lower bound
  * \param beta          the upper bound
+ * \param move_stack    pre-allocated stack for move generation
  * \param stats         structure for tracking search stats
  * 
  * \return the score
  */
 int32_t search(position_t* pos, int32_t depth, int32_t alpha, int32_t beta,
-    stats_t* stats)
+    move_t* move_stack, stats_t* stats)
 {
     /* initialize the stats structure */
     memset(stats, 0, sizeof(stats_t));
 
-    return search_helper(pos, 0, depth, alpha, beta, stats);
+    return search_helper(pos, 0, depth, alpha, beta, move_stack, stats);
 }
 
 
 static int32_t search_helper(position_t* pos, int ply, int32_t depth, 
-    int32_t alpha, int32_t beta, stats_t* stats)
+    int32_t alpha, int32_t beta, move_t* move_stack, stats_t* stats)
 {
     assert (depth >= 0);
 
@@ -47,12 +48,11 @@ static int32_t search_helper(position_t* pos, int ply, int32_t depth,
         return eval(pos, false);
     }
 
-    move_t moves[300];
-    move_t* endp = gen_pseudo_legal_moves(moves, pos, true, true);
+    move_t* endp = gen_pseudo_legal_moves(move_stack, pos, true, true);
 
     move_t* mp;
     int num_moves_searched = 0;
-    for (mp = moves; mp < endp; mp++)
+    for (mp = move_stack; mp < endp; mp++)
     {
         undo_t u;
         apply_move(pos, *mp, &u);
@@ -65,7 +65,7 @@ static int32_t search_helper(position_t* pos, int ply, int32_t depth,
         }
 
         int32_t score = -search_helper(pos, ply+1, depth-1, -beta, -alpha, 
-            stats);
+            endp, stats);
         ++num_moves_searched;
 
         undo_move(pos, &u);

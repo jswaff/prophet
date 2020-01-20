@@ -25,12 +25,13 @@ typedef struct
  * \param depth         the depth to search to
  * \param alpha         the lower bound
  * \param beta          the upper bound
+ * \param move_stack    pre-allocated stack for move generation
  * \param stats         structure for tracking search stats
  * 
  * \return the score
  */
 int32_t search(position_t* pos, int32_t depth, int32_t alpha, int32_t beta, 
-    stats_t* stats);
+    move_t* move_stack, stats_t* stats);
 
 
 // make this header C++ friendly.
