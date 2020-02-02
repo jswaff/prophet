@@ -69,6 +69,7 @@ TEST(string_utils_test, str_to_sq)
 
 TEST(string_utils_test, mv_to_str)
 {
+
     char* buf = move_to_str(to_move(PAWN, E2, E4));
     EXPECT_NE(nullptr, buf);
     EXPECT_EQ(strcmp(buf, "e2e4"), 0);
@@ -81,6 +82,37 @@ TEST(string_utils_test, mv_to_str)
     set_promopiece(&mv, BISHOP);
     buf = move_to_str(mv);
     EXPECT_EQ(strcmp(buf, "a7a8b"), 0);
+    free(buf);
+}
+
+TEST(string_utils_test, mv_line_to_str)
+{
+    /* empty line */
+    move_line_t mv_line;
+    mv_line.n = 0;
+    char* buf = move_line_to_str(&mv_line);
+    EXPECT_EQ(strcmp(buf, ""), 0);
+    free(buf);
+
+    /* line of one move */
+    mv_line.n = 1;
+    mv_line.mv[0] = to_move(PAWN, E2, E4);
+    buf = move_line_to_str(&mv_line);
+    EXPECT_EQ(strcmp(buf, "e2e4"), 0);
+    free(buf);
+
+    /* line of two moves */
+    mv_line.n = 2;
+    mv_line.mv[1] = to_move(KNIGHT, G8, F6);
+    buf = move_line_to_str(&mv_line);
+    EXPECT_EQ(strcmp(buf, "e2e4 g8f6"), 0);
+    free(buf);
+
+    /* line of three moves */
+    mv_line.n = 3;
+    mv_line.mv[2] = to_move(PAWN, D2, D3);
+    buf = move_line_to_str(&mv_line);
+    EXPECT_EQ(strcmp(buf, "e2e4 g8f6 d2d3"), 0);
     free(buf);
 }
 

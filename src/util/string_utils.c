@@ -182,6 +182,69 @@ char* move_to_str(move_t mv)
     return buf;
 }
 
+
+/**
+ * \brief Convert a move line to a string.
+ *
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param mv_line       the move to convert
+ *
+ * \return a null terminated string
+ */
+char* move_line_to_str(const move_line_t* mv_line)
+{
+    /* an empty line is a valid line. */
+    if (mv_line->n == 0)
+    {
+        char* buf = (char*)malloc(sizeof(char));
+        *buf = 0;
+        return buf;
+    }
+
+    /* we don't really know in advance how long the string will be.
+       get all of the individual move strings and add them up */
+    char* mv_bufs[mv_line->n];
+    size_t total_len = 0;
+    for (int i=0; i < mv_line->n; i++) 
+    {
+        mv_bufs[i] = move_to_str(mv_line->mv[i]);
+        total_len += strlen(mv_bufs[i]);
+    }
+
+    /* allow for trailing spaces but all but the last move, and a null
+       terminator after the last move */
+    total_len += mv_line->n;
+
+    char* buf = (char*)malloc(total_len);
+
+    /* copy the moves to the line buffer */
+    size_t offset = 0;
+    for (int i=0; i< mv_line->n; i++) 
+    {
+        memcpy(buf + offset, mv_bufs[i], strlen(mv_bufs[i]));
+        offset += strlen(mv_bufs[i]);
+        
+        /* add a trailing space after all but the last move */
+        if (i < mv_line->n - 1)
+        {
+            buf[offset++] = ' ';
+        }
+
+        /* free the buffer holding the move */
+        free(mv_bufs[i]);
+    }
+
+    /* add the null terminator */
+    buf[offset] = 0;
+
+    return buf;
+}
+
+
 /**
  * \brief Convert a square to a string.
  *

@@ -58,6 +58,21 @@ char* move_to_str(move_t mv);
 
 
 /**
+ * \brief Convert a move line to a string.
+ *
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param mv_line       the move to convert
+ *
+ * \return a null terminated string
+ */
+char* move_line_to_str(const move_line_t* mv_line);
+
+
+/**
  * \brief Convert a square to a string.
  *
  * Returns a pointer to a null-terminated string.  The returned pointer must be

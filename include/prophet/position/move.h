@@ -1,6 +1,7 @@
 #ifndef _MOVE_H_
 #define _MOVE_H_
 
+#include <prophet/const.h>
 #include <prophet/position/piece.h>
 #include <prophet/position/square.h>
 
@@ -13,6 +14,13 @@ extern "C" {
 #endif  
 
 typedef uint64_t move_t;
+
+typedef struct
+{
+    int n; /* the number of moves in the line */
+    move_t mv[MAX_PLY];    
+} move_line_t;
+
 
 /**
  * \brief Create a non-capturing move
