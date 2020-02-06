@@ -55,7 +55,7 @@ move_t select_move(const position_t* pos)
     position_t copy_pos;
     memcpy(&copy_pos, pos, sizeof(position_t));
 
-    /* search the poition to a fixed depth */
+    /* search the position to a fixed depth */
     move_line_t pv;
     stats_t stats;
     //out(stdout, "# starting depth 3 search\n");
