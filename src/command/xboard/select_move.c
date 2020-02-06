@@ -2,12 +2,17 @@
 #include <prophet/eval.h>
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
+#include <prophet/search.h>
+#include <prophet/util/output.h>
 
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
 bool random_mode = false;
+
+/* move stack */
+move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
 static move_t select_random_move(
@@ -50,31 +55,16 @@ move_t select_move(const position_t* pos)
     position_t copy_pos;
     memcpy(&copy_pos, pos, sizeof(position_t));
 
-    /* iterate over the move list, looking for the one with the highest
-     * static evaluation */
-    move_t best_mv = NO_MOVE;
-    int32_t best_score = 0;
-    undo_t u;
-
-    for (move_t* mp = moves; mp < endp; mp++) 
-    {
-        if (*mp != NO_MOVE)
-        {
-            apply_move(&copy_pos, *mp, &u);
-            int32_t score = -eval(&copy_pos, false);
-            undo_move(&copy_pos, &u);
-
-            if (best_mv == NO_MOVE || score > best_score)
-            {
-                best_mv = *mp;
-                best_score = score;
-            }
-        }
-    }
+    /* search the poition to a fixed depth */
+    move_line_t pv;
+    stats_t stats;
+    //out(stdout, "# starting depth 3 search\n");
+    search(&copy_pos, &pv, 3, -INF, INF, moves, &stats); 
 
     /* return the best move */
-    assert(best_mv != NO_MOVE);
-    return best_mv;
+    assert(pv.n > 0);
+
+    return pv.mv[0];
 }
 
 
