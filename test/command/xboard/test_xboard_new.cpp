@@ -8,6 +8,7 @@
 
 extern position_t gpos;
 extern bool xboard_force_mode;
+extern int32_t max_depth;
 
 TEST(xboard_test, xboard_new_incorrect_cmd)
 {
@@ -22,6 +23,9 @@ TEST(xboard_test, xboard_new)
     // and that we are in force mode
     xboard_force_mode = true;
 
+    // and there is a depth constraint
+    max_depth = 10;
+
     ASSERT_EQ(0, xboard_new("new"));
 
     // the global position should now be reset.
@@ -33,4 +37,7 @@ TEST(xboard_test, xboard_new)
 
     // we should not be in force mode
     EXPECT_FALSE(xboard_force_mode);
+
+    // depth constraints should be removed
+    EXPECT_EQ(0, max_depth);
 }

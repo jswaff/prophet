@@ -39,7 +39,7 @@ struct function_table_entry function_table[] = {
     {"rejected", command_no_op},
     {"remove", xboard_remove},
     {"result", xboard_result},
-    {"sd", command_no_op},
+    {"sd", xboard_sd},
     {"setboard", xboard_setboard},
     {"st", command_no_op},
     {"time", command_no_op},

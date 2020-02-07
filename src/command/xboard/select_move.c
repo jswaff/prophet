@@ -10,6 +10,7 @@
 #include <string.h>
 
 bool random_mode = false;
+int32_t max_depth;
 
 /* move stack */
 move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
@@ -58,8 +59,14 @@ move_t select_move(const position_t* pos)
     /* search the position to a fixed depth */
     move_line_t pv;
     stats_t stats;
-    //out(stdout, "# starting depth 3 search\n");
-    search(&copy_pos, &pv, 3, -INF, INF, moves, &stats); 
+    int32_t search_depth = max_depth;
+    
+    /* set a hard limit on depth until timing is in place */
+    if (max_depth == 0 || max_depth > 6)
+    {
+        search_depth = 6;
+    }
+    search(&copy_pos, &pv, search_depth, -INF, INF, moves, &stats); 
 
     /* return the best move */
     assert(pv.n > 0);

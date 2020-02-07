@@ -103,6 +103,18 @@ int xboard_result(const char* input);
 
 
 /**
+ * \brief Execute the xboard sd command 
+ * 
+ * Respond to the sd DEPTH command by setting the maximum search depth.  
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_sd(const char* input);
+
+
+/**
  * \brief Execute the xboard setboard command 
  * 
  * \param input         the user entered input 

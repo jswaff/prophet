@@ -7,6 +7,7 @@
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
+extern int32_t max_depth;
 
 /**
  * \brief Execute the xboard new command 
@@ -36,6 +37,8 @@ int xboard_new(const char* input)
     memset(gundos, 0, sizeof(gundos));
 
     xboard_force_mode = false;
+
+    max_depth = 0;
 
     return 0;
 }
