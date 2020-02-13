@@ -4,10 +4,13 @@
 #include <prophet/position/position.h>
 #include <prophet/search.h>
 #include <prophet/util/output.h>
+#include <prophet/util/string_utils.h>
 
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+
+extern bool xboard_post_mode;
 
 bool random_mode = false;
 int32_t max_depth;
@@ -66,7 +69,17 @@ move_t select_move(const position_t* pos)
     {
         search_depth = 6;
     }
-    search(&copy_pos, &pv, search_depth, -INF, INF, moves, &stats); 
+    int32_t score = search(
+        &copy_pos, &pv, search_depth, -INF, INF, moves, &stats); 
+
+    /* print the best line */
+    if (xboard_post_mode)
+    {
+        char* pv_buffer = move_line_to_str(&pv);
+        out(stdout, "%2d %5d %5d %7llu %s\n", 
+            search_depth, score, 0, stats.nodes, pv_buffer);
+        free(pv_buffer);
+    }
 
     /* return the best move */
     assert(pv.n > 0);

@@ -56,6 +56,16 @@ int xboard_new(const char* input);
 
 
 /**
+ * \brief Execute the xboard nopost command 
+ * 
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_nopost(const char* input);
+
+
+/**
  * \brief Execute the xboard ping command 
  * 
  * Respond to the ping N command with a pong N.  
@@ -65,6 +75,16 @@ int xboard_new(const char* input);
  * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_ping(const char* input);
+
+
+/**
+ * \brief Execute the xboard post command 
+ * 
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_post(const char* input);
 
 
 /**

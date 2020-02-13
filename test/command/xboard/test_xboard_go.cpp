@@ -6,6 +6,7 @@
 
 extern position_t gpos;
 extern bool xboard_force_mode;
+extern bool xboard_post_mode;
 
 TEST(xboard_test, xboard_go_incorrect_cmd)
 {
@@ -17,6 +18,7 @@ TEST(xboard_test, xboard_go)
 	// setup
     ASSERT_EQ(0, xboard_new("new"));
     ASSERT_EQ(0, xboard_force("force"));
+    xboard_post_mode = false;
 
 	// redirect stdout to a buffer 
 	char buffer[255];
