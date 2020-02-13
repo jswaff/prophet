@@ -64,8 +64,15 @@ move_t select_move(const position_t* pos)
     stats_t stats;
     int32_t search_depth = max_depth;
     
-    /* set a hard limit on depth until timing is in place */
-    if (max_depth == 0 || max_depth > 6)
+    /* default to a search depth of 3 and set a hard limit of 6
+     * until there is some move ordering in place and the search
+     * can abort on time. 
+     */
+    if (max_depth == 0)
+    {
+        search_depth = 3;
+    }
+    else if (max_depth > 6)
     {
         search_depth = 6;
     }

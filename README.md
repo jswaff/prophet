@@ -21,11 +21,12 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 
 ## Status
 
-### 2/6/20
-Added a simple search without any move ordering, and extended the JNI integration with chess4j to 
-include the search.  The next phase will be to add some basic move ordering, such as trying the previous
-PV first, MVV/LVA capture scoring and killer moves.
+### 2/13/20
+Added a simple depth first search.  The search uses the alpha/beta algorithm and recognizes checkmated and stalemated positions but otherwise has no "intelligence."  It is a simple fixed depth search without iterative deepening or timing.
 
+The next phase of work will be to add some basic move ordering, such as trying the previous PV first, MVV/LVA capture scoring and killer moves.
+
+The JNI integration with chess4j has gone extremely well.  chess4j is capable of using Prophet for search, so after this rewrite is complete there will likely be a chess4j bundle that includes P4 for some platforms.  I am leaning towards keeping P4 as a lightweight, XBoard compatible  "calculation engine" and leveraging chess4j for ancillary functions such as opening book, pondering support, and distributed computing support.
 
 ### 12/7/19
 Successful integration with chess4j by loading as a static library.  This was just a proof-of-concept, where chess4j uses the P4 library for endpoint evaluation, but paves the way for using native code for search.
