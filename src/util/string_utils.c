@@ -206,7 +206,7 @@ char* move_line_to_str(const move_line_t* mv_line)
     }
 
     /* we don't really know in advance how long the string will be.
-     *  get all of the individual move strings and add them up 
+     * get all of the individual move strings and add them up 
      */
     char* mv_bufs[mv_line->n];
     size_t total_len = 0;
@@ -217,7 +217,7 @@ char* move_line_to_str(const move_line_t* mv_line)
     }
 
     /* allow for trailing spaces for all but the last move, and a null
-     *  terminator after the last move  
+     * terminator after the last move  
      */
     total_len += mv_line->n;
 
