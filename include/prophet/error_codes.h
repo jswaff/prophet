@@ -73,55 +73,62 @@ extern "C" {
 
 
 /**
+ * \brief This error is thrown by xboard_sd() when the depth paramter
+ * of the command is missing.
+ */
+#define P4_ERROR_CMD_XBOARD_SD_MISSING_DEPTH               0x0101
+
+
+/**
  * \brief This error is thrown by xboard_protover() when the N parameter
  * of the command is missing.
  */
-#define P4_ERROR_CMD_XBOARD_PROTOVER_MISSING_N             0x0101
+#define P4_ERROR_CMD_XBOARD_PROTOVER_MISSING_N             0x0102
 
 
 /**
  * \brief This error is thrown by xboard_protover() when the protocol version
  * is unsupported.
  */
-#define P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED           0x0102
+#define P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED           0x0103
 
 
 /**
  * \brief This error is thrown by xboard_result() when the result is missing.
  */
-#define P4_ERROR_CMD_XBOARD_RESULT_MISSING_RESULT          0x0103
+#define P4_ERROR_CMD_XBOARD_RESULT_MISSING_RESULT          0x0104
 
 
 /**
  * \brief This error is thrown by xboard_result() when the given result is 
  * invalid.
  */
-#define P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT          0x0104
+#define P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT          0x0105
 
 
 /**
  * \brief This error is thrown by xboard_usermove() when the move is missing.
  */
-#define P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE          0x0105
+#define P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE          0x0106
 
 
 /**
  * \brief This error is thrown by xboard_usermove() when the move is invalid
  * or illegal.
  */
-#define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE          0x0106
+#define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE          0x0107
 
 
 /**
  * \brief This error is thrown by xboard_setboard() when the FEN is missing
  */
-#define P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN           0x0107
+#define P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN           0x0108
 
 
 /**
  * \brief This error is thrown by xboard_setboard() when the FEN is invalid
  */
-#define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN           0x0108
+#define P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN           0x0109
 
 
 /**

@@ -290,7 +290,8 @@ bool pawn_passed(const position_t* pos, square_t pawn_sq);
  *
  * \return the cumulative score.
  */
-int32_t eval_accumulator(const position_t* pos, uint64_t piece_map, eval_func_t eval_func);
+int32_t eval_accumulator(const position_t* pos, uint64_t piece_map, 
+  eval_func_t eval_func);
 
 
 

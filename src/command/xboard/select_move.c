@@ -2,12 +2,21 @@
 #include <prophet/eval.h>
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
+#include <prophet/search.h>
+#include <prophet/util/output.h>
+#include <prophet/util/string_utils.h>
 
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
+extern bool xboard_post_mode;
+
 bool random_mode = false;
+int32_t max_depth;
+
+/* move stack */
+move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
 static move_t select_random_move(
@@ -50,31 +59,39 @@ move_t select_move(const position_t* pos)
     position_t copy_pos;
     memcpy(&copy_pos, pos, sizeof(position_t));
 
-    /* iterate over the move list, looking for the one with the highest
-     * static evaluation */
-    move_t best_mv = NO_MOVE;
-    int32_t best_score = 0;
-    undo_t u;
-
-    for (move_t* mp = moves; mp < endp; mp++) 
+    /* search the position to a fixed depth */
+    move_line_t pv;
+    stats_t stats;
+    int32_t search_depth = max_depth;
+    
+    /* default to a search depth of 3 and set a hard limit of 6
+     * until there is some move ordering in place and the search
+     * can abort on time. 
+     */
+    if (max_depth == 0)
     {
-        if (*mp != NO_MOVE)
-        {
-            apply_move(&copy_pos, *mp, &u);
-            int32_t score = -eval(&copy_pos, false);
-            undo_move(&copy_pos, &u);
+        search_depth = 3;
+    }
+    else if (max_depth > 6)
+    {
+        search_depth = 6;
+    }
+    int32_t score = search(
+        &copy_pos, &pv, search_depth, -INF, INF, moves, &stats); 
 
-            if (best_mv == NO_MOVE || score > best_score)
-            {
-                best_mv = *mp;
-                best_score = score;
-            }
-        }
+    /* print the best line */
+    if (xboard_post_mode)
+    {
+        char* pv_buffer = move_line_to_str(&pv);
+        out(stdout, "%2d %5d %5d %7llu %s\n", 
+            search_depth, score, 0, stats.nodes, pv_buffer);
+        free(pv_buffer);
     }
 
     /* return the best move */
-    assert(best_mv != NO_MOVE);
-    return best_mv;
+    assert(pv.n > 0);
+
+    return pv.mv[0];
 }
 
 

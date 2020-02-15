@@ -6,6 +6,7 @@
 
 extern position_t gpos;
 extern bool xboard_force_mode;
+extern bool xboard_post_mode;
 
 TEST(xboard_test, xboard_usermove_incorrect_cmd)
 {
@@ -56,6 +57,7 @@ TEST(xoard_test, xboard_usermove_not_force_mode)
 {
     ASSERT_EQ(0, xboard_new("new"));
     ASSERT_FALSE(xboard_force_mode);
+    xboard_post_mode = false;
 
     // redirect stdout to a buffer 
     char buffer[255];
