@@ -9,6 +9,18 @@
 
 static bool best_at_top(move_t* start, move_t* end);
 
+
+/**
+ * \brief Determine the next move to play.
+ *
+ * \param pos           the chess position 
+ * \param m             pointer to a move pointer to be set to the selected
+ *                      move
+ * \param mo            the move ordering context
+ *
+ * \return true if a move has been selected, or false if there are no
+ *    further moves.
+ */
 bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 {
 

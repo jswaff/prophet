@@ -33,6 +33,17 @@ typedef struct
 int32_t mvvlva(move_t mv);
 
 
+/**
+ * \brief Determine the next move to play.
+ *
+ * \param pos           the chess position 
+ * \param m             pointer to a move pointer to be set to the selected
+ *                      move
+ * \param mo            the move ordering context
+ *
+ * \return true if a move has been selected, or false if there are no
+ *    further moves.
+ */
 bool next(const position_t* pos, move_t** m, move_order_dto* mo);
 
 
