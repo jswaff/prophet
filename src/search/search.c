@@ -2,7 +2,8 @@
 #include <prophet/eval.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
-#include <prophet/search.h>
+
+#include "search_internal.h"
 
 #include <assert.h>
 #include <string.h>
@@ -60,14 +61,17 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
         return eval(pos, false);
     }
 
-
     /* prepare to search */
-    move_t* endp = gen_pseudo_legal_moves(move_stack, pos, true, true);
-    move_t* mp;
     int num_moves_searched = 0;
     move_line_t pv; pv.n = 0;
 
-    for (mp = move_stack; mp < endp; mp++)
+    move_order_dto mo_dto;
+    memset(&mo_dto, 0, sizeof(move_order_dto));
+    mo_dto.next_stage = GEN_CAPS;
+    mo_dto.start = move_stack;
+
+    move_t* mp;
+    while (next(pos, &mp, &mo_dto))
     {
         undo_t u;
         apply_move(pos, *mp, &u);
@@ -80,7 +84,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
         }
 
         int32_t score = -search_helper(
-            pos, &pv, ply+1, depth-1, -beta, -alpha, endp, stats);
+            pos, &pv, ply+1, depth-1, -beta, -alpha, mo_dto.end, stats);
         ++num_moves_searched;
 
         undo_move(pos, &u);

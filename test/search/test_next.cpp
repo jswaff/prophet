@@ -15,7 +15,7 @@ TEST(next_test, caps_in_order_white)
 
     move_order_dto mo_dto;
     memset(&mo_dto, 0, sizeof(move_order_dto));
-    mo_dto.start = mo_dto.current = mo_dto.end = moves;
+    mo_dto.start = moves;
     mo_dto.next_stage = GEN_CAPS;
 
     move_t* m;
@@ -58,7 +58,7 @@ TEST(next_test, caps_in_order_black)
 
     move_order_dto mo_dto;
     memset(&mo_dto, 0, sizeof(move_order_dto));
-    mo_dto.start = mo_dto.current = mo_dto.end = moves;
+    mo_dto.start = moves;
     mo_dto.next_stage = GEN_CAPS;
 
     move_t* m;

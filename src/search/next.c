@@ -11,18 +11,16 @@ static bool best_at_top(move_t* start, move_t* end);
 
 bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 {
-    assert(mo->current >= mo->start);
-
 
     if (mo->next_stage == GEN_CAPS)
     {
         mo->next_stage = CAPTURES_PROMOS;
 
-        assert(mo->start == mo->end);
-        assert(mo->current == mo->start);
+        assert(mo->start);
 
         /* generate the captures */
         mo->end = gen_pseudo_legal_moves(mo->start, pos, true, false);
+        mo->current = mo->start;
 
         /* score the captures */
         for (move_t* mp=mo->start; mp<mo->end; mp++)
