@@ -8,6 +8,20 @@
 extern "C" {
 #endif  
 
+enum move_order_stage_t 
+{ 
+   GEN_CAPS, CAPTURES_PROMOS, GEN_NONCAPS, REMAINING 
+};
+typedef enum move_order_stage_t move_order_stage_t;
+
+typedef struct 
+{
+    move_order_stage_t next_stage;
+    move_t* start;
+    move_t* end;
+    move_t* current;
+} move_order_dto;
+
 
 /**
  * \brief Score a move using the MVV/LVA algorithm.
@@ -18,6 +32,8 @@ extern "C" {
  */
 int32_t mvvlva(move_t mv);
 
+
+bool next(const position_t* pos, move_t** m, move_order_dto* mo);
 
 
 // make this header C++ friendly.
