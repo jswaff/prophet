@@ -21,6 +21,10 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 
 ## Status
 
+### 2/23/20
+Captures generated and tried before non-captures.  Captures are sorted using the MVV/LVA algorithm.
+
+
 ### 2/13/20
 Added a simple depth first search.  The search uses the alpha/beta algorithm and recognizes checkmated and stalemated positions but otherwise has no "intelligence."  It is a simple fixed depth search without iterative deepening or timing.
 
