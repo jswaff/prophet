@@ -137,6 +137,17 @@ uint64_t get_rook_moves(const position_t* p, square_t from, uint64_t targets);
 
 
 /**
+ * \brief Determine if a move is "good" (pseudo-legal) in a given position.
+ *
+ * \param pos           a pointer to a chess position 
+ * \param mv            the move to test
+ * 
+ * \return true if the move is good, otherwise false
+ */
+bool good_move(const position_t* pos, move_t mv);
+
+
+/**
  * \brief Count the number of legal moves possible in a position.
  *
  * \param pos           a pointer to a chess position

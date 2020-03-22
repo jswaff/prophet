@@ -17,17 +17,17 @@ TEST(next_test, caps_in_order_white)
     initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE);
 
     move_t* m;
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(PAWN, E4, D5, PAWN));
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(PAWN, E4, D5, PAWN), clear_score(*m));
 
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(BISHOP, B3, D5, PAWN));    
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(BISHOP, B3, D5, PAWN), clear_score(*m));    
 
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(ROOK, A5, D5, PAWN));    
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(ROOK, A5, D5, PAWN), clear_score(*m));    
 
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(QUEEN, G5, D5, PAWN));    
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(QUEEN, G5, D5, PAWN), clear_score(*m));    
 
     // the remaining moves are noncaps.  ensure next() returns a result for
     // each move.
@@ -35,14 +35,14 @@ TEST(next_test, caps_in_order_white)
     uint32_t num_noncaps = num_legal_moves(&pos, false, true);
     for (uint32_t i = 0; i < num_noncaps; i++)
     {
-        assert(next(&pos, &m, &mo_dto));
-        assert(*m != NO_MOVE);
-        assert(move_list_contains(*m, moves, endp));
+        EXPECT_TRUE(next(&pos, &m, &mo_dto));
+        EXPECT_NE(*m, NO_MOVE);
+        EXPECT_TRUE(move_list_contains(*m, moves, endp));
         *m = NO_MOVE;
     }
 
     // no more moves
-    assert(!next(&pos, &m, &mo_dto));
+    EXPECT_FALSE(next(&pos, &m, &mo_dto));
 }
 
 
@@ -58,17 +58,17 @@ TEST(next_test, caps_in_order_black)
     initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE);
 
     move_t* m;
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(PAWN, E6, D5, PAWN));
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(PAWN, E6, D5, PAWN), clear_score(*m));
 
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(BISHOP, B3, D5, PAWN));
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(BISHOP, B3, D5, PAWN), clear_score(*m));
 
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(ROOK, A5, D5, PAWN));
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(ROOK, A5, D5, PAWN), clear_score(*m));
 
-    assert(next(&pos, &m, &mo_dto));
-    assert(clear_score(*m) == to_capture(QUEEN, G5, D5, PAWN));
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(to_capture(QUEEN, G5, D5, PAWN), clear_score(*m));
 
     // the remaining moves are noncaps.  ensure next() returns a result for
     // each move.
@@ -76,14 +76,14 @@ TEST(next_test, caps_in_order_black)
     uint32_t num_noncaps = num_legal_moves(&pos, false, true);
     for (uint32_t i = 0; i < num_noncaps; i++)
     {
-        assert(next(&pos, &m, &mo_dto));
-        assert(*m != NO_MOVE);
-        assert(move_list_contains(*m, moves, endp));
+        EXPECT_TRUE(next(&pos, &m, &mo_dto));
+        EXPECT_NE(*m, NO_MOVE);
+        EXPECT_TRUE(move_list_contains(*m, moves, endp));
         *m = NO_MOVE;
     }
 
     // no more moves
-    assert(!next(&pos, &m, &mo_dto));
+    EXPECT_FALSE(next(&pos, &m, &mo_dto));
 }
 
 
@@ -96,18 +96,29 @@ TEST(next_test, killers)
     move_t moves[50];
     move_t* endp = gen_legal_moves(moves, &pos, true, true);
     move_t h2h3 = to_move(PAWN, H2, H3);
-    assert(move_list_contains(h2h3, moves, endp));
+    EXPECT_TRUE(move_list_contains(h2h3, moves, endp));
 
     move_t g2g4 = to_move(PAWN, G2, G4);
-    assert(move_list_contains(g2g4, moves, endp));
+    EXPECT_TRUE(move_list_contains(g2g4, moves, endp));
 
     move_order_dto mo_dto;
     initialize_move_ordering(&mo_dto, moves, h2h3, g2g4);
 
     move_t* m;
-    assert(next(&pos, &m, &mo_dto));
-//    assert(clear_score(*m) == h2h3);
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(h2h3, clear_score(*m));
 
-    assert(next(&pos, &m, &mo_dto));
-//    assert(clear_score(*m) == g2g4);
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(g2g4, clear_score(*m));
+
+    // we should get 18 more moves 
+    for (uint32_t i = 0; i < 18; i++)
+    {
+        EXPECT_TRUE(next(&pos, &m, &mo_dto));
+        EXPECT_TRUE(move_list_contains(*m, moves, endp));
+    }
+
+    // no more moves
+    EXPECT_FALSE(next(&pos, &m, &mo_dto));
+
 }

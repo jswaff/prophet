@@ -57,20 +57,39 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 
     if (mo->next_stage == KILLER1)
     {
-
         mo->next_stage = KILLER2;
+        if (good_move(pos, mo->killer1))
+        {
+            assert(!is_capture(mo->killer1));
+            *m = &mo->killer1;
+            return true;
+        }
+
     }
 
     if (mo->next_stage == KILLER2)
     {
-
         mo->next_stage = GEN_NONCAPS;
+        if (mo->killer2 != mo->killer1 && good_move(pos, mo->killer2))
+        {
+            assert(!is_capture(mo->killer2));
+            *m = &mo->killer2;
+            return true;
+        }
     }
 
     if (mo->next_stage == GEN_NONCAPS)
     {
         mo->next_stage = REMAINING;
         mo->end = gen_pseudo_legal_moves(mo->current, pos, false, true);
+        /* remove any moves already tried */
+        for (move_t* mp=mo->current; mp<mo->end; mp++)
+        {
+            if (*mp==mo->killer1 || *mp==mo->killer2)
+            {
+                *mp = 0;
+            }
+        }
     }
 
     /* play them as they come */
@@ -116,3 +135,4 @@ static bool best_at_top(move_t* start, move_t* end)
 
     return false;
 }
+
