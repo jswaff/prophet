@@ -52,6 +52,18 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             return true;
         }
 
+        mo->next_stage = KILLER1;
+    }
+
+    if (mo->next_stage == KILLER1)
+    {
+
+        mo->next_stage = KILLER2;
+    }
+
+    if (mo->next_stage == KILLER2)
+    {
+
         mo->next_stage = GEN_NONCAPS;
     }
 

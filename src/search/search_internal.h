@@ -10,7 +10,7 @@ extern "C" {
 
 enum move_order_stage_t 
 { 
-   GEN_CAPS, CAPTURES_PROMOS, GEN_NONCAPS, REMAINING 
+   GEN_CAPS, CAPTURES_PROMOS, KILLER1, KILLER2, GEN_NONCAPS, REMAINING 
 };
 typedef enum move_order_stage_t move_order_stage_t;
 
@@ -20,6 +20,8 @@ typedef struct
     move_t* start;
     move_t* end;
     move_t* current;
+    move_t killer1;
+    move_t killer2;
 } move_order_dto;
 
 
@@ -45,6 +47,10 @@ int32_t mvvlva(move_t mv);
  *    further moves.
  */
 bool next(const position_t* pos, move_t** m, move_order_dto* mo);
+
+
+void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
+    move_t killer1, move_t killer2);
 
 
 // make this header C++ friendly.
