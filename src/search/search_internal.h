@@ -49,6 +49,14 @@ int32_t mvvlva(move_t mv);
 bool next(const position_t* pos, move_t** m, move_order_dto* mo);
 
 
+/**
+ * \brief Initialize move ordering
+ *
+ * \param mo            pointer to the move ordering data structure
+ * \param stackptr      pointer to move stack to place new moves on
+ * \param killer1       killer move 1
+ * \param killer2       killer move 2
+ */
 void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     move_t killer1, move_t killer2);
 
