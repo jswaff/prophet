@@ -1,6 +1,7 @@
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
 
+
 static bool good_pawn_move(const position_t* pos, square_t from_sq, 
     square_t to_sq, int32_t captured, bool is_ep);
 
@@ -39,18 +40,21 @@ bool good_move(const position_t* pos, move_t mv)
     int32_t piece_on_board = pos->piece[from_sq];
     if (pos->player==WHITE)
     {
-        if (!is_white_piece(piece_on_board))
+        if (!is_white_piece(piece_on_board) 
+            || (int32_t)mover != piece_on_board)
         {
             goto exit;
         }
     }
     else 
     {
-        if (!is_black_piece(piece_on_board))
+        if (!is_black_piece(piece_on_board) 
+            || (int32_t)mover != -piece_on_board)
         {
             goto exit;
         }
     }
+
 
     if (mover==PAWN)
     {

@@ -22,6 +22,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
 
+static void add_killer(move_t killer_move, int ply);
+
 
 /**
  * \brief Search the position to a fixed depth.
@@ -101,8 +103,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
             stats->fail_highs++;
             if (!is_capture(*mp) && !get_promopiece(*mp))
             {
-                killer2[ply] = killer1[ply];
-                killer1[ply] = *mp;
+                add_killer(*mp, ply);
             }
             return beta;
         }
@@ -153,4 +154,24 @@ static void set_parent_pv(move_line_t* parent_pv, const move_t head,
 
     /* set the size of the line */
     parent_pv->n = tail->n + 1;
+}
+
+static void add_killer(move_t killer_move, int ply)
+{
+    if (killer_move != killer1[ply])
+    {
+        if (killer_move != killer2[ply]) 
+        {
+            /* shift */
+            killer2[ply] = killer1[ply];
+            killer1[ply] = killer_move;
+        }
+        else
+        {
+            /* swap them */
+            move_t tmp = killer1[ply];
+            killer1[ply] = killer2[ply];
+            killer2[ply] = tmp;
+        }
+    }
 }

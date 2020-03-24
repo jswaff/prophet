@@ -24,7 +24,7 @@ static const unsigned int CASTLE_NOT_BQ = 0x7;
 static const unsigned int CASTLE_BLACK  = 0xC;
 static const unsigned int CASTLE_ALL    = 0xF;
 
-enum color_t { BLACK=0,WHITE=1 };
+enum color_t { BLACK=0, WHITE=1 };
 typedef enum color_t color_t;
 
 typedef struct 
