@@ -21,6 +21,9 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 
 ## Status
 
+### 3/24/20
+Killer moves.  Two killer moves are kept per ply.  A killer move is defined as a non-capturing move that causes a fail high.  A new killer move is stored in "slot 1," while the previous killer move in slot 1 is shifted to slot 2.  Killer moves are tried after capturing moves, before any other non-capturing moves are even generated.
+
 ### 2/23/20
 Captures generated and tried before non-captures.  Captures are sorted using the MVV/LVA algorithm.
 

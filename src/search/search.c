@@ -8,6 +8,10 @@
 #include <assert.h>
 #include <string.h>
 
+extern move_t killer1[MAX_PLY];
+extern move_t killer2[MAX_PLY];
+
+
 static int32_t adjust_score_for_mate(const position_t* pos, int32_t score, 
     int num_moves_searched, int ply);
 
@@ -17,6 +21,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
 
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
+
+static void add_killer(move_t killer_move, int ply);
 
 
 /**
@@ -40,6 +46,11 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
 
     /* initialize the stats structure */
     memset(stats, 0, sizeof(stats_t));
+
+    /* initialize the killer move arrays */
+    memset(killer1, 0, sizeof(move_t) * MAX_PLY);
+    memset(killer2, 0, sizeof(move_t) * MAX_PLY);
+
 
     return search_helper(pos, parent_pv, 0, depth, alpha, beta, move_stack, 
         stats);
@@ -66,9 +77,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
     move_line_t pv; pv.n = 0;
 
     move_order_dto mo_dto;
-    memset(&mo_dto, 0, sizeof(move_order_dto));
-    mo_dto.next_stage = GEN_CAPS;
-    mo_dto.start = move_stack;
+    initialize_move_ordering(&mo_dto, move_stack, killer1[ply], killer2[ply]);
 
     move_t* mp;
     while (next(pos, &mp, &mo_dto))
@@ -92,6 +101,10 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
         if (score >= beta)
         {
             stats->fail_highs++;
+            if (!is_capture(*mp) && !get_promopiece(*mp))
+            {
+                add_killer(*mp, ply);
+            }
             return beta;
         }
         if (score > alpha)
@@ -141,4 +154,24 @@ static void set_parent_pv(move_line_t* parent_pv, const move_t head,
 
     /* set the size of the line */
     parent_pv->n = tail->n + 1;
+}
+
+static void add_killer(move_t killer_move, int ply)
+{
+    if (killer_move != killer1[ply])
+    {
+        if (killer_move != killer2[ply]) 
+        {
+            /* shift */
+            killer2[ply] = killer1[ply];
+            killer1[ply] = killer_move;
+        }
+        else
+        {
+            /* swap them */
+            move_t tmp = killer1[ply];
+            killer1[ply] = killer2[ply];
+            killer2[ply] = tmp;
+        }
+    }
 }
