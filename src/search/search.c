@@ -24,6 +24,8 @@ static void set_parent_pv(move_line_t* parent_pv, const move_t head,
 
 static void add_killer(move_t killer_move, int ply);
 
+static bool is_draw(const position_t* pos);
+
 
 /**
  * \brief Search the position to a fixed depth.
@@ -70,6 +72,12 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
     if (depth == 0)
     {
         return eval(pos, false);
+    }
+
+    /* draw check */
+    if (is_draw(pos))
+    {
+        return 0;
     }
 
     /* prepare to search */
@@ -174,4 +182,10 @@ static void add_killer(move_t killer_move, int ply)
             killer2[ply] = tmp;
         }
     }
+}
+
+static bool is_draw(const position_t* pos)
+{
+    return pos->fifty_counter >= 100 
+        || is_lack_of_mating_material(pos);
 }
