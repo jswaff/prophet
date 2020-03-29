@@ -13,8 +13,10 @@ TEST(search_test, depth0_no_bounds)
     move_line_t pv;
     stats_t stats;
     move_t moves[100];
+    undo_t undos[1];
 
-    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -INF, INF, moves, &stats));
+    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -INF, INF, moves, undos, 
+        &stats));
     ASSERT_EQ(0, pv.n);
 }
 
@@ -25,8 +27,10 @@ TEST(search_test, mate_in_1)
     move_line_t pv;
     stats_t stats;
     move_t moves[200];
+    undo_t undos[2];
 
-    ASSERT_EQ(CHECKMATE-1, search(&pos, &pv, 2, -INF, INF, moves, &stats));
+    ASSERT_EQ(CHECKMATE-1, search(&pos, &pv, 2, -INF, INF, moves, undos, 
+        &stats));
     ASSERT_EQ(1, pv.n);
     ASSERT_EQ(to_move(QUEEN, D6, E7), pv.mv[0]);
 }
@@ -38,8 +42,9 @@ TEST(search_test, mate_in_2)
     move_line_t pv;
     stats_t stats;
     move_t moves[400];
+    undo_t undos[4];
 
-    ASSERT_EQ(CHECKMATE-3, search(&pos, &pv, 4, -INF, INF, moves, &stats));
+    ASSERT_EQ(CHECKMATE-3, search(&pos, &pv, 4, -INF, INF, moves, undos, &stats));
     ASSERT_EQ(3, pv.n);
     ASSERT_EQ(to_move(QUEEN, D2, H6), pv.mv[0]);
     ASSERT_EQ(to_capture(KING, G7, H6, QUEEN), pv.mv[1]);
@@ -56,8 +61,10 @@ TEST(search_test, mate_in_3)
     move_line_t pv;
     stats_t stats;
     move_t moves[600];
+    undo_t undos[6];
 
-    ASSERT_EQ(CHECKMATE-5, search(&pos, &pv, 6, -INF, INF, moves, &stats));
+    ASSERT_EQ(CHECKMATE-5, search(&pos, &pv, 6, -INF, INF, moves, undos, 
+        &stats));
     ASSERT_EQ(5, pv.n);
     ASSERT_EQ(to_move(ROOK, F6, A6), pv.mv[0]);
     ASSERT_EQ(to_move(PAWN, F7, F6), pv.mv[1]);
@@ -76,7 +83,8 @@ TEST(search_test, stalemate)
     move_line_t pv;
     stats_t stats;
     move_t moves[100];
+    undo_t undos[1];
 
-    ASSERT_EQ(0, search(&pos, &pv, 1, -INF, INF, moves, &stats));
+    ASSERT_EQ(0, search(&pos, &pv, 1, -INF, INF, moves, undos, &stats));
     ASSERT_EQ(0, pv.n);
 }

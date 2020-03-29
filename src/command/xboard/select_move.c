@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
+
 extern bool xboard_post_mode;
 
 bool random_mode = false;
@@ -35,7 +37,7 @@ static move_t select_random_move(
 move_t select_move(const position_t* pos)
 {
     /* generate legal moves */
-    move_t moves[MAX_MOVES_PER_PLY];
+    move_t moves[MAX_MOVES_PER_PLY * MAX_PLY]; /* TODO: move this */
     move_t *endp = gen_legal_moves(moves, pos, true, true);
 
     /* count the number of moves to choose from */
@@ -59,6 +61,10 @@ move_t select_move(const position_t* pos)
     position_t copy_pos;
     memcpy(&copy_pos, pos, sizeof(position_t));
 
+    /* create an undo stack and initialize - TODO: move this */
+    undo_t undos[MAX_PLY];
+    memcpy(undos, gundos, pos->move_counter * sizeof(undo_t));
+
     /* search the position to a fixed depth */
     move_line_t pv;
     stats_t stats;
@@ -77,7 +83,7 @@ move_t select_move(const position_t* pos)
         search_depth = 6;
     }
     int32_t score = search(
-        &copy_pos, &pv, search_depth, -INF, INF, moves, &stats); 
+        &copy_pos, &pv, search_depth, -INF, INF, moves, undos, &stats); 
 
     /* print the best line */
     if (xboard_post_mode)
