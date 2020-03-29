@@ -37,7 +37,7 @@ static move_t select_random_move(
 move_t select_move(const position_t* pos)
 {
     /* generate legal moves */
-    move_t moves[MAX_MOVES_PER_PLY * MAX_PLY]; /* TODO: move this */
+    move_t moves[MAX_PLY * MAX_MOVES_PER_PLY]; /* TODO: move this */
     move_t *endp = gen_legal_moves(moves, pos, true, true);
 
     /* count the number of moves to choose from */
