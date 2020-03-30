@@ -15,6 +15,8 @@ typedef struct
 {
     uint64_t nodes;
     uint64_t fail_highs;
+    uint64_t fail_lows;
+    uint64_t draws;
 } stats_t;
 
 

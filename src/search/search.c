@@ -79,6 +79,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
     /* draw check */
     if (is_draw(pos, undo_stack))
     {
+        stats->draws++;
         return 0;
     }
 
