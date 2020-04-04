@@ -5,7 +5,7 @@
 static bool good_pawn_move(const position_t* pos, square_t from_sq, 
     square_t to_sq, int32_t captured, bool is_ep);
 
-#ifdef DEBUG
+#ifndef NDEBUG
 static bool verify_good_move(const position_t* pos, move_t mv);
 #endif 
 
@@ -254,7 +254,7 @@ static bool good_pawn_move(const position_t* pos, square_t from_sq,
     return false;
 }
 
-#ifdef DEBUG
+#ifndef NDEBUG
 static bool verify_good_move(const position_t* pos, move_t mv)
 {
     move_t moves[MAX_MOVES_PER_PLY];
