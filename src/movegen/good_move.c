@@ -5,7 +5,9 @@
 static bool good_pawn_move(const position_t* pos, square_t from_sq, 
     square_t to_sq, int32_t captured, bool is_ep);
 
+#ifdef DEBUG
 static bool verify_good_move(const position_t* pos, move_t mv);
+#endif 
 
 /**
  * \brief Determine if a move is "good" (pseudo-legal) in a given position.
@@ -252,9 +254,11 @@ static bool good_pawn_move(const position_t* pos, square_t from_sq,
     return false;
 }
 
+#ifdef DEBUG
 static bool verify_good_move(const position_t* pos, move_t mv)
 {
     move_t moves[MAX_MOVES_PER_PLY];
     move_t* endp = gen_pseudo_legal_moves(moves, pos, true, true);
     return move_list_contains(mv, moves, endp);
 }
+#endif

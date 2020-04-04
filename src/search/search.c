@@ -17,12 +17,14 @@ static int32_t adjust_score_for_mate(const position_t* pos, int32_t score,
 
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply, 
     int32_t depth, int32_t alpha, int32_t beta, move_t* move_stack, 
-    stats_t* stats);
+    undo_t* undo_stack, stats_t* stats);
 
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
 
 static void add_killer(move_t killer_move, int ply);
+
+static bool is_draw(const position_t* pos, const undo_t* undo_stack);
 
 
 /**
@@ -34,12 +36,14 @@ static void add_killer(move_t killer_move, int ply);
  * \param alpha         the lower bound
  * \param beta          the upper bound
  * \param move_stack    pre-allocated stack for move generation
+ * \param undo_stack    pre-allocated stack for undo information
  * \param stats         structure for tracking search stats
  * 
  * \return the score
  */
 int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
-    int32_t alpha, int32_t beta, move_t* move_stack, stats_t* stats)
+    int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack, 
+    stats_t* stats)
 {
     /* initialize the move line structure */
     memset(parent_pv, 0, sizeof(move_line_t));
@@ -53,13 +57,13 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
 
 
     return search_helper(pos, parent_pv, 0, depth, alpha, beta, move_stack, 
-        stats);
+        undo_stack, stats);
 }
 
 
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply, 
     int32_t depth, int32_t alpha, int32_t beta, move_t* move_stack, 
-    stats_t* stats)
+    undo_t* undo_stack, stats_t* stats)
 {
     assert (depth >= 0);
 
@@ -72,6 +76,13 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
         return eval(pos, false);
     }
 
+    /* draw check */
+    if (is_draw(pos, undo_stack))
+    {
+        stats->draws++;
+        return 0;
+    }
+
     /* prepare to search */
     int num_moves_searched = 0;
     move_line_t pv; pv.n = 0;
@@ -80,23 +91,24 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
     initialize_move_ordering(&mo_dto, move_stack, killer1[ply], killer2[ply]);
 
     move_t* mp;
+    undo_t* uptr = undo_stack + pos->move_counter;
     while (next(pos, &mp, &mo_dto))
     {
-        undo_t u;
-        apply_move(pos, *mp, &u);
+        apply_move(pos, *mp, uptr);
 
         /* verify the move was legal */
         if (in_check(pos, opposite_player(pos->player)))
         {
-            undo_move(pos, &u);
+            undo_move(pos, uptr);
             continue;
         }
 
         int32_t score = -search_helper(
-            pos, &pv, ply+1, depth-1, -beta, -alpha, mo_dto.end, stats);
+            pos, &pv, ply+1, depth-1, -beta, -alpha, mo_dto.end, undo_stack, 
+            stats);
         ++num_moves_searched;
 
-        undo_move(pos, &u);
+        undo_move(pos, uptr);
 
         if (score >= beta)
         {
@@ -174,4 +186,11 @@ static void add_killer(move_t killer_move, int ply)
             killer2[ply] = tmp;
         }
     }
+}
+
+static bool is_draw(const position_t* pos, const undo_t* undo_stack)
+{
+    return pos->fifty_counter >= 100 
+        || is_lack_of_mating_material(pos)
+        || is_draw_rep(pos, undo_stack);
 }
