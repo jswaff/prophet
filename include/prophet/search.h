@@ -20,6 +20,16 @@ typedef struct
 } stats_t;
 
 
+/**
+ * \brief Search the position using iterative deepening. 
+ * 
+ * \param pos           a pointer to a chess position
+ * \param test_suite_mode if this search is for a test suite run
+ * \param move_stack    pre-allocated stack for move generation
+ * \param undo_stack    pre-allocated stack for undo information
+ *
+ * \return the principal variation
+ */ 
 move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack, 
     undo_t* undo_stack);
 

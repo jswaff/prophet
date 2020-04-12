@@ -16,6 +16,16 @@ static void print_search_summary(int32_t last_depth, int32_t start_time,
     const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
 
+/**
+ * \brief Search the position using iterative deepening. 
+ * 
+ * \param pos           a pointer to a chess position
+ * \param test_suite_mode if this search is for a test suite run
+ * \param move_stack    pre-allocated stack for move generation
+ * \param undo_stack    pre-allocated stack for undo information
+ *
+ * \return the principal variation
+ */ 
 move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack, 
     undo_t* undo_stack)
 {
@@ -81,11 +91,13 @@ move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack,
 
     } while (!stop_searching);
 
-    /* TODO: assert the PV is valid */
     assert(pv.n > 0);
 
     /* print the search summary */
-    print_search_summary(depth, start_time, &stats);
+    if (xboard_post_mode)
+    {
+        print_search_summary(depth, start_time, &stats);
+    }
 
     return pv;
 }
@@ -115,6 +127,7 @@ static void print_search_summary(int32_t last_depth, int32_t start_time,
     out(stdout, "# search time: %.2f seconds, rate: %llu kn/s\n",
         search_time,nps);
 }
+
 
 /* TODO: this is a duplicate of the function in next */
 static bool best_at_top(move_t* start, move_t* end)

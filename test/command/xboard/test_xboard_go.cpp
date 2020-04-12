@@ -5,6 +5,7 @@
 #include "../../../src/command/xboard/xboard_internal.h"
 
 extern position_t gpos;
+extern int32_t max_depth;
 extern bool xboard_force_mode;
 extern bool xboard_post_mode;
 
@@ -19,6 +20,7 @@ TEST(xboard_test, xboard_go)
     ASSERT_EQ(0, xboard_new("new"));
     ASSERT_EQ(0, xboard_force("force"));
     xboard_post_mode = false;
+    max_depth = 1;
 
 	// redirect stdout to a buffer 
 	char buffer[255];
@@ -32,9 +34,6 @@ TEST(xboard_test, xboard_go)
     freopen("/dev/tty", "a", stdout);
 
     ASSERT_EQ(0, retval);
-
-    // Note: in future versions we'll have to stop the search, or maye just
-    // set a shallow search depth
 
     // ensure a move was printed
     EXPECT_EQ(0, strncmp(buffer, "move ", 5));

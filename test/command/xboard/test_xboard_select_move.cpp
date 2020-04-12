@@ -5,11 +5,14 @@
 
 #include "../../../src/command/xboard/xboard_internal.h"
 
+extern int32_t max_depth;
+
 TEST(xboard_test, select_move)
 {
     position_t pos;
     reset_pos(&pos);
 
+    max_depth = 1;
     move_t mv = select_move(&pos);
     EXPECT_NE(NO_MOVE, mv);
     EXPECT_TRUE(is_legal_move(mv, &pos));
