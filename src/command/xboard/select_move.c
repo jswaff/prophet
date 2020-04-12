@@ -12,10 +12,7 @@
 
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 
-extern bool xboard_post_mode;
-
 bool random_mode = false;
-int32_t max_depth;
 
 /* move stack */
 move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
@@ -66,33 +63,8 @@ move_t select_move(const position_t* pos)
     memcpy(undos, gundos, pos->move_counter * sizeof(undo_t));
 
     /* search the position to a fixed depth */
-    move_line_t pv;
-    stats_t stats;
-    int32_t search_depth = max_depth;
-    
-    /* default to a search depth of 3 and set a hard limit of 6
-     * until there is some move ordering in place and the search
-     * can abort on time. 
-     */
-    if (max_depth == 0)
-    {
-        search_depth = 3;
-    }
-    else if (max_depth > 6)
-    {
-        search_depth = 6;
-    }
-    int32_t score = search(
-        &copy_pos, &pv, search_depth, -INF, INF, moves, undos, &stats); 
+    move_line_t pv = iterate(&copy_pos, false, moves, undos);
 
-    /* print the best line */
-    if (xboard_post_mode)
-    {
-        char* pv_buffer = move_line_to_str(&pv);
-        out(stdout, "%2d %5d %5d %7llu %s\n", 
-            search_depth, score, 0, stats.nodes, pv_buffer);
-        free(pv_buffer);
-    }
 
     /* return the best move */
     assert(pv.n > 0);

@@ -20,6 +20,10 @@ typedef struct
 } stats_t;
 
 
+move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack, 
+    undo_t* undo_stack);
+
+
 /**
  * \brief Search the position to a fixed depth.
  *
