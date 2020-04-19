@@ -10,12 +10,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* external variables */
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
+extern int32_t max_depth;
+extern bool xboard_post_mode;
 
+/* local variables */
 bool random_mode = false;
-
-/* move stack */
 move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
+undo_t undos[MAX_PLY];
 
 /* forward decls */
 static move_t select_random_move(
@@ -34,7 +37,6 @@ static move_t select_random_move(
 move_t select_move(const position_t* pos)
 {
     /* generate legal moves */
-    move_t moves[MAX_PLY * MAX_MOVES_PER_PLY]; /* TODO: move this */
     move_t *endp = gen_legal_moves(moves, pos, true, true);
 
     /* count the number of moves to choose from */
@@ -58,12 +60,21 @@ move_t select_move(const position_t* pos)
     position_t copy_pos;
     memcpy(&copy_pos, pos, sizeof(position_t));
 
-    /* create an undo stack and initialize - TODO: move this */
-    undo_t undos[MAX_PLY];
+    /* create an undo stack and initialize */
     memcpy(undos, gundos, pos->move_counter * sizeof(undo_t));
 
     /* search the position to a fixed depth */
-    move_line_t pv = iterate(&copy_pos, false, moves, undos);
+    iterator_options_t opts;
+    opts.early_exit_ok = true;
+    opts.max_depth = max_depth;
+    opts.post_mode = xboard_post_mode;
+
+    iterator_context_t ctx;
+    ctx.pos = &copy_pos;
+    ctx.move_stack = moves;
+    ctx.undo_stack = undos;
+
+    move_line_t pv = iterate(&opts, &ctx);
 
 
     /* return the best move */

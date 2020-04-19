@@ -9,9 +9,8 @@
 
 #include <stdlib.h>
 
-extern int32_t max_depth;
-extern bool xboard_post_mode;
 
+/* forward decls */
 static void print_search_summary(int32_t last_depth, int32_t start_time, 
     const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
@@ -19,31 +18,27 @@ static bool best_at_top(move_t* start, move_t* end);
 /**
  * \brief Search the position using iterative deepening. 
  * 
- * \param pos           a pointer to a chess position
- * \param test_suite_mode if this search is for a test suite run
- * \param move_stack    pre-allocated stack for move generation
- * \param undo_stack    pre-allocated stack for undo information
+ * \param opts          the options structure
+ * \pram ctx            the context for this search iterator
  *
  * \return the principal variation
  */ 
-move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack, 
-    undo_t* undo_stack)
+move_line_t iterate(const iterator_options_t* opts, 
+    const iterator_context_t* ctx)
 {
 
     move_line_t pv; pv.n = 0;
 
-    /* TODO: book probe */
-
     /* if just one legal move, don't bother searching */
-    if (!test_suite_mode)
+    if (opts->early_exit_ok)
     {
-        move_t* endp = gen_legal_moves(move_stack, pos, true, true);
+        move_t* endp = gen_legal_moves(ctx->move_stack, ctx->pos, true, true);
         int num_caps, num_noncaps;
-        num_moves_in_list(move_stack, endp, &num_caps, &num_noncaps);
+        num_moves_in_list(ctx->move_stack, endp, &num_caps, &num_noncaps);
         if (num_caps + num_noncaps == 1)
         {
-            best_at_top(move_stack, endp);
-            pv.mv[0] = move_stack[0];
+            best_at_top(ctx->move_stack, endp);
+            pv.mv[0] = ctx->move_stack[0];
             pv.n = 1;
             return pv;
         }
@@ -63,11 +58,11 @@ move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack,
         int32_t alpha_bound = -INF;
         int32_t beta_bound = INF;
 
-        score = search(pos, &pv, depth, alpha_bound, beta_bound, move_stack, 
-            undo_stack, &stats);
+        score = search(ctx->pos, &pv, depth, alpha_bound, beta_bound, ctx->move_stack, 
+            ctx->undo_stack, &stats);
 
         /* print the move line */
-        if (xboard_post_mode)
+        if (opts->post_mode)
         {
             char* pv_buf = move_line_to_str(&pv);
             int32_t time_centis = (milli_timer() - start_time) / 10;
@@ -83,7 +78,7 @@ move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack,
         }
 
         /* if the search has reached the maximum depth, stop */
-        if (max_depth > 0 && depth >= max_depth)
+        if (opts->max_depth > 0 && depth >= opts->max_depth)
         {
             stop_searching = true;
         }
@@ -94,7 +89,7 @@ move_line_t iterate(position_t* pos, bool test_suite_mode, move_t* move_stack,
     assert(pv.n > 0);
 
     /* print the search summary */
-    if (xboard_post_mode)
+    if (opts->post_mode)
     {
         print_search_summary(depth, start_time, &stats);
     }
