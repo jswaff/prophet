@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int32_t max_depth;
+int32_t max_depth = 6; /* Default value */
 
 /**
  * \brief Execute the xboard sd command 
