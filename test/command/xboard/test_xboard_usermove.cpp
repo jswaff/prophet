@@ -5,6 +5,7 @@
 #include "../../../src/command/xboard/xboard_internal.h"
 
 extern position_t gpos;
+extern int32_t max_depth;
 extern bool xboard_force_mode;
 extern bool xboard_post_mode;
 
@@ -58,6 +59,7 @@ TEST(xoard_test, xboard_usermove_not_force_mode)
     ASSERT_EQ(0, xboard_new("new"));
     ASSERT_FALSE(xboard_force_mode);
     xboard_post_mode = false;
+    max_depth = 1;
 
     // redirect stdout to a buffer 
     char buffer[255];
@@ -73,9 +75,6 @@ TEST(xoard_test, xboard_usermove_not_force_mode)
     ASSERT_EQ(0, retval);
 
     // white should have moved, and then the engine.
-    // Note: we may need to stop the search or limit the search depth in 
-    // future versions.
-
     // ensure a move was printed
     EXPECT_EQ(0, strncmp(buffer, "move ", 5));
 

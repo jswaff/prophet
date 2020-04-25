@@ -4,7 +4,10 @@
 
 #include <getopt.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdint.h>
 
+extern int32_t max_depth;
 extern bool random_mode;
 
 
@@ -21,12 +24,13 @@ int commandline_process_options(int argc, char* argv[])
 
     /* specify options */
     static struct option long_options[] = {
-        {"random",      no_argument,    0, 'r'}
+        {"random",      no_argument,       0, 'r'},
+        {"set depth",   required_argument, 0, 'd'}
     };
 
     int long_index = 0;
     int opt = 0;
-    while ((opt = getopt_long(argc, argv, "r",
+    while ((opt = getopt_long(argc, argv, "rd:",
         long_options, &long_index)) != -1)
     {
         switch (opt)
@@ -34,6 +38,10 @@ int commandline_process_options(int argc, char* argv[])
             case 'r':
                 out(stdout, "random mode enabled.\n");
                 random_mode = true;
+                break;
+            case 'd':
+                out(stdout, "setting max depth to %s\n", optarg);
+                max_depth = atoi(optarg);
                 break;
             default:
                 commandline_print_usage();
