@@ -21,6 +21,12 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 
 ## Status
 
+### 4/25/20
+Iterative deepening added.  At the moment I wouldn't expect this to have much benefit, as there isn't much knowledge shared from one search iteration to the next.  One of the surprising benefits of iterative deepening is that it's faster to search to depth N by first searching to depth 1, then 2, up to N, than it is to just search to depth N straight away.  Without a priori knowledge (via a populated hash table, searching the last principal variation first, and tightened search bounds), it probably performs worse.  However, this update is about getting the iterative deepening framework in place.  Those improvements will follow.
+
+The current implementation does not take time into account.  It simply iterates through progressively deeper searches until the maximum search depth has been reached.  For example, if max_depth = 6, it will search depth=1, 2, 3, 4, 5 and then 6 before quitting.  There are two exceptions to this: if the starting position has just one legal move, it will play it without thinking, as it's forced anyway.  The other exception is that if a forced mate is found, the iterator will exit early.
+
+
 ### 4/3/20
 Draw by rep, 50 move rule, and lack of material checks added to search.
 
