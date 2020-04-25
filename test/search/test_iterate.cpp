@@ -39,3 +39,35 @@ TEST(search_test, iterate_from_initial_pos)
         apply_move(&pos, pv.mv[i], &u);
     }
 }
+
+TEST(search_test, iterate_from_mating_position)
+{
+    position_t pos;
+
+    // set up fool's mate
+    reset_pos(&pos);
+    undo_t u;
+    apply_move(&pos, to_move(PAWN, F2, F3), &u);
+    apply_move(&pos, to_move(PAWN, E7, E5), &u);
+    apply_move(&pos, to_move(PAWN, G2, G4), &u);
+
+    move_t moves[500];
+    undo_t undos[50];
+
+    iterator_options_t opts;
+    opts.early_exit_ok = true;
+    opts.max_depth = 3;
+    opts.post_mode = false;
+
+    iterator_context_t ctx;
+    ctx.pos = &pos;
+    ctx.move_stack = moves;
+    ctx.undo_stack = undos;
+
+    move_line_t pv;
+    pv = iterate(&opts, &ctx);
+
+
+    ASSERT_EQ(pv.n, 1);
+    ASSERT_EQ(to_move(QUEEN, D8, H4), pv.mv[0]);
+}
