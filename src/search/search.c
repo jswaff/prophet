@@ -88,7 +88,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
     move_line_t pv; pv.n = 0;
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, move_stack, killer1[ply], killer2[ply]);
+    initialize_move_ordering(&mo_dto, move_stack, NO_MOVE, killer1[ply], killer2[ply]);
 
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;

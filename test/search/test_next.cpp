@@ -5,6 +5,37 @@
 
 #include "../../src/search/search_internal.h"
 
+TEST(next_test, pv_move) 
+{
+    position_t pos;
+    set_pos(&pos, "b2b1r1k/3R1ppp/4qP2/4p1PQ/4P3/5B2/4N1K1/8 w - -");
+
+    // pick a random move
+    move_t moves[50],*endp;
+    endp = gen_legal_moves(moves, &pos, true, true);
+    move_t pv_move = NO_MOVE;
+    int i = 0;
+    for (move_t* mp = moves; mp<endp; mp++) {
+        if (*mp == 0) 
+        {
+            continue;
+        }
+        if (++i == 5) 
+        {
+            pv_move = *mp;
+            break;
+        }
+    }
+    ASSERT_NE(pv_move, NO_MOVE);
+
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, NO_MOVE);
+    move_t* m;
+    EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    EXPECT_EQ(pv_move, clear_score(*m));
+}
+
+
 TEST(next_test, caps_in_order_white)
 {
     position_t pos;
@@ -14,7 +45,7 @@ TEST(next_test, caps_in_order_white)
     endp = gen_legal_moves(moves, &pos, true, true);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE);
 
     move_t* m;
     EXPECT_TRUE(next(&pos, &m, &mo_dto));
@@ -55,7 +86,7 @@ TEST(next_test, caps_in_order_black)
     endp = gen_legal_moves(moves, &pos, true, true);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE);
 
     move_t* m;
     EXPECT_TRUE(next(&pos, &m, &mo_dto));
@@ -102,7 +133,7 @@ TEST(next_test, killers)
     EXPECT_TRUE(move_list_contains(g2g4, moves, endp));
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, h2h3, g2g4);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, h2h3, g2g4);
 
     move_t* m;
     EXPECT_TRUE(next(&pos, &m, &mo_dto));
@@ -120,5 +151,51 @@ TEST(next_test, killers)
 
     // no more moves
     EXPECT_FALSE(next(&pos, &m, &mo_dto));
+}
 
+TEST(next_test, moves_not_repeated)
+{
+    position_t pos;
+    set_pos(&pos, "8/7p/5k2/5p2/p1p2P2/Pr1pPK2/1P1R3P/8 b - - "); // WAC-2
+    uint32_t num_moves = num_legal_moves(&pos, true, true);
+
+    // select a PV move which will get duplicated as the first killer, and a
+    // second move to be the second killer
+    move_t moves[50],*endp;
+    endp = gen_legal_moves(moves, &pos, false, true);
+    move_t pv_move = NO_MOVE;
+    move_t killer2 = NO_MOVE;
+    for (move_t* mp = moves; mp<endp; mp++) {
+        if (*mp == 0) 
+        {
+            continue;
+        }
+        if (pv_move == NO_MOVE) 
+        {
+            pv_move = *mp;
+        }
+        else if (killer2 == NO_MOVE)
+        {
+            killer2 = *mp;
+        }
+    }
+    ASSERT_NE(pv_move, NO_MOVE);
+    ASSERT_NE(killer2, NO_MOVE);
+    ASSERT_NE(pv_move, killer2);
+
+
+    // initialize move ordering and select moves
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, moves, pv_move, pv_move, killer2);
+
+    uint32_t num_selected = 0U;
+    move_t* mp;
+    while (next(&pos, &mp, &mo_dto))
+    {
+        if (is_legal_move(*mp, &pos))
+        {
+            num_selected++;
+        }
+    }
+    ASSERT_EQ(num_moves, num_selected);
 }
