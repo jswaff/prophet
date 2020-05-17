@@ -23,6 +23,17 @@ static bool best_at_top(move_t* start, move_t* end);
  */
 bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 {
+    if (mo->next_stage == PV) 
+    {
+        mo->next_stage = GEN_CAPS;
+
+        if (mo->pv_move != NO_MOVE)
+        {
+            assert(is_legal_move(mo->pv_move, pos));
+            *m = &mo->pv_move;
+            return true;
+        }
+    }
 
     if (mo->next_stage == GEN_CAPS)
     {
@@ -34,10 +45,17 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         mo->end = gen_pseudo_legal_moves(mo->start, pos, true, false);
         mo->current = mo->start;
 
-        /* score the captures */
+        /* score the captures, and remove any special moves already played */
         for (move_t* mp=mo->start; mp<mo->end; mp++)
         {
-            set_move_score(mp, mvvlva(*mp));
+            if (*mp==mo->pv_move)
+            {
+                *mp = 0;
+            }
+            else
+            {
+                set_move_score(mp, mvvlva(*mp));
+            }
         }
     }
 
@@ -58,7 +76,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
     if (mo->next_stage == KILLER1)
     {
         mo->next_stage = KILLER2;
-        if (good_move(pos, mo->killer1))
+        if (mo->killer1 != mo->pv_move && good_move(pos, mo->killer1))
         {
             assert(!is_capture(mo->killer1));
             *m = &mo->killer1;
@@ -70,7 +88,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
     if (mo->next_stage == KILLER2)
     {
         mo->next_stage = GEN_NONCAPS;
-        if (mo->killer2 != mo->killer1 && good_move(pos, mo->killer2))
+        if (mo->killer2 != mo->pv_move && mo->killer2 != mo->killer1 && 
+            good_move(pos, mo->killer2))
         {
             assert(!is_capture(mo->killer2));
             *m = &mo->killer2;
@@ -85,7 +104,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         /* remove any moves already tried */
         for (move_t* mp=mo->current; mp<mo->end; mp++)
         {
-            if (*mp==mo->killer1 || *mp==mo->killer2)
+            if (*mp==mo->pv_move || *mp==mo->killer1 || *mp==mo->killer2)
             {
                 *mp = 0;
             }

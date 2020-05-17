@@ -8,7 +8,9 @@
 #include "search_internal.h"
 
 #include <stdlib.h>
+#include <string.h>
 
+extern move_line_t last_pv;
 
 /* forward decls */
 static void print_search_summary(int32_t last_depth, int32_t start_time, 
@@ -45,6 +47,7 @@ move_line_t iterate(const iterator_options_t* opts,
     }
 
     /* prepare to search */
+    memset(&last_pv, 0, sizeof(move_line_t));
     int32_t start_time = milli_timer();
     int32_t depth = 0;
     bool stop_searching = false;
@@ -57,7 +60,6 @@ move_line_t iterate(const iterator_options_t* opts,
 
         int32_t alpha_bound = -INF;
         int32_t beta_bound = INF;
-
         score = search(ctx->pos, &pv, depth, alpha_bound, beta_bound, ctx->move_stack, 
             ctx->undo_stack, &stats);
 
