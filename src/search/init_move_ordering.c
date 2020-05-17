@@ -14,9 +14,12 @@
 void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     move_t pv_move, move_t killer1, move_t killer2)
 {
+    assert(mo);
+    assert(stackptr);
+    
     memset(mo, 0, sizeof(move_order_dto));
     mo->next_stage = PV;
-    mo->start = stackptr;
+    mo->start = mo->current = mo->end = stackptr;
     mo->pv_move = pv_move;
     mo->killer1 = killer1;
     mo->killer2 = killer2;

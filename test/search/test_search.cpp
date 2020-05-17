@@ -6,6 +6,8 @@
 
 #include <gtest/gtest.h>
 
+extern move_line_t last_pv;
+
 TEST(search_test, depth0_no_bounds)
 {
     position_t pos;
@@ -14,7 +16,8 @@ TEST(search_test, depth0_no_bounds)
     stats_t stats;
     move_t moves[100];
     undo_t undos[1];
-
+    memset(&last_pv, 0, sizeof(move_line_t));
+    
     ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -INF, INF, moves, undos, 
         &stats));
     ASSERT_EQ(0, pv.n);
@@ -28,6 +31,7 @@ TEST(search_test, mate_in_1)
     stats_t stats;
     move_t moves[200];
     undo_t undos[2];
+    memset(&last_pv, 0, sizeof(move_line_t));
 
     ASSERT_EQ(CHECKMATE-1, search(&pos, &pv, 2, -INF, INF, moves, undos, 
         &stats));
@@ -43,6 +47,7 @@ TEST(search_test, mate_in_2)
     stats_t stats;
     move_t moves[400];
     undo_t undos[4];
+    memset(&last_pv, 0, sizeof(move_line_t));
 
     ASSERT_EQ(CHECKMATE-3, search(&pos, &pv, 4, -INF, INF, moves, undos, &stats));
     ASSERT_EQ(3, pv.n);
@@ -55,13 +60,11 @@ TEST(search_test, mate_in_3)
 {
     position_t pos;
     set_pos(&pos, "r5rk/5p1p/5R2/4B3/8/8/7P/7K w - -");
-    //char* brd = pos_to_str(&pos);
-    //printf("%s", brd);
-    //free(brd);
     move_line_t pv;
     stats_t stats;
     move_t moves[600];
     undo_t undos[6];
+    memset(&last_pv, 0, sizeof(move_line_t));
 
     ASSERT_EQ(CHECKMATE-5, search(&pos, &pv, 6, -INF, INF, moves, undos, 
         &stats));
@@ -71,9 +74,6 @@ TEST(search_test, mate_in_3)
     ASSERT_EQ(to_capture(BISHOP, E5, F6, PAWN), pv.mv[2]);
     ASSERT_EQ(to_move(ROOK, G8, G7), pv.mv[3]);
     ASSERT_EQ(to_capture(ROOK, A6, A8, ROOK), pv.mv[4]);
-    //char* buf = move_line_to_str(&pv);
-    //printf("pv: %s\n", buf);
-    //free(buf);
 }
 
 TEST(search_test, stalemate)
@@ -84,6 +84,7 @@ TEST(search_test, stalemate)
     stats_t stats;
     move_t moves[100];
     undo_t undos[1];
+    memset(&last_pv, 0, sizeof(move_line_t));
 
     ASSERT_EQ(0, search(&pos, &pv, 1, -INF, INF, moves, undos, &stats));
     ASSERT_EQ(0, pv.n);

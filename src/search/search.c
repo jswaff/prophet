@@ -8,6 +8,8 @@
 #include <assert.h>
 #include <string.h>
 
+move_line_t last_pv;
+
 extern move_t killer1[MAX_PLY];
 extern move_t killer2[MAX_PLY];
 
@@ -15,9 +17,9 @@ extern move_t killer2[MAX_PLY];
 static int32_t adjust_score_for_mate(const position_t* pos, int32_t score, 
     int num_moves_searched, int ply);
 
-static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply, 
-    int32_t depth, int32_t alpha, int32_t beta, move_t* move_stack, 
-    undo_t* undo_stack, stats_t* stats);
+static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
+    bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
+    move_t* move_stack, undo_t* undo_stack, stats_t* stats);
 
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
@@ -45,6 +47,9 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack, 
     stats_t* stats)
 {
+    assert(move_stack);
+    assert(undo_stack);
+    
     /* initialize the move line structure */
     memset(parent_pv, 0, sizeof(move_line_t));
 
@@ -56,14 +61,19 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     memset(killer2, 0, sizeof(move_t) * MAX_PLY);
 
 
-    return search_helper(pos, parent_pv, 0, depth, alpha, beta, move_stack, 
-        undo_stack, stats);
+    int32_t score = search_helper(pos, parent_pv, true, 0, depth, alpha, beta, 
+        move_stack, undo_stack, stats);
+
+    /* capture the PV for ordering in the next search */
+    memcpy(&last_pv, parent_pv, sizeof(move_line_t));
+
+    return score;
 }
 
 
-static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply, 
-    int32_t depth, int32_t alpha, int32_t beta, move_t* move_stack, 
-    undo_t* undo_stack, stats_t* stats)
+static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
+    bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
+    move_t* move_stack, undo_t* undo_stack, stats_t* stats)
 {
     assert (depth >= 0);
 
@@ -88,7 +98,9 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
     move_line_t pv; pv.n = 0;
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, move_stack, NO_MOVE, killer1[ply], killer2[ply]);
+    move_t pv_move = first && last_pv.n > ply ? last_pv.mv[ply] : NO_MOVE;
+    initialize_move_ordering(&mo_dto, move_stack, pv_move, killer1[ply], 
+        killer2[ply]);
 
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
@@ -103,9 +115,10 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
             continue;
         }
 
+        bool pvnode = first && num_moves_searched==0;
         int32_t score = -search_helper(
-            pos, &pv, ply+1, depth-1, -beta, -alpha, mo_dto.end, undo_stack, 
-            stats);
+            pos, &pv, pvnode, ply+1, depth-1, -beta, -alpha, mo_dto.end, 
+            undo_stack, stats);
         ++num_moves_searched;
 
         undo_move(pos, uptr);
@@ -123,6 +136,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv, int ply,
         {
             alpha = score;
             set_parent_pv(parent_pv, *mp, &pv);
+            /* TODO: display updated PV */
         }
     }
 
