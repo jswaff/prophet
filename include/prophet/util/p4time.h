@@ -14,7 +14,7 @@ extern "C" {
  *
  * \return the number of milliseconds since epoch
  */
-int32_t milli_timer();
+uint64_t milli_timer();
 
 
 /* make this header C++ friendly. */

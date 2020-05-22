@@ -48,7 +48,7 @@ move_line_t iterate(const iterator_options_t* opts,
 
     /* prepare to search */
     memset(&last_pv, 0, sizeof(move_line_t));
-    int32_t start_time = milli_timer();
+    uint64_t start_time = milli_timer();
     int32_t depth = 0;
     bool stop_searching = false;
     int32_t score = 0;
@@ -67,8 +67,8 @@ move_line_t iterate(const iterator_options_t* opts,
         if (opts->post_mode)
         {
             char* pv_buf = move_line_to_str(&pv);
-            int32_t time_centis = (milli_timer() - start_time) / 10;
-            out(stdout, "%2d %5d %5d %7llu %s\n", depth, score, time_centis,
+            uint64_t time_centis = (milli_timer() - start_time) / 10;
+            out(stdout, "%2d %5d %5llu %7llu %s\n", depth, score, time_centis,
                 stats.nodes, pv_buf);
             free(pv_buf);
         }
@@ -118,7 +118,7 @@ static void print_search_summary(int32_t last_depth, int32_t start_time,
         total_nodes/1000, stats->nodes/1000, interior_pct, 0.0, qnode_pct);
 
     /* calculate the search time.  add 1 ms just to avoid div by 0 */
-    int32_t search_time_ms = milli_timer() - start_time + 1; 
+    uint64_t search_time_ms = milli_timer() - start_time + 1; 
     float search_time = search_time_ms / 1000.0;
     uint64_t nps = total_nodes / search_time_ms;
     out(stdout, "# search time: %.2f seconds, rate: %llu kn/s\n",
