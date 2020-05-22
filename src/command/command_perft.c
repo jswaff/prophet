@@ -40,9 +40,9 @@ int command_perft(const char* input)
 
     out(stdout, "running perft depth %d.\n", depth);
     for (int i=1; i <= depth; i++) {
-        int32_t start_time = milli_timer();
+        uint64_t start_time = milli_timer();
         uint64_t nodes = perft(&gpos, i);
-        int32_t elapsed = milli_timer() - start_time;
+        uint64_t elapsed = milli_timer() - start_time;
         out(stdout, 
             "depth %d - nodes: %" PRIu64 " - rate: %" PRIu64 " kn/s\n", 
             i, nodes, nodes / (elapsed+1)); /* avoid div by 0 */

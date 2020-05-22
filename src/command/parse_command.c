@@ -18,7 +18,6 @@ struct function_table_entry function_table[] = {
 
     /* xboard protocol */
     {"accepted", command_no_op},
-    {"analyze", command_no_op},
     {"bk", command_no_op},
     {"computer", command_no_op},
     {"easy", command_no_op},
@@ -26,12 +25,12 @@ struct function_table_entry function_table[] = {
     {"go", xboard_go},
     {"hard", command_no_op},
     {"hint", command_no_op},
-    {"level", command_no_op},
+    {"level", command_no_op}, // TODO - timer
     {"new", xboard_new},
     {"nopost", xboard_nopost},
     {"otim", command_no_op},
     {"ping", xboard_ping},
-    {"post", xboard_post},
+    {"post", xboard_post}, 
     {"protover", xboard_protover},
     {"quit", command_exit},
     {"random", command_no_op},
@@ -41,13 +40,12 @@ struct function_table_entry function_table[] = {
     {"result", xboard_result},
     {"sd", xboard_sd},
     {"setboard", xboard_setboard},
-    {"st", command_no_op},
-    {"time", command_no_op},
+    {"st", command_no_op}, // TODO - timer
+    {"time", command_no_op}, // TODO - timer
     {"undo", xboard_undo},
     {"usermove", xboard_usermove},
-    {"variant", command_no_op},
     {"xboard", command_no_op},
-    {"?", command_no_op},
+    {"?", command_no_op}, // TODO - move now
 
     /* custom commands */
     {"db", command_db},
