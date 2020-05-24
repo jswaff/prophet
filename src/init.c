@@ -2,7 +2,6 @@
 #include <prophet/position/position.h>
 
 #include <stdlib.h>
-#include <pthread.h>
 #include <time.h>
 
 bool initialized = false;
@@ -22,9 +21,7 @@ extern void init_pawn_isolated();
 extern void init_pawn_passed();
 
 extern position_t gpos;
-extern pthread_t search_thread;
 
-static void* init_helper(void *ptr);
 
 /**
  * \brief Initialize the program.
@@ -35,8 +32,6 @@ int init()
 {
     if (!initialized) 
     {
-        pthread_create(&search_thread, NULL, init_helper, NULL);
-
         /* initialize the random number generator */
         time_t t;
         srand((unsigned) time(&t));
@@ -60,6 +55,3 @@ int init()
 
     return 0;
 }
-
-/* silly hack to init search_thread */ 
-static void* init_helper(void *UNUSED(ptr)) { return 0; }

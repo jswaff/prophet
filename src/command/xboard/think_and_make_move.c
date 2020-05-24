@@ -7,6 +7,7 @@
 #include <prophet/util/string_utils.h>
 
 #include <assert.h>
+#include <errno.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
@@ -80,7 +81,8 @@ int think_and_make_move()
 int stop_search_thread_blocking()
 {
     int retval = pthread_join(search_thread, NULL);
-    if (0 != retval)
+    /* let ESRCH slide as we may not have initialized yet */
+    if (0 != retval && ESRCH != retval)
     {
         return P4_ERROR_THREAD_JOIN_FAILURE;
     }
