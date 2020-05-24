@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 
+
+#include "xboard_internal.h"
+
+
 /**
  * \brief Execute the xboard result command 
  * 
@@ -17,6 +21,8 @@ int xboard_result(const char* input)
     {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
+
+    stop_search_thread_blocking();
 
     /* is the command long enough to contain an argument? 
      * the shortest possible valid command is "result *"

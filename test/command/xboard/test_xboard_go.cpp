@@ -29,6 +29,7 @@ TEST(xboard_test, xboard_go)
 	setbuf(stdout, buffer);
 
     int retval = xboard_go("go");
+    stop_search_thread_blocking(); // wait for search thread to finish
 
     // redirect back
     freopen("/dev/tty", "a", stdout);

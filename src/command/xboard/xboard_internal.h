@@ -173,19 +173,6 @@ int xboard_usermove(const char* input);
 
 
 /**
- * \brief Select a move.
- *
- * Select a legal move from the given position.  If there are no legal moves,
- * NO_MOVE is returned.
- *
- * \param pos           a pointer to the chess position
- *
- * \return a move to play, or NO_MOVE if there isn't one
- */
-move_t select_move(const position_t* pos);
-
-
-/**
  * \brief Select a move, and apply it to the game position.  If the game is
  * over, print the result.
  *
@@ -196,6 +183,7 @@ move_t select_move(const position_t* pos);
  */
 int think_and_make_move();
 
+void stop_search_thread_blocking();
 
 /**
  * \brief Check for an end-of-game condition and print RESULT if appropriate.

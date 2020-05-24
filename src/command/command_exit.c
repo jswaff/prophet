@@ -3,6 +3,10 @@
 
 #include <string.h>
 
+#include "xboard/xboard_internal.h"
+
+/* TODO: this should be in the xboard folder */
+
 /**
  * \brief Execute the exit command.
  * 
@@ -18,6 +22,8 @@ int command_exit(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
+    stop_search_thread_blocking();
+    
     out(stdout, "bye.\n");
 
     return 0;

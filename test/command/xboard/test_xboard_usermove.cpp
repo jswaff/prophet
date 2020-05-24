@@ -68,6 +68,7 @@ TEST(xoard_test, xboard_usermove_not_force_mode)
     setbuf(stdout, buffer);
 
     int retval = xboard_usermove("usermove e2e4");
+    stop_search_thread_blocking(); // wait for search thread to finish
 
     // redirect back
     freopen("/dev/tty", "a", stdout);
