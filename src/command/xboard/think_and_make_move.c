@@ -27,12 +27,20 @@ move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
 static void* iterate_wrapper(void* arg);
-//static move_t select_random_move();
+static int select_random_move();
+static int make_move_otb(move_t mv);
 
 
 /**
- * \brief Select a move, and apply it to the game position.  If the game is
- * over, print the result.
+ * \brief Start the engine "thinking"  and (eventually) make a move.
+ *
+ * If the engine is in random mode, a move will be made immediately.
+ * Otherwise, a separate thread will be started and the method will return.
+ * Once the thread terminates, the move will be applied to the global
+ * position.
+ *
+ * If the selected move results in the end of the game, the game
+ * result is displayed.
  *
  * This method should not be called if the game is already over.
  *
@@ -41,26 +49,22 @@ static void* iterate_wrapper(void* arg);
  */
 int think_and_make_move()
 {
-    /* TODO - perhaps a join or exit statement */
-
     assert(!endgame_check());
 
-    // if (random_mode)
-    // {
-    //     engine_mv = select_random_move();
-    // }
-    // else
-    // {
-        // engine_mv = select_move();
-    // }
-
-
-    /* search the position to a fixed depth */
-    int retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
-    if (retval != 0)
+    int retval; 
+    if (random_mode)
     {
-        /* TODO: translate error if retval != 0 */
+        retval = select_random_move();
     }
+    else
+    {
+        retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
+        if (retval != 0)
+        {
+            /* TODO: translate error if retval != 0 */
+        }
+    }
+
 
     return retval;
 }
@@ -68,6 +72,7 @@ int think_and_make_move()
 
 void stop_search_thread_blocking()
 {
+    /* TODO: capture any error val and return */
     pthread_join(search_thread, NULL);
 }
 
@@ -92,18 +97,8 @@ static void* iterate_wrapper(void* UNUSED(arg))
     free(ctx);
     free(opts);
 
-    /* apply the move to the global position */
-    // if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME)
-    // {
-    //     return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
-    // }
-
-    apply_move(&gpos, pv.mv[0], gundos + gpos.move_counter);
-    char* str_engine_mv = move_to_str(pv.mv[0]);
-    out(stdout, "move %s\n", str_engine_mv);
-    free(str_engine_mv);
-
-    endgame_check();
+    /* TODO: capture any error and return up */
+    make_move_otb(pv.mv[0]);
 
     return 0;
 }
@@ -114,10 +109,9 @@ static void* iterate_wrapper(void* UNUSED(arg))
  *
  * Choose a random move from the global chess position.
  *
- * \return a move.
+ * \return 0 if successful, non-zero on error.
  */
-#if 0
-static move_t select_random_move()
+static int select_random_move()
 {
     /* generate legal moves */
     move_t *endp = gen_legal_moves(moves, &gpos, true, true);
@@ -140,14 +134,31 @@ static move_t select_random_move()
         {
             if (i == mv_ind)
             {
-                return *mp;
+                return make_move_otb(*mp);
             }
             i++;
         }
     }
 
-    /* we should never get here, but the compiler doesn't know that. */
+    /* we should never get here */
     assert(false);
-    return NO_MOVE;
+
+    return 0; /* TODO */
 }
-#endif
+
+
+static int make_move_otb(move_t mv)
+{
+    if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME)
+    {
+        return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
+    }
+
+    apply_move(&gpos, mv, gundos + gpos.move_counter);
+    char* str_engine_mv = move_to_str(mv);
+    out(stdout, "move %s\n", str_engine_mv);
+    free(str_engine_mv);
+    endgame_check();
+
+    return 0;
+}
