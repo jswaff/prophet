@@ -59,9 +59,9 @@ int think_and_make_move()
     else
     {
         retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
-        if (retval != 0)
+        if (0 != retval)
         {
-            /* TODO: translate error if retval != 0 */
+            return P4_ERROR_THREAD_CREATION_FAILURE;
         }
     }
 
@@ -70,10 +70,21 @@ int think_and_make_move()
 }
 
 
-void stop_search_thread_blocking()
+/**
+ * \brief Stop any running search thread.
+ * 
+ * Performs a join on any running search thread.
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int stop_search_thread_blocking()
 {
-    /* TODO: capture any error val and return */
-    pthread_join(search_thread, NULL);
+    int retval = pthread_join(search_thread, NULL);
+    if (0 != retval)
+    {
+        return P4_ERROR_THREAD_JOIN_FAILURE;
+    }
+    return 0;
 }
 
 
@@ -97,8 +108,11 @@ static void* iterate_wrapper(void* UNUSED(arg))
     free(ctx);
     free(opts);
 
-    /* TODO: capture any error and return up */
-    make_move_otb(pv.mv[0]);
+    int retval = make_move_otb(pv.mv[0]);
+    if (0 != retval)
+    {
+        pthread_exit(&retval);
+    }
 
     return 0;
 }
@@ -107,7 +121,7 @@ static void* iterate_wrapper(void* UNUSED(arg))
 /**
  * \brief Choose a move randomly.
  *
- * Choose a random move from the global chess position.
+ * Choose a random move from the global chess position and make the move.
  *
  * \return 0 if successful, non-zero on error.
  */
@@ -140,13 +154,19 @@ static int select_random_move()
         }
     }
 
-    /* we should never get here */
+    /* we should never get here, but the compiler doesn't know that. */
     assert(false);
-
-    return 0; /* TODO */
+    return 0;
 }
 
 
+/**
+ * \brief Make a move over the global game board.
+ *
+ * \param mv           The move to apply
+ *
+ * \return 0 if successful, non-zero on error.
+ */
 static int make_move_otb(move_t mv)
 {
     if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME)

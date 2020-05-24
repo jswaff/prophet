@@ -33,7 +33,11 @@ int xboard_new(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    stop_search_thread_blocking();
+    int retval = stop_search_thread_blocking();
+    if (0 != retval)
+    {
+        return retval;
+    }
 
     reset_pos(&gpos);
 

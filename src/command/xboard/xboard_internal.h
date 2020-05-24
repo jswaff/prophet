@@ -100,6 +100,16 @@ int xboard_protover(const char* input);
 
 
 /**
+ * \brief Execute the xboard quit command
+ * 
+ * \param input         the user entered input
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_quit(const char* input);
+
+
+/**
  * \brief Execute the xboard remove command 
  * 
  * Undo the previous FULL move - one move for each player.  XBoard protocol 
@@ -183,7 +193,15 @@ int xboard_usermove(const char* input);
  */
 int think_and_make_move();
 
-void stop_search_thread_blocking();
+
+/**
+ * \brief Stop any running search thread.
+ * 
+ * Performs a join on any running search thread.
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int stop_search_thread_blocking();
 
 /**
  * \brief Check for an end-of-game condition and print RESULT if appropriate.

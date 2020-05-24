@@ -3,18 +3,16 @@
 
 #include <string.h>
 
-#include "xboard/xboard_internal.h"
-
-/* TODO: this should be in the xboard folder */
+#include "xboard_internal.h"
 
 /**
- * \brief Execute the exit command.
+ * \brief Execute the xboard quit command
  * 
  * \param input         the user entered input
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int command_exit(const char* input)
+int xboard_quit(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("exit", input) && 0 != strcmp("quit", input))
@@ -22,10 +20,10 @@ int command_exit(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    stop_search_thread_blocking();
+    int retval = stop_search_thread_blocking();
     
     out(stdout, "bye.\n");
 
-    return 0;
+    return retval;
 }
 
