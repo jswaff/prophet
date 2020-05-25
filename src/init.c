@@ -1,3 +1,4 @@
+#include <prophet/parameters.h>
 #include <prophet/position/position.h>
 
 #include <stdlib.h>
@@ -20,6 +21,7 @@ extern void init_pawn_isolated();
 extern void init_pawn_passed();
 
 extern position_t gpos;
+
 
 /**
  * \brief Initialize the program.

@@ -100,6 +100,16 @@ int xboard_protover(const char* input);
 
 
 /**
+ * \brief Execute the xboard quit command
+ * 
+ * \param input         the user entered input
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_quit(const char* input);
+
+
+/**
  * \brief Execute the xboard remove command 
  * 
  * Undo the previous FULL move - one move for each player.  XBoard protocol 
@@ -173,19 +183,6 @@ int xboard_usermove(const char* input);
 
 
 /**
- * \brief Select a move.
- *
- * Select a legal move from the given position.  If there are no legal moves,
- * NO_MOVE is returned.
- *
- * \param pos           a pointer to the chess position
- *
- * \return a move to play, or NO_MOVE if there isn't one
- */
-move_t select_move(const position_t* pos);
-
-
-/**
  * \brief Select a move, and apply it to the game position.  If the game is
  * over, print the result.
  *
@@ -196,6 +193,15 @@ move_t select_move(const position_t* pos);
  */
 int think_and_make_move();
 
+
+/**
+ * \brief Stop any running search thread.
+ * 
+ * Performs a join on any running search thread.
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int stop_search_thread_blocking();
 
 /**
  * \brief Check for an end-of-game condition and print RESULT if appropriate.

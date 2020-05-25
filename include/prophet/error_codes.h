@@ -145,6 +145,20 @@ extern "C" {
 #define P4_ERROR_GUNDO_INDEX_UB_VIOLATION                  0x0201
 
 
+/**
+ * \brief This error is thrown when an attempt to create a new thread has
+ * failed.
+ */
+#define P4_ERROR_THREAD_CREATION_FAILURE                   0x0300
+
+
+/**
+ * \brief This error is thrown when an attempt to join a thread has failed.
+ */
+#define P4_ERROR_THREAD_JOIN_FAILURE                       0x0301
+
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

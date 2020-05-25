@@ -32,7 +32,7 @@ struct function_table_entry function_table[] = {
     {"ping", xboard_ping},
     {"post", xboard_post}, 
     {"protover", xboard_protover},
-    {"quit", command_exit},
+    {"quit", xboard_quit},
     {"random", command_no_op},
     {"rating", command_no_op},
     {"rejected", command_no_op},
@@ -50,7 +50,7 @@ struct function_table_entry function_table[] = {
     /* custom commands */
     {"db", command_db},
     {"eval", command_eval}, 
-    {"exit", command_exit},
+    {"exit", xboard_quit},
     {"perft", command_perft}
 };
 
@@ -60,6 +60,11 @@ struct function_table_entry function_table[] = {
  * Parse the user input and attempt to map it to a command.  Note that failure
  * to map the input to a command does not generate a failure return code.  In 
  * this case the input is mapped to the no-op command.
+ *
+ * Implementation note: for the most part the commands specific to XBoard are 
+ * isolated in the xboard folder.  Some of the XBoard logic has leaked up, but
+ * it's pretty minimal and wouldn't be hard to refactor if support for another
+ * protocol were added in the future.
  *
  * \param cmd           pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
@@ -101,7 +106,7 @@ done:
 
     /* special case - if the command was mapped to the exit handler, set the
      * exit_status flag. */
-    if (cmd->cmd_func == command_exit)
+    if (cmd->cmd_func == xboard_quit)
     {
         *exit_status = true;
     }

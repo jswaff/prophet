@@ -8,6 +8,7 @@
 
 #include "xboard_internal.h"
 
+/* externs */
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;

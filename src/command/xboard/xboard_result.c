@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 
+
+#include "xboard_internal.h"
+
+
 /**
  * \brief Execute the xboard result command 
  * 
@@ -16,6 +20,12 @@ int xboard_result(const char* input)
     if (0 != strncmp("result", input, 6))
     {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
+    }
+
+    int retval = stop_search_thread_blocking();
+    if (0 != retval)
+    {
+        return retval;
     }
 
     /* is the command long enough to contain an argument? 

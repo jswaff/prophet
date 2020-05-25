@@ -4,6 +4,8 @@
 
 #include <string.h>
 
+#include "xboard_internal.h"
+
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
@@ -29,6 +31,12 @@ int xboard_new(const char* input)
     if (0 != strcmp("new", input))
     {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
+    }
+
+    int retval = stop_search_thread_blocking();
+    if (0 != retval)
+    {
+        return retval;
     }
 
     reset_pos(&gpos);

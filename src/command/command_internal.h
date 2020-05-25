@@ -25,6 +25,15 @@ int parse_and_execute(const char* input, bool* exit_status);
 /**
  * \brief Parse a command
  * 
+ * Parse the user input and attempt to map it to a command.  Note that failure
+ * to map the input to a command does not generate a failure return code.  In 
+ * this case the input is mapped to the no-op command.
+ *
+ * Implementation note: for the most part the commands specific to XBoard are 
+ * isolated in the xboard folder.  Some of the XBoard logic has leaked up, but
+ * it's pretty minimal and wouldn't be hard to refactor if support for another
+ * protocol were added in the future.
+ *
  * \param cmd           pointer to structure to receive parsed command
  * \param input         buffer containing command to be parsed
  * \param exit_status   pointer to boolean to receive exit status
@@ -45,16 +54,6 @@ int parse_command(
  * \return 0 on successful execution, and non-zero on failure
  */
 int command_db(const char* input);
-
-
-/**
- * \brief Execute the exit command.
- * 
- * \param input         the user entered input
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int command_exit(const char* input);
 
 
 /**
