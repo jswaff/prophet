@@ -1,6 +1,5 @@
 #include <prophet/error_codes.h>
 
-#include <stdio.h>
 #include <string.h>
 
 #include "xboard_internal.h"
@@ -27,11 +26,6 @@ int xboard_go(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    int retval = stop_search_thread_blocking();
-    if (0 != retval)
-    {
-        return retval;
-    }
     xboard_force_mode = false;
 
     return think_and_make_move();

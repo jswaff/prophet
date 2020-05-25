@@ -23,6 +23,8 @@ extern bool xboard_post_mode;
 /* local variables */
 bool random_mode = false;
 pthread_t search_thread;
+bool search_thread_running = false;
+pthread_mutex_t search_lock;
 move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 
@@ -52,18 +54,26 @@ int think_and_make_move()
 {
     assert(!endgame_check());
 
-    int retval; 
+    int retval = stop_search_thread_blocking();
+    if (0 != retval)
+    {
+        return retval;
+    }
+
     if (random_mode)
     {
         retval = select_random_move();
     }
     else
     {
+        pthread_mutex_lock(&search_lock); 
         retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
         if (0 != retval)
         {
             return P4_ERROR_THREAD_CREATION_FAILURE;
         }
+        search_thread_running = true;
+        pthread_mutex_unlock(&search_lock); 
     }
 
 
@@ -80,12 +90,17 @@ int think_and_make_move()
  */
 int stop_search_thread_blocking()
 {
-    int retval = pthread_join(search_thread, NULL);
-    /* let ESRCH slide as we may not have initialized yet */
-    if (0 != retval && ESRCH != retval)
+    pthread_mutex_lock(&search_lock);
+    if (search_thread_running)
     {
-        return P4_ERROR_THREAD_JOIN_FAILURE;
+        int retval = pthread_join(search_thread, NULL);
+        if (0 != retval)
+        {
+            return P4_ERROR_THREAD_JOIN_FAILURE;
+        }
+        search_thread_running = false;
     }
+    pthread_mutex_unlock(&search_lock); 
     return 0;
 }
 
