@@ -1,5 +1,6 @@
 #include <prophet/const.h>
 #include <prophet/movegen.h>
+#include <prophet/parameters.h>
 #include <prophet/util/output.h>
 #include <prophet/util/p4time.h>
 #include <prophet/util/string_utils.h>
@@ -12,6 +13,7 @@
 extern move_line_t last_pv;
 
 /* forward decls */
+static void print_pv(move_line_t* pv);
 static void print_search_summary(int32_t last_depth, int32_t start_time, 
     const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
@@ -60,7 +62,7 @@ move_line_t iterate(const iterator_options_t* opts,
         int32_t alpha_bound = -INF;
         int32_t beta_bound = INF;
         score = search(ctx->pos, &pv, depth, alpha_bound, beta_bound, ctx->move_stack, 
-            ctx->undo_stack, &stats);
+            ctx->undo_stack, &stats, print_pv);
 
         /* print the move line */
         if (opts->post_mode)
@@ -98,6 +100,10 @@ move_line_t iterate(const iterator_options_t* opts,
     return pv;
 }
 
+static void print_pv(move_line_t* UNUSED(pv))
+{
+
+}
 
 static void print_search_summary(int32_t last_depth, int32_t start_time, 
     const stats_t* stats)

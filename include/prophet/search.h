@@ -61,6 +61,12 @@ typedef struct
 
 
 /**
+ * \brief Callback function when the PV is updated.
+ */
+typedef void (*pv_func_t)(move_line_t*);
+
+
+/**
  * \brief Structure for tracking various stats during the search.
  */
 typedef struct 
@@ -113,12 +119,13 @@ move_line_t iterate(const iterator_options_t* opts,
  * \param move_stack    pre-allocated stack for move generation
  * \param undo_stack    pre-allocated stack for undo information
  * \param stats         structure for tracking search stats
+ * \param pv_callback   callback when the PV is updated at the root
  * 
  * \return the score
  */
 int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
     int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack,
-    stats_t* stats);
+    stats_t* stats, pv_func_t pv_callback);
 
 
 // make this header C++ friendly.

@@ -40,12 +40,13 @@ static bool is_draw(const position_t* pos, const undo_t* undo_stack);
  * \param move_stack    pre-allocated stack for move generation
  * \param undo_stack    pre-allocated stack for undo information
  * \param stats         structure for tracking search stats
+ * \param pv_callback   callback when the PV is updated at the root
  * 
  * \return the score
  */
 int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
     int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack, 
-    stats_t* stats)
+    stats_t* stats, pv_func_t UNUSED(pv_callback))
 {
     assert(move_stack);
     assert(undo_stack);
@@ -137,6 +138,10 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             alpha = score;
             set_parent_pv(parent_pv, *mp, &pv);
             /* TODO: display updated PV */
+            if (ply == 0)
+            {
+
+            }
         }
     }
 
