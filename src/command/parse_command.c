@@ -25,7 +25,7 @@ struct function_table_entry function_table[] = {
     {"go", xboard_go},
     {"hard", command_no_op},
     {"hint", command_no_op},
-    {"level", command_no_op}, // TODO - timer
+    {"level", xboard_level},
     {"new", xboard_new},
     {"nopost", xboard_nopost},
     {"otim", command_no_op},
