@@ -9,9 +9,10 @@
 
 extern move_line_t last_pv;
 
-static void pv_cb(move_line_t* UNUSED(pv))
+static void pv_cb(move_line_t* UNUSED(pv), int32_t UNUSED(depth), 
+    int32_t UNUSED(score), uint64_t UNUSED(num_nodes))
 {
-    /* nothing */
+    /* no op */
 }
 
 TEST(search_test, depth0_no_bounds)

@@ -63,7 +63,7 @@ typedef struct
 /**
  * \brief Callback function when the PV is updated.
  */
-typedef void (*pv_func_t)(move_line_t*);
+typedef void (*pv_func_t)(move_line_t*, int32_t, int32_t, uint64_t);
 
 
 /**
