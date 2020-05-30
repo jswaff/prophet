@@ -64,6 +64,7 @@ move_line_t iterate(const iterator_options_t* opts,
         search_opts.pv_callback = print_pv;
     }
     search_opts.start_time = milli_timer();
+    search_opts.nodes_between_time_checks = 50000UL;
 
     /* search using iterative deepening */
     bool stop_iterator = false;

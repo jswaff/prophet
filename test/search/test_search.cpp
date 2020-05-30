@@ -151,6 +151,7 @@ TEST(search_test, search_stops_on_time)
     // start a depth 30 search, with a stop time in 500 ms
     opts.start_time = milli_timer();
     opts.stop_time = opts.start_time + 500;
+    opts.nodes_between_time_checks = 1000UL;
     ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 30, -INF, INF, moves, undos, 
         &stats, &opts));
     uint64_t stop_time = milli_timer();

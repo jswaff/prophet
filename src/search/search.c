@@ -24,6 +24,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
     search_options_t* opts);
 
+static bool stop_search_on_time(search_options_t* opts, stats_t* stats);
+
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
 
@@ -85,7 +87,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     parent_pv->n = 0;
 
     /* time check */
-    if (opts->stop_time && milli_timer() >= opts->stop_time)
+    if (stop_search_on_time(opts, stats))
     {
         stop_search = true;
         return 0;
@@ -165,6 +167,27 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     alpha = adjust_score_for_mate(pos, alpha, num_moves_searched, ply);
 
     return alpha;
+}
+
+
+static bool stop_search_on_time(search_options_t* opts, stats_t* stats)
+{
+    /* if we don't have a stop time, nevermind! */
+    if (!opts->stop_time)
+    {
+        return false;
+    }
+
+    /* avoid doing expensive time checks too often. */
+    if (stats->nodes - opts->node_count_last_time_check < 
+        opts->nodes_between_time_checks)
+    {
+        return false;
+    }
+
+    /* ok, time check */
+    opts->node_count_last_time_check = stats->nodes;
+    return milli_timer() >= opts->stop_time;
 }
 
 
