@@ -19,6 +19,7 @@ extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern int32_t max_depth;
 extern bool xboard_post_mode;
+extern bool stop_search;
 
 /* local variables */
 bool random_mode = false;
@@ -67,6 +68,7 @@ int think_and_make_move()
     else
     {
         pthread_mutex_lock(&search_lock); 
+        stop_search = false;
         retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
         if (0 != retval)
         {

@@ -8,6 +8,7 @@
 #include <gtest/gtest.h>
 
 extern move_line_t last_pv;
+extern bool stop_search;
 
 static void pv_cb(move_line_t* UNUSED(pv), int32_t UNUSED(depth), 
     int32_t UNUSED(score), uint64_t UNUSED(elapased), 
@@ -25,10 +26,12 @@ TEST(search_test, depth0_no_bounds)
     move_t moves[100];
     undo_t undos[1];
     memset(&last_pv, 0, sizeof(move_line_t));
-    
+    stop_search = false;
+
     ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -INF, INF, moves, undos, 
         &stats, pv_cb, 0, 0));
     ASSERT_EQ(0, pv.n);
+    ASSERT_EQ(1U, stats.nodes);
 }
 
 TEST(search_test, mate_in_1)
@@ -40,6 +43,7 @@ TEST(search_test, mate_in_1)
     move_t moves[200];
     undo_t undos[2];
     memset(&last_pv, 0, sizeof(move_line_t));
+    stop_search = false;
 
     ASSERT_EQ(CHECKMATE-1, search(&pos, &pv, 2, -INF, INF, moves, undos, 
         &stats, pv_cb, 0, 0));
@@ -56,6 +60,7 @@ TEST(search_test, mate_in_2)
     move_t moves[400];
     undo_t undos[4];
     memset(&last_pv, 0, sizeof(move_line_t));
+    stop_search = false;
 
     ASSERT_EQ(CHECKMATE-3, search(&pos, &pv, 4, -INF, INF, moves, undos, 
         &stats, pv_cb, 0, 0));
@@ -74,6 +79,7 @@ TEST(search_test, mate_in_3)
     move_t moves[600];
     undo_t undos[6];
     memset(&last_pv, 0, sizeof(move_line_t));
+    stop_search = false;
 
     ASSERT_EQ(CHECKMATE-5, search(&pos, &pv, 6, -INF, INF, moves, undos, 
         &stats, pv_cb, 0, 0));
@@ -94,8 +100,32 @@ TEST(search_test, stalemate)
     move_t moves[100];
     undo_t undos[1];
     memset(&last_pv, 0, sizeof(move_line_t));
+    stop_search = false;
 
     ASSERT_EQ(0, search(&pos, &pv, 1, -INF, INF, moves, undos, &stats, pv_cb, 
         0, 0));
+    ASSERT_EQ(0, pv.n);
+}
+
+
+TEST(search_test, stop_search)
+{
+    position_t pos;
+    reset_pos(&pos);
+    move_line_t pv;
+    stats_t stats;
+    move_t moves[100];
+    undo_t undos[3];
+    memset(&last_pv, 0, sizeof(move_line_t));
+    stop_search = true;
+
+    // start a depth 3 search
+    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 3, -INF, INF, moves, undos, 
+        &stats, pv_cb, 0, 0));
+
+    // visit one node per depth, down the left side of the tree
+    ASSERT_EQ(4U, stats.nodes);
+
+    // the PV should not have been updated
     ASSERT_EQ(0, pv.n);
 }

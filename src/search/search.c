@@ -10,6 +10,7 @@
 #include <string.h>
 
 move_line_t last_pv;
+bool stop_search;
 
 extern move_t killer1[MAX_PLY];
 extern move_t killer2[MAX_PLY];
@@ -65,7 +66,6 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     /* initialize the killer move arrays */
     memset(killer1, 0, sizeof(move_t) * MAX_PLY);
     memset(killer2, 0, sizeof(move_t) * MAX_PLY);
-
 
     int32_t score = search_helper(pos, parent_pv, true, 0, depth, alpha, beta, 
         move_stack, undo_stack, stats, pv_callback, start_time, stop_time);
@@ -129,6 +129,12 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         ++num_moves_searched;
 
         undo_move(pos, uptr);
+
+        /* if the search was stopped we can't trust these results */
+        if (stop_search)
+        {
+            return 0;
+        }
 
         if (score >= beta)
         {

@@ -11,6 +11,7 @@
 #include <string.h>
 
 extern move_line_t last_pv;
+extern bool stop_search;
 
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
@@ -35,26 +36,27 @@ move_line_t iterate(const iterator_options_t* opts,
 
     move_line_t pv; pv.n = 0;
 
+    /* generate and count the number of moves to choose from */
+    move_t* endp = gen_legal_moves(ctx->move_stack, ctx->pos, true, true);
+    int num_caps, num_noncaps;
+    num_moves_in_list(ctx->move_stack, endp, &num_caps, &num_noncaps);
+
+    /* initialize the PV to ensure we have a valid move to play */
+    best_at_top(ctx->move_stack, endp);
+    pv.mv[0] = ctx->move_stack[0];
+    pv.n = 1;
+
     /* if just one legal move, don't bother searching */
-    if (opts->early_exit_ok)
+    if (opts->early_exit_ok && num_caps + num_noncaps == 1)
     {
-        move_t* endp = gen_legal_moves(ctx->move_stack, ctx->pos, true, true);
-        int num_caps, num_noncaps;
-        num_moves_in_list(ctx->move_stack, endp, &num_caps, &num_noncaps);
-        if (num_caps + num_noncaps == 1)
-        {
-            best_at_top(ctx->move_stack, endp);
-            pv.mv[0] = ctx->move_stack[0];
-            pv.n = 1;
-            return pv;
-        }
+        return pv;
     }
 
     /* prepare to search */
     memset(&last_pv, 0, sizeof(move_line_t));
     uint64_t start_time = milli_timer();
     int32_t depth = 0;
-    bool stop_searching = false;
+    bool stop_iterator = false;
     int32_t score = 0;
     stats_t stats;
 
@@ -64,34 +66,45 @@ move_line_t iterate(const iterator_options_t* opts,
 
         int32_t alpha_bound = -INF;
         int32_t beta_bound = INF;
-        score = search(ctx->pos, &pv, depth, alpha_bound, beta_bound, ctx->move_stack, 
-            ctx->undo_stack, &stats, (opts->post_mode ? print_pv : no_op),
-            start_time, 0);
+        move_line_t search_pv; search_pv.n = 0;
+        score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound, 
+            ctx->move_stack, ctx->undo_stack, &stats, 
+            (opts->post_mode ? print_pv : no_op), start_time, 0);
+
+        /* the search may or may not have a PV.  If it does, we can use it 
+         * since the last iteraton's PV was tried first
+         */
+        if (search_pv.n > 0)
+        {
+            memcpy(&pv, &search_pv, sizeof(move_line_t));
+        }
+
+        if (stop_search)
+        {
+            break;
+        }
 
         /* print the move line */
         if (opts->post_mode)
         {
-            char* pv_buf = move_line_to_str(&pv);
-            uint64_t time_centis = (milli_timer() - start_time) / 10;
-            out(stdout, "%2d %5d %5llu %7llu %s\n", depth, score, time_centis,
-                stats.nodes, pv_buf);
-            free(pv_buf);
+            print_pv(&pv, depth, score, milli_timer() - start_time, 
+                stats.nodes);
         }
 
         /* if the search discovered a checkmate, stop */
         if (abs(score) > CHECKMATE - 500)
         {
-            stop_searching = true;
+            stop_iterator = true;
         }
 
         /* if the search has reached the maximum depth, stop */
         if (opts->max_depth > 0 && depth >= opts->max_depth)
         {
-            stop_searching = true;
+            stop_iterator = true;
         }
 
 
-    } while (!stop_searching);
+    } while (!stop_iterator);
 
     assert(pv.n > 0);
 
