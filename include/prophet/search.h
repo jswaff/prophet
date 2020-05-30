@@ -25,7 +25,14 @@ typedef struct
     /**
      * \brief Maximum search depth
      */
-    int max_depth;
+    uint32_t max_depth;
+
+
+    /*
+     * \brief Maximum search time in milliseconds
+     */
+    uint32_t max_time_ms;
+
 
     /**
      * \brief If in post mode the iterator will print the best line to stdout

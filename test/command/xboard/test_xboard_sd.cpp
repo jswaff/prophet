@@ -5,7 +5,7 @@
 
 #include "../../../src/command/xboard/xboard_internal.h"
 
-extern int32_t max_depth;
+extern uint32_t max_depth;
 
 TEST(xboard_test, xboard_sd_incorrect_cmd)
 {
@@ -20,5 +20,5 @@ TEST(xboard_test, xboard_sd)
     ASSERT_EQ(0, xboard_sd("sd 3"));
 
     // the depth constraint should be set
-    EXPECT_EQ(3, max_depth);
+    EXPECT_EQ(3U, max_depth);
 }

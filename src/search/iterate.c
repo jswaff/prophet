@@ -52,7 +52,7 @@ move_line_t iterate(const iterator_options_t* opts,
 
     /* prepare to search */
     memset(&last_pv, 0, sizeof(move_line_t));
-    int32_t depth = 0;
+    uint32_t depth = 0;
     int32_t score = 0;
     stats_t stats;
 
@@ -65,6 +65,10 @@ move_line_t iterate(const iterator_options_t* opts,
     }
     search_opts.start_time = milli_timer();
     search_opts.nodes_between_time_checks = 50000UL;
+    if (opts->max_time_ms)
+    {
+        search_opts.stop_time = search_opts.start_time + opts->max_time_ms;
+    }
 
     /* search using iterative deepening */
     bool stop_iterator = false;

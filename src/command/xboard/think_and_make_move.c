@@ -17,7 +17,8 @@
 /* externs */
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
-extern int32_t max_depth;
+extern uint32_t max_depth;
+extern uint32_t max_time_ms;
 extern bool xboard_post_mode;
 extern bool stop_search;
 
@@ -113,6 +114,7 @@ static void* iterate_wrapper(void* UNUSED(arg))
     memset(opts, 0, sizeof(iterator_options_t));
     opts->early_exit_ok = true;
     opts->max_depth = max_depth;
+    opts->max_time_ms = max_time_ms;
     opts->post_mode = xboard_post_mode;
 
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
