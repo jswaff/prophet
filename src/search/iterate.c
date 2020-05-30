@@ -16,8 +16,6 @@ extern bool stop_search;
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
     uint64_t elapsed, uint64_t num_nodes);
-static void no_op(move_line_t* pv, int32_t depth, int32_t score, 
-    uint64_t elapsed, uint64_t num_nodes);
 static void print_search_summary(int32_t last_depth, int32_t start_time, 
     const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
@@ -54,13 +52,21 @@ move_line_t iterate(const iterator_options_t* opts,
 
     /* prepare to search */
     memset(&last_pv, 0, sizeof(move_line_t));
-    uint64_t start_time = milli_timer();
     int32_t depth = 0;
-    bool stop_iterator = false;
     int32_t score = 0;
     stats_t stats;
 
+    /* set up options */
+    search_options_t search_opts;
+    memset(&search_opts, 0, sizeof(search_options_t));
+    if (opts->post_mode)
+    {
+        search_opts.pv_callback = print_pv;
+    }
+    search_opts.start_time = milli_timer();
+
     /* search using iterative deepening */
+    bool stop_iterator = false;
     do {
         ++depth;
 
@@ -68,8 +74,7 @@ move_line_t iterate(const iterator_options_t* opts,
         int32_t beta_bound = INF;
         move_line_t search_pv; search_pv.n = 0;
         score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound, 
-            ctx->move_stack, ctx->undo_stack, &stats, 
-            (opts->post_mode ? print_pv : no_op), start_time, 0);
+            ctx->move_stack, ctx->undo_stack, &stats, &search_opts);
 
         /* the search may or may not have a PV.  If it does, we can use it 
          * since the last iteraton's PV was tried first
@@ -87,8 +92,8 @@ move_line_t iterate(const iterator_options_t* opts,
         /* print the move line */
         if (opts->post_mode)
         {
-            print_pv(&pv, depth, score, milli_timer() - start_time, 
-                stats.nodes);
+            print_pv(&pv, depth, score, 
+                milli_timer() - search_opts.start_time, stats.nodes);
         }
 
         /* if the search discovered a checkmate, stop */
@@ -111,7 +116,7 @@ move_line_t iterate(const iterator_options_t* opts,
     /* print the search summary */
     if (opts->post_mode)
     {
-        print_search_summary(depth, start_time, &stats);
+        print_search_summary(depth, search_opts.start_time, &stats);
     }
 
     return pv;
@@ -125,12 +130,6 @@ static void print_pv(move_line_t* pv, int32_t depth, int32_t score,
     out(stdout, "%2d %5d %5llu %7llu %s\n", depth, score, time_centis,
         num_nodes, pv_buf);
     free(pv_buf);
-}
-
-static void no_op(move_line_t* UNUSED(pv), int32_t UNUSED(depth), 
-    int32_t UNUSED(score), uint64_t UNUSED(elapased), 
-    uint64_t UNUSED(num_nodes))
-{
 }
 
 

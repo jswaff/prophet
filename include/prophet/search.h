@@ -97,6 +97,51 @@ typedef struct
 
 
 /**
+ * \brief Structure for search optional data.
+ */
+typedef struct 
+{
+    /*
+     * \brief A callback function to execute when the PV is updated at the root
+     * of the search.
+     */
+    pv_func_t pv_callback;
+    
+
+    /*
+     * \brief The time the search was started - should be milliseconds since
+     * epoch.  This is used to calculate elapsed time when the callback is
+     * executed.
+     */
+    uint64_t start_time;
+
+
+    /*
+     * \brief The time the search should stop, if non-zero.  Should be 
+     * millseconds since epoch.
+     */
+    uint64_t stop_time;
+
+
+    /*
+     * \brief The number of nodes to wait between time checks.  This, along 
+     * with node_count_last_time_check are used to avoid calling the expensive
+     * time check routine at every node.
+     */
+    uint64_t nodes_between_time_checks;
+
+
+    /*
+     * \brief The node count at the last time check.  
+     */
+    uint64_t node_count_last_time_check;
+
+
+
+} search_options_t;
+
+
+/**
  * \brief Search the position using iterative deepening. 
  * 
  * \param opts          the options structure
@@ -119,16 +164,13 @@ move_line_t iterate(const iterator_options_t* opts,
  * \param move_stack    pre-allocated stack for move generation
  * \param undo_stack    pre-allocated stack for undo information
  * \param stats         structure for tracking search stats
- * \param pv_callback   callback when the PV is updated at the root
- * \param start_time    start time, milliseconds since epoch
- * \param stop_time     stop time, milliseconds since epoch
+ * \param opts          structure for tracking search options data
  * 
  * \return the score
  */
 int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
     int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack,
-    stats_t* stats, pv_func_t pv_callback, uint64_t start_time, 
-    uint64_t stop_time);
+    stats_t* stats, search_options_t* opts);
 
 
 // make this header C++ friendly.

@@ -22,7 +22,7 @@ static int32_t adjust_score_for_mate(const position_t* pos, int32_t score,
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
     bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
     move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
-    pv_func_t pv_callback, uint64_t start_time, uint64_t stop_time);
+    search_options_t* opts);
 
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
@@ -43,16 +43,13 @@ static bool is_draw(const position_t* pos, const undo_t* undo_stack);
  * \param move_stack    pre-allocated stack for move generation
  * \param undo_stack    pre-allocated stack for undo information
  * \param stats         structure for tracking search stats
- * \param pv_callback   callback when the PV is updated at the root
- * \param start_time    start time, milliseconds since epoch
- * \param stop_time     stop time, milliseconds since epoch
+ * \param opts          structure for tracking search options data
  * 
  * \return the score
  */
 int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
     int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack, 
-    stats_t* stats, pv_func_t pv_callback, uint64_t start_time, 
-    uint64_t stop_time)
+    stats_t* stats, search_options_t* opts)
 {
     assert(move_stack);
     assert(undo_stack);
@@ -68,7 +65,7 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     memset(killer2, 0, sizeof(move_t) * MAX_PLY);
 
     int32_t score = search_helper(pos, parent_pv, true, 0, depth, alpha, beta, 
-        move_stack, undo_stack, stats, pv_callback, start_time, stop_time);
+        move_stack, undo_stack, stats, opts);
 
     /* capture the PV for ordering in the next search */
     memcpy(&last_pv, parent_pv, sizeof(move_line_t));
@@ -80,7 +77,7 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
     bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
     move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
-    pv_func_t pv_callback, uint64_t start_time, uint64_t stop_time)
+    search_options_t* opts)
 {
     assert (depth >= 0);
 
@@ -88,7 +85,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     parent_pv->n = 0;
 
     /* time check */
-    if (stop_time && milli_timer() >= stop_time)
+    if (opts->stop_time && milli_timer() >= opts->stop_time)
     {
         stop_search = true;
         return 0;
@@ -132,7 +129,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         bool pvnode = first && num_moves_searched==0;
         int32_t score = -search_helper(
             pos, &pv, pvnode, ply+1, depth-1, -beta, -alpha, mo_dto.end, 
-            undo_stack, stats, pv_callback, start_time, stop_time);
+            undo_stack, stats, opts);
         ++num_moves_searched;
 
         undo_move(pos, uptr);
@@ -156,10 +153,11 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         {
             alpha = score;
             set_parent_pv(parent_pv, *mp, &pv);
-            if (ply == 0)
+            if (ply == 0 && opts->pv_callback)
             {
-                uint64_t elapsed = milli_timer() - start_time;
-                pv_callback(parent_pv, depth, score, elapsed, stats->nodes);
+                uint64_t elapsed = milli_timer() - opts->start_time;
+                opts->pv_callback(parent_pv, depth, score, elapsed, 
+                    stats->nodes);
             }
         }
     }
