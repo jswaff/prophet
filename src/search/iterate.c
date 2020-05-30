@@ -14,9 +14,9 @@ extern move_line_t last_pv;
 
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
-    uint64_t num_nodes);
+    uint64_t elapsed, uint64_t num_nodes);
 static void no_op(move_line_t* pv, int32_t depth, int32_t score, 
-    uint64_t num_nodes);
+    uint64_t elapsed, uint64_t num_nodes);
 static void print_search_summary(int32_t last_depth, int32_t start_time, 
     const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
@@ -65,7 +65,8 @@ move_line_t iterate(const iterator_options_t* opts,
         int32_t alpha_bound = -INF;
         int32_t beta_bound = INF;
         score = search(ctx->pos, &pv, depth, alpha_bound, beta_bound, ctx->move_stack, 
-            ctx->undo_stack, &stats, (opts->post_mode ? print_pv : no_op));
+            ctx->undo_stack, &stats, (opts->post_mode ? print_pv : no_op),
+            start_time, 0);
 
         /* print the move line */
         if (opts->post_mode)
@@ -104,17 +105,18 @@ move_line_t iterate(const iterator_options_t* opts,
 }
 
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
-    uint64_t num_nodes)
+    uint64_t elapsed, uint64_t num_nodes)
 {
     char* pv_buf = move_line_to_str(pv);
-    uint64_t time_centis = 0; //(milli_timer() - start_time) / 10;
+    uint64_t time_centis = elapsed / 10;
     out(stdout, "%2d %5d %5llu %7llu %s\n", depth, score, time_centis,
         num_nodes, pv_buf);
     free(pv_buf);
 }
 
 static void no_op(move_line_t* UNUSED(pv), int32_t UNUSED(depth), 
-    int32_t UNUSED(score), uint64_t UNUSED(num_nodes))
+    int32_t UNUSED(score), uint64_t UNUSED(elapased), 
+    uint64_t UNUSED(num_nodes))
 {
 }
 

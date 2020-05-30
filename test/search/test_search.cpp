@@ -10,7 +10,8 @@
 extern move_line_t last_pv;
 
 static void pv_cb(move_line_t* UNUSED(pv), int32_t UNUSED(depth), 
-    int32_t UNUSED(score), uint64_t UNUSED(num_nodes))
+    int32_t UNUSED(score), uint64_t UNUSED(elapased), 
+    uint64_t UNUSED(num_nodes))
 {
     /* no op */
 }
@@ -26,7 +27,7 @@ TEST(search_test, depth0_no_bounds)
     memset(&last_pv, 0, sizeof(move_line_t));
     
     ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -INF, INF, moves, undos, 
-        &stats, pv_cb));
+        &stats, pv_cb, 0, 0));
     ASSERT_EQ(0, pv.n);
 }
 
@@ -41,7 +42,7 @@ TEST(search_test, mate_in_1)
     memset(&last_pv, 0, sizeof(move_line_t));
 
     ASSERT_EQ(CHECKMATE-1, search(&pos, &pv, 2, -INF, INF, moves, undos, 
-        &stats, pv_cb));
+        &stats, pv_cb, 0, 0));
     ASSERT_EQ(1, pv.n);
     ASSERT_EQ(to_move(QUEEN, D6, E7), pv.mv[0]);
 }
@@ -57,7 +58,7 @@ TEST(search_test, mate_in_2)
     memset(&last_pv, 0, sizeof(move_line_t));
 
     ASSERT_EQ(CHECKMATE-3, search(&pos, &pv, 4, -INF, INF, moves, undos, 
-        &stats, pv_cb));
+        &stats, pv_cb, 0, 0));
     ASSERT_EQ(3, pv.n);
     ASSERT_EQ(to_move(QUEEN, D2, H6), pv.mv[0]);
     ASSERT_EQ(to_capture(KING, G7, H6, QUEEN), pv.mv[1]);
@@ -75,7 +76,7 @@ TEST(search_test, mate_in_3)
     memset(&last_pv, 0, sizeof(move_line_t));
 
     ASSERT_EQ(CHECKMATE-5, search(&pos, &pv, 6, -INF, INF, moves, undos, 
-        &stats, pv_cb));
+        &stats, pv_cb, 0, 0));
     ASSERT_EQ(5, pv.n);
     ASSERT_EQ(to_move(ROOK, F6, A6), pv.mv[0]);
     ASSERT_EQ(to_move(PAWN, F7, F6), pv.mv[1]);
@@ -94,6 +95,7 @@ TEST(search_test, stalemate)
     undo_t undos[1];
     memset(&last_pv, 0, sizeof(move_line_t));
 
-    ASSERT_EQ(0, search(&pos, &pv, 1, -INF, INF, moves, undos, &stats, pv_cb));
+    ASSERT_EQ(0, search(&pos, &pv, 1, -INF, INF, moves, undos, &stats, pv_cb, 
+        0, 0));
     ASSERT_EQ(0, pv.n);
 }
