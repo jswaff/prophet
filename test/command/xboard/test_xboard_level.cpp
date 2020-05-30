@@ -5,7 +5,7 @@
 
 #include "../../../src/command/xboard/xboard_internal.h"
 
-
+extern bool fixed_time_per_move;
 extern uint32_t time_control_moves;
 extern char time_control_base[10];
 extern uint32_t time_control_increment;
@@ -25,15 +25,16 @@ TEST(xboard_test, xboard_level_missing_parameter)
 
 TEST(xboard_test, xboard_level)
 {
+    fixed_time_per_move = true;
     time_control_moves = 0;
     time_control_base[0] = 0;
     time_control_increment = 0;
 
-    // reset the moves, base time, and increment variables
     ASSERT_EQ(0, xboard_level("level 0 2 12"));
     EXPECT_EQ(0U, time_control_moves);
     EXPECT_EQ(0, strcmp("2", time_control_base));
     EXPECT_EQ(12U, time_control_increment);
+    EXPECT_FALSE(fixed_time_per_move);
 
     // another variation
     ASSERT_EQ(0, xboard_level("level  40    0:30  0 "));

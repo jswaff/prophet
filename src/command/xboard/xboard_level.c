@@ -1,15 +1,15 @@
 #include <prophet/error_codes.h>
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+bool fixed_time_per_move;
 uint32_t time_control_moves;
 char time_control_base[10];
 uint32_t time_control_increment;
-
-//extern uint32_t max_time_ms;
 
 
 /**
@@ -73,6 +73,8 @@ int xboard_level(const char* input)
     }
     time_control_increment = atoi(token);
     
+    /* we should calculate how much time to use before each move */
+    fixed_time_per_move = false;
 
     /* success */
     return 0;

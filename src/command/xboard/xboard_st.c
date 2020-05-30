@@ -1,11 +1,13 @@
 #include <prophet/error_codes.h>
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
 
-uint32_t max_time_ms = 0;
+extern uint32_t max_time_ms;
+extern bool fixed_time_per_move;
 
 
 /**
@@ -40,6 +42,9 @@ int xboard_st(const char* input)
 
     /* set the search time - seconds to milliseconds */
     max_time_ms = t * 1000;
+
+    /* we should NOT calculate time to use before each move */
+    fixed_time_per_move = true;
 
     /* success */
     return 0;
