@@ -2,7 +2,7 @@
 #include <prophet/eval.h>
 #include <prophet/parameters.h>
 #include <prophet/search.h>
-
+#include <prophet/util/p4time.h>
 #include <prophet/util/string_utils.h>
 
 #include <gtest/gtest.h>
@@ -128,4 +128,27 @@ TEST(search_test, stop_search)
 
     // the PV should not have been updated
     ASSERT_EQ(0, pv.n);
+}
+
+
+TEST(search_test, search_stops_on_time)
+{
+    position_t pos;
+    reset_pos(&pos);
+    move_line_t pv;
+    stats_t stats;
+    move_t moves[1000];
+    undo_t undos[50];
+    memset(&last_pv, 0, sizeof(move_line_t));
+    stop_search = false;
+
+    // start a depth 30 search, with a stop time in 500 ms
+    uint64_t start_time = milli_timer();
+    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 30, -INF, INF, moves, undos, 
+        &stats, pv_cb, 0, start_time + 500));
+    uint64_t stop_time = milli_timer();
+
+    // the search should have stopped within 100 ms (which is very "generous")
+    // from when we told it to.
+    ASSERT_TRUE(stop_time - start_time < 600); 
 }

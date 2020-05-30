@@ -87,6 +87,13 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     stats->nodes++;
     parent_pv->n = 0;
 
+    /* time check */
+    if (stop_time && milli_timer() >= stop_time)
+    {
+        stop_search = true;
+        return 0;
+    }
+
     /* base case */
     if (depth == 0)
     {
