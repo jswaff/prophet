@@ -177,6 +177,18 @@ int xboard_setboard(const char* input);
 
 
 /**
+ * \brief Execute the xboard time command 
+ * 
+ * Respond to the time command by setting the time remaining.  
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_time(const char* input);
+
+
+/**
  * \brief Execute the xboard undo command 
  * 
  * Undo the previous move.  XBoard protocol guarantees that the engine will be

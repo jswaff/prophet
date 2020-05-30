@@ -41,7 +41,7 @@ struct function_table_entry function_table[] = {
     {"sd", xboard_sd},
     {"setboard", xboard_setboard},
     {"st", xboard_st},
-    {"time", command_no_op}, // TODO - timer
+    {"time", xboard_time},
     {"undo", xboard_undo},
     {"usermove", xboard_usermove},
     {"xboard", command_no_op},
