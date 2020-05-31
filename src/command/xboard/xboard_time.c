@@ -8,7 +8,7 @@
 uint32_t time_remaining_millis;
 
 extern bool fixed_time_per_move;
-extern uint32_t max_time_ms;
+extern volatile uint32_t max_time_ms;
 extern uint32_t time_control_increment;
 
 

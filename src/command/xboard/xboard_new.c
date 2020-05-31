@@ -9,7 +9,7 @@
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
-extern int32_t max_depth;
+extern volatile int32_t max_depth;
 
 /**
  * \brief Execute the xboard new command 

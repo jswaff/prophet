@@ -10,12 +10,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-uint32_t max_depth = 0;
-uint32_t max_time_ms = 0;
-
+uint32_t volatile max_depth = 0;
+uint32_t volatile max_time_ms = 0;
 
 extern move_line_t last_pv;
-extern bool stop_search;
+extern volatile bool stop_search;
 
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 

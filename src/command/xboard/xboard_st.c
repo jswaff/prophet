@@ -6,7 +6,7 @@
 #include <string.h>
 
 
-extern uint32_t max_time_ms;
+extern volatile uint32_t max_time_ms;
 extern bool fixed_time_per_move;
 
 

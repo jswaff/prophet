@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-extern uint32_t max_depth;
+extern volatile uint32_t max_depth;
 extern bool random_mode;
 
 

@@ -5,6 +5,7 @@
 #include <string.h>
 
 extern position_t gpos;
+extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 
 /**
  * \brief Execute the xboard setboard command 
@@ -37,6 +38,9 @@ int xboard_setboard(const char* input)
         out(stdout, "tellusererror Illegal position\n");
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN;
     }
+
+    /* clear the undo information */
+    memset(gundos, 0, sizeof(gundos));
 
     /* success */
     return 0;

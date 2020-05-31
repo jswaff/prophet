@@ -17,10 +17,10 @@
 /* externs */
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
-extern uint32_t max_depth;
-extern uint32_t max_time_ms;
+extern volatile uint32_t max_depth;
+extern volatile uint32_t max_time_ms;
 extern bool xboard_post_mode;
-extern bool stop_search;
+extern volatile bool stop_search;
 
 /* local variables */
 bool random_mode = false;
@@ -56,12 +56,7 @@ int think_and_make_move()
 {
     assert(!endgame_check());
 
-    int retval = block_on_search_thread(true);
-    if (0 != retval)
-    {
-        return retval;
-    }
-
+    int retval;
     if (random_mode)
     {
         retval = select_random_move();

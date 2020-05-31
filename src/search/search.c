@@ -10,7 +10,7 @@
 #include <string.h>
 
 move_line_t last_pv;
-bool stop_search;
+bool volatile stop_search;
 
 extern move_t killer1[MAX_PLY];
 extern move_t killer2[MAX_PLY];

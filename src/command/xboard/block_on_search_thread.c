@@ -6,7 +6,7 @@
 #include "xboard_internal.h"
 
 /* externs */
-extern bool stop_search;
+extern volatile bool stop_search;
 extern pthread_t search_thread;
 extern bool search_thread_running;
 extern pthread_mutex_t search_lock;
