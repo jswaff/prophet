@@ -36,7 +36,7 @@ TEST(xboard_test, xboard_time_fixed_time_per_move)
 
     ASSERT_EQ(0, xboard_time("time 4")); // 40 milliseconds
     EXPECT_EQ(40U, time_remaining_millis);
-    EXPECT_EQ(0U, max_time_ms);
+    EXPECT_EQ(1U, max_time_ms);
 }
 
 

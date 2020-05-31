@@ -50,13 +50,13 @@ int xboard_time(const char* input)
     if (fixed_time_per_move)
     {
         /* leave 50ms for overhead */
-        if (time_remaining_millis >= 50)
+        if (time_remaining_millis > 50)
         {
             max_time_ms = time_remaining_millis - 50;
         }
         else
         {
-            max_time_ms = 0;
+            max_time_ms = 1;
         }
     }
     else

@@ -11,7 +11,7 @@ extern bool fixed_time_per_move;
 
 
 /**
- * \brief Execute the xboard sd command 
+ * \brief Execute the xboard st command 
  * 
  * Respond to the st TIME command by setting the maximum search time
  *
