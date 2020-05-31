@@ -56,7 +56,7 @@ int think_and_make_move()
 {
     assert(!endgame_check());
 
-    int retval = stop_search_thread_blocking();
+    int retval = block_on_search_thread(true);
     if (0 != retval)
     {
         return retval;
@@ -85,17 +85,21 @@ int think_and_make_move()
 
 
 /**
- * \brief Stop any running search thread.
+ * \brief Block on an active search thread.
  * 
- * Performs a join on any running search thread.
+ * Performs a join on any running search thread.  If the stop parameter
+ * is true the search is forcefully stopped.
+ *
+ * \param stop          stop the search thread  
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int stop_search_thread_blocking()
+int block_on_search_thread(bool stop)
 {
     pthread_mutex_lock(&search_lock);
     if (search_thread_running)
     {
+        if (stop) stop_search = true;
         int retval = pthread_join(search_thread, NULL);
         if (0 != retval)
         {

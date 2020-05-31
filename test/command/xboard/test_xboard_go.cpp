@@ -29,7 +29,7 @@ TEST(xboard_test, xboard_go)
 	setbuf(stdout, buffer);
 
     int retval = xboard_go("go");
-    ASSERT_EQ(0, stop_search_thread_blocking()); // wait for search thread to finish
+    ASSERT_EQ(0, block_on_search_thread(false)); // wait for search thread to finish
 
     // redirect back
     freopen("/dev/tty", "a", stdout);
