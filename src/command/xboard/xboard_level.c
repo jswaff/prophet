@@ -77,5 +77,7 @@ int xboard_level(const char* input)
     fixed_time_per_move = false;
 
     /* success */
+    free(input_ptr);
+
     return 0;
 }
