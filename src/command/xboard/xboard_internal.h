@@ -39,6 +39,26 @@ int xboard_go(const char* input);
 
 
 /**
+ * \brief Execute the xboard level command 
+ * 
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_level(const char* input);
+
+
+/**
+ * \brief Execute the xboard move now command
+ * 
+ * \param input         the user entered input
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_move_now(const char* input);
+
+
+/**
  * \brief Execute the xboard new command 
  * 
  * Reset the board to the standard chess starting position. Set White on move. 
@@ -145,6 +165,18 @@ int xboard_sd(const char* input);
 
 
 /**
+ * \brief Execute the xboard st command 
+ * 
+ * Respond to the st TIME command by setting the maximum search time
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_st(const char* input);
+
+
+/**
  * \brief Execute the xboard setboard command 
  * 
  * \param input         the user entered input 
@@ -152,6 +184,18 @@ int xboard_sd(const char* input);
  * \return 0 on successful execution, and non-zero on failure
  */
 int xboard_setboard(const char* input);
+
+
+/**
+ * \brief Execute the xboard time command 
+ * 
+ * Respond to the time command by setting the time remaining.  
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_time(const char* input);
 
 
 /**
@@ -195,13 +239,17 @@ int think_and_make_move();
 
 
 /**
- * \brief Stop any running search thread.
+ * \brief Block on an active search thread.
  * 
- * Performs a join on any running search thread.
+ * Performs a join on any running search thread.  If the stop parameter
+ * is true the search is forcefully stopped.
+ *
+ * \param stop          stop the search thread  
  *
  * \return 0 on successful execution, and non-zero on failure
  */
-int stop_search_thread_blocking();
+int block_on_search_thread(bool stop);
+
 
 /**
  * \brief Check for an end-of-game condition and print RESULT if appropriate.

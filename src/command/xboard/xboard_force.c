@@ -27,7 +27,7 @@ int xboard_force(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    int retval = stop_search_thread_blocking();
+    int retval = block_on_search_thread(true);
     xboard_force_mode = true;
 
     return retval;

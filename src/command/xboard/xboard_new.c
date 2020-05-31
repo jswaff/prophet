@@ -9,7 +9,7 @@
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
-extern int32_t max_depth;
+extern volatile int32_t max_depth;
 
 /**
  * \brief Execute the xboard new command 
@@ -33,7 +33,7 @@ int xboard_new(const char* input)
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    int retval = stop_search_thread_blocking();
+    int retval = block_on_search_thread(true);
     if (0 != retval)
     {
         return retval;

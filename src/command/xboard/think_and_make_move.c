@@ -17,8 +17,10 @@
 /* externs */
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
-extern int32_t max_depth;
+extern volatile uint32_t max_depth;
+extern volatile uint32_t max_time_ms;
 extern bool xboard_post_mode;
+extern volatile bool stop_search;
 
 /* local variables */
 bool random_mode = false;
@@ -54,12 +56,7 @@ int think_and_make_move()
 {
     assert(!endgame_check());
 
-    int retval = stop_search_thread_blocking();
-    if (0 != retval)
-    {
-        return retval;
-    }
-
+    int retval;
     if (random_mode)
     {
         retval = select_random_move();
@@ -67,6 +64,7 @@ int think_and_make_move()
     else
     {
         pthread_mutex_lock(&search_lock); 
+        stop_search = false;
         retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
         if (0 != retval)
         {
@@ -81,36 +79,13 @@ int think_and_make_move()
 }
 
 
-/**
- * \brief Stop any running search thread.
- * 
- * Performs a join on any running search thread.
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int stop_search_thread_blocking()
-{
-    pthread_mutex_lock(&search_lock);
-    if (search_thread_running)
-    {
-        int retval = pthread_join(search_thread, NULL);
-        if (0 != retval)
-        {
-            return P4_ERROR_THREAD_JOIN_FAILURE;
-        }
-        search_thread_running = false;
-    }
-    pthread_mutex_unlock(&search_lock); 
-    return 0;
-}
-
-
 static void* iterate_wrapper(void* UNUSED(arg))
 {
     iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
     memset(opts, 0, sizeof(iterator_options_t));
     opts->early_exit_ok = true;
     opts->max_depth = max_depth;
+    opts->max_time_ms = max_time_ms;
     opts->post_mode = xboard_post_mode;
 
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));

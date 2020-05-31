@@ -1,7 +1,10 @@
 #include <prophet/error_codes.h>
 #include <prophet/util/output.h>
 
+#include <stdbool.h>
 #include <string.h>
+
+#include "xboard_internal.h"
 
 /**
  * \brief Execute the xboard ping command 
@@ -31,6 +34,13 @@ int xboard_ping(const char* input)
     if (1 != sscanf(input + 5, "%d", &n))
     {
         return P4_ERROR_CMD_XBOARD_PING_MISSING_N;
+    }
+
+    /* wait for any active search to finish before responding */
+    int retval = block_on_search_thread(false);
+    if (retval != 0)
+    {
+        return retval;
     }
 
     out(stdout, "pong %d\n", n);

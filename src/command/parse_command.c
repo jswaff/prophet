@@ -25,7 +25,7 @@ struct function_table_entry function_table[] = {
     {"go", xboard_go},
     {"hard", command_no_op},
     {"hint", command_no_op},
-    {"level", command_no_op}, // TODO - timer
+    {"level", xboard_level},
     {"new", xboard_new},
     {"nopost", xboard_nopost},
     {"otim", command_no_op},
@@ -40,12 +40,12 @@ struct function_table_entry function_table[] = {
     {"result", xboard_result},
     {"sd", xboard_sd},
     {"setboard", xboard_setboard},
-    {"st", command_no_op}, // TODO - timer
-    {"time", command_no_op}, // TODO - timer
+    {"st", xboard_st},
+    {"time", xboard_time},
     {"undo", xboard_undo},
     {"usermove", xboard_usermove},
     {"xboard", command_no_op},
-    {"?", command_no_op}, // TODO - move now
+    {"?", xboard_move_now},
 
     /* custom commands */
     {"db", command_db},

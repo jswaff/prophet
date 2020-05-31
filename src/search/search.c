@@ -2,6 +2,7 @@
 #include <prophet/eval.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
+#include <prophet/util/p4time.h>
 
 #include "search_internal.h"
 
@@ -9,6 +10,7 @@
 #include <string.h>
 
 move_line_t last_pv;
+bool volatile stop_search;
 
 extern move_t killer1[MAX_PLY];
 extern move_t killer2[MAX_PLY];
@@ -19,7 +21,10 @@ static int32_t adjust_score_for_mate(const position_t* pos, int32_t score,
 
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
     bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
-    move_t* move_stack, undo_t* undo_stack, stats_t* stats);
+    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
+    search_options_t* opts);
+
+static bool stop_search_on_time(search_options_t* opts, stats_t* stats);
 
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
@@ -40,12 +45,13 @@ static bool is_draw(const position_t* pos, const undo_t* undo_stack);
  * \param move_stack    pre-allocated stack for move generation
  * \param undo_stack    pre-allocated stack for undo information
  * \param stats         structure for tracking search stats
+ * \param opts          structure for tracking search options data
  * 
  * \return the score
  */
 int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
     int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack, 
-    stats_t* stats)
+    stats_t* stats, search_options_t* opts)
 {
     assert(move_stack);
     assert(undo_stack);
@@ -60,9 +66,8 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     memset(killer1, 0, sizeof(move_t) * MAX_PLY);
     memset(killer2, 0, sizeof(move_t) * MAX_PLY);
 
-
     int32_t score = search_helper(pos, parent_pv, true, 0, depth, alpha, beta, 
-        move_stack, undo_stack, stats);
+        move_stack, undo_stack, stats, opts);
 
     /* capture the PV for ordering in the next search */
     memcpy(&last_pv, parent_pv, sizeof(move_line_t));
@@ -73,12 +78,20 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
 
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
     bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
-    move_t* move_stack, undo_t* undo_stack, stats_t* stats)
+    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
+    search_options_t* opts)
 {
     assert (depth >= 0);
 
     stats->nodes++;
     parent_pv->n = 0;
+
+    /* time check */
+    if (stop_search_on_time(opts, stats))
+    {
+        stop_search = true;
+        return 0;
+    }
 
     /* base case */
     if (depth == 0)
@@ -118,10 +131,16 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         bool pvnode = first && num_moves_searched==0;
         int32_t score = -search_helper(
             pos, &pv, pvnode, ply+1, depth-1, -beta, -alpha, mo_dto.end, 
-            undo_stack, stats);
+            undo_stack, stats, opts);
         ++num_moves_searched;
 
         undo_move(pos, uptr);
+
+        /* if the search was stopped we can't trust these results */
+        if (stop_search)
+        {
+            return 0;
+        }
 
         if (score >= beta)
         {
@@ -136,13 +155,39 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         {
             alpha = score;
             set_parent_pv(parent_pv, *mp, &pv);
-            /* TODO: display updated PV */
+            if (ply == 0 && opts->pv_callback)
+            {
+                uint64_t elapsed = milli_timer() - opts->start_time;
+                opts->pv_callback(parent_pv, depth, score, elapsed, 
+                    stats->nodes);
+            }
         }
     }
 
     alpha = adjust_score_for_mate(pos, alpha, num_moves_searched, ply);
 
     return alpha;
+}
+
+
+static bool stop_search_on_time(search_options_t* opts, stats_t* stats)
+{
+    /* if we don't have a stop time, nevermind! */
+    if (!opts->stop_time)
+    {
+        return false;
+    }
+
+    /* avoid doing expensive time checks too often. */
+    if (stats->nodes - opts->node_count_last_time_check < 
+        opts->nodes_between_time_checks)
+    {
+        return false;
+    }
+
+    /* ok, time check */
+    opts->node_count_last_time_check = stats->nodes;
+    return milli_timer() >= opts->stop_time;
 }
 
 

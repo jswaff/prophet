@@ -4,11 +4,13 @@
 #include <stdio.h>
 #include <string.h>
 
-int32_t max_depth = 6; /* Default value */
+extern volatile uint32_t max_depth;
 
 /**
  * \brief Execute the xboard sd command 
  * 
+ * Respond to the sd DEPTH command by setting the maximum search depth.  
+ *
  * \param input         the user entered input 
  *
  * \return 0 on successful execution, and non-zero on failure
@@ -28,7 +30,7 @@ int xboard_sd(const char* input)
     }
 
     /* attempt to read the DEPTH parameter */
-    int depth;
+    uint32_t depth;
     if (1 != sscanf(input + 3, "%d", &depth))
     {
         return P4_ERROR_CMD_XBOARD_SD_MISSING_DEPTH;
