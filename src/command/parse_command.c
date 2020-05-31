@@ -45,7 +45,7 @@ struct function_table_entry function_table[] = {
     {"undo", xboard_undo},
     {"usermove", xboard_usermove},
     {"xboard", command_no_op},
-    {"?", command_no_op}, // TODO - move now
+    {"?", xboard_move_now},
 
     /* custom commands */
     {"db", command_db},

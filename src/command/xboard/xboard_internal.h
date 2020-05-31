@@ -49,6 +49,16 @@ int xboard_level(const char* input);
 
 
 /**
+ * \brief Execute the xboard move now command
+ * 
+ * \param input         the user entered input
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_move_now(const char* input);
+
+
+/**
  * \brief Execute the xboard new command 
  * 
  * Reset the board to the standard chess starting position. Set White on move. 
