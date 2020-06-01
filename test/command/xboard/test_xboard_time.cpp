@@ -50,18 +50,18 @@ TEST(xboard_test, xboard_time_not_fixed_time_per_move)
     time_control_increment = 0;
     ASSERT_EQ(0, xboard_time("time 1000")); // 10 seconds in centiseconds
     EXPECT_EQ(10000U, time_remaining_millis);
-    EXPECT_EQ(400U, max_time_ms);
+    EXPECT_EQ(398U, max_time_ms);
 
     ASSERT_EQ(0, xboard_time("time 25"));
     EXPECT_EQ(250U, time_remaining_millis);
-    EXPECT_EQ(10U, max_time_ms);
+    EXPECT_EQ(8U, max_time_ms);
 
     time_control_increment = 12;
     ASSERT_EQ(0, xboard_time("time 25"));
     EXPECT_EQ(250U, time_remaining_millis);
-    EXPECT_EQ(12010U, max_time_ms);
+    EXPECT_EQ(11408U, max_time_ms);
 
     ASSERT_EQ(0, xboard_time("time -2"));
     EXPECT_EQ(0U, time_remaining_millis);
-    EXPECT_EQ(12000U, max_time_ms);
+    EXPECT_EQ(11401U, max_time_ms);
 }

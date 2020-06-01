@@ -61,9 +61,21 @@ int xboard_time(const char* input)
     }
     else
     {
-        /* the basic strategy is to use 1/25th of the time plus increment */
-        max_time_ms = time_remaining_millis / 25 + 
-            time_control_increment * 1000;
+        /* the basic strategy is to use 1/25th of the time, leaving a small
+         * margin for overhead, plus 95% of the increment */
+        uint32_t base_time_ms;
+        if (time_remaining_millis >= 75)
+        {
+            base_time_ms = (time_remaining_millis - 50) / 25;
+        }
+        else
+        {
+            base_time_ms = 1;
+        }
+
+        uint32_t increment_ms = time_control_increment * 950;
+
+        max_time_ms = base_time_ms + increment_ms;
     }
 
     /* success */
