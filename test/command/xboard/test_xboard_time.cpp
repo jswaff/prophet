@@ -7,7 +7,7 @@
 
 extern bool fixed_time_per_move;
 extern uint32_t time_remaining_millis;
-extern uint32_t time_control_increment;
+extern double time_control_increment;
 extern uint32_t max_time_ms;
 
 
@@ -64,4 +64,9 @@ TEST(xboard_test, xboard_time_not_fixed_time_per_move)
     ASSERT_EQ(0, xboard_time("time -2"));
     EXPECT_EQ(0U, time_remaining_millis);
     EXPECT_EQ(11401U, max_time_ms);
+
+    time_control_increment = 0.5F;
+    ASSERT_EQ(0, xboard_time("time 1000"));
+    EXPECT_EQ(10000U, time_remaining_millis);
+    EXPECT_EQ(873U, max_time_ms);
 }

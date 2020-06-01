@@ -9,7 +9,7 @@ uint32_t time_remaining_millis;
 
 extern bool fixed_time_per_move;
 extern volatile uint32_t max_time_ms;
-extern uint32_t time_control_increment;
+extern double time_control_increment;
 
 
 /**
@@ -73,7 +73,7 @@ int xboard_time(const char* input)
             base_time_ms = 1;
         }
 
-        uint32_t increment_ms = time_control_increment * 950;
+        uint32_t increment_ms = (uint32_t)(time_control_increment * 950);
 
         max_time_ms = base_time_ms + increment_ms;
     }

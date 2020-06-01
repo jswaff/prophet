@@ -9,7 +9,7 @@
 bool fixed_time_per_move;
 uint32_t time_control_moves;
 char time_control_base[10];
-uint32_t time_control_increment;
+double time_control_increment;
 
 
 /**
@@ -53,6 +53,7 @@ int xboard_level(const char* input)
 
 
     /* read the BASE TIME parameter */
+    memset(time_control_base, 0, 10);
     token = strtok(NULL, " ");
     if (!token)
     {
@@ -71,7 +72,7 @@ int xboard_level(const char* input)
         free(input_ptr);
         return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
     }
-    time_control_increment = atoi(token);
+    time_control_increment = atof(token);
     
     /* we should calculate how much time to use before each move */
     fixed_time_per_move = false;
