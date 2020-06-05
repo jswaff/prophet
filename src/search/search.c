@@ -86,6 +86,11 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     stats->nodes++;
     parent_pv->n = 0;
 
+    if (ply >= MAX_PLY)
+    {
+        return beta;
+    }
+
     /* time check */
     if (stop_search_on_time(opts, stats))
     {
@@ -99,11 +104,15 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         return eval(pos, false);
     }
 
+
     /* draw check */
-    if (is_draw(pos, undo_stack))
+    if (ply > 0) 
     {
-        stats->draws++;
-        return 0;
+        if (is_draw(pos, undo_stack))
+        {
+            stats->draws++;
+            return 0;
+        }
     }
 
     /* prepare to search */
