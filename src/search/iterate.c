@@ -67,10 +67,19 @@ move_line_t iterate(const iterator_options_t* opts,
         search_opts.pv_callback = print_pv;
     }
     search_opts.start_time = milli_timer();
-    search_opts.nodes_between_time_checks = 50000UL;
     if (opts->max_time_ms)
     {
         search_opts.stop_time = search_opts.start_time + opts->max_time_ms;
+        search_opts.nodes_between_time_checks = 100000UL;
+        /* if we're getting low on time, check more often */
+        if (opts->max_time_ms < 10000)
+        {
+            search_opts.nodes_between_time_checks /= 10;
+        }
+        if (opts->max_time_ms < 1000)
+        {
+            search_opts.nodes_between_time_checks /= 10;   
+        }
     }
 
     /* search using iterative deepening */
