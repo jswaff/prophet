@@ -1,4 +1,5 @@
 #include <prophet/error_codes.h>
+#include <prophet/util/output.h>
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -9,7 +10,7 @@ uint32_t time_remaining_millis;
 
 extern bool fixed_time_per_move;
 extern volatile uint32_t max_time_ms;
-extern uint32_t time_control_increment;
+extern double time_control_increment;
 
 
 /**
@@ -49,21 +50,40 @@ int xboard_time(const char* input)
     /* set the maximum search time */
     if (fixed_time_per_move)
     {
-        /* leave 50ms for overhead */
-        if (time_remaining_millis > 50)
+        /* leave a small margin to avoid the flag falling */
+        if (time_remaining_millis > 100)
         {
-            max_time_ms = time_remaining_millis - 50;
+            max_time_ms = time_remaining_millis - 100;
         }
-        else
+        else if (time_remaining_millis > 50)
+        {
+            max_time_ms = time_remaining_millis / 2;
+        }
+        else 
         {
             max_time_ms = 1;
         }
     }
     else
     {
-        /* the basic strategy is to use 1/25th of the time plus increment */
-        max_time_ms = time_remaining_millis / 25 + 
-            time_control_increment * 1000;
+        /* the strategy is to use 1/25th of the time, plus the increment,
+         * minus a small margin of the increment to avoid ever running out
+         * of time. */
+        uint32_t base_time_ms = time_remaining_millis / 25;
+        uint32_t increment_ms = (uint32_t)(time_control_increment * 1000);
+        if (increment_ms > 100)
+        {
+            increment_ms -= 100;
+        }
+        else if (increment_ms > 50)
+        {
+            increment_ms /= 2;
+        }
+
+        max_time_ms = base_time_ms + increment_ms;
+        out(stdout, 
+            "# setting max_time_ms: %d, remaining: %d, base: %d, inc: %d\n", 
+            max_time_ms, time_remaining_millis, base_time_ms, increment_ms);
     }
 
     /* success */

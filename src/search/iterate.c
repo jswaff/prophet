@@ -67,10 +67,19 @@ move_line_t iterate(const iterator_options_t* opts,
         search_opts.pv_callback = print_pv;
     }
     search_opts.start_time = milli_timer();
-    search_opts.nodes_between_time_checks = 50000UL;
     if (opts->max_time_ms)
     {
         search_opts.stop_time = search_opts.start_time + opts->max_time_ms;
+        search_opts.nodes_between_time_checks = 100000UL;
+        /* if we're getting low on time, check more often */
+        if (opts->max_time_ms < 10000)
+        {
+            search_opts.nodes_between_time_checks /= 10;
+        }
+        if (opts->max_time_ms < 1000)
+        {
+            search_opts.nodes_between_time_checks /= 10;   
+        }
     }
 
     /* search using iterative deepening */
@@ -110,12 +119,17 @@ move_line_t iterate(const iterator_options_t* opts,
             stop_iterator = true;
         }
 
-        /* if the search has reached the maximum depth, stop */
+        /* if the search has reached the max user defined  depth, stop */
         if (opts->max_depth > 0 && depth >= opts->max_depth)
         {
             stop_iterator = true;
         }
 
+        /* if we've hit the max system defined depth, stop */
+        if (depth >= MAX_ITERATIONS)
+        {
+            stop_iterator = true;
+        }
 
     } while (!stop_iterator);
 

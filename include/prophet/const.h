@@ -10,6 +10,9 @@ extern "C" {
 /* the maximum depth the search is allowed to reach. */
 #define MAX_PLY                       100
 
+/* the maximum iterations in the iterative deepening routine */
+#define MAX_ITERATIONS                 50
+
 /* these limits are a little handwavy but should suffice.
  * in theory a game could be up to 17697 half moves according to
  * https://wismuth.com/chess/longest-game.html */
