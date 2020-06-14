@@ -19,7 +19,7 @@ extern volatile bool stop_search;
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
     uint64_t elapsed, uint64_t num_nodes);
-static void print_search_summary(int32_t last_depth, int32_t start_time, 
+static void print_search_summary(int32_t last_depth, uint64_t start_time, 
     const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
 
@@ -58,6 +58,7 @@ move_line_t iterate(const iterator_options_t* opts,
     uint32_t depth = 0;
     int32_t score = 0;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
 
     /* set up options */
     search_options_t search_opts;
@@ -155,7 +156,7 @@ static void print_pv(move_line_t* pv, int32_t depth, int32_t score,
 }
 
 
-static void print_search_summary(int32_t last_depth, int32_t start_time, 
+static void print_search_summary(int32_t last_depth, uint64_t start_time, 
     const stats_t* stats)
 {
 

@@ -16,6 +16,7 @@ TEST(search_test, depth0_no_bounds)
     reset_pos(&pos);
     move_line_t pv;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[100];
@@ -35,6 +36,7 @@ TEST(search_test, mate_in_1)
     set_pos(&pos, "4k3/8/3Q4/2B5/8/8/1K6/8 w - -");
     move_line_t pv;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[200];
@@ -54,6 +56,7 @@ TEST(search_test, mate_in_2)
     set_pos(&pos, "r1bq2r1/b4pk1/p1pp1p2/1p2pP2/1P2P1PB/3P4/1PPQ2P1/R3K2R w - -");
     move_line_t pv;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[400];
@@ -75,6 +78,7 @@ TEST(search_test, mate_in_3)
     set_pos(&pos, "r5rk/5p1p/5R2/4B3/8/8/7P/7K w - -");
     move_line_t pv;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[600];
@@ -98,6 +102,7 @@ TEST(search_test, stalemate)
     set_pos(&pos, "8/6p1/5p2/5k1K/7P/8/8/8 w - -");
     move_line_t pv;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[100];
@@ -116,6 +121,7 @@ TEST(search_test, stop_search)
     reset_pos(&pos);
     move_line_t pv;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[100];
@@ -141,6 +147,7 @@ TEST(search_test, search_stops_on_time)
     reset_pos(&pos);
     move_line_t pv;
     stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[1000];

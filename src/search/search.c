@@ -59,9 +59,6 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     /* initialize the move line structure */
     memset(parent_pv, 0, sizeof(move_line_t));
 
-    /* initialize the stats structure */
-    memset(stats, 0, sizeof(stats_t));
-
     /* initialize the killer move arrays */
     memset(killer1, 0, sizeof(move_t) * MAX_PLY);
     memset(killer2, 0, sizeof(move_t) * MAX_PLY);
