@@ -21,6 +21,8 @@ extern volatile uint32_t max_depth;
 extern volatile uint32_t max_time_ms;
 extern bool xboard_post_mode;
 extern volatile bool stop_search;
+extern bool xboard_force_mode;
+
 
 /* local variables */
 bool random_mode = false;
@@ -100,10 +102,13 @@ static void* iterate_wrapper(void* UNUSED(arg))
     free(ctx);
     free(opts);
 
-    int retval = make_move_otb(pv.mv[0]);
-    if (0 != retval)
+    if (!xboard_force_mode)
     {
-        pthread_exit(&retval);
+        int retval = make_move_otb(pv.mv[0]);
+        if (0 != retval)
+        {
+            pthread_exit(&retval);
+        }
     }
 
     return 0;
