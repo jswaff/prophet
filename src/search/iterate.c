@@ -15,6 +15,7 @@ uint32_t volatile max_time_ms = 0;
 
 extern move_line_t last_pv;
 extern volatile bool stop_search;
+extern volatile bool skip_time_checks;
 
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 

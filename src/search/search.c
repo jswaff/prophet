@@ -11,6 +11,7 @@
 
 move_line_t last_pv;
 bool volatile stop_search;
+bool volatile skip_time_checks = false;
 
 extern move_t killer1[MAX_PLY];
 extern move_t killer2[MAX_PLY];
@@ -89,7 +90,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     }
 
     /* time check */
-    if (stop_search_on_time(opts, stats))
+    if (!skip_time_checks && stop_search_on_time(opts, stats))
     {
         stop_search = true;
         return 0;
