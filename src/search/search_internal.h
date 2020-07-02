@@ -23,6 +23,7 @@ typedef struct
     move_t pv_move;
     move_t killer1;
     move_t killer2;
+    bool gen_noncaps;
 } move_order_dto;
 
 
@@ -58,9 +59,10 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo);
  * \param pv_move       pv move
  * \param killer1       killer move 1
  * \param killer2       killer move 2
+ * \pram gen_noncaps    whether to generate non-capturing moves
  */
 void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
-    move_t pv_move, move_t killer1, move_t killer2);
+    move_t pv_move, move_t killer1, move_t killer2, bool gen_noncaps);
 
 
 /**

@@ -117,7 +117,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     move_order_dto mo_dto;
     move_t pv_move = first && last_pv.n > ply ? last_pv.mv[ply] : NO_MOVE;
     initialize_move_ordering(&mo_dto, move_stack, pv_move, killer1[ply], 
-        killer2[ply]);
+        killer2[ply], true);
 
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
