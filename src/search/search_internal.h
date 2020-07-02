@@ -63,6 +63,17 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     move_t pv_move, move_t killer1, move_t killer2);
 
 
+/**
+ * \brief Determine if the search should be stopped on time.
+ *
+ * \param opts          structure for tracking search options data
+ * \param stats         structure for tracking search stats
+ *
+ * \return true if the search should be stopped, othwerwise false
+ */
+bool stop_search_on_time(search_options_t* opts, stats_t* stats);
+
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }
