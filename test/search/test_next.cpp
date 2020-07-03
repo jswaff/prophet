@@ -199,3 +199,28 @@ TEST(next_test, moves_not_repeated)
     }
     ASSERT_EQ(num_moves, num_selected);
 }
+
+TEST(next_test, noncaps_generated_only_when_requested)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    move_t moves[50],*m;
+
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, true);
+
+    // we should get 20 moves 
+    for (uint32_t i = 0; i < 20; i++)
+    {
+        EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    }
+
+    // no more moves
+    EXPECT_FALSE(next(&pos, &m, &mo_dto));
+
+
+    // now without noncaps - no moves
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, false);
+    EXPECT_FALSE(next(&pos, &m, &mo_dto));    
+}

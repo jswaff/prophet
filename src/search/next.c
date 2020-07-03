@@ -97,28 +97,31 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         }
     }
 
-    if (mo->next_stage == GEN_NONCAPS)
+    if (mo->gen_noncaps)
     {
-        mo->next_stage = REMAINING;
-        mo->end = gen_pseudo_legal_moves(mo->current, pos, false, true);
-        /* remove any moves already tried */
-        for (move_t* mp=mo->current; mp<mo->end; mp++)
+        if (mo->next_stage == GEN_NONCAPS)
         {
-            if (*mp==mo->pv_move || *mp==mo->killer1 || *mp==mo->killer2)
+            mo->next_stage = REMAINING;
+            mo->end = gen_pseudo_legal_moves(mo->current, pos, false, true);
+            /* remove any moves already tried */
+            for (move_t* mp=mo->current; mp<mo->end; mp++)
             {
-                *mp = 0;
+                if (*mp==mo->pv_move || *mp==mo->killer1 || *mp==mo->killer2)
+                {
+                    *mp = 0;
+                }
             }
         }
-    }
 
-    /* play them as they come */
-    while (mo->current < mo->end)
-    {
-        *m = mo->current;
-        mo->current++;
-        if (**m != 0)
+        /* play them as they come */
+        while (mo->current < mo->end)
         {
-            return true;
+            *m = mo->current;
+            mo->current++;
+            if (**m != 0)
+            {
+                return true;
+            }
         }
     }
 
