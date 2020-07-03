@@ -11,7 +11,7 @@
  *
  * \return true if the search should be stopped, othwerwise false
  */
-bool stop_search_on_time(search_options_t* opts, stats_t* stats)
+bool stop_search_on_time(search_options_t* opts, const stats_t* stats)
 {
     /* if we don't have a stop time, nevermind! */
     if (!opts->stop_time)

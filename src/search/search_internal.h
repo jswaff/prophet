@@ -73,7 +73,7 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
  *
  * \return true if the search should be stopped, othwerwise false
  */
-bool stop_search_on_time(search_options_t* opts, stats_t* stats);
+bool stop_search_on_time(search_options_t* opts, const stats_t* stats);
 
 
 // make this header C++ friendly.
