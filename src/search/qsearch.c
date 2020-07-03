@@ -34,8 +34,6 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
     assert(alpha < beta);
 
-    stats->qnodes++;
-
     /* time check */
     if (!skip_time_checks && stop_search_on_time(opts, stats))
     {
@@ -43,6 +41,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
         return 0;
     }
 
+    stats->qnodes++;
 
     int32_t stand_pat = eval(pos, false);
     if (stand_pat > alpha) 

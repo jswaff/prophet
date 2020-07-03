@@ -78,7 +78,6 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
 {
     assert (depth >= 0);
 
-    stats->nodes++;
     parent_pv->n = 0;
 
     if (ply >= MAX_PLY)
@@ -99,6 +98,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         return qsearch(pos, alpha, beta, move_stack, undo_stack, stats, opts);
     }
 
+    /* this is an interior node */
+    stats->nodes++;
 
     /* draw check */
     if (ply > 0) 

@@ -27,7 +27,8 @@ TEST(search_test, depth0_no_bounds)
     ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -INF, INF, moves, undos, 
         &stats, &opts));
     ASSERT_EQ(0, pv.n);
-    ASSERT_EQ(1U, stats.nodes);
+    ASSERT_EQ(0U, stats.nodes);
+    ASSERT_EQ(1U, stats.qnodes);
 }
 
 TEST(search_test, mate_in_1)
@@ -134,7 +135,8 @@ TEST(search_test, stop_search)
         &stats, &opts));
 
     // visit one node per depth, down the left side of the tree
-    ASSERT_EQ(4U, stats.nodes);
+    ASSERT_EQ(3U, stats.nodes);
+    ASSERT_EQ(1U, stats.qnodes);
 
     // the PV should not have been updated
     ASSERT_EQ(0, pv.n);
