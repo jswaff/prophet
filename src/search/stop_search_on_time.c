@@ -27,6 +27,6 @@ bool stop_search_on_time(search_options_t* opts, stats_t* stats)
     }
 
     /* ok, time check */
-    opts->node_count_last_time_check = stats->nodes;
+    opts->node_count_last_time_check = stats->nodes + stats->qnodes;
     return milli_timer() >= opts->stop_time;
 }
