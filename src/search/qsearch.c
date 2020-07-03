@@ -28,7 +28,7 @@ extern bool volatile skip_time_checks;
  * \return the score
  */
 int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta, 
-    move_t* UNUSED(move_stack), undo_t* UNUSED(undo_stack), stats_t* stats, 
+    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
     search_options_t* opts)
 {
 
@@ -53,6 +53,45 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
         }
         /* the static evaulation is our lower bound */
         alpha = stand_pat;
+    }
+
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, move_stack, NO_MOVE, NO_MOVE, 
+        NO_MOVE, false);
+
+    move_t* mp;
+    undo_t* uptr = undo_stack + pos->move_counter;
+    while (next(pos, &mp, &mo_dto))
+    {
+        apply_move(pos, *mp, uptr);
+
+        /* verify the move was legal */
+        if (in_check(pos, opposite_player(pos->player)))
+        {
+            undo_move(pos, uptr);
+            continue;
+        }
+
+        int32_t score = -qsearch(
+            pos, -beta, -alpha, mo_dto.end, undo_stack, stats, opts);
+
+        undo_move(pos, uptr);
+
+        /* if the search was stopped we can't trust these results */
+        if (stop_search)
+        {
+            return 0;
+        }
+
+        if (score >= beta)
+        {
+            stats->fail_highs++;
+            return beta;
+        }
+        if (score > alpha)
+        {
+            alpha = score;
+        }
     }
 
 

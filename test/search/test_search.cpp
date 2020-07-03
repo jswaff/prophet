@@ -40,7 +40,7 @@ TEST(search_test, mate_in_1)
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[200];
-    undo_t undos[2];
+    undo_t undos[10];
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
@@ -60,7 +60,7 @@ TEST(search_test, mate_in_2)
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[400];
-    undo_t undos[4];
+    undo_t undos[20];
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
@@ -82,7 +82,7 @@ TEST(search_test, mate_in_3)
     search_options_t opts;
     memset(&opts, 0, sizeof(search_options_t));
     move_t moves[600];
-    undo_t undos[6];
+    undo_t undos[30];
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
