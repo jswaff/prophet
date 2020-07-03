@@ -165,10 +165,10 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
     out(stdout, "# depth: %d\n", last_depth);
 
     /* print node counts */
-    uint64_t total_nodes = stats->nodes;
+    uint64_t total_nodes = stats->nodes + stats->qnodes;
 
     float interior_pct = stats->nodes / (total_nodes/100.0);
-    float qnode_pct = 0.0; // stats->qnodes / (total_nodes/100.0);    
+    float qnode_pct = stats->qnodes / (total_nodes/100.0);    
 
     out(stdout, 
         "# nodes: %lluk, interior: %lluk (%.2f%%), quiescence: %lluk (%.2f%%)\n",
