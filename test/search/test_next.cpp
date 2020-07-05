@@ -29,7 +29,7 @@ TEST(next_test, pv_move)
     ASSERT_NE(pv_move, NO_MOVE);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, NO_MOVE);
+    initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, NO_MOVE, true);
     move_t* m;
     EXPECT_TRUE(next(&pos, &m, &mo_dto));
     EXPECT_EQ(pv_move, clear_score(*m));
@@ -45,7 +45,7 @@ TEST(next_test, caps_in_order_white)
     endp = gen_legal_moves(moves, &pos, true, true);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, true);
 
     move_t* m;
     EXPECT_TRUE(next(&pos, &m, &mo_dto));
@@ -86,7 +86,7 @@ TEST(next_test, caps_in_order_black)
     endp = gen_legal_moves(moves, &pos, true, true);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, true);
 
     move_t* m;
     EXPECT_TRUE(next(&pos, &m, &mo_dto));
@@ -133,7 +133,7 @@ TEST(next_test, killers)
     EXPECT_TRUE(move_list_contains(g2g4, moves, endp));
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, h2h3, g2g4);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, h2h3, g2g4, true);
 
     move_t* m;
     EXPECT_TRUE(next(&pos, &m, &mo_dto));
@@ -186,7 +186,7 @@ TEST(next_test, moves_not_repeated)
 
     // initialize move ordering and select moves
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, pv_move, killer2);
+    initialize_move_ordering(&mo_dto, moves, pv_move, pv_move, killer2, true);
 
     uint32_t num_selected = 0U;
     move_t* mp;
@@ -198,4 +198,29 @@ TEST(next_test, moves_not_repeated)
         }
     }
     ASSERT_EQ(num_moves, num_selected);
+}
+
+TEST(next_test, noncaps_generated_only_when_requested)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    move_t moves[50],*m;
+
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, true);
+
+    // we should get 20 moves 
+    for (uint32_t i = 0; i < 20; i++)
+    {
+        EXPECT_TRUE(next(&pos, &m, &mo_dto));
+    }
+
+    // no more moves
+    EXPECT_FALSE(next(&pos, &m, &mo_dto));
+
+
+    // now without noncaps - no moves
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, false);
+    EXPECT_FALSE(next(&pos, &m, &mo_dto));    
 }

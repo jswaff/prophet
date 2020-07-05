@@ -10,9 +10,10 @@
  * \param pv_move       pv move
  * \param killer1       killer move 1
  * \param killer2       killer move 2
+ * \pram gen_noncaps    whether to generate non-capturing moves
  */
 void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
-    move_t pv_move, move_t killer1, move_t killer2)
+    move_t pv_move, move_t killer1, move_t killer2, bool gen_noncaps)
 {
     assert(mo);
     assert(stackptr);
@@ -23,4 +24,5 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     mo->pv_move = pv_move;
     mo->killer1 = killer1;
     mo->killer2 = killer2;
+    mo->gen_noncaps = gen_noncaps;
 }

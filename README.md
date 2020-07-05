@@ -5,7 +5,6 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 
 ## Design Goals
 
-
 * Use pure C.  Prophet3 is "nearly C" anyway.  It is not an object oriented program. 
 * Modularize the codebase.  Group source files into directories according to functionality.  E.g. movegen, eval, search, etc.
 * Break the code down into more source files that are more focused in nature.
@@ -16,63 +15,10 @@ Prophet4 is, or will be, a chess playing program written in C.  It is the succes
 * Use a proper test harness, e.g. GoogleTest or the like.  The release binary should not contain the test code.  Prophet3 uses assertions exclusively, and all the test code is built into the binary (even though it can't be executed when compiled with the NDEBUG flag).
 * Make use of memory leak detectors such as Valgrind on each release.
 * Produce a static library containing the move generation, evaluation, and search related functions.  It will not include the opening book related code or the Xboard protocol related code.  The intent is to modularize the core functionality for inclusion in other projects.
-* Retire SQLite.  It never felt like a relational database was a good fit for the opening book.  Replace with a Key-Value store type database, possibly LMDB.
 
 
 ## Status
 
-### 4/25/20
-Iterative deepening added.  At the moment I wouldn't expect this to have much benefit, as there isn't much knowledge shared from one search iteration to the next.  One of the surprising benefits of iterative deepening is that it's faster to search to depth N by first searching to depth 1, then 2, up to N, than it is to just search to depth N straight away.  Without a priori knowledge (via a populated hash table, searching the last principal variation first, and tightened search bounds), it probably performs worse.  However, this update is about getting the iterative deepening framework in place.  Those improvements will follow.
+The rewrite is far enough along now that Prophet4 is a completely functional XBoard compatible chess engine.  Search enhancements are being added and carefully tested.  The engine will be released when it is 100 ELO stronger than its predecessor, Prophet3.
 
-The current implementation does not take time into account.  It simply iterates through progressively deeper searches until the maximum search depth has been reached.  For example, if max_depth = 6, it will search depth=1, 2, 3, 4, 5 and then 6 before quitting.  There are two exceptions to this: if the starting position has just one legal move, it will play it without thinking, as it's forced anyway.  The other exception is that if a forced mate is found, the iterator will exit early.
-
-
-### 4/3/20
-Draw by rep, 50 move rule, and lack of material checks added to search.
-
-
-### 3/24/20
-Killer moves.  Two killer moves are kept per ply.  A killer move is defined as a non-capturing move that causes a fail high.  A new killer move is stored in "slot 1," while the previous killer move in slot 1 is shifted to slot 2.  Killer moves are tried after capturing moves, before any other non-capturing moves are even generated.
-
-### 2/23/20
-Captures generated and tried before non-captures.  Captures are sorted using the MVV/LVA algorithm.
-
-
-### 2/13/20
-Added a simple depth first search.  The search uses the alpha/beta algorithm and recognizes checkmated and stalemated positions but otherwise has no "intelligence."  It is a simple fixed depth search without iterative deepening or timing.
-
-The next phase of work will be to add some basic move ordering, such as trying the previous PV first, MVV/LVA capture scoring and killer moves.
-
-The JNI integration with chess4j has gone extremely well.  chess4j is capable of using Prophet for search, so after this rewrite is complete there will likely be a chess4j bundle that includes P4 for some platforms.  I am leaning towards keeping P4 as a lightweight, XBoard compatible  "calculation engine" and leveraging chess4j for ancillary functions such as opening book, pondering support, and distributed computing support.
-
-### 12/7/19
-Successful integration with chess4j by loading as a static library.  This was just a proof-of-concept, where chess4j uses the P4 library for endpoint evaluation, but paves the way for using native code for search.
-
-### 9/24/19
-Evaluator complete.  This is a verbatim "migration" of Prophet3's evaluator.  It was a little painful really, because the evaluation routines are clearly a major weakness in the program, but I think it's important to port everything over and run some comparisons before making any changes.
-
-I found the "random move selection" kind of fun, so a command line parameter was created to enable random mode.  Just start the program with the '-r' option.
-
-The next phase of the rewrite will be the search.  Before starting this phase I'm going to try a small side project.  I'm going to add a JNI layer to chess4j to enable it to call native code from Prophet4.  If it works out, this would have some implications for future development.  
-
-1) It may be easier to do some testing from the Java tier where we can use proper mocks without resorting to function pointers (the indirection probably slows the native code down anyway).
-
-2) If it works out really well I may be less inclined to implement some things in C, such as an opening book or PGN facilities.  Possibly not even pondering. 
-
-3) I've had in mind to do some distributed computing work (not to be confused with parallel processing).  Perhaps I could do this from the Java tier where there are more supporting libraries.  
-
-4) What about machine learning experiments?  Best done from a higher level language?
-
-Those are just some thoughts.  Since I'm not on a timeline and not getting paid to do this I have the luxury of playing around a little. :-)
-
-
-### 8/30/19 
-Protocol handler complete.  Enough of the XBoard protocol has been implemented to play a complete game.  Move selection is completely random.  A 20,000 game match was run between identical copies of the program (which didn't take long since it moves instantly), and as predicted the outcome was almost exactly 50%.  Interestingly, 85% of the games resulted in a draw.
-
-The next area of focus will be implementing the evaluation routine, which gives a static analysis of a position.  This will be a direct port of the evaluator from Prophet3.  The evaluation needs a lot of work, but forward progress will come after the rewrite is complete.  Once the evaluator is in place I can make the engine just slightly smarter than a complete random mover.  I'm also considering a JNI integration with chess4j, as a proof of concept for future work.
-
-### 6/16/19
-Move generator complete.  Google Test is being used for the test code.  Many tests have been added to validate all the functionality added thus far, including a wide variety of perft type functions to test move generation in a number of edge cases.  Perft numbers all check out.  Move gen speed is comparable to Prophet3, which is to be expected.  Valgrind has not found any memory leaks.
-
-The next step will be to add the scaffolding for the protocol handler decode-and-dispatch mechanism.  There will be one protocol handler that implements the XBoard protocol, and a smaller handler to add some custom commands.  Following that I will likely move on to the evaluation routines.
-
+See my website http://jamesswafford.com for the latest updates.

@@ -85,6 +85,11 @@ typedef struct
     uint64_t nodes;
 
     /**
+     * \brief The total number of qnodes encountered in the search.
+     */
+    uint64_t qnodes;
+
+    /**
      * \brief The total number of exits due to a fail high (score exceeding 
      * beta) during the search.
      */
@@ -158,6 +163,27 @@ typedef struct
  */ 
 move_line_t iterate(const iterator_options_t* opts, 
     const iterator_context_t* ctx);
+
+
+/**
+ * \brief Search the position to until is is "quiet".
+ *
+ * Quiescence search - attempt to obtain a score by searching until the 
+ * position is quiet.
+ *
+ * \param pos           a pointer to a chess position
+ * \param alpha         the lower bound
+ * \param beta          the upper bound
+ * \param move_stack    pre-allocated stack for move generation
+ * \param undo_stack    pre-allocated stack for undo information
+ * \param stats         structure for tracking search stats
+ * \param opts          structure for tracking search options data
+ * 
+ * \return the score
+ */
+int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta, 
+    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
+    search_options_t* opts);
 
 
 /**
