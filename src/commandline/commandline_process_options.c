@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 extern volatile uint32_t max_depth;
+extern uint32_t hash_size;
 extern bool random_mode;
 
 
@@ -25,7 +26,8 @@ int commandline_process_options(int argc, char* argv[])
     /* specify options */
     static struct option long_options[] = {
         {"random",      no_argument,       0, 'r'},
-        {"set depth",   required_argument, 0, 'd'}
+        {"set depth",   required_argument, 0, 'd'},
+        {"set hash size in bytes", required_argument, 0, 'h'}
     };
 
     int long_index = 0;
@@ -42,6 +44,10 @@ int commandline_process_options(int argc, char* argv[])
             case 'd':
                 out(stdout, "setting max depth to %s\n", optarg);
                 max_depth = atoi(optarg);
+                break;
+            case 'h':
+                out(stdout, "setting hash table size to %s bytes\n", optarg);
+                hash_size = atoi(optarg);
                 break;
             default:
                 commandline_print_usage();

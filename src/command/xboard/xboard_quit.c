@@ -1,3 +1,4 @@
+#include <prophet/hash.h>
 #include <prophet/error_codes.h>
 #include <prophet/util/output.h>
 
@@ -21,6 +22,9 @@ int xboard_quit(const char* input)
     }
 
     int retval = block_on_search_thread(true);
+
+    /* cleanup */
+    free_hash_tables();
     
     out(stdout, "bye.\n");
 

@@ -1,3 +1,4 @@
+#include <prophet/hash.h>
 #include <prophet/parameters.h>
 #include <prophet/position/position.h>
 
@@ -47,6 +48,7 @@ int init()
         init_pawn_isolated();
         init_bitmap_ray();
         init_pawn_passed();
+        init_hash_tables();
         
         reset_pos(&gpos);
     }
