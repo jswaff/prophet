@@ -103,15 +103,43 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
     int32_t score, move_t mv);
 
 
+/**
+ * \brief Get the hash entry type
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry type
+ */
 hash_entry_type_t get_hash_entry_type(uint64_t val);
 
 
+/**
+ * \brief Get the hash entry depth
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry depth
+ */
 int32_t get_hash_entry_depth(uint64_t val);
 
 
+/**
+ * \brief Get the hash entry score
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry score
+ */
 int32_t get_hash_entry_score(uint64_t val);
 
 
+/**
+ * \brief Get the hash entry move
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry move
+ */
 move_t get_hash_entry_move(uint64_t val);
 
 

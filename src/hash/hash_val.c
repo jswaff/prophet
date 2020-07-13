@@ -70,20 +70,42 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
 }
 
 
+/**
+ * \brief Get the hash entry type
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry type
+ */
 hash_entry_type_t get_hash_entry_type(uint64_t val) 
 {
     return (hash_entry_type_t)(val & 0x03);
 }
 
 
+/**
+ * \brief Get the hash entry depth
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry depth
+ */
 int32_t get_hash_entry_depth(uint64_t val) 
 {
     return (int32_t)((val >> 2) & 0xFFFF);
 }
 
 
+/**
+ * \brief Get the hash entry score
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry score
+ */
 int32_t get_hash_entry_score(uint64_t val) 
 {
+    assert(get_hash_entry_type(val) != MOVE_ONLY);
     int32_t score = ((val >> 18) & 0xFFFF);
     if ((val >> 34) & 1) 
     {
@@ -96,6 +118,13 @@ int32_t get_hash_entry_score(uint64_t val)
 }
 
 
+/**
+ * \brief Get the hash entry move
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry move
+ */
 move_t get_hash_entry_move(uint64_t val) 
 {
     move_t mv = val >> 35;
