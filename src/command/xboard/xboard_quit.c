@@ -30,4 +30,3 @@ int xboard_quit(const char* input)
 
     return retval;
 }
-

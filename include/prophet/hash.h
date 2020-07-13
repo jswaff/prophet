@@ -55,10 +55,39 @@ void init_hash_tables();
 void free_hash_tables();
 
 
+/**
+ * \brief store a value in the hash table
+ *
+ * Store the value in the hash table, using an "always replace" replacement
+ * strategy.  The index in the table is computed by taking the supplied
+ * key modulo the table capacity.
+ *
+ * \param tbl           a pointer to a hash table 
+ * \param key           a 64 bit key
+ * \param val           the value to store
+ *
+ */
+void store_hash_entry(hash_table_t *tbl, uint64_t key, uint64_t val);
+
+
+/**
+ * Probe the hash table
+ *
+ * Probe the supplied hash table.  The index used is computed by taking the
+ * key argument modulo the table capacity.
+ *
+ * \param tbl           a pointer to a hash table 
+ * \param key           a 64 bit key
+ *
+ * \return - the stored value, or null if there is no value.
+ */
+uint64_t probe_hash(hash_table_t *tbl, uint64_t key);
+
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
 #endif    
 
 #endif /* ! defined _HASH_H_ */
-
