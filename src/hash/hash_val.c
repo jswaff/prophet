@@ -61,6 +61,9 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
         val |= ((uint64_t)-score) << 18;
         val |= ((uint64_t)1) << 34;
     }
+    /* the left shift here clears the score as it is stored in the high
+     * order 32 bits 
+     */
     val |= ((uint64_t)mv) << 35;    
 
     return val;
@@ -95,5 +98,7 @@ int32_t get_hash_entry_score(uint64_t val)
 
 move_t get_hash_entry_move(uint64_t val) 
 {
-    return val >> 35;
+    move_t mv = val >> 35;
+    assert(get_move_score(mv)==0);
+    return mv;
 }
