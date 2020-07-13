@@ -33,3 +33,6 @@ TEST(hash_test, store_and_probe)
     ASSERT_EQ(0U, probe_hash(&hash_table, 12));
 
 }
+
+// TODO: test replacement strategy
+

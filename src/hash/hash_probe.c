@@ -14,7 +14,7 @@
  *
  * \return - the stored value, or null if there is no value.
  */
-uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
+uint64_t probe_hash(const hash_table_t *tbl, uint64_t key)
 {
     assert(tbl->tbl);
 

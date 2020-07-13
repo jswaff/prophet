@@ -45,6 +45,13 @@ extern zobrist_keys zkeys;
 
 
 /**
+ * \brief Clear a hash table
+ *
+ */
+void clear_hash_table(hash_table_t *tbl);
+
+
+/**
  * \brief Initialize all hash tables
  *
  * Allocates memory for hash tables and sets the capacity.
@@ -72,7 +79,7 @@ void free_hash_tables();
  * \param val           the value to store
  *
  */
-void store_hash_entry(hash_table_t *tbl, uint64_t key, uint64_t val);
+void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val);
 
 
 /**
@@ -86,7 +93,7 @@ void store_hash_entry(hash_table_t *tbl, uint64_t key, uint64_t val);
  *
  * \return - the stored value, or null if there is no value.
  */
-uint64_t probe_hash(hash_table_t *tbl, uint64_t key);
+uint64_t probe_hash(const hash_table_t *tbl, uint64_t key);
 
 
 /**

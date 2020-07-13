@@ -15,7 +15,7 @@
  * \param val           the value to store
  *
  */
-void store_hash_entry(hash_table_t *tbl, uint64_t key, uint64_t val)
+void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
 {
     assert(tbl->tbl);
     uint32_t tbl_index = key % tbl->capacity;
