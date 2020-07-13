@@ -1,12 +1,17 @@
 #ifndef _HASH_H_
 #define _HASH_H_
 
+#include <prophet/position/move.h>
+
 #include <stdint.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
 #endif   
+
+enum hash_entry_type_t { MOVE_ONLY, LOWER_BOUND, UPPER_BOUND, EXACT_SCORE };
+typedef enum hash_entry_type_t hash_entry_type_t;
 
 
 typedef struct 
@@ -82,6 +87,32 @@ void store_hash_entry(hash_table_t *tbl, uint64_t key, uint64_t val);
  * \return - the stored value, or null if there is no value.
  */
 uint64_t probe_hash(hash_table_t *tbl, uint64_t key);
+
+
+/**
+ * \brief Build a hash value.
+ *
+ * \param entry_type    the type of hash entry
+ * \param depth         the depth of the search backing the score
+ * \param score         the score to hash
+ * \param mv            the move
+ *
+ * \return - the encoded value
+ */
+uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth, 
+    int32_t score, move_t mv);
+
+
+hash_entry_type_t get_hash_entry_type(uint64_t val);
+
+
+int32_t get_hash_entry_depth(uint64_t val);
+
+
+int32_t get_hash_entry_score(uint64_t val);
+
+
+move_t get_hash_entry_move(uint64_t val);
 
 
 
