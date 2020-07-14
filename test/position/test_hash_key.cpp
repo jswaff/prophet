@@ -47,6 +47,7 @@ TEST(pos_test, build_hash_key)
     EXPECT_EQ(build_hash_key(&pos), orig_key);
 }
 
+
 TEST(pos_test, build_hash_key_ep)
 {
     position_t pos;
@@ -73,50 +74,89 @@ TEST(pos_test, build_hash_key_ep)
     EXPECT_EQ(build_hash_key(&pos), orig_key);
 }
 
-TEST(pos_test, build_pawn_key)
+
+/**
+ * test that hash keys are equal after transposition.
+ */
+TEST(pos_test, hash_key_transposition)
 {
     position_t pos;
     reset_pos(&pos);
 
-    uint64_t orig_key = build_pawn_key(&pos);
+    position_t pos2;
+    reset_pos(&pos2);
 
-    EXPECT_NE(orig_key, 0U);
+    undo_t u;
 
-    // removing white pawn changes key
-    remove_piece(&pos, A2);
-    uint64_t hkey = build_pawn_key(&pos);
-    EXPECT_NE(hkey, orig_key);
+    ASSERT_EQ(pos.hash_key, pos2.hash_key);
 
-    // removing white rook does not change key
-    remove_piece(&pos, A1);
-    EXPECT_EQ(build_pawn_key(&pos), hkey);
+    // step through the Queen's Gambit
+    apply_move(&pos, to_move(PAWN, D2, D4), &u);
+    apply_move(&pos, to_move(PAWN, D7, D5), &u);
+    apply_move(&pos, to_move(PAWN, C2, C4), &u);
+    apply_move(&pos, to_move(PAWN, E7, E6), &u);
+    apply_move(&pos, to_move(KNIGHT, B1, C3), &u);
+    apply_move(&pos, to_move(KNIGHT, G8, F6), &u);
 
-    // replacing white rook does not change key
-    add_piece(&pos, ROOK, A1);
-    EXPECT_EQ(build_pawn_key(&pos), hkey);
+    // step through the English Opening
+    apply_move(&pos2, to_move(PAWN, C2, C4), &u);
+    apply_move(&pos2, to_move(KNIGHT, G8, F6), &u);
+    apply_move(&pos2, to_move(KNIGHT, B1, C3), &u);
+    apply_move(&pos2, to_move(PAWN, E7, E6), &u);
+    apply_move(&pos2, to_move(PAWN, D2, D4), &u);
+    apply_move(&pos2, to_move(PAWN, D7, D5), &u);
 
-    // replacing pawn restores key
-    add_piece(&pos, PAWN, A2);
-    EXPECT_EQ(build_pawn_key(&pos), orig_key);
+    // the positions would be equal at this point, except for fifty counter
+    // and eq square
+    ASSERT_FALSE(pos_equals(&pos, &pos2, true));
+    ASSERT_NE(pos.hash_key, pos2.hash_key);
 
-    // removing black pawn changes key
-    remove_piece(&pos, G7);
-    hkey = build_pawn_key(&pos);
-    EXPECT_NE(hkey, orig_key);
+    // by adding a pawn move the positions are equal
+    apply_move(&pos, to_move(PAWN, G2, G3), &u);
+    apply_move(&pos2, to_move(PAWN, G2, G3), &u);
+    ASSERT_TRUE(pos_equals(&pos, &pos2, true));
+    ASSERT_EQ(pos.hash_key, pos2.hash_key);
+}
 
-    // removing black bishop does not change key
-    remove_piece(&pos, B8);
-    EXPECT_EQ(build_pawn_key(&pos), hkey);
 
-    // replacing black bishop does not change key
-    add_piece(&pos, -BISHOP, B8);
-    EXPECT_EQ(build_pawn_key(&pos), hkey);
+TEST(pos_test, hash_key_transposition2)
+{
+    position_t pos;
+    reset_pos(&pos);
 
-    // replacing pawn restores key
-    add_piece(&pos, -PAWN, G7);
-    EXPECT_EQ(build_pawn_key(&pos), orig_key);
+    position_t pos2;
+    reset_pos(&pos2);
 
-    // changing player does not change key
-    pos.player = BLACK;
-    EXPECT_EQ(build_pawn_key(&pos), orig_key);
+    undo_t u;
+
+    ASSERT_EQ(pos.hash_key, pos2.hash_key);
+
+    // step through the French Defense
+    apply_move(&pos, to_move(PAWN, E2, E4), &u);
+    apply_move(&pos, to_move(PAWN, E7, E6), &u);
+    apply_move(&pos, to_move(PAWN, D2, D4), &u);
+    apply_move(&pos, to_move(PAWN, D7, D5), &u);
+    apply_move(&pos, to_capture(PAWN, E4, D5, PAWN), &u);
+    apply_move(&pos, to_capture(PAWN, E6, D5, PAWN), &u);
+    apply_move(&pos, to_move(KNIGHT, G1, F3), &u);
+    apply_move(&pos, to_move(KNIGHT, G8, F6), &u);
+
+    // step through the Petrov Defense
+    apply_move(&pos2, to_move(PAWN, E2, E4), &u);
+    apply_move(&pos2, to_move(PAWN, E7, E5), &u);
+    apply_move(&pos2, to_move(KNIGHT, G1, F3), &u);
+    apply_move(&pos2, to_move(KNIGHT, G8, F6), &u);
+    apply_move(&pos2, to_capture(KNIGHT, F3, E5, PAWN), &u);
+    apply_move(&pos2, to_move(PAWN, D7, D6), &u);
+    apply_move(&pos2, to_move(KNIGHT, E5, F3), &u);
+    apply_move(&pos2, to_capture(KNIGHT, F6, E4, PAWN), &u);
+    apply_move(&pos2, to_move(PAWN, D2, D3), &u);
+    apply_move(&pos2, to_move(KNIGHT, E4, F6), &u);
+    apply_move(&pos2, to_move(PAWN, D3, D4), &u);
+    apply_move(&pos2, to_move(PAWN, D6, D5), &u);
+
+    // the positions would be equal at this point, except for fifty counter
+    // and move counter which are not factored into the key
+    ASSERT_FALSE(pos_equals(&pos, &pos2, true));
+    ASSERT_EQ(pos.hash_key, pos2.hash_key);
 }
