@@ -38,6 +38,17 @@ typedef struct
     /* the capacity, in number of elements */
     uint32_t capacity;
 
+    /* the number of times the table has been probed */
+    uint64_t probes;
+
+    /* the number of probes that an entry was found with a full key match */
+    uint64_t hits;
+
+    /* the number of probes that an entry was found that didn't pass the full 
+     * key match 
+     */
+    uint64_t collisions;
+
 } hash_table_t;
 
 
@@ -46,7 +57,6 @@ extern zobrist_keys zkeys;
 
 /**
  * \brief Clear a hash table
- *
  */
 void clear_hash_table(hash_table_t *tbl);
 
@@ -55,14 +65,12 @@ void clear_hash_table(hash_table_t *tbl);
  * \brief Initialize all hash tables
  *
  * Allocates memory for hash tables and sets the capacity.
- *
  */
 void init_hash_tables();
 
 
 /**
  * \brief Free the memory allocated to each hash table
- *
  */
 void free_hash_tables();
 
@@ -88,12 +96,16 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val);
  * Probe the supplied hash table.  The index used is computed by taking the
  * key argument modulo the table capacity.
  *
+ * The internal "probes" counter is incremented with every probe.  If an entry
+ * is found, either the "hits" or "collisions" counter is incremented depending
+ * on whether the full key comparison check passed.
+ *
  * \param tbl           a pointer to a hash table 
  * \param key           a 64 bit key
  *
  * \return - the stored value, or null if there is no value.
  */
-uint64_t probe_hash(const hash_table_t *tbl, uint64_t key);
+uint64_t probe_hash(hash_table_t *tbl, uint64_t key);
 
 
 /**

@@ -21,6 +21,13 @@ TEST(hash_test, clear_table)
 
     // clear the table and reprobe
     clear_hash_table(&hash_table);
+    EXPECT_EQ(0U, hash_table.probes);
+    EXPECT_EQ(0U, hash_table.hits);
+    EXPECT_EQ(0U, hash_table.collisions);
+
     ASSERT_EQ(0U, probe_hash(&hash_table, key));
+    EXPECT_EQ(1U, hash_table.probes);
+    EXPECT_EQ(0U, hash_table.hits);
+    EXPECT_EQ(0U, hash_table.collisions);
 }
 

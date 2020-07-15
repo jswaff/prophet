@@ -105,6 +105,21 @@ typedef struct
      */
     uint64_t draws;
 
+    /**
+     * \brief The number of fail highs from a hash hit
+     */
+    uint64_t hash_fail_highs;
+
+    /**
+     * \brief The number of fail lows from a hash hit
+     */
+    uint64_t hash_fail_lows;
+
+    /**
+     * \brief The number of exact scores from a hash hit
+     */
+    uint64_t hash_exact_scores;
+
 } stats_t;
 
 

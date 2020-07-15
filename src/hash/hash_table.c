@@ -21,6 +21,9 @@ static void init_hash_table(hash_table_t *tbl, uint32_t size);
 void clear_hash_table(hash_table_t *tbl)
 {
     memset(tbl->tbl, 0, tbl->capacity * sizeof(hash_entry_t));
+    tbl->probes = 0;
+    tbl->hits = 0;
+    tbl->collisions = 0;
 }
 
 

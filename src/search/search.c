@@ -1,4 +1,5 @@
 #include <prophet/const.h>
+#include <prophet/hash.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
 #include <prophet/util/p4time.h>
@@ -12,9 +13,9 @@ move_line_t last_pv;
 bool volatile stop_search;
 bool volatile skip_time_checks = false;
 
+extern hash_table_t htbl;
 extern move_t killer1[MAX_PLY];
 extern move_t killer2[MAX_PLY];
-
 
 static int32_t adjust_score_for_mate(const position_t* pos, int32_t score, 
     int num_moves_searched, int ply);
@@ -101,14 +102,46 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     /* this is an interior node */
     stats->nodes++;
 
-    /* draw check */
+    /* try to get an early exit, iff this isn't the root. */
     if (ply > 0) 
     {
+        /* draw check */
         if (is_draw(pos, undo_stack))
         {
             stats->draws++;
             return 0;
         }
+
+        /* check the hash table */
+        uint64_t hash_val = probe_hash(&htbl, pos->hash_key);
+        if (hash_val != 0 && get_hash_entry_depth(hash_val) >= depth) 
+        {
+            hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val);
+            if (hash_entry_type == LOWER_BOUND) 
+            {
+                if (get_hash_entry_score(hash_val) >= beta) 
+                {
+                    stats->fail_highs++;
+                    stats->hash_fail_highs++;
+                    return beta;
+                }
+            } 
+            else if (hash_entry_type == UPPER_BOUND) 
+            {
+                if (get_hash_entry_score(hash_val) <= alpha) 
+                {
+                    stats->fail_lows++;
+                    stats->hash_fail_lows++;
+                    return alpha;
+                }
+            } 
+            else if (hash_entry_type == EXACT_SCORE) 
+            {
+                stats->hash_exact_scores++;
+                return get_hash_entry_score(hash_val);
+            }
+        }
+
     }
 
     /* prepare to search */
@@ -120,6 +153,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     initialize_move_ordering(&mo_dto, move_stack, pv_move, killer1[ply], 
         killer2[ply], true);
 
+    move_t best_move = NO_MOVE;
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
     while (next(pos, &mp, &mo_dto))
@@ -147,18 +181,24 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             return 0;
         }
 
+        /* if this move is "too good", stop here */
         if (score >= beta)
         {
             stats->fail_highs++;
+            store_hash_entry(&htbl, pos->hash_key, 
+                build_hash_val(LOWER_BOUND, depth, score, *mp));
             if (!is_capture(*mp) && !get_promopiece(*mp))
             {
                 add_killer(*mp, ply);
             }
             return beta;
         }
+
+        /* if this move improves alpha, we should back it up */
         if (score > alpha)
         {
             alpha = score;
+            best_move = *mp;
             set_parent_pv(parent_pv, *mp, &pv);
             if (ply == 0 && opts->pv_callback)
             {
@@ -170,6 +210,22 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     }
 
     alpha = adjust_score_for_mate(pos, alpha, num_moves_searched, ply);
+
+    /* since we're here, we didn't get a cutoff.  store the result in the 
+     * hash table 
+     */
+    hash_entry_type_t tet;
+    if (best_move == NO_MOVE)
+    {
+        tet = UPPER_BOUND;
+        stats->fail_lows++;
+    }
+    else
+    {
+        tet = EXACT_SCORE;
+    }
+    store_hash_entry(&htbl, pos->hash_key, 
+        build_hash_val(tet, depth, alpha, best_move));
 
     return alpha;
 }
