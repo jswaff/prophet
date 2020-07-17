@@ -16,16 +16,9 @@ extern hash_table_t htbl;
  */
 int xboard_memory(const char* input)
 {
-    char* my_input = strdup(input);
-
-    /* keep the original to free the memory allocated by strdup before 
-     * exiting. */
-    char* input_ptr = my_input;
-
     /* verify the command */
-    if (0 != strncmp("memory ", my_input, 7))
+    if (0 != strncmp("memory ", input, 7))
     {
-        free(input_ptr);
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
