@@ -19,7 +19,7 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
 {
 
     /* convert mate scores */
-    if (score > CHECKMATE-500) 
+    if (score >= CHECKMATE-500) 
     {
         if (entry_type == UPPER_BOUND) 
         {
@@ -35,7 +35,7 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
             score = CHECKMATE-500;
         }
     } 
-    else if (score < -(CHECKMATE-500)) 
+    else if (score <= -(CHECKMATE-500)) 
     {
         if (entry_type == LOWER_BOUND) 
         {

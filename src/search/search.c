@@ -141,7 +141,6 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
                 return get_hash_entry_score(hash_val);
             }
         }
-
     }
 
     /* prepare to search */
@@ -186,7 +185,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         {
             stats->fail_highs++;
             store_hash_entry(&htbl, pos->hash_key, 
-                build_hash_val(LOWER_BOUND, depth, score, *mp));
+                build_hash_val(LOWER_BOUND, depth, beta, *mp));
             if (!is_capture(*mp) && !get_promopiece(*mp))
             {
                 add_killer(*mp, ply);

@@ -10,7 +10,7 @@
 extern "C" {
 #endif   
 
-enum hash_entry_type_t { MOVE_ONLY, LOWER_BOUND, UPPER_BOUND, EXACT_SCORE };
+enum hash_entry_type_t { LOWER_BOUND, UPPER_BOUND, EXACT_SCORE, MOVE_ONLY };
 typedef enum hash_entry_type_t hash_entry_type_t;
 
 
