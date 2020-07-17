@@ -1,8 +1,8 @@
 #include <prophet/hash.h>
+#include <prophet/util/output.h>
 
 #include <assert.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 /* the default hash table size is 256 MB */
@@ -45,7 +45,7 @@ void init_hash_tables()
  */
 void free_hash_tables()
 {
-    printf("# freeing hash tables\n");
+    out(stdout, "# freeing hash tables\n");
     assert(htbl.tbl);
     free(htbl.tbl);
 }
@@ -66,5 +66,5 @@ static void init_hash_table(hash_table_t *tbl, uint32_t size)
     tbl->tbl = (hash_entry_t*)malloc(tbl->capacity * sizeof(hash_entry_t));
     clear_hash_table(tbl);    
 
-    printf("# hash capacity: %d\n", tbl->capacity);
+    out(stdout, "# P4 hash capacity: %d\n", tbl->capacity);
 }
