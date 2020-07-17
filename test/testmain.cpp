@@ -38,8 +38,10 @@ GTEST_API_ int main(int argc, char* argv[])
     // initialize program data
     init();
 
-    return RUN_ALL_TESTS();
+    int retval = RUN_ALL_TESTS();
 
     cleanup();
+
+    return retval;
 }
 
