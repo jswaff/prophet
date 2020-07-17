@@ -91,9 +91,20 @@ move_line_t iterate(const iterator_options_t* opts,
     do {
         ++depth;
 
+        /* clear the hash, if that option is set.  this is mainly used for
+         * debugging.
+         */
+        if (opts->clear_hash_each_search)
+        {
+            clear_hash_table(&htbl);
+        }
+
+        /* set up the search */
         int32_t alpha_bound = -INF;
         int32_t beta_bound = INF;
         move_line_t search_pv; search_pv.n = 0;
+
+        /* start the search */
         score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound, 
             ctx->move_stack, ctx->undo_stack, &stats, &search_opts);
 
