@@ -49,6 +49,16 @@ int xboard_level(const char* input);
 
 
 /**
+ * \brief Execute the xboard memory command 
+ * 
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_memory(const char* input);
+
+
+/**
  * \brief Execute the xboard move now command
  * 
  * \param input         the user entered input

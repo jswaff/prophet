@@ -36,9 +36,15 @@ GTEST_API_ int main(int argc, char* argv[])
     }
 
     // initialize program data
-    init();
+    int retval = init();
+    if (0 != retval)
+    {
+        goto cleanup_and_exit;
+    }
 
-    int retval = RUN_ALL_TESTS();
+    retval = RUN_ALL_TESTS();
+
+cleanup_and_exit:
 
     cleanup();
 

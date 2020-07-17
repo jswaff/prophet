@@ -153,6 +153,12 @@ extern "C" {
 
 
 /**
+ * \brief This error is thrown by xboard_memory() when the SIZE is missing.
+ */
+#define P4_ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE            0x010D
+
+
+/**
  * \brief This error is thrown when a lower bound violation is detected
  * on the game undo array.
  */
@@ -178,6 +184,12 @@ extern "C" {
  */
 #define P4_ERROR_THREAD_JOIN_FAILURE                       0x0301
 
+
+/**
+ * \brief This error is thrown when memory could not be allocated for the 
+ * hash table.
+ */
+#define P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE            0x400
 
 
 /* make this header C++ friendly. */

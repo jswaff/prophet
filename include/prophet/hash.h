@@ -65,8 +65,10 @@ void clear_hash_table(hash_table_t *tbl);
  * \brief Initialize all hash tables
  *
  * Allocates memory for hash tables and sets the capacity.
- */
-void init_hash_tables();
+ *
+ * \return - 0 on success, or non-zero on failure
+*/
+int init_hash_tables();
 
 
 /**
@@ -81,8 +83,9 @@ void free_hash_tables();
  * \param tbl           a pointer to hash table
  * \param size          the number of bytes to allocate 
  *
+ * \return - 0 on success, or non-zero on failure
  */
-void resize_hash_table(hash_table_t *tbl, uint32_t size);
+int resize_hash_table(hash_table_t *tbl, uint32_t size);
 
 
 

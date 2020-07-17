@@ -1,3 +1,4 @@
+#include <prophet/error_codes.h>
 #include <prophet/hash.h>
 #include <prophet/util/output.h>
 
@@ -11,7 +12,7 @@ uint32_t hash_size = 134217728 * 2;
 hash_table_t htbl;
 
 /* forward decls */
-static void init_hash_table(hash_table_t *tbl, uint32_t size);
+static int init_hash_table(hash_table_t *tbl, uint32_t size);
 
 
 /**
@@ -32,10 +33,11 @@ void clear_hash_table(hash_table_t *tbl)
  *
  * Allocates memory for hash tables and sets the capacity.
  *
+ * \return - 0 on success, or non-zero on failure
  */
-void init_hash_tables()
+int init_hash_tables()
 {
-    init_hash_table(&htbl, hash_size);
+    return init_hash_table(&htbl, hash_size);
 }
 
 
@@ -57,16 +59,26 @@ void free_hash_tables()
  * \param tbl           a pointer to hash table
  * \param size          the number of bytes to allocate 
  *
+ * \return - 0 on success, or non-zero on failure
  */
-void resize_hash_table(hash_table_t *tbl, uint32_t size)
+int resize_hash_table(hash_table_t *tbl, uint32_t size)
 {
     assert(tbl->tbl);
    
     tbl->capacity = size / sizeof(hash_entry_t);
-    tbl->tbl = (hash_entry_t*)realloc(tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
+    hash_entry_t* new_table_ptr = (hash_entry_t*)realloc(
+        tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
+    if (NULL == new_table_ptr)
+    {
+        return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
+    }
+    tbl->tbl = new_table_ptr;
     clear_hash_table(tbl);    
 
     out(stdout, "# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
+
+    /* success */
+    return 0;
 }
 
 /**
@@ -75,14 +87,22 @@ void resize_hash_table(hash_table_t *tbl, uint32_t size)
  * \param tbl           a pointer to hash table
  * \param size          the number of bytes to allocate 
  *
+ * \return - 0 on success, or non-zero on failure
  */
-static void init_hash_table(hash_table_t *tbl, uint32_t size)
+static int init_hash_table(hash_table_t *tbl, uint32_t size)
 {
     assert(size_mb > 0);
 
     tbl->capacity = size / sizeof(hash_entry_t);
     tbl->tbl = (hash_entry_t*)malloc(tbl->capacity * sizeof(hash_entry_t));
+    if (NULL == tbl->tbl)
+    {
+        return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
+    }
     clear_hash_table(tbl);    
 
     out(stdout, "# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
+
+    /* success */
+    return 0;
 }

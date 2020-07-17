@@ -31,6 +31,8 @@ extern position_t gpos;
  */
 int init()
 {
+    int retval = 0;
+
     if (!initialized) 
     {
         /* initialize the random number generator */
@@ -48,12 +50,18 @@ int init()
         init_pawn_isolated();
         init_bitmap_ray();
         init_pawn_passed();
-        init_hash_tables();
+        retval = init_hash_tables();
+        if (0 != retval)
+        {
+            goto bailout;
+        }
         
         reset_pos(&gpos);
     }
 
     initialized = true;
 
-    return 0;
+bailout:
+
+    return retval;
 }
