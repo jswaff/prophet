@@ -61,8 +61,12 @@ void free_hash_tables()
 void resize_hash_table(hash_table_t *tbl, uint32_t size)
 {
     assert(tbl->tbl);
-    free(tbl->tbl);
-    init_hash_table(tbl, size);
+   
+    tbl->capacity = size / sizeof(hash_entry_t);
+    tbl->tbl = (hash_entry_t*)realloc(tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
+    clear_hash_table(tbl);    
+
+    out(stdout, "# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
 }
 
 /**
