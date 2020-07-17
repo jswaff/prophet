@@ -3,6 +3,7 @@
 #include <prophet/util/output.h>
 
 extern int init();
+extern int cleanup();
 
 /**
  * \brief Main entry point.
@@ -40,6 +41,8 @@ done:
     {
         out(stdout, "exiting with value: %d\n", retval);
     }
+
+    cleanup();
 
     return retval;
 }

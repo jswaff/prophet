@@ -1,6 +1,7 @@
 #include <prophet/hash.h>
 
 
+bool cleanup_done = false;
 
 /**
  * \brief Cleanup and exit
@@ -9,7 +10,11 @@
  */
 int cleanup()
 {
-    free_hash_tables();
+    if (!cleanup_done)
+    {
+        free_hash_tables();
+        cleanup_done = true;
+    }
 
     return 0;
 }

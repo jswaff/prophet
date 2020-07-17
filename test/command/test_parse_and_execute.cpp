@@ -6,14 +6,14 @@
 
 extern bool xboard_force_mode;
 
-TEST(command_test, DISABLED_parse_and_execute_exit)
+TEST(command_test, parse_and_execute_exit)
 {
     bool exit_status;
     EXPECT_EQ(0, parse_and_execute("exit", &exit_status));
     EXPECT_TRUE(exit_status);
 }
 
-TEST(command_test, DISABLED_parse_and_execute_quit)
+TEST(command_test, parse_and_execute_quit)
 {
     bool exit_status;
     EXPECT_EQ(0, parse_and_execute("quit", &exit_status));
