@@ -76,6 +76,17 @@ void free_hash_tables();
 
 
 /**
+ * \brief Resize a hash table.  
+ *
+ * \param tbl           a pointer to hash table
+ * \param size          the number of bytes to allocate 
+ *
+ */
+void resize_hash_table(hash_table_t *tbl, uint32_t size);
+
+
+
+/**
  * \brief store a value in the hash table
  *
  * Store the value in the hash table, using an "always replace" replacement
