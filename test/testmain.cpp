@@ -7,6 +7,7 @@ using namespace std;
 extern "C" 
 {
     extern int init();
+    extern int cleanup();
 }
 
 GTEST_API_ int main(int argc, char* argv[])
@@ -38,5 +39,7 @@ GTEST_API_ int main(int argc, char* argv[])
     init();
 
     return RUN_ALL_TESTS();
+
+    cleanup();
 }
 
