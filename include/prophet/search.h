@@ -28,7 +28,7 @@ typedef struct
     uint32_t max_depth;
 
 
-    /*
+    /**
      * \brief Maximum search time in milliseconds
      */
     uint32_t max_time_ms;
@@ -38,7 +38,14 @@ typedef struct
      * \brief If in post mode the iterator will print the best line to stdout
      * after each iteration, and a summary at the end.
      */
-    bool post_mode;    
+    bool post_mode;
+
+
+    /**
+     * \brief Clear hash before each search.  This is a debugging tool.
+     */
+    bool clear_hash_each_search;
+
 
 } iterator_options_t;
 
@@ -104,6 +111,21 @@ typedef struct
      * \brief The total number of search exits due to a draw condition.
      */
     uint64_t draws;
+
+    /**
+     * \brief The number of fail highs from a hash hit
+     */
+    uint64_t hash_fail_highs;
+
+    /**
+     * \brief The number of fail lows from a hash hit
+     */
+    uint64_t hash_fail_lows;
+
+    /**
+     * \brief The number of exact scores from a hash hit
+     */
+    uint64_t hash_exact_scores;
 
 } stats_t;
 

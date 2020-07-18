@@ -5,6 +5,7 @@
 
 #include "xboard_internal.h"
 
+
 /**
  * \brief Execute the xboard quit command
  * 
@@ -21,9 +22,8 @@ int xboard_quit(const char* input)
     }
 
     int retval = block_on_search_thread(true);
-    
+
     out(stdout, "bye.\n");
 
     return retval;
 }
-

@@ -89,6 +89,7 @@ static void* iterate_wrapper(void* UNUSED(arg))
     opts->max_depth = max_depth;
     opts->max_time_ms = max_time_ms;
     opts->post_mode = xboard_post_mode;
+    opts->clear_hash_each_search = false;
 
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
     ctx->pos = (position_t*)malloc(sizeof(position_t));

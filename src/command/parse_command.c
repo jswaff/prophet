@@ -26,6 +26,7 @@ struct function_table_entry function_table[] = {
     {"hard", command_no_op},
     {"hint", command_no_op},
     {"level", xboard_level},
+    {"memory", xboard_memory},
     {"new", xboard_new},
     {"nopost", xboard_nopost},
     {"otim", command_no_op},

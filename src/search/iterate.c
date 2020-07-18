@@ -1,4 +1,5 @@
 #include <prophet/const.h>
+#include <prophet/hash.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
 #include <prophet/util/output.h>
@@ -14,6 +15,7 @@ uint32_t volatile max_depth = 0;
 uint32_t volatile max_time_ms = 0;
 
 extern move_line_t last_pv;
+extern hash_table_t htbl;
 extern volatile bool stop_search;
 extern volatile bool skip_time_checks;
 
@@ -89,9 +91,20 @@ move_line_t iterate(const iterator_options_t* opts,
     do {
         ++depth;
 
+        /* clear the hash, if that option is set.  this is mainly used for
+         * debugging.
+         */
+        if (opts->clear_hash_each_search)
+        {
+            clear_hash_table(&htbl);
+        }
+
+        /* set up the search */
         int32_t alpha_bound = -INF;
         int32_t beta_bound = INF;
         move_line_t search_pv; search_pv.n = 0;
+
+        /* start the search */
         score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound, 
             ctx->move_stack, ctx->undo_stack, &stats, &search_opts);
 
@@ -181,6 +194,28 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
     uint64_t nps = total_nodes / search_time_ms;
     out(stdout, "# search time: %.2f seconds, rate: %llu kn/s\n",
         search_time,nps);
+
+    /* display hash stats */
+    uint64_t hash_hits = htbl.hits;
+    uint64_t hash_probes = htbl.probes;
+    uint64_t hash_collisions = htbl.collisions;
+    float hash_hit_pct = hash_hits / (hash_probes/100.0);
+    float hash_collision_pct = hash_collisions / (hash_probes/100.0);
+    out(stdout, "# hash probes: %lluk, hits: %lluk (%.2f%%), "
+        "collisions: %lluk (%.2f%%)\n",
+        hash_probes/1000,
+        hash_hits/1000, hash_hit_pct,
+        hash_collisions/1000, hash_collision_pct);
+
+    float hash_fail_high_pct = stats->hash_fail_highs / (hash_probes/100.0);
+    float hash_fail_low_pct = stats->hash_fail_lows / (hash_probes/100.0);
+    float hash_exact_score_pct = stats->hash_exact_scores / (hash_probes/100.0);
+
+    out(stdout, "# hash fail highs: %lluk (%.2f%%), "
+        "fail lows: %lluk (%.2f%%), exact scores: %lluk (%.2f%%)\n",
+        stats->fail_highs, hash_fail_high_pct,
+        stats->fail_lows, hash_fail_low_pct,
+        stats->hash_exact_scores, hash_exact_score_pct);
 }
 
 
