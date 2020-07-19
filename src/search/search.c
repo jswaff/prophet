@@ -102,6 +102,9 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     /* this is an interior node */
     stats->nodes++;
 
+    /* check the hash table */
+    uint64_t hash_val = probe_hash(&htbl, pos->hash_key);
+
     /* try to get an early exit, iff this isn't the root. */
     if (ply > 0) 
     {
@@ -112,8 +115,6 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             return 0;
         }
 
-        /* check the hash table */
-        uint64_t hash_val = probe_hash(&htbl, pos->hash_key);
         if (hash_val != 0 && get_hash_entry_depth(hash_val) >= depth) 
         {
             hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val);
@@ -149,8 +150,9 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
 
     move_order_dto mo_dto;
     move_t pv_move = first && last_pv.n > ply ? last_pv.mv[ply] : NO_MOVE;
-    initialize_move_ordering(&mo_dto, move_stack, pv_move, killer1[ply], 
-        killer2[ply], true);
+    move_t hash_move = hash_val == 0 ? NO_MOVE : get_hash_entry_move(hash_val);
+    initialize_move_ordering(&mo_dto, move_stack, pv_move, hash_move, 
+        killer1[ply], killer2[ply], true);
 
     move_t best_move = NO_MOVE;
     move_t* mp;

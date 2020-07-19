@@ -29,10 +29,121 @@ TEST(next_test, pv_move)
     ASSERT_NE(pv_move, NO_MOVE);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, NO_MOVE, true);
+    initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, NO_MOVE, 
+        NO_MOVE, true);
     move_t* m;
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(pv_move, clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(pv_move, clear_score(*m));
+}
+
+
+TEST(next_test, no_pv_then_hash_move)
+{
+    position_t pos;
+    set_pos(&pos, "1R6/1brk2p1/4p2p/p1P1Pp2/P7/6P1/1P4P1/2R3K1 w - - ");
+
+    move_t moves[MAX_MOVES_PER_PLY];
+    gen_legal_moves(moves, &pos, true, true);
+
+    // randomly make the 5th move the hash move
+    move_t hash_move = moves[5];
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, hash_move, NO_MOVE, 
+        NO_MOVE, true);
+
+    move_t* m;
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(hash_move, clear_score(*m));
+}
+
+
+TEST(next_text, pv_then_hash)
+{
+    position_t pos;
+    set_pos(&pos, "6k1/p4p1p/1p3np1/2q5/4p3/4P1N1/PP3PPP/3Q2K1 w - - ");
+
+    move_t moves[MAX_MOVES_PER_PLY];
+    gen_legal_moves(moves, &pos, true, true);
+
+    // make move 4 the PV move and move 2 the hash move
+    move_t pv_move = moves[4];
+    move_t hash_move = moves[2];
+    move_order_dto mo_dto;
+
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
+        NO_MOVE, true);
+
+    move_t* m;
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(pv_move, clear_score(*m));
+
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(hash_move, clear_score(*m));
+}
+
+
+TEST(next_test, pv_and_hash_same_move)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    move_t moves[MAX_MOVES_PER_PLY];
+    gen_legal_moves(moves, &pos, true, true);
+
+    // make move 9 the PV move and the hash move
+    move_t pv_move = moves[9];
+    move_t hash_move = moves[9];
+
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
+        NO_MOVE, true);
+
+    move_t* m;
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(pv_move, clear_score(*m));
+
+    // there are 19 more moves.  none should be the hash move.
+    for (int i=1; i<20; i++)
+    {
+        ASSERT_TRUE(next(&pos, &m, &mo_dto));
+        ASSERT_NE(hash_move, clear_score(*m));
+    }
+
+    // the 21st call should return false
+    ASSERT_FALSE(next(&pos, &m, &mo_dto));
+}
+
+
+TEST(next_text, pv_then_hash_then_captures)
+{
+    position_t pos;
+    set_pos(&pos, "6R1/kp6/8/1KpP4/8/8/8/6B1 w - c6");
+
+    move_t moves[MAX_MOVES_PER_PLY];
+    gen_legal_moves(moves, &pos, true, true);
+
+    move_t d5c6 = to_capture(PAWN, D5, C6, PAWN);
+    set_epcapture(&d5c6);
+    move_t b5c5 = to_capture(KING, B5, C5, PAWN);
+    move_t g1c5 = to_capture(BISHOP, G1, C5, PAWN);
+    move_t g8g7 = to_move(ROOK, G8, G7);
+
+    move_order_dto mo_dto;
+    initialize_move_ordering(&mo_dto, moves, g8g7, d5c6, NO_MOVE, 
+        NO_MOVE, true);
+
+    move_t* m;
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(g8g7, clear_score(*m));
+
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(d5c6, clear_score(*m));
+
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_TRUE(g1c5 == clear_score(*m) || b5c5 == clear_score(*m));
+
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_TRUE(g1c5 == clear_score(*m) || b5c5 == clear_score(*m));
 }
 
 
@@ -45,20 +156,21 @@ TEST(next_test, caps_in_order_white)
     endp = gen_legal_moves(moves, &pos, true, true);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, true);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
+        NO_MOVE, true);
 
     move_t* m;
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(PAWN, E4, D5, PAWN), clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(PAWN, E4, D5, PAWN), clear_score(*m));
 
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(BISHOP, B3, D5, PAWN), clear_score(*m));    
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(BISHOP, B3, D5, PAWN), clear_score(*m));    
 
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(ROOK, A5, D5, PAWN), clear_score(*m));    
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(ROOK, A5, D5, PAWN), clear_score(*m));    
 
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(QUEEN, G5, D5, PAWN), clear_score(*m));    
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(QUEEN, G5, D5, PAWN), clear_score(*m));    
 
     // the remaining moves are noncaps.  ensure next() returns a result for
     // each move.
@@ -66,14 +178,14 @@ TEST(next_test, caps_in_order_white)
     uint32_t num_noncaps = num_legal_moves(&pos, false, true);
     for (uint32_t i = 0; i < num_noncaps; i++)
     {
-        EXPECT_TRUE(next(&pos, &m, &mo_dto));
-        EXPECT_NE(*m, NO_MOVE);
-        EXPECT_TRUE(move_list_contains(*m, moves, endp));
+        ASSERT_TRUE(next(&pos, &m, &mo_dto));
+        ASSERT_NE(*m, NO_MOVE);
+        ASSERT_TRUE(move_list_contains(*m, moves, endp));
         *m = NO_MOVE;
     }
 
     // no more moves
-    EXPECT_FALSE(next(&pos, &m, &mo_dto));
+    ASSERT_FALSE(next(&pos, &m, &mo_dto));
 }
 
 
@@ -86,20 +198,21 @@ TEST(next_test, caps_in_order_black)
     endp = gen_legal_moves(moves, &pos, true, true);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, true);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
+        NO_MOVE, true);
 
     move_t* m;
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(PAWN, E6, D5, PAWN), clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(PAWN, E6, D5, PAWN), clear_score(*m));
 
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(BISHOP, B3, D5, PAWN), clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(BISHOP, B3, D5, PAWN), clear_score(*m));
 
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(ROOK, A5, D5, PAWN), clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(ROOK, A5, D5, PAWN), clear_score(*m));
 
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(to_capture(QUEEN, G5, D5, PAWN), clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(to_capture(QUEEN, G5, D5, PAWN), clear_score(*m));
 
     // the remaining moves are noncaps.  ensure next() returns a result for
     // each move.
@@ -107,14 +220,14 @@ TEST(next_test, caps_in_order_black)
     uint32_t num_noncaps = num_legal_moves(&pos, false, true);
     for (uint32_t i = 0; i < num_noncaps; i++)
     {
-        EXPECT_TRUE(next(&pos, &m, &mo_dto));
-        EXPECT_NE(*m, NO_MOVE);
-        EXPECT_TRUE(move_list_contains(*m, moves, endp));
+        ASSERT_TRUE(next(&pos, &m, &mo_dto));
+        ASSERT_NE(*m, NO_MOVE);
+        ASSERT_TRUE(move_list_contains(*m, moves, endp));
         *m = NO_MOVE;
     }
 
     // no more moves
-    EXPECT_FALSE(next(&pos, &m, &mo_dto));
+    ASSERT_FALSE(next(&pos, &m, &mo_dto));
 }
 
 
@@ -127,30 +240,31 @@ TEST(next_test, killers)
     move_t moves[50];
     move_t* endp = gen_legal_moves(moves, &pos, true, true);
     move_t h2h3 = to_move(PAWN, H2, H3);
-    EXPECT_TRUE(move_list_contains(h2h3, moves, endp));
+    ASSERT_TRUE(move_list_contains(h2h3, moves, endp));
 
     move_t g2g4 = to_move(PAWN, G2, G4);
-    EXPECT_TRUE(move_list_contains(g2g4, moves, endp));
+    ASSERT_TRUE(move_list_contains(g2g4, moves, endp));
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, h2h3, g2g4, true);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, h2h3, g2g4, 
+        true);
 
     move_t* m;
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(h2h3, clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(h2h3, clear_score(*m));
 
-    EXPECT_TRUE(next(&pos, &m, &mo_dto));
-    EXPECT_EQ(g2g4, clear_score(*m));
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(g2g4, clear_score(*m));
 
     // we should get 18 more moves 
     for (uint32_t i = 0; i < 18; i++)
     {
-        EXPECT_TRUE(next(&pos, &m, &mo_dto));
-        EXPECT_TRUE(move_list_contains(*m, moves, endp));
+        ASSERT_TRUE(next(&pos, &m, &mo_dto));
+        ASSERT_TRUE(move_list_contains(*m, moves, endp));
     }
 
     // no more moves
-    EXPECT_FALSE(next(&pos, &m, &mo_dto));
+    ASSERT_FALSE(next(&pos, &m, &mo_dto));
 }
 
 TEST(next_test, moves_not_repeated)
@@ -160,11 +274,11 @@ TEST(next_test, moves_not_repeated)
     uint32_t num_moves = num_legal_moves(&pos, true, true);
 
     // select a PV move which will get duplicated as the first killer, and a
-    // second move to be the second killer
-    move_t moves[50],*endp;
+    // second move to be the hash move and second killer
+    move_t moves[50], *endp;
     endp = gen_legal_moves(moves, &pos, false, true);
     move_t pv_move = NO_MOVE;
-    move_t killer2 = NO_MOVE;
+    move_t hash_move = NO_MOVE;
     for (move_t* mp = moves; mp<endp; mp++) {
         if (*mp == 0) 
         {
@@ -174,19 +288,20 @@ TEST(next_test, moves_not_repeated)
         {
             pv_move = *mp;
         }
-        else if (killer2 == NO_MOVE)
+        else if (hash_move == NO_MOVE)
         {
-            killer2 = *mp;
+            hash_move = *mp;
         }
     }
     ASSERT_NE(pv_move, NO_MOVE);
-    ASSERT_NE(killer2, NO_MOVE);
-    ASSERT_NE(pv_move, killer2);
+    ASSERT_NE(hash_move, NO_MOVE);
+    ASSERT_NE(pv_move, hash_move);
 
 
     // initialize move ordering and select moves
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, pv_move, killer2, true);
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, pv_move, 
+        hash_move, true);
 
     uint32_t num_selected = 0U;
     move_t* mp;
@@ -200,6 +315,7 @@ TEST(next_test, moves_not_repeated)
     ASSERT_EQ(num_moves, num_selected);
 }
 
+
 TEST(next_test, noncaps_generated_only_when_requested)
 {
     position_t pos;
@@ -208,19 +324,21 @@ TEST(next_test, noncaps_generated_only_when_requested)
     move_t moves[50],*m;
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, true);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
+        NO_MOVE, true);
 
     // we should get 20 moves 
     for (uint32_t i = 0; i < 20; i++)
     {
-        EXPECT_TRUE(next(&pos, &m, &mo_dto));
+        ASSERT_TRUE(next(&pos, &m, &mo_dto));
     }
 
     // no more moves
-    EXPECT_FALSE(next(&pos, &m, &mo_dto));
+    ASSERT_FALSE(next(&pos, &m, &mo_dto));
 
 
     // now without noncaps - no moves
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, false);
-    EXPECT_FALSE(next(&pos, &m, &mo_dto));    
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
+        NO_MOVE, false);
+    ASSERT_FALSE(next(&pos, &m, &mo_dto));    
 }

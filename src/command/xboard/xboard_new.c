@@ -1,5 +1,6 @@
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
+#include <prophet/hash.h>
 #include <prophet/position/position.h>
 
 #include <string.h>
@@ -43,6 +44,9 @@ int xboard_new(const char* input)
 
     /* clear the undo information */
     memset(gundos, 0, sizeof(gundos));
+
+    /* clear hash tables */
+    clear_hash_tables();
 
     xboard_force_mode = false;
 
