@@ -208,7 +208,7 @@ static bool good_pawn_move(const position_t* pos, square_t from_sq,
     {
         if (pos->player==WHITE)
         {
-            if (northeast(from_sq) != to_sq && northwest(to_sq) != to_sq)
+            if (northeast(from_sq) != to_sq && northwest(from_sq) != to_sq)
             {
                 return false;
             }
@@ -229,7 +229,7 @@ static bool good_pawn_move(const position_t* pos, square_t from_sq,
         }
         else
         {
-            if (southeast(from_sq) != to_sq && southwest(to_sq) != to_sq)
+            if (southeast(from_sq) != to_sq && southwest(from_sq) != to_sq)
             {
                 return false;
             }

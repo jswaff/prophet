@@ -25,12 +25,24 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 {
     if (mo->next_stage == PV) 
     {
-        mo->next_stage = GEN_CAPS;
+        mo->next_stage = HASH_MOVE;
 
         if (mo->pv_move != NO_MOVE)
         {
             assert(is_legal_move(mo->pv_move, pos));
             *m = &mo->pv_move;
+            return true;
+        }
+    }
+
+    if (mo->next_stage == HASH_MOVE)
+    {
+        mo->next_stage = GEN_CAPS;
+
+        if (mo->hash_move != mo->pv_move && good_move(pos, mo->hash_move))
+        {
+            assert(is_legal_move(mo->hash_move, pos));
+            *m = &mo->hash_move;
             return true;
         }
     }
@@ -48,7 +60,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         /* score the captures, and remove any special moves already played */
         for (move_t* mp=mo->start; mp<mo->end; mp++)
         {
-            if (*mp==mo->pv_move)
+            if (*mp==mo->pv_move || *mp==mo->hash_move)
             {
                 *mp = 0;
             }
@@ -76,7 +88,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
     if (mo->next_stage == KILLER1)
     {
         mo->next_stage = KILLER2;
-        if (mo->killer1 != mo->pv_move && good_move(pos, mo->killer1))
+        if (mo->killer1 != mo->pv_move && mo->killer1 != mo->hash_move &&
+            good_move(pos, mo->killer1))
         {
             assert(!is_capture(mo->killer1));
             *m = &mo->killer1;
@@ -88,8 +101,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
     if (mo->next_stage == KILLER2)
     {
         mo->next_stage = GEN_NONCAPS;
-        if (mo->killer2 != mo->pv_move && mo->killer2 != mo->killer1 && 
-            good_move(pos, mo->killer2))
+        if (mo->killer2 != mo->pv_move && mo->killer2 != mo->hash_move && 
+            mo->killer2 != mo->killer1 && good_move(pos, mo->killer2))
         {
             assert(!is_capture(mo->killer2));
             *m = &mo->killer2;
@@ -106,7 +119,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             /* remove any moves already tried */
             for (move_t* mp=mo->current; mp<mo->end; mp++)
             {
-                if (*mp==mo->pv_move || *mp==mo->killer1 || *mp==mo->killer2)
+                if (*mp==mo->pv_move || *mp==mo->hash_move || 
+                    *mp==mo->killer1 || *mp==mo->killer2)
                 {
                     *mp = 0;
                 }

@@ -56,7 +56,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
     move_order_dto mo_dto;
     initialize_move_ordering(&mo_dto, move_stack, NO_MOVE, NO_MOVE, 
-        NO_MOVE, false);
+        NO_MOVE, NO_MOVE, false);
 
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
