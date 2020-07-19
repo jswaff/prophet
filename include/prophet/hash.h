@@ -62,6 +62,13 @@ void clear_hash_table(hash_table_t *tbl);
 
 
 /**
+ * \brief Clear all hash tables
+ *
+ */
+void clear_hash_tables();
+
+
+/**
  * \brief Initialize all hash tables
  *
  * Allocates memory for hash tables and sets the capacity.

@@ -15,6 +15,7 @@ hash_table_t htbl;
 static int init_hash_table(hash_table_t *tbl, uint32_t size);
 
 
+
 /**
  * \brief Clear a hash table
  *
@@ -25,6 +26,16 @@ void clear_hash_table(hash_table_t *tbl)
     tbl->probes = 0;
     tbl->hits = 0;
     tbl->collisions = 0;
+}
+
+
+/**
+ * \brief Clear all hash tables
+ *
+ */
+void clear_hash_tables()
+{
+    clear_hash_table(&htbl);
 }
 
 
