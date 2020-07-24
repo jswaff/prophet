@@ -22,8 +22,8 @@ static int32_t adjust_score_for_mate(const position_t* pos, int32_t score,
 
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
     bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
-    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
-    search_options_t* opts);
+    bool in_check, bool null_move_ok, move_t* move_stack, undo_t* undo_stack, 
+    stats_t* stats, search_options_t* opts);
 
 static void set_parent_pv(move_line_t* parent_pv, const move_t head, 
     const move_line_t* tail);
@@ -32,6 +32,8 @@ static void add_killer(move_t killer_move, int ply);
 
 static bool is_draw(const position_t* pos, const undo_t* undo_stack);
 
+static square_t apply_null_move(position_t* pos);
+static void undo_null_move(position_t* pos, square_t ep_sq);
 
 /**
  * \brief Search the position to a fixed depth.
@@ -62,8 +64,10 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     memset(killer1, 0, sizeof(move_t) * MAX_PLY);
     memset(killer2, 0, sizeof(move_t) * MAX_PLY);
 
+    bool player_in_check = in_check(pos, pos->player);
+
     int32_t score = search_helper(pos, parent_pv, true, 0, depth, alpha, beta, 
-        move_stack, undo_stack, stats, opts);
+        player_in_check, false, move_stack, undo_stack, stats, opts);
 
     /* capture the PV for ordering in the next search */
     memcpy(&last_pv, parent_pv, sizeof(move_line_t));
@@ -74,8 +78,8 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
 
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
     bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
-    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
-    search_options_t* opts)
+    bool incheck, bool null_move_ok, move_t* move_stack, undo_t* undo_stack, 
+    stats_t* stats, search_options_t* opts)
 {
     assert (depth >= 0);
 
@@ -142,6 +146,34 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
                 return get_hash_entry_score(hash_val);
             }
         }
+
+        /* null move */
+        if (!first && !incheck && null_move_ok && depth >= 3)
+        {
+            uint64_t orig_key = pos->hash_key;
+
+            square_t ep_sq = apply_null_move(pos);
+            int null_depth = depth - 4; /* R=3 */
+            /* don't drop into q-search */
+            if (null_depth < 1) { null_depth = 1; } 
+            move_line_t mline;
+            mline.n = 0;
+            //memset(&mline, 0, sizeof(move_line_t));
+            int32_t null_score = -search_helper(pos, &mline, false, ply+1, 
+                null_depth, -beta, -beta+1, false, false, move_stack, 
+                undo_stack, stats, opts);
+            undo_null_move(pos, ep_sq);
+
+            assert(orig_key == pos->hash_key);
+            if (stop_search) 
+            {
+                return 0;
+            }
+            if (null_score >= beta) 
+            {
+                return beta;
+            }
+        }
     }
 
     /* prepare to search */
@@ -169,9 +201,11 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         }
 
         bool pvnode = first && num_moves_searched==0;
+        bool gives_check = in_check(pos, pos->player);
+
         int32_t score = -search_helper(
-            pos, &pv, pvnode, ply+1, depth-1, -beta, -alpha, mo_dto.end, 
-            undo_stack, stats, opts);
+            pos, &pv, pvnode, ply+1, depth-1, -beta, -alpha, gives_check, true,
+            mo_dto.end, undo_stack, stats, opts);
         ++num_moves_searched;
 
         undo_move(pos, uptr);
@@ -293,4 +327,40 @@ static bool is_draw(const position_t* pos, const undo_t* undo_stack)
     return pos->fifty_counter >= 100 
         || is_lack_of_mating_material(pos)
         || is_draw_rep(pos, undo_stack);
+}
+
+
+static square_t apply_null_move(position_t* pos) 
+{
+    square_t ep_sq = pos->ep_sq;
+
+    /* change player */
+    pos->hash_key ^= zkeys.ptm[pos->player];
+    pos->player = opposite_player(pos->player);
+    pos->hash_key ^= zkeys.ptm[pos->player];
+
+    /* clear EP square */    
+    if (pos->ep_sq != NO_SQUARE) 
+    {
+        pos->hash_key ^= zkeys.ep[pos->ep_sq];
+    }
+    pos->ep_sq = NO_SQUARE;
+
+    return ep_sq;
+}
+
+
+static void undo_null_move(position_t* pos, square_t ep_sq) 
+{
+    /* reset EP square */
+    pos->ep_sq = ep_sq;
+    if (ep_sq != NO_SQUARE)
+    {
+        pos->hash_key ^= zkeys.ep[pos->ep_sq];
+    }
+
+    /* change player */
+    pos->hash_key ^= zkeys.ptm[pos->player];
+    pos->player = opposite_player(pos->player);
+    pos->hash_key ^= zkeys.ptm[pos->player];
 }
