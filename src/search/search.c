@@ -150,21 +150,17 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         /* null move */
         if (!first && !incheck && null_move_ok && depth >= 3)
         {
-            uint64_t orig_key = pos->hash_key;
-
             square_t ep_sq = apply_null_move(pos);
             int null_depth = depth - 4; /* R=3 */
             /* don't drop into q-search */
             if (null_depth < 1) { null_depth = 1; } 
             move_line_t mline;
             mline.n = 0;
-            //memset(&mline, 0, sizeof(move_line_t));
             int32_t null_score = -search_helper(pos, &mline, false, ply+1, 
                 null_depth, -beta, -beta+1, false, false, move_stack, 
                 undo_stack, stats, opts);
             undo_null_move(pos, ep_sq);
 
-            assert(orig_key == pos->hash_key);
             if (stop_search) 
             {
                 return 0;
