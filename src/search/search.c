@@ -32,8 +32,10 @@ static void add_killer(move_t killer_move, int ply);
 
 static bool is_draw(const position_t* pos, const undo_t* undo_stack);
 
+#if 0
 static square_t apply_null_move(position_t* pos);
 static void undo_null_move(position_t* pos, square_t ep_sq);
+#endif
 
 /**
  * \brief Search the position to a fixed depth.
@@ -78,7 +80,7 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
 
 static int32_t search_helper(position_t* pos, move_line_t* parent_pv, 
     bool first, int ply, int32_t depth, int32_t alpha, int32_t beta, 
-    bool incheck, bool null_move_ok, move_t* move_stack, undo_t* undo_stack, 
+    bool UNUSED(incheck), bool UNUSED(null_move_ok), move_t* move_stack, undo_t* undo_stack, 
     stats_t* stats, search_options_t* opts)
 {
     assert (depth >= 0);
@@ -148,6 +150,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         }
 
         /* null move */
+#if 0        
         if (!first && !incheck && null_move_ok && depth >= 3)
         {
             square_t ep_sq = apply_null_move(pos);
@@ -170,6 +173,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
                 return beta;
             }
         }
+#endif
     }
 
     /* prepare to search */
@@ -325,7 +329,7 @@ static bool is_draw(const position_t* pos, const undo_t* undo_stack)
         || is_draw_rep(pos, undo_stack);
 }
 
-
+#if 0
 static square_t apply_null_move(position_t* pos) 
 {
     square_t ep_sq = pos->ep_sq;
@@ -360,3 +364,4 @@ static void undo_null_move(position_t* pos, square_t ep_sq)
     pos->player = opposite_player(pos->player);
     pos->hash_key ^= zkeys.ptm[pos->player];
 }
+#endif
