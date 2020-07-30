@@ -80,6 +80,16 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
 bool stop_search_on_time(search_options_t* opts, const stats_t* stats);
 
 
+/**
+ * \brief - Determine if a position is zugzwang
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return - true if the position is zugzwang, otherwise false.
+ */
+bool zugzwang(const position_t* pos);
+
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }
