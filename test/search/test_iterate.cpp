@@ -60,7 +60,7 @@ TEST(search_test, iterate_from_mating_position)
 
     iterator_options_t opts;
     memset(&opts, 0, sizeof(iterator_options_t));
-    opts.early_exit_ok = true;
+    opts.early_exit_ok = false;
     opts.max_depth = 3;
     opts.post_mode = false;
 
