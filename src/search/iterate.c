@@ -122,10 +122,10 @@ move_line_t iterate(const iterator_options_t* opts,
         }
 
         /* print the move line */
+        uint64_t elapsed = milli_timer() - search_opts.start_time;
         if (opts->post_mode)
         {
-            print_pv(&pv, depth, score, 
-                milli_timer() - search_opts.start_time, stats.nodes);
+            print_pv(&pv, depth, score, elapsed, stats.nodes);
         }
 
         /* if the search discovered a checkmate, stop */
@@ -143,6 +143,16 @@ move_line_t iterate(const iterator_options_t* opts,
         /* if we've hit the max system defined depth, stop */
         if (depth >= MAX_ITERATIONS)
         {
+            stop_iterator = true;
+        }
+
+        /* if we've used more than half our time, don't start a new 
+        *  iteration 
+        */
+        if (opts->early_exit_ok && !skip_time_checks && 
+            (elapsed > opts->max_time_ms / 2))
+        {
+            //out(stdout, "# stopping iterative search because half time expired.\n");
             stop_iterator = true;
         }
 

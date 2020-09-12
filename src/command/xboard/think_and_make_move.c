@@ -15,6 +15,7 @@
 #include "xboard_internal.h"
 
 /* externs */
+extern bool fixed_time_per_move;
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern volatile uint32_t max_depth;
@@ -85,7 +86,7 @@ static void* iterate_wrapper(void* UNUSED(arg))
 {
     iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
     memset(opts, 0, sizeof(iterator_options_t));
-    opts->early_exit_ok = true;
+    opts->early_exit_ok = !fixed_time_per_move;
     opts->max_depth = max_depth;
     opts->max_time_ms = max_time_ms;
     opts->post_mode = xboard_post_mode;
