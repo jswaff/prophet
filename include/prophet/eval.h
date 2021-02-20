@@ -9,6 +9,11 @@
 extern "C" {
 #endif    //__cplusplus
 
+static const int32_t pawn_val = 100;
+static const int32_t knight_val = 300;
+static const int32_t bishop_val = 320;
+static const int32_t rook_val = 500;
+static const int32_t queen_val = 900;
 
 /**
  * \brief Evaluate a chess position for the side to move.
