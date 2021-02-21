@@ -122,7 +122,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
 	return scores[0];
 }
 
-static int max(int a, int b)
+static inline int max(int a, int b)
 {
 	return a >= b ? a : b;
 }
