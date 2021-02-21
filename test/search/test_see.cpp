@@ -254,3 +254,43 @@ TEST(see_test, non_capturing_promotions)
     int32_t score = see(&pos, mv);
     ASSERT_EQ(score, queen_val-pawn_val);
 }
+
+
+TEST(see_test, integration1)
+{
+    position_t pos;
+    set_pos(&pos, "8/8/8/3k1p1p/p1p1PP1P/Pr1p1K2/1P4R1/8 b - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t mv = to_capture(PAWN, F5, E4, PAWN);
+
+    assert(move_list_contains(mv, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, mv, &u);
+
+    int32_t score = see(&pos, mv);
+    ASSERT_EQ(score, pawn_val);
+}
+
+
+TEST(see_test, integration2)
+{
+    position_t pos;
+    set_pos(&pos, "8/8/5k2/7p/p1p1KP2/r2p4/1p1R3P/8 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t mv = to_capture(ROOK, D2, D3, PAWN);
+
+    assert(move_list_contains(mv, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, mv, &u);
+
+    int32_t score = see(&pos, mv);
+    ASSERT_EQ(score, pawn_val-rook_val);
+}
