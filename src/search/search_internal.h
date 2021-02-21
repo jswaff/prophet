@@ -77,7 +77,7 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
  * 
  * \return the score
  */
-int32_t see(position_t* pos, move_t mv);
+int32_t see(const position_t* pos, move_t mv);
 
 
 /**

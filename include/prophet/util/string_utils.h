@@ -102,6 +102,21 @@ char* sq_to_str(square_t sq);
 char* pos_to_str(const position_t* pos);
 
 
+/**
+ * \brief Convert a bitmap into a string.
+ *
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param val           a 64 bit word (bitmap)
+ *
+ * \return a null terminated byte string
+ */
+char* bitmap_to_str(uint64_t val);
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

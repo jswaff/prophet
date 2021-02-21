@@ -18,6 +18,9 @@ TEST(see_test, queen_takes_undefended_pawn)
     move_t b3b6 = to_capture(QUEEN, B3, B6, PAWN);
     assert(move_list_contains(b3b6, moves, endp));
 
+    undo_t u;
+    apply_move(&pos, b3b6, &u);
+
     int32_t score = see(&pos, b3b6);
     ASSERT_EQ(score, pawn_val);
 }
@@ -33,6 +36,9 @@ TEST(see_test, queen_takes_defended_pawn)
 
     move_t b3b6 = to_capture(QUEEN, B3, B6, PAWN);
     assert(move_list_contains(b3b6, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, b3b6, &u);
 
     int32_t score = see(&pos, b3b6);
     ASSERT_EQ(score, pawn_val - queen_val);
