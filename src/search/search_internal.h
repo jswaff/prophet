@@ -69,16 +69,6 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     bool gen_noncaps);
 
 
-/**
- * \brief Score a move using static exchange analysis (SEE)
- *
- * \param pos           the chess position
- * \param mv            the chess move to score
- * 
- * \return the score
- */
-int32_t see(const position_t* pos, move_t mv);
-
 
 /**
  * \brief Determine if the search should be stopped on time.

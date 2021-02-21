@@ -228,6 +228,17 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
     stats_t* stats, search_options_t* opts);
 
 
+/**
+ * \brief Score a move using static exchange analysis (SEE)
+ *
+ * \param pos           the chess position
+ * \param mv            the chess move to score
+ * 
+ * \return the score
+ */
+int32_t see(const position_t* pos, move_t mv);
+
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }

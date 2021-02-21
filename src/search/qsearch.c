@@ -71,6 +71,13 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
             continue;
         }
 
+        int32_t see_score = see(pos, *mp);
+        if (see_score < 0)
+        {
+            undo_move(pos, uptr);            
+            continue;
+        }
+
         int32_t score = -qsearch(
             pos, -beta, -alpha, mo_dto.end, undo_stack, stats, opts);
 
