@@ -23,9 +23,13 @@ int32_t see(const position_t* pos, move_t mv)
 {
     int32_t score = 0;
 
-    if (is_capture(mv))
+    if (get_promopiece(mv) != NO_PIECE)
     {
-    	score += score_capture(pos, mv);
+    	score = eval_piece(get_promopiece(mv)) - pawn_val;
+    }
+    else if (is_capture(mv))
+    {
+    	score = score_capture(pos, mv);
     }
 
     return score;
@@ -36,21 +40,54 @@ static int32_t score_capture(const position_t* pos, move_t mv)
 {
 	assert(is_capture(mv));
 
+	square_t from_sq = get_from_sq(mv);
+	square_t to_sq = get_to_sq(mv);
+
 	int32_t scores[32];
 	scores[0] = eval_piece(get_captured_piece(mv));
 	int scores_ind = 1;
 
 	/* play out the sequence */
-	uint64_t white_attackers = attackers(pos, get_to_sq(mv), WHITE);
-	uint64_t black_attackers = attackers(pos, get_to_sq(mv), BLACK);
+	uint64_t white_attackers = attackers(pos, to_sq, WHITE);
+	uint64_t black_attackers = attackers(pos, to_sq, BLACK);
 
 	color_t ptm = pos->player;
-	int32_t current_sq = get_from_sq(mv);
-	int32_t current_piece = pos->piece[get_to_sq(mv)];
+	int32_t current_sq = from_sq;
+	int32_t current_piece = pos->piece[to_sq];
 	int32_t attacked_piece_val = eval_piece(current_piece);
 
 	while(1)
 	{
+		/* fold in any xray attackers behind the current piece, in the direction of 
+		 * to -> current sq 
+		 */
+		if (current_piece != KNIGHT && current_piece != -KNIGHT &&
+			current_piece != KING && current_piece != -KING)
+		{
+			dir_t xray_dir = get_dir(to_sq, current_sq);
+			assert(xray_dir != NODIR);
+			uint64_t targets = ray(current_sq, xray_dir);
+			uint64_t xrays;
+			if (xray_dir==NORTH || xray_dir==EAST || xray_dir==SOUTH || xray_dir==WEST)
+			{
+				xrays = get_rook_moves(pos, current_sq, targets) &
+					(pos->white_rooks | pos->white_queens | pos->black_rooks | pos->black_queens);
+			}
+			else
+			{
+				xrays = get_bishop_moves(pos, current_sq, targets) &
+					(pos->white_bishops | pos->white_queens | pos->black_bishops | pos->black_queens);
+			}
+			if (xrays & pos->white_pieces)
+			{
+				white_attackers |= xrays;
+			}
+			else if (xrays & pos->black_pieces)
+			{
+				black_attackers |= xrays;
+			}
+		}
+
 		current_sq = find_least_valuable(pos, ptm==WHITE ? white_attackers : black_attackers);
 		if (current_sq == NO_SQUARE)
 		{
@@ -112,6 +149,10 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
 /* TODO: use array */
 static int32_t eval_piece(int32_t piece)
 {
+	//enum piece_t { NO_PIECE,PAWN,KNIGHT,BISHOP,ROOK,QUEEN,KING };
+//const int32 pvals[13] = { INF,queen_val,rook_val,bishop_val,knight_val,pawn_val,0,
+//        pawn_val,knight_val,bishop_val,rook_val,queen_val,INF };
+
 	switch(piece)
 	{
 		case PAWN:

@@ -43,3 +43,214 @@ TEST(see_test, queen_takes_defended_pawn)
     int32_t score = see(&pos, b3b6);
     ASSERT_EQ(score, pawn_val - queen_val);
 }
+
+
+TEST(see_test, rook_takes_undefended_pawn)
+{
+    position_t pos;
+    set_pos(&pos, "1k1r4/1pp4p/p7/4p3/8/P5P1/1PP4P/2K1R3 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t e1e5 = to_capture(ROOK, E1, E5, PAWN);
+    assert(move_list_contains(e1e5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, e1e5, &u);
+
+    int32_t score = see(&pos, e1e5);
+    ASSERT_EQ(score, pawn_val);
+}
+
+
+TEST(see_test, xrays)
+{
+    position_t pos;
+    set_pos(&pos, "1k1r3q/1ppn3p/p4b2/4p3/8/P2N2P1/1PP1R1BP/2K1Q3 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t d3e5 = to_capture(KNIGHT, D3, E5, PAWN);
+    assert(move_list_contains(d3e5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, d3e5, &u);
+
+    int32_t score = see(&pos, d3e5);
+    ASSERT_EQ(score, pawn_val - knight_val);
+}
+
+
+TEST(see_test, rook_xrays)
+{
+    position_t pos;
+    set_pos(&pos, "3kr3/8/4p3/8/8/4R3/4R3/4K3 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t e3e6 = to_capture(ROOK, E3, E6, PAWN);
+    assert(move_list_contains(e3e6, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, e3e6, &u);
+
+    int32_t score = see(&pos, e3e6);
+    ASSERT_EQ(score, pawn_val);
+}
+
+
+TEST(see_test, knight_takes_defended_pawn_as_white)
+{
+    position_t pos;
+    set_pos(&pos, "k7/8/5n2/3p4/8/2N2B2/8/K7 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
+    assert(move_list_contains(c3d5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, c3d5, &u);
+
+    int32_t score = see(&pos, c3d5);
+    ASSERT_EQ(score, pawn_val);
+}
+
+
+TEST(see_test, knight_takes_defended_pawn_as_black)
+{
+    position_t pos;
+    set_pos(&pos, "K7/8/5N2/3P4/8/2n2b2/8/k7 b - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
+    assert(move_list_contains(c3d5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, c3d5, &u);
+
+    int32_t score = see(&pos, c3d5);
+    ASSERT_EQ(score, pawn_val);
+}
+
+
+TEST(see_test, crazy_rooks)
+{
+    position_t pos;
+    set_pos(&pos, "2K5/8/8/3pRrRr/8/8/8/2k5 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t e5d5 = to_capture(ROOK, E5, D5, PAWN);
+    assert(move_list_contains(e5d5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, e5d5, &u);
+
+    int32_t score = see(&pos, e5d5);
+    ASSERT_EQ(score, pawn_val - rook_val);
+}
+
+
+TEST(see_test, crazy_rooks2)
+{
+    position_t pos;
+    set_pos(&pos, "2K5/8/8/3pRrR1/8/8/8/2k5 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t e5d5 = to_capture(ROOK, E5, D5, PAWN);
+    assert(move_list_contains(e5d5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, e5d5, &u);
+
+    int32_t score = see(&pos, e5d5);
+    ASSERT_EQ(score, pawn_val);
+}
+
+
+TEST(see_test, knight_takes_defended_pawn)
+{
+    position_t pos;
+    set_pos(&pos, "1K1k4/8/5n2/3p4/8/1BN5/8/8 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
+    assert(move_list_contains(c3d5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, c3d5, &u);
+
+    int32_t score = see(&pos, c3d5);
+    ASSERT_EQ(score, pawn_val);
+}
+
+
+TEST(see_test, bishop_takes_defended_pawn)
+{
+    position_t pos;
+    set_pos(&pos, "1K1k4/8/5n2/3p4/8/1BN5/8/8 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t b3d5 = to_capture(BISHOP, B3, D5, PAWN);
+    assert(move_list_contains(b3d5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, b3d5, &u);
+
+    int32_t score = see(&pos, b3d5);
+    ASSERT_EQ(score, pawn_val-bishop_val+knight_val);
+}
+
+
+TEST(see_test, knight_takes_defended_pawn_with_crazy_bishops)
+{
+    position_t pos;
+    set_pos(&pos, "1K1k4/8/5n2/3p4/8/2N2B2/6b1/7b w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
+    assert(move_list_contains(c3d5, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, c3d5, &u);
+
+    int32_t score = see(&pos, c3d5);
+    ASSERT_EQ(score, pawn_val-knight_val);
+}
+
+
+TEST(see_test, non_capturing_promotions)
+{
+    position_t pos;
+    set_pos(&pos, "6RR/4bP2/8/8/5r2/3K4/5p2/4k3 w - -");
+
+    move_t moves[50], *endp;
+    endp = gen_legal_moves(moves, &pos, true, true); 
+
+    move_t mv = to_move(PAWN, F7, F8);
+    set_promopiece(&mv, QUEEN);
+
+    assert(move_list_contains(mv, moves, endp));
+
+    undo_t u;
+    apply_move(&pos, mv, &u);
+
+    int32_t score = see(&pos, mv);
+    ASSERT_EQ(score, queen_val-pawn_val);
+}
