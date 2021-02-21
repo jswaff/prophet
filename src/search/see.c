@@ -5,6 +5,7 @@
 
 #include <assert.h>
 
+
 /* forward decls */
 static int32_t score_capture(const position_t* pos, move_t mv);
 static int32_t eval_piece(int32_t piece);
@@ -146,32 +147,12 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
 	return lv_sq;
 }
 
-/* TODO: use array */
-static int32_t eval_piece(int32_t piece)
+static inline int32_t eval_piece(int32_t piece)
 {
-	//enum piece_t { NO_PIECE,PAWN,KNIGHT,BISHOP,ROOK,QUEEN,KING };
-//const int32 pvals[13] = { INF,queen_val,rook_val,bishop_val,knight_val,pawn_val,0,
-//        pawn_val,knight_val,bishop_val,rook_val,queen_val,INF };
-
-	switch(piece)
-	{
-		case PAWN:
-		case -PAWN:
-			return pawn_val;
-		case KNIGHT:
-		case -KNIGHT:
-			return knight_val;
-		case BISHOP:
-		case -BISHOP:
-			return bishop_val;
-		case ROOK:
-		case -ROOK:
-			return rook_val;
-		case QUEEN:
-		case -QUEEN:
-			return queen_val;
-		default:
-			assert(false);
-			return 0;
-	}
+	const int32_t pvals[13] = 
+	{ 
+		0, queen_val, rook_val, bishop_val, knight_val, pawn_val, 0,
+	    pawn_val, knight_val, bishop_val, rook_val, queen_val, 0 
+	};
+    return pvals[piece+6];
 }
