@@ -1,5 +1,6 @@
 #include <prophet/const.h>
 #include <prophet/movegen.h>
+#include <prophet/parameters.h>
 #include <prophet/util/string_utils.h>
 
 #include <stdlib.h>
@@ -362,6 +363,35 @@ char* pos_to_str(const position_t* pos)
             }
         }
 
+        strcat(buf, "\n");
+    }
+
+    return buf;
+}
+
+/**
+ * \brief Convert a bitmap into a string.
+ *
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param val           a 64 bit word (bitmap)
+ *
+ * \return a null terminated byte string
+ */
+char* bitmap_to_str(uint64_t val)
+{
+    char* buf = (char*)malloc(73 * sizeof(char));
+
+    strcpy(buf, "");
+    for (int r=0; r<8; r++) 
+    { 
+        for (int f=0; f<8; f++) 
+        {
+            strcat(buf, (val & square_to_bitmap(r*8+f)) ? "1" : "0");
+        }
         strcat(buf, "\n");
     }
 

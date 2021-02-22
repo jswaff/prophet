@@ -182,3 +182,48 @@ TEST(string_utils_test, pos_to_str)
 
     free(buf);
 }
+
+TEST(string_utils_test, bitmap_to_str_0s)
+{
+    char expected[] =
+        "00000000\n"
+        "00000000\n"
+        "00000000\n"
+        "00000000\n"
+        "00000000\n"
+        "00000000\n"
+        "00000000\n"
+        "00000000\n";
+
+    char* buf = bitmap_to_str(0);
+
+    EXPECT_NE(buf, nullptr);
+
+    EXPECT_EQ(strncmp(buf, expected, strlen(expected)), 0);
+
+    free(buf);
+}
+
+TEST(string_utils_test, bitmap_to_str_after_e4)
+{
+    position_t pos;
+    set_pos(&pos,"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b - e3 0 1");
+
+    char expected[] =
+        "00000000\n"
+        "00000000\n"
+        "00000000\n"
+        "00000000\n"
+        "00001000\n"
+        "00000000\n"
+        "11110111\n"
+        "11111111\n";
+
+    char* buf = bitmap_to_str(pos.white_pieces);
+
+    EXPECT_NE(buf, nullptr);
+
+    EXPECT_EQ(strncmp(buf, expected, strlen(expected)), 0);
+
+    free(buf);
+}

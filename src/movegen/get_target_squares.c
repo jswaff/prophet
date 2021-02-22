@@ -12,8 +12,8 @@
  * options are not mutually exclusive.
  *
  * \param p             a pointer to a chess position
- * \param caps          jf capture targets should be included
- * \param noncaps       jf non-capture targets should be included
+ * \param caps          if capture targets should be included
+ * \param noncaps       if non-capture targets should be included
  *
  * \return the set of target squares
  */

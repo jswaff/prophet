@@ -69,6 +69,7 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     bool gen_noncaps);
 
 
+
 /**
  * \brief Determine if the search should be stopped on time.
  *

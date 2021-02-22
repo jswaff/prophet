@@ -10,11 +10,6 @@ extern "C" {
 
 
 /* piece values */
-static const int32_t pawn_val = 100;
-static const int32_t knight_val = 300;
-static const int32_t bishop_val = 320;
-static const int32_t rook_val = 500;
-static const int32_t queen_val = 900;
 static inline int32_t all_nonpawn_pieces_val()
 {
   return  queen_val + rook_val*2 + bishop_val*2 + knight_val*2;

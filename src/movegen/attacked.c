@@ -25,6 +25,7 @@ bool attacked(const position_t* pos, square_t sq, color_t player)
     return false;
 }
 
+
 /**
  * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
  * bishops?
