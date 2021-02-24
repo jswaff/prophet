@@ -8,7 +8,6 @@
 
 /* forward decls */
 static int32_t score_capture(const position_t* pos, move_t mv);
-static int32_t eval_piece(int32_t piece);
 static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map);
 static int max(int, int);
 
@@ -145,14 +144,4 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
     }
 
     return lv_sq;
-}
-
-static inline int32_t eval_piece(int32_t piece)
-{
-    const int32_t pvals[13] = 
-    { 
-        INF, queen_val, rook_val, bishop_val, knight_val, pawn_val, 0,
-        pawn_val, knight_val, bishop_val, rook_val, queen_val, INF 
-    };
-    return pvals[piece+6];
 }

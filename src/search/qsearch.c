@@ -71,11 +71,18 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
             continue;
         }
 
-        /*int32_t see_score = see(pos, *mp);
-        if (see_score < 0)
+        /* if the captured piece is more valuable than the capturing piece, 
+         * calculate the static exchange score.  If it says "loss", then prune
+         * this line.
+         */
+        /*if (is_capture(*mp) && eval_piece(get_captured_piece(*mp)) > eval_piece(get_piece(*mp)))
         {
-            undo_move(pos, uptr);            
-            continue;
+            int32_t see_score = see(pos, *mp);
+            if (see_score < 0)
+            {
+                undo_move(pos, uptr);            
+                continue;
+            }
         }*/
 
         int32_t score = -qsearch(
