@@ -199,8 +199,10 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         bool pvnode = first && num_moves_searched==0;
         bool gives_check = in_check(pos, pos->player);
 
+        int ext = gives_check ? 1 : 0;
+
         int32_t score = -search_helper(
-            pos, &pv, pvnode, ply+1, depth-1, -beta, -alpha, gives_check, true,
+            pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, true,
             mo_dto.end, undo_stack, stats, opts);
         ++num_moves_searched;
 
