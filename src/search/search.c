@@ -167,6 +167,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             }
             if (null_score >= beta) 
             {
+                stats->fail_highs++;
                 return beta;
             }
         }

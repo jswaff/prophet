@@ -98,7 +98,6 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
         if (score >= beta)
         {
-            stats->fail_highs++;
             return beta;
         }
         if (score > alpha)
