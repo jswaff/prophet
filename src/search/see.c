@@ -38,10 +38,9 @@ int32_t see(const position_t* pos, move_t mv)
 
 static int32_t score_capture(const position_t* pos, move_t mv) 
 {
-    assert(is_capture(mv));
-
     square_t from_sq = get_from_sq(mv);
     square_t to_sq = get_to_sq(mv);
+    assert(pos->piece[from_sq] != NO_PIECE);
 
     int32_t scores[32];
     scores[0] = eval_piece(get_captured_piece(mv));
@@ -50,10 +49,18 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     /* play out the sequence */
     uint64_t white_attackers = attackers(pos, to_sq, WHITE);
     uint64_t black_attackers = attackers(pos, to_sq, BLACK);
+    if (pos->player == WHITE) 
+    {
+        white_attackers ^= square_to_bitmap(from_sq);
+    }
+    else
+    {
+        black_attackers ^= square_to_bitmap(from_sq);
+    }
 
-    color_t ptm = pos->player;
+    color_t ptm = opposite_player(pos->player);
     int32_t current_sq = from_sq;
-    int32_t current_piece = pos->piece[to_sq];
+    int32_t current_piece = pos->piece[from_sq];
     int32_t attacked_piece_val = eval_piece(current_piece);
 
     while(1)

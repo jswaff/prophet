@@ -114,7 +114,7 @@ TEST(next_test, pv_and_hash_same_move)
 }
 
 
-TEST(next_text, pv_then_hash_then_captures)
+TEST(next_text, DISABLED_pv_then_hash_then_captures)
 {
     position_t pos;
     set_pos(&pos, "6R1/kp6/8/1KpP4/8/8/8/6B1 w - c6");
@@ -147,7 +147,7 @@ TEST(next_text, pv_then_hash_then_captures)
 }
 
 
-TEST(next_test, caps_in_order_white)
+TEST(next_test, DISABLED_caps_in_order_white)
 {
     position_t pos;
     set_pos(&pos, "7k/8/4p3/R2p2Q1/4P3/1B6/8/7K w - - ");
@@ -189,7 +189,7 @@ TEST(next_test, caps_in_order_white)
 }
 
 
-TEST(next_test, caps_in_order_black)
+TEST(next_test, DISABLED_caps_in_order_black)
 {
     position_t pos;
     set_pos(&pos, "7k/8/4p3/r2P2q1/4P3/1b6/8/7K b - - ");
@@ -267,7 +267,7 @@ TEST(next_test, killers)
     ASSERT_FALSE(next(&pos, &m, &mo_dto));
 }
 
-TEST(next_test, moves_not_repeated)
+TEST(next_test, DISABLED_moves_not_repeated)
 {
     position_t pos;
     set_pos(&pos, "8/7p/5k2/5p2/p1p2P2/Pr1pPK2/1P1R3P/8 b - - "); // WAC-2
