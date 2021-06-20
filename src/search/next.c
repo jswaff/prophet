@@ -82,6 +82,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             assert(get_piece(*bestcap) != NO_PIECE);
             assert(get_promopiece(*bestcap) != NO_PIECE || get_captured_piece(*bestcap) != NO_PIECE);
 
+
             /* the best by MVV/LVA doesn't mean the move is good.  it's good if:
              * 1. it's a promotion
              * 2. the value of the captured piece >= value of capturing piece
@@ -94,27 +95,31 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             int32_t see_score = -INF;    
             if (!good_cap)
             {
-                see_score = see(pos, *bestcap);
+                see_score = -1; //see(pos, *bestcap);
                 good_cap = see_score >= 0;
             }
 
+            /* put the selected move at the top of the list */
+            swap_moves(bestcap, mo->current);
+            *m = mo->current;
+
+            /* if the capture is good, play it now.  Otherwise, defer it until later and move
+             * onto the next item.
+             */
+            mo->current++;
             if (good_cap)
             {
-                set_move_score(bestcap, 0); /* signal that this move has been played */
-                swap_moves(bestcap, mo->current);
-                *m = mo->current;
-                mo->current++;
+                //set_move_score(bestcap, 0); /* signal that this move has been played */
                 return true;
             }
-
-            /* defer bad capture for later */
-            assert(see_score > -INF);
-            assert(see_score < 0);
-            set_move_score(bestcap, see_score);
-            swap_moves(bestcap, mo->current);
-            mo->current++;
-            bestcap = index_best_capture(mo->current, mo->end);
-            bestcap = 0;
+            else
+            {
+                /* defer bad capture for later */
+                assert(see_score > -INF);
+                assert(see_score < 0);
+                //set_move_score(bestcap, see_score);
+                bestcap = index_best_capture(mo->current, mo->end);
+            }
         }
 
         mo->next_stage = KILLER1;
