@@ -45,16 +45,20 @@ uint64_t attackers(const position_t* pos, square_t sq, color_t player)
     /* fold in pawn attackers */
     if (player==WHITE)
     {
-        attackers_map |= ((square_to_bitmap(sq) & ~file_to_bitmap(FILE_A)) << 7) & 
+        /* attacked by white pawn from SW? */
+        attackers_map |= (square_to_bitmap(sq) << 7)  & ~file_to_bitmap(FILE_H) & 
             pos->white_pawns;
-        attackers_map |= ((square_to_bitmap(sq) & ~file_to_bitmap(FILE_H)) << 9) & 
+        /* attacked by white pawn from SE? */
+        attackers_map |= (square_to_bitmap(sq) << 9)  & ~file_to_bitmap(FILE_A) & 
             pos->white_pawns;
     }
     else
     {
-        attackers_map |= ((square_to_bitmap(sq) & ~file_to_bitmap(FILE_A)) >> 9) & 
+        /* attacked by black pawn from NE? */
+        attackers_map |= (square_to_bitmap(sq) >> 9)  & ~file_to_bitmap(FILE_H) & 
             pos->black_pawns;
-        attackers_map |= ((square_to_bitmap(sq) & ~file_to_bitmap(FILE_H)) >> 7) & 
+        /* attacked by black pawn from NW? */
+        attackers_map |= (square_to_bitmap(sq) >> 7)  & ~file_to_bitmap(FILE_A) & 
             pos->black_pawns;
     }
 

@@ -95,7 +95,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             int32_t see_score = -INF;    
             if (!good_cap)
             {
-                see_score = -1; //see(pos, *bestcap);
+                see_score = see(pos, *bestcap);
                 good_cap = see_score >= 0;
             }
 
