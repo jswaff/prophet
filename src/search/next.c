@@ -106,10 +106,10 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             /* if the capture is good, play it now.  Otherwise, defer it until later and move
              * onto the next item.
              */
-            mo->current++;
             if (good_cap)
             {
-                //set_move_score(bestcap, 0); /* signal that this move has been played */
+                set_move_score(mo->current, 0); /* signal that this move has been played */
+                mo->current++;
                 return true;
             }
             else
@@ -117,7 +117,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
                 /* defer bad capture for later */
                 assert(see_score > -INF);
                 assert(see_score < 0);
-                //set_move_score(bestcap, see_score);
+                set_move_score(mo->current, see_score);
+                mo->current++;
                 bestcap = index_best_capture(mo->current, mo->end);
             }
         }
@@ -154,7 +155,6 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         if (mo->next_stage == GEN_NONCAPS)
         {
             mo->next_stage = NONCAPS;
-            mo->current = mo->end;
             mo->end = gen_pseudo_legal_moves(mo->current, pos, false, true);
             /* remove any moves already tried */
             for (move_t* mp=mo->current; mp<mo->end; mp++)
@@ -184,32 +184,34 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 
     }
 
-    // if (mo->next_stage == INIT_BAD_CAPTURES)
-    // {
-    //     for (move_t* mp=mo->start; mp<mo->end; mp++)
-    //     {
-    //         /* remove everything except captures with losing scores */
-    //         bool losing_capture = is_capture(*mp) && get_move_score(*mp) < 0;
-    //         if (!losing_capture)
-    //         {
-    //             *mp = 0;
-    //         }
-    //     }
-    //     mo->current = mo->start;
-    //     mo->next_stage = BAD_CAPTURES;
-    // }
+    if (mo->next_stage == INIT_BAD_CAPTURES)
+    {
+        for (move_t* mp=mo->start; mp<mo->end; mp++)
+        {
+            /* remove everything except captures with losing scores */
+            bool losing_capture = is_capture(*mp) && get_move_score(*mp) < 0;
+            if (!losing_capture)
+            {
+                *mp = 0;
+            }
+        }
+        mo->current = mo->start;
+        mo->next_stage = BAD_CAPTURES;
+    }
 
 
     /* now just go back through the list playing the best option we have */
-    /*move_t* best_bad_cap = index_best_capture(mo->current, mo->end);
+    move_t* best_bad_cap = index_best_capture(mo->current, mo->end);
     if (best_bad_cap)
     {
+        assert(is_capture(*best_bad_cap));
+        assert(get_promopiece(*best_bad_cap)==NO_PIECE);
         assert(get_move_score(*best_bad_cap) < 0);
         swap_moves(best_bad_cap, mo->current);
         *m = mo->current;
         mo->current++;
         return true;
-    }*/
+    }
 
 
     return false;
