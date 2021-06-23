@@ -62,6 +62,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
     undo_t* uptr = undo_stack + pos->move_counter;
     while (next(pos, &mp, &mo_dto))
     {
+        assert(get_move_score(*mp)==0);
         apply_move(pos, *mp, uptr);
 
         /* verify the move was legal */

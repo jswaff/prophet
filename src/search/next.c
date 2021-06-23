@@ -68,6 +68,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             else
             {
                 set_move_score(mp, mvvlva(*mp));
+                assert(get_move_score(*mp) == mvvlva(*mp));
             }
         }
     }
@@ -77,7 +78,6 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         move_t* bestcap = index_best_capture(mo->current, mo->end);
         while (bestcap)
         {
-            assert(bestcap);
             assert(*bestcap);
             assert(get_piece(*bestcap) != NO_PIECE);
             assert(get_promopiece(*bestcap) != NO_PIECE || get_captured_piece(*bestcap) != NO_PIECE);
@@ -90,8 +90,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
              * only do SEE if necessary, but if we do, keep the score for sorting bad
              * captures later on.
              */ 
-            bool good_cap = get_promopiece(*bestcap) != NO_PIECE
-                 || (eval_piece(get_captured_piece(*bestcap)) >= eval_piece(get_piece(*bestcap)));
+            bool good_cap = get_promopiece(*bestcap) != NO_PIECE || 
+                 (eval_piece(get_captured_piece(*bestcap)) >= eval_piece(get_piece(*bestcap)));
             int32_t see_score = -INF;    
             if (!good_cap)
             {
@@ -101,7 +101,6 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 
             /* put the selected move at the top of the list */
             swap_moves(bestcap, mo->current);
-            *m = mo->current;
 
             /* if the capture is good, play it now.  Otherwise, defer it until later and move
              * onto the next item.
@@ -109,6 +108,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             if (good_cap)
             {
                 set_move_score(mo->current, 0); /* signal that this move has been played */
+                *m = mo->current;
                 mo->current++;
                 return true;
             }
@@ -118,6 +118,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
                 assert(see_score > -INF);
                 assert(see_score < 0);
                 set_move_score(mo->current, see_score);
+                assert(get_move_score(*mo->current) == see_score);
                 mo->current++;
                 bestcap = index_best_capture(mo->current, mo->end);
             }
@@ -181,7 +182,6 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             }
             mo->next_stage = INIT_BAD_CAPTURES;
         }
-
     }
 
     if (mo->next_stage == INIT_BAD_CAPTURES)
@@ -206,13 +206,13 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
     {
         assert(is_capture(*best_bad_cap));
         assert(get_promopiece(*best_bad_cap)==NO_PIECE);
-        assert(get_move_score(*best_bad_cap) < 0);
+        assert(get_move_score(*best_bad_cap) == see(pos, *best_bad_cap));
         swap_moves(best_bad_cap, mo->current);
+        set_move_score(mo->current, 0);
         *m = mo->current;
         mo->current++;
         return true;
     }
-
 
     return false;
 }

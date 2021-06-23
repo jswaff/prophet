@@ -30,16 +30,6 @@ typedef struct
 
 
 /**
- * \brief Score a move using the MVV/LVA algorithm.
- *
- * \param mv            the chess move to score
- * 
- * \return the score
- */
-int32_t mvvlva(move_t mv);
-
-
-/**
  * \brief Determine the next move to play.
  *
  * \param pos           the chess position 

@@ -51,7 +51,7 @@ TEST(search_test, mate_in_1)
     ASSERT_EQ(to_move(QUEEN, D6, E7), pv.mv[0]);
 }
 
-TEST(search_test, DISABLED_mate_in_2)
+TEST(search_test, mate_in_2)
 {
     position_t pos;
     set_pos(&pos, "r1bq2r1/b4pk1/p1pp1p2/1p2pP2/1P2P1PB/3P4/1PPQ2P1/R3K2R w - -");
@@ -73,7 +73,7 @@ TEST(search_test, DISABLED_mate_in_2)
     ASSERT_EQ(to_capture(BISHOP, H4, F6, PAWN), pv.mv[2]);
 }
 
-TEST(search_test, DISABLED_mate_in_3)
+TEST(search_test, mate_in_3)
 {
     position_t pos;
     set_pos(&pos, "r5rk/5p1p/5R2/4B3/8/8/7P/7K w - -");

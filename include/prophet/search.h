@@ -229,6 +229,16 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
 
 
 /**
+ * \brief Score a move using the MVV/LVA algorithm.
+ *
+ * \param mv            the chess move to score
+ * 
+ * \return the score
+ */
+int32_t mvvlva(move_t mv);
+
+
+/**
  * \brief Score a move using static exchange analysis (SEE)
  *
  * \param pos           the chess position

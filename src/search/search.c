@@ -188,6 +188,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     undo_t* uptr = undo_stack + pos->move_counter;
     while (next(pos, &mp, &mo_dto))
     {
+        assert(get_move_score(*mp)==0);
         apply_move(pos, *mp, uptr);
 
         /* verify the move was legal */
