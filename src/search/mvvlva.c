@@ -34,16 +34,7 @@ int32_t mvvlva(move_t mv)
 
 static int32_t mvvlva_capture(move_t mv)
 {
-    piece_t captured;
-    if (is_epcapture(mv)) 
-    {
-        assert(get_captured_piece(mv)==PAWN);
-        captured = PAWN; // FIXME: this seems unnecessary
-    }
-    else
-    {
-        captured = get_captured_piece(mv);
-    }
+    piece_t captured = get_captured_piece(mv);
     assert(captured != NO_PIECE);
 
     piece_t mover = get_piece(mv);
