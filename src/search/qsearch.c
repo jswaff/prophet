@@ -7,6 +7,7 @@
 
 #include <assert.h>
 
+
 extern bool volatile stop_search;
 extern bool volatile skip_time_checks;
 

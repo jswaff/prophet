@@ -10,6 +10,7 @@
 
 static move_t* index_best_capture(move_t* start, move_t* end);
 static void swap_moves(move_t* mv1, move_t* mv2);
+static move_t* next_nonnull_move(move_t* start, move_t* end);
 
 /**
  * \brief Determine the next move to play.
@@ -68,7 +69,6 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             else
             {
                 set_move_score(mp, mvvlva(*mp));
-                assert(get_move_score(*mp) == mvvlva(*mp));
             }
         }
     }
@@ -118,12 +118,10 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
                 assert(see_score > -INF);
                 assert(see_score < 0);
                 set_move_score(mo->current, see_score);
-                assert(get_move_score(*mo->current) == see_score);
                 mo->current++;
                 bestcap = index_best_capture(mo->current, mo->end);
             }
         }
-
         mo->next_stage = KILLER1;
     }
 
@@ -156,6 +154,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         if (mo->next_stage == GEN_NONCAPS)
         {
             mo->next_stage = NONCAPS;
+            mo->current = mo->end;
             mo->end = gen_pseudo_legal_moves(mo->current, pos, false, true);
             /* remove any moves already tried */
             for (move_t* mp=mo->current; mp<mo->end; mp++)
@@ -200,18 +199,25 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
     }
 
 
-    /* now just go back through the list playing the best option we have */
-    move_t* best_bad_cap = index_best_capture(mo->current, mo->end);
-    if (best_bad_cap)
+    /* now just go back through the list playing the best option we have 
+     * Implementation note: advancing the pointer to the next non-null move is not
+     * necessary.  It is only here to match the method used in chess4j, so the
+     * search trees are equal. */
+    move_t* nextp = next_nonnull_move(mo->current, mo->end);
+    if (nextp)
     {
-        assert(is_capture(*best_bad_cap));
-        assert(get_promopiece(*best_bad_cap)==NO_PIECE);
-        assert(get_move_score(*best_bad_cap) == see(pos, *best_bad_cap));
-        swap_moves(best_bad_cap, mo->current);
-        set_move_score(mo->current, 0);
-        *m = mo->current;
-        mo->current++;
-        return true;
+        mo->current = nextp;
+        move_t* best_bad_cap = index_best_capture(mo->current, mo->end);
+        if (best_bad_cap)
+        {
+            assert(is_capture(*best_bad_cap));
+            assert(get_promopiece(*best_bad_cap)==NO_PIECE);
+            swap_moves(best_bad_cap, mo->current);
+            set_move_score(mo->current, 0);
+            *m = mo->current;
+            mo->current++;
+            return true;
+        }
     }
 
     return false;
@@ -245,4 +251,16 @@ static void swap_moves(move_t* mv1, move_t* mv2)
     move_t tmp_mv = *mv2;
     *mv2 = *mv1;
     *mv1 = tmp_mv;
+}
+
+static move_t* next_nonnull_move(move_t* start, move_t* end)
+{
+    for (move_t* mp=start;mp<end; mp++) 
+    {
+        if (*mp != 0)
+        {
+            return mp;
+        }
+    }
+    return 0;
 }
