@@ -16,10 +16,7 @@ TEST(see_test, queen_takes_undefended_pawn)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t b3b6 = to_capture(QUEEN, B3, B6, PAWN);
-    assert(move_list_contains(b3b6, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, b3b6, &u);
+    ASSERT_TRUE(move_list_contains(b3b6, moves, endp));
 
     int32_t score = see(&pos, b3b6);
     ASSERT_EQ(score, pawn_val);
@@ -35,10 +32,7 @@ TEST(see_test, queen_takes_defended_pawn)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t b3b6 = to_capture(QUEEN, B3, B6, PAWN);
-    assert(move_list_contains(b3b6, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, b3b6, &u);
+    ASSERT_TRUE(move_list_contains(b3b6, moves, endp));
 
     int32_t score = see(&pos, b3b6);
     ASSERT_EQ(score, pawn_val - queen_val);
@@ -54,10 +48,7 @@ TEST(see_test, rook_takes_undefended_pawn)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t e1e5 = to_capture(ROOK, E1, E5, PAWN);
-    assert(move_list_contains(e1e5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, e1e5, &u);
+    ASSERT_TRUE(move_list_contains(e1e5, moves, endp));
 
     int32_t score = see(&pos, e1e5);
     ASSERT_EQ(score, pawn_val);
@@ -73,10 +64,7 @@ TEST(see_test, xrays)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t d3e5 = to_capture(KNIGHT, D3, E5, PAWN);
-    assert(move_list_contains(d3e5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, d3e5, &u);
+    ASSERT_TRUE(move_list_contains(d3e5, moves, endp));
 
     int32_t score = see(&pos, d3e5);
     ASSERT_EQ(score, pawn_val - knight_val);
@@ -92,10 +80,7 @@ TEST(see_test, rook_xrays)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t e3e6 = to_capture(ROOK, E3, E6, PAWN);
-    assert(move_list_contains(e3e6, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, e3e6, &u);
+    ASSERT_TRUE(move_list_contains(e3e6, moves, endp));
 
     int32_t score = see(&pos, e3e6);
     ASSERT_EQ(score, pawn_val);
@@ -111,10 +96,7 @@ TEST(see_test, knight_takes_defended_pawn_as_white)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
-    assert(move_list_contains(c3d5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, c3d5, &u);
+    ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
     ASSERT_EQ(score, pawn_val);
@@ -130,10 +112,7 @@ TEST(see_test, knight_takes_defended_pawn_as_black)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
-    assert(move_list_contains(c3d5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, c3d5, &u);
+    ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
     ASSERT_EQ(score, pawn_val);
@@ -149,10 +128,7 @@ TEST(see_test, crazy_rooks)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t e5d5 = to_capture(ROOK, E5, D5, PAWN);
-    assert(move_list_contains(e5d5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, e5d5, &u);
+    ASSERT_TRUE(move_list_contains(e5d5, moves, endp));
 
     int32_t score = see(&pos, e5d5);
     ASSERT_EQ(score, pawn_val - rook_val);
@@ -168,10 +144,7 @@ TEST(see_test, crazy_rooks2)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t e5d5 = to_capture(ROOK, E5, D5, PAWN);
-    assert(move_list_contains(e5d5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, e5d5, &u);
+    ASSERT_TRUE(move_list_contains(e5d5, moves, endp));
 
     int32_t score = see(&pos, e5d5);
     ASSERT_EQ(score, pawn_val);
@@ -187,10 +160,7 @@ TEST(see_test, knight_takes_defended_pawn)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
-    assert(move_list_contains(c3d5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, c3d5, &u);
+    ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
     ASSERT_EQ(score, pawn_val);
@@ -206,10 +176,7 @@ TEST(see_test, bishop_takes_defended_pawn)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t b3d5 = to_capture(BISHOP, B3, D5, PAWN);
-    assert(move_list_contains(b3d5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, b3d5, &u);
+    ASSERT_TRUE(move_list_contains(b3d5, moves, endp));
 
     int32_t score = see(&pos, b3d5);
     ASSERT_EQ(score, pawn_val-bishop_val+knight_val);
@@ -225,10 +192,7 @@ TEST(see_test, knight_takes_defended_pawn_with_crazy_bishops)
     endp = gen_legal_moves(moves, &pos, true, true); 
 
     move_t c3d5 = to_capture(KNIGHT, C3, D5, PAWN);
-    assert(move_list_contains(c3d5, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, c3d5, &u);
+    ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
     ASSERT_EQ(score, pawn_val-knight_val);
@@ -246,10 +210,7 @@ TEST(see_test, non_capturing_promotions)
     move_t mv = to_move(PAWN, F7, F8);
     set_promopiece(&mv, QUEEN);
 
-    assert(move_list_contains(mv, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, mv, &u);
+    ASSERT_TRUE(move_list_contains(mv, moves, endp));
 
     int32_t score = see(&pos, mv);
     ASSERT_EQ(score, queen_val-pawn_val);
@@ -266,10 +227,7 @@ TEST(see_test, integration1)
 
     move_t mv = to_capture(PAWN, F5, E4, PAWN);
 
-    assert(move_list_contains(mv, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, mv, &u);
+    ASSERT_TRUE(move_list_contains(mv, moves, endp));
 
     int32_t score = see(&pos, mv);
     ASSERT_EQ(score, pawn_val);
@@ -286,10 +244,7 @@ TEST(see_test, integration2)
 
     move_t mv = to_capture(ROOK, D2, D3, PAWN);
 
-    assert(move_list_contains(mv, moves, endp));
-
-    undo_t u;
-    apply_move(&pos, mv, &u);
+    ASSERT_TRUE(move_list_contains(mv, moves, endp));
 
     int32_t score = see(&pos, mv);
     ASSERT_EQ(score, pawn_val-rook_val);

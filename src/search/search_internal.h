@@ -10,8 +10,8 @@ extern "C" {
 
 enum move_order_stage_t 
 { 
-   PV, HASH_MOVE, GEN_CAPS, CAPTURES_PROMOS, KILLER1, KILLER2, GEN_NONCAPS, 
-   REMAINING 
+   PV, HASH_MOVE, GEN_CAPS, GOOD_CAPTURES_PROMOS, KILLER1, KILLER2, GEN_NONCAPS, 
+   NONCAPS, INIT_BAD_CAPTURES, BAD_CAPTURES
 };
 typedef enum move_order_stage_t move_order_stage_t;
 
@@ -27,16 +27,6 @@ typedef struct
     move_t killer2;
     bool gen_noncaps;
 } move_order_dto;
-
-
-/**
- * \brief Score a move using the MVV/LVA algorithm.
- *
- * \param mv            the chess move to score
- * 
- * \return the score
- */
-int32_t mvvlva(move_t mv);
 
 
 /**
