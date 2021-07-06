@@ -57,7 +57,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
     move_order_dto mo_dto;
     initialize_move_ordering(&mo_dto, move_stack, NO_MOVE, NO_MOVE, 
-        NO_MOVE, NO_MOVE, false);
+        NO_MOVE, NO_MOVE, false, false);
 
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
@@ -72,20 +72,6 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
             undo_move(pos, uptr);
             continue;
         }
-
-        /* if the captured piece is more valuable than the capturing piece, 
-         * calculate the static exchange score.  If it says "loss", then prune
-         * this line.
-         */
-        /*if (is_capture(*mp) && eval_piece(get_captured_piece(*mp)) > eval_piece(get_piece(*mp)))
-        {
-            int32_t see_score = see(pos, *mp);
-            if (see_score < 0)
-            {
-                undo_move(pos, uptr);            
-                continue;
-            }
-        }*/
 
         int32_t score = -qsearch(
             pos, -beta, -alpha, mo_dto.end, undo_stack, stats, opts);

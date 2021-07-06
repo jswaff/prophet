@@ -183,40 +183,43 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         }
     }
 
-    if (mo->next_stage == INIT_BAD_CAPTURES)
+    if (mo->play_badcaps)
     {
-        for (move_t* mp=mo->start; mp<mo->end; mp++)
+        if (mo->next_stage == INIT_BAD_CAPTURES)
         {
-            /* remove everything except captures with losing scores */
-            bool losing_capture = is_capture(*mp) && get_move_score(*mp) < 0;
-            if (!losing_capture)
+            for (move_t* mp=mo->start; mp<mo->end; mp++)
             {
-                *mp = 0;
+                /* remove everything except captures with losing scores */
+                bool losing_capture = is_capture(*mp) && get_move_score(*mp) < 0;
+                if (!losing_capture)
+                {
+                    *mp = 0;
+                }
             }
+            mo->current = mo->start;
+            mo->next_stage = BAD_CAPTURES;
         }
-        mo->current = mo->start;
-        mo->next_stage = BAD_CAPTURES;
-    }
 
 
-    /* now just go back through the list playing the best option we have 
-     * Implementation note: advancing the pointer to the next non-null move is not
-     * necessary.  It is only here to match the method used in chess4j, so the
-     * search trees are equal. */
-    move_t* nextp = next_nonnull_move(mo->current, mo->end);
-    if (nextp)
-    {
-        mo->current = nextp;
-        move_t* best_bad_cap = index_best_capture(mo->current, mo->end);
-        if (best_bad_cap)
+        /* now just go back through the list playing the best option we have 
+         * Implementation note: advancing the pointer to the next non-null move is not
+         * necessary.  It is only here to match the method used in chess4j, so the
+         * search trees are equal. */
+        move_t* nextp = next_nonnull_move(mo->current, mo->end);
+        if (nextp)
         {
-            assert(is_capture(*best_bad_cap));
-            assert(get_promopiece(*best_bad_cap)==NO_PIECE);
-            swap_moves(best_bad_cap, mo->current);
-            set_move_score(mo->current, 0);
-            *m = mo->current;
-            mo->current++;
-            return true;
+            mo->current = nextp;
+            move_t* best_bad_cap = index_best_capture(mo->current, mo->end);
+            if (best_bad_cap)
+            {
+                assert(is_capture(*best_bad_cap));
+                assert(get_promopiece(*best_bad_cap)==NO_PIECE);
+                swap_moves(best_bad_cap, mo->current);
+                set_move_score(mo->current, 0);
+                *m = mo->current;
+                mo->current++;
+                return true;
+            }
         }
     }
 
