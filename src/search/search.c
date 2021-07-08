@@ -181,7 +181,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     move_t pv_move = first && last_pv.n > ply ? last_pv.mv[ply] : NO_MOVE;
     move_t hash_move = hash_val == 0 ? NO_MOVE : get_hash_entry_move(hash_val);
     initialize_move_ordering(&mo_dto, move_stack, pv_move, hash_move, 
-        killer1[ply], killer2[ply], true);
+        killer1[ply], killer2[ply], true, true);
 
     move_t best_move = NO_MOVE;
     move_t* mp;
