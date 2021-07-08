@@ -3,6 +3,8 @@
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
 
+#include "search_internal.h"
+
 #include <assert.h>
 
 
@@ -10,6 +12,23 @@
 static int32_t score_capture(const position_t* pos, move_t mv);
 static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map);
 static int max(int, int);
+
+/**
+ * \brief Evaluate a piece.
+ *
+ * \param piece         the piece to evaluate
+ *
+ * \return the score
+ */
+int32_t see_eval_piece(int32_t piece)
+{
+    const int32_t pvals[13] = 
+    { 
+        INF, see_queen_val, see_rook_val, see_bishop_val, see_knight_val, see_pawn_val, 0,
+        see_pawn_val, see_knight_val, see_bishop_val, see_rook_val, see_queen_val, INF 
+    };
+    return pvals[piece+6];
+}
 
 /**
  * \brief Score a move using static exchange analysis (SEE)
@@ -25,7 +44,7 @@ int32_t see(const position_t* pos, move_t mv)
 
     if (get_promopiece(mv) != NO_PIECE)
     {
-        score = eval_piece(get_promopiece(mv)) - pawn_val;
+        score = see_eval_piece(get_promopiece(mv)) - pawn_val;
     }
     else if (is_capture(mv))
     {
@@ -43,7 +62,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     assert(pos->piece[from_sq] != NO_PIECE);
 
     int32_t scores[32];
-    scores[0] = eval_piece(get_captured_piece(mv));
+    scores[0] = see_eval_piece(get_captured_piece(mv));
     int scores_ind = 1;
 
     /* play out the sequence */
@@ -61,7 +80,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     color_t ptm = opposite_player(pos->player);
     int32_t current_sq = from_sq;
     int32_t current_piece = pos->piece[from_sq];
-    int32_t attacked_piece_val = eval_piece(current_piece);
+    int32_t attacked_piece_val = see_eval_piece(current_piece);
 
     while(1)
     {
@@ -114,7 +133,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
 
         scores[scores_ind] = attacked_piece_val - scores[scores_ind-1];
         scores_ind++;
-        attacked_piece_val = eval_piece(current_piece);
+        attacked_piece_val = see_eval_piece(current_piece);
         ptm = ptm==WHITE ? BLACK : WHITE;
     }
 
@@ -141,7 +160,7 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
     while(attackers_map)
     {
         uint32_t sq_ind = get_lsb(attackers_map);
-        int32_t val = eval_piece(pos->piece[sq_ind]);
+        int32_t val = see_eval_piece(pos->piece[sq_ind]);
         if (lv_sq == NO_SQUARE || val < lv_score)
         {
             lv_sq = (int32_t)sq_ind;
@@ -152,3 +171,4 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
 
     return lv_sq;
 }
+

@@ -8,6 +8,12 @@
 extern "C" {
 #endif  
 
+static const int32_t see_pawn_val = 100;
+static const int32_t see_knight_val = 300;
+static const int32_t see_bishop_val = 300;
+static const int32_t see_rook_val = 500;
+static const int32_t see_queen_val = 1000;
+
 enum move_order_stage_t 
 { 
    PV, HASH_MOVE, GEN_CAPS, GOOD_CAPTURES_PROMOS, KILLER1, KILLER2, GEN_NONCAPS, 
@@ -60,6 +66,8 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     move_t pv_move, move_t hash_move, move_t killer1, move_t killer2, 
     bool gen_noncaps, bool play_badcaps);
 
+
+int32_t see_eval_piece(int32_t piece);
 
 
 /**

@@ -91,7 +91,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
              * captures later on.
              */ 
             bool good_cap = get_promopiece(*bestcap) != NO_PIECE || 
-                 (eval_piece(get_captured_piece(*bestcap)) >= eval_piece(get_piece(*bestcap)));
+                 (see_eval_piece(get_captured_piece(*bestcap)) >= see_eval_piece(get_piece(*bestcap)));
             int32_t see_score = -INF;    
             if (!good_cap)
             {
