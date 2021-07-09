@@ -4,7 +4,6 @@
 #include <gtest/gtest.h>
 
 #include "../../src/search/search_internal.h"
-#include "../../src/eval/eval_internal.h"
 
 
 TEST(see_test, queen_takes_undefended_pawn)
@@ -19,11 +18,11 @@ TEST(see_test, queen_takes_undefended_pawn)
     ASSERT_TRUE(move_list_contains(b3b6, moves, endp));
 
     int32_t score = see(&pos, b3b6);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
-TEST(see_test, DISABLED_queen_takes_defended_pawn)
+TEST(see_test, queen_takes_defended_pawn)
 {
     position_t pos;
     set_pos(&pos, "7k/p7/1p6/8/8/1Q6/8/7K w - -");
@@ -35,7 +34,7 @@ TEST(see_test, DISABLED_queen_takes_defended_pawn)
     ASSERT_TRUE(move_list_contains(b3b6, moves, endp));
 
     int32_t score = see(&pos, b3b6);
-    ASSERT_EQ(score, pawn_val - queen_val);
+    ASSERT_EQ(score, see_pawn_val - see_queen_val);
 }
 
 
@@ -51,7 +50,7 @@ TEST(see_test, rook_takes_undefended_pawn)
     ASSERT_TRUE(move_list_contains(e1e5, moves, endp));
 
     int32_t score = see(&pos, e1e5);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
@@ -67,7 +66,7 @@ TEST(see_test, xrays)
     ASSERT_TRUE(move_list_contains(d3e5, moves, endp));
 
     int32_t score = see(&pos, d3e5);
-    ASSERT_EQ(score, pawn_val - knight_val);
+    ASSERT_EQ(score, see_pawn_val - see_knight_val);
 }
 
 
@@ -83,7 +82,7 @@ TEST(see_test, rook_xrays)
     ASSERT_TRUE(move_list_contains(e3e6, moves, endp));
 
     int32_t score = see(&pos, e3e6);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
@@ -99,7 +98,7 @@ TEST(see_test, knight_takes_defended_pawn_as_white)
     ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
@@ -115,7 +114,7 @@ TEST(see_test, knight_takes_defended_pawn_as_black)
     ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
@@ -131,7 +130,7 @@ TEST(see_test, crazy_rooks)
     ASSERT_TRUE(move_list_contains(e5d5, moves, endp));
 
     int32_t score = see(&pos, e5d5);
-    ASSERT_EQ(score, pawn_val - rook_val);
+    ASSERT_EQ(score, see_pawn_val - see_rook_val);
 }
 
 
@@ -147,7 +146,7 @@ TEST(see_test, crazy_rooks2)
     ASSERT_TRUE(move_list_contains(e5d5, moves, endp));
 
     int32_t score = see(&pos, e5d5);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
@@ -163,11 +162,11 @@ TEST(see_test, knight_takes_defended_pawn)
     ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
-TEST(see_test, DISABLED_bishop_takes_defended_pawn)
+TEST(see_test, bishop_takes_defended_pawn)
 {
     position_t pos;
     set_pos(&pos, "1K1k4/8/5n2/3p4/8/1BN5/8/8 w - -");
@@ -179,7 +178,7 @@ TEST(see_test, DISABLED_bishop_takes_defended_pawn)
     ASSERT_TRUE(move_list_contains(b3d5, moves, endp));
 
     int32_t score = see(&pos, b3d5);
-    ASSERT_EQ(score, pawn_val-bishop_val+knight_val);
+    ASSERT_EQ(score, see_pawn_val-see_bishop_val+see_knight_val);
 }
 
 
@@ -195,11 +194,11 @@ TEST(see_test, knight_takes_defended_pawn_with_crazy_bishops)
     ASSERT_TRUE(move_list_contains(c3d5, moves, endp));
 
     int32_t score = see(&pos, c3d5);
-    ASSERT_EQ(score, pawn_val-knight_val);
+    ASSERT_EQ(score, see_pawn_val-see_knight_val);
 }
 
 
-TEST(see_test, DISABLED_non_capturing_promotions)
+TEST(see_test, non_capturing_promotions)
 {
     position_t pos;
     set_pos(&pos, "6RR/4bP2/8/8/5r2/3K4/5p2/4k3 w - -");
@@ -213,7 +212,7 @@ TEST(see_test, DISABLED_non_capturing_promotions)
     ASSERT_TRUE(move_list_contains(mv, moves, endp));
 
     int32_t score = see(&pos, mv);
-    ASSERT_EQ(score, queen_val-pawn_val);
+    ASSERT_EQ(score, see_queen_val-see_pawn_val);
 }
 
 
@@ -230,7 +229,7 @@ TEST(see_test, integration1)
     ASSERT_TRUE(move_list_contains(mv, moves, endp));
 
     int32_t score = see(&pos, mv);
-    ASSERT_EQ(score, pawn_val);
+    ASSERT_EQ(score, see_pawn_val);
 }
 
 
@@ -247,5 +246,5 @@ TEST(see_test, integration2)
     ASSERT_TRUE(move_list_contains(mv, moves, endp));
 
     int32_t score = see(&pos, mv);
-    ASSERT_EQ(score, pawn_val-rook_val);
+    ASSERT_EQ(score, see_pawn_val-see_rook_val);
 }

@@ -8,6 +8,7 @@
 extern "C" {
 #endif  
 
+/* piece values for move ordering purposes (not material evaluation) */
 static const int32_t see_pawn_val = 100;
 static const int32_t see_knight_val = 300;
 static const int32_t see_bishop_val = 300;
@@ -67,6 +68,15 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
     bool gen_noncaps, bool play_badcaps);
 
 
+/**
+ * \brief Evaluate a piece for move ordering purposes.
+ *
+ * Note- this method should not be used for a material evaluation.
+ *
+ * \param piece         the piece to evaluate
+ *
+ * \return the score
+ */
 int32_t see_eval_piece(int32_t piece);
 
 

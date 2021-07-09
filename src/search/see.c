@@ -14,7 +14,9 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
 static int max(int, int);
 
 /**
- * \brief Evaluate a piece.
+ * \brief Evaluate a piece for move ordering purposes.
+ *
+ * Note- this method should not be used for a material evaluation.
  *
  * \param piece         the piece to evaluate
  *
