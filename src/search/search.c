@@ -203,9 +203,29 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
 
         int ext = gives_check ? 1 : 0;
 
-        int32_t score = -search_helper(
-            pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, true,
-            mo_dto.end, undo_stack, stats, opts);
+        int32_t score;
+
+        if (num_moves_searched==0)
+        {
+            score = -search_helper(
+                pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, true,
+                mo_dto.end, undo_stack, stats, opts);
+        }
+        else
+        {
+            /* try a PVS (zero width) search */
+            score = -search_helper(
+                pos, &pv, pvnode, ply+1, depth-1+ext, -(alpha+1), -alpha, gives_check, true,
+                mo_dto.end, undo_stack, stats, opts);
+
+            if (score > alpha && score < beta)
+            {
+                score = -search_helper(
+                    pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, true,
+                    mo_dto.end, undo_stack, stats, opts);
+            }
+        }
+
         ++num_moves_searched;
 
         undo_move(pos, uptr);
