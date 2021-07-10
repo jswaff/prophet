@@ -186,6 +186,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     move_t best_move = NO_MOVE;
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
+    bool found_pv = false;
     while (next(pos, &mp, &mo_dto))
     {
         assert(get_move_score(*mp)==0);
@@ -205,7 +206,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
 
         int32_t score;
 
-        if (num_moves_searched==0)
+        if (!found_pv)
         {
             score = -search_helper(
                 pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, true,
@@ -261,6 +262,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
                 opts->pv_callback(parent_pv, depth, score, elapsed, 
                     stats->nodes);
             }
+            found_pv = true;
         }
     }
 
