@@ -213,6 +213,11 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         }
         else
         {
+            /* if we've already searched a few moves, chances are this is an ALL node, 
+             * and we're not going to get a beta cutoff.  Unless the move looks "interesting"
+             * in some way, just search to a reduced depth.  If we're surprised by the 
+             * score, we'll research it to the normal depth.
+             */
             if (num_moves_searched >= 4 && depth >= 3 && !pvnode && !incheck && 
                 !gives_check && ext==0 && !is_capture(*mp) && !get_promopiece(*mp) &&
                 *mp != killer1[ply] && *mp != killer2[ply])
