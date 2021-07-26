@@ -202,13 +202,13 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         bool gives_check = in_check(pos, pos->player);
 
         int ext = gives_check ? 1 : 0;
+        bool try_null = ext == 0;
 
         int32_t score;
-
         if (num_moves_searched==0 || ply==0)
         {
             score = -search_helper(
-                pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, true,
+                pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, try_null,
                 mo_dto.end, undo_stack, stats, opts);
         }
         else
@@ -223,7 +223,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
                 *mp != killer1[ply] && *mp != killer2[ply])
             {
                 score = -search_helper(
-                    pos, &pv, pvnode, ply+1, depth-2, -(alpha+1), -alpha, gives_check, true,
+                    pos, &pv, pvnode, ply+1, depth-2, -(alpha+1), -alpha, gives_check, try_null,
                     mo_dto.end, undo_stack, stats, opts);
             }
             else
@@ -235,13 +235,13 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             {
                 /* try a PVS (zero width) search */
                 score = -search_helper(
-                    pos, &pv, pvnode, ply+1, depth-1+ext, -(alpha+1), -alpha, gives_check, true,
+                    pos, &pv, pvnode, ply+1, depth-1+ext, -(alpha+1), -alpha, gives_check, try_null,
                     mo_dto.end, undo_stack, stats, opts);
 
                 if (score > alpha && score < beta)
                 {
                     score = -search_helper(
-                        pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, true,
+                        pos, &pv, pvnode, ply+1, depth-1+ext, -beta, -alpha, gives_check, try_null,
                         mo_dto.end, undo_stack, stats, opts);
                 }
             }
