@@ -27,6 +27,8 @@ typedef struct
 {
     uint64_t key;
     uint64_t val;
+    uint64_t key2;
+    uint64_t val2;
 } hash_entry_t;
 
 
@@ -123,10 +125,11 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val);
  *
  * \param tbl           a pointer to a hash table 
  * \param key           a 64 bit key
+ * \param slot          which slot to return; a 0 based index
  *
  * \return - the stored value, or null if there is no value.
  */
-uint64_t probe_hash(hash_table_t *tbl, uint64_t key);
+uint64_t probe_hash(hash_table_t *tbl, uint64_t key, int slot);
 
 
 /**

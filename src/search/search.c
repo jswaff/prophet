@@ -106,8 +106,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     /* this is an interior node */
     stats->nodes++;
 
-    /* check the hash table */
-    uint64_t hash_val = probe_hash(&htbl, pos->hash_key);
+    uint64_t hash_val = 0, hash_val2 = 0;
 
     /* try to get an early exit, iff this isn't the root. */
     if (ply > 0) 
@@ -119,6 +118,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             return 0;
         }
 
+        /* hash table slot 0 */
+        hash_val = probe_hash(&htbl, pos->hash_key, 0);
         if (hash_val != 0 && get_hash_entry_depth(hash_val) >= depth) 
         {
             hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val);
@@ -144,6 +145,36 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             {
                 stats->hash_exact_scores++;
                 return get_hash_entry_score(hash_val);
+            }
+        }
+
+        /* hash table slot 1 */
+        hash_val2 = probe_hash(&htbl, pos->hash_key, 1);
+        if (hash_val2 != 0 && get_hash_entry_depth(hash_val2) >= depth) 
+        {
+            hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val2);
+            if (hash_entry_type == LOWER_BOUND) 
+            {
+                if (get_hash_entry_score(hash_val2) >= beta) 
+                {
+                    stats->fail_highs++;
+                    stats->hash_fail_highs++;
+                    return beta;
+                }
+            } 
+            else if (hash_entry_type == UPPER_BOUND) 
+            {
+                if (get_hash_entry_score(hash_val2) <= alpha) 
+                {
+                    stats->fail_lows++;
+                    stats->hash_fail_lows++;
+                    return alpha;
+                }
+            } 
+            else if (hash_entry_type == EXACT_SCORE) 
+            {
+                stats->hash_exact_scores++;
+                return get_hash_entry_score(hash_val2);
             }
         }
 
@@ -180,7 +211,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     move_order_dto mo_dto;
     move_t pv_move = first && last_pv.n > ply ? last_pv.mv[ply] : NO_MOVE;
     move_t hash_move = hash_val == 0 ? NO_MOVE : get_hash_entry_move(hash_val);
-    initialize_move_ordering(&mo_dto, move_stack, pv_move, hash_move, 
+    move_t hash_move2 = hash_val2 == 0 ? NO_MOVE : get_hash_entry_move(hash_val2);    
+    initialize_move_ordering(&mo_dto, move_stack, pv_move, hash_move, hash_move2,
         killer1[ply], killer2[ply], true, true);
 
     move_t best_move = NO_MOVE;

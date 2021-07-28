@@ -15,17 +15,20 @@
  *
  * \param tbl           a pointer to a hash table 
  * \param key           a 64 bit key
+ * \param slot          which slot to return; a 0 based index
  *
  * \return - the stored value, or null if there is no value.
  */
-uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
+uint64_t probe_hash(hash_table_t *tbl, uint64_t key, int slot)
 {
     assert(tbl->tbl);
+    assert(slot==0 || slot==1);
 
     tbl->probes++;
     uint32_t tbl_index = key % tbl->capacity;
     hash_entry_t *he = tbl->tbl + tbl_index;
-    if (he->val != 0) 
+
+    if (slot==0 && he->val != 0) 
     {
         /* do full signature match */
         if (he->key == key)
@@ -33,6 +36,18 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
             /* success */
             tbl->hits++;
             return he->val;
+        }
+        else
+        {
+            tbl->collisions++;
+        }
+    }
+    else if (slot==1 && he->val2 != 0)
+    {
+        if (he->key2 == key)
+        {
+            tbl->hits++;
+            return he->val2;
         }
         else
         {

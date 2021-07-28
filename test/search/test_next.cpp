@@ -30,7 +30,7 @@ TEST(next_test, pv_move)
 
     move_order_dto mo_dto;
     initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, NO_MOVE, 
-        NO_MOVE, true, true);
+        NO_MOVE, NO_MOVE, true, true);
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
     ASSERT_EQ(pv_move, clear_score(*m));
@@ -49,7 +49,7 @@ TEST(next_test, no_pv_then_hash_move)
     move_t hash_move = moves[5];
     move_order_dto mo_dto;
     initialize_move_ordering(&mo_dto, moves, NO_MOVE, hash_move, NO_MOVE, 
-        NO_MOVE, true, true);
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -71,7 +71,7 @@ TEST(next_text, pv_then_hash)
     move_order_dto mo_dto;
 
     initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
-        NO_MOVE, true, true);
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -96,7 +96,7 @@ TEST(next_test, pv_and_hash_same_move)
 
     move_order_dto mo_dto;
     initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
-        NO_MOVE, true, true);
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -130,7 +130,7 @@ TEST(next_text, pv_then_hash_then_captures)
 
     move_order_dto mo_dto;
     initialize_move_ordering(&mo_dto, moves, g8g7, d5c6, NO_MOVE, 
-        NO_MOVE, true, true);
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -162,7 +162,7 @@ TEST(next_test, killers)
     ASSERT_TRUE(move_list_contains(g2g4, moves, endp));
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, h2h3, g2g4, 
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, h2h3, g2g4, 
         true, true);
 
     move_t* m;
@@ -216,7 +216,7 @@ TEST(next_test, moves_not_repeated)
 
     // initialize move ordering and select moves
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, pv_move, 
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, pv_move, 
         hash_move, true, true);
 
     uint32_t num_selected = 0U;
@@ -240,7 +240,7 @@ TEST(next_test, noncaps_generated_only_when_requested)
     move_t moves[50],*m;
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, NO_MOVE, 
         NO_MOVE, true, true);
 
     // we should get 20 moves 
@@ -254,7 +254,7 @@ TEST(next_test, noncaps_generated_only_when_requested)
 
 
     // now without noncaps - no moves
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, NO_MOVE, 
         NO_MOVE, false, true);
     ASSERT_FALSE(next(&pos, &m, &mo_dto));    
 }

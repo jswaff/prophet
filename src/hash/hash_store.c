@@ -20,6 +20,21 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
     assert(tbl->tbl);
     uint32_t tbl_index = key % tbl->capacity;
     hash_entry_t *he = tbl->tbl + tbl_index;
-    he->key = key;
-    he->val = val;
+
+    /* if there is an existing entry in slot 1, the depth of the new entry must
+     * be greater than or equal to replace it.  If not, store in the second
+     * slot. 
+     */
+
+    if (get_hash_entry_depth(val) >= get_hash_entry_depth(he->val))
+    {
+	    /* TODO: shift va1 to val2? */
+	    he->key = key;
+	    he->val = val;
+    }
+    else
+    {
+    	he->key2 = key;
+    	he->val2 = val;
+    }
 }
