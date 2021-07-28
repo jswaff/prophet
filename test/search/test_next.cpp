@@ -65,12 +65,14 @@ TEST(next_text, pv_then_hash)
     move_t moves[MAX_MOVES_PER_PLY];
     gen_legal_moves(moves, &pos, true, true);
 
-    // make move 4 the PV move and move 2 the hash move
+    // make move 4 the PV move and move 2 the hash move and move 3 the
+    // second hash move
     move_t pv_move = moves[4];
     move_t hash_move = moves[2];
+    move_t hash_move2 = moves[3];
     move_order_dto mo_dto;
 
-    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, hash_move2, 
         NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
@@ -79,6 +81,9 @@ TEST(next_text, pv_then_hash)
 
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
     ASSERT_EQ(hash_move, clear_score(*m));
+
+    ASSERT_TRUE(next(&pos, &m, &mo_dto));
+    ASSERT_EQ(hash_move2, clear_score(*m));
 }
 
 
@@ -90,12 +95,12 @@ TEST(next_test, pv_and_hash_same_move)
     move_t moves[MAX_MOVES_PER_PLY];
     gen_legal_moves(moves, &pos, true, true);
 
-    // make move 9 the PV move and the hash move
+    // make move 9 the PV move, the hash move, and the second hash move
     move_t pv_move = moves[9];
     move_t hash_move = moves[9];
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, hash_move, 
         NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
@@ -129,7 +134,7 @@ TEST(next_text, pv_then_hash_then_captures)
     move_t g8g7 = to_move(ROOK, G8, G7);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, g8g7, d5c6, NO_MOVE, 
+    initialize_move_ordering(&mo_dto, moves, g8g7, d5c6, b5c5, 
         NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
@@ -140,10 +145,10 @@ TEST(next_text, pv_then_hash_then_captures)
     ASSERT_EQ(d5c6, clear_score(*m));
 
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
-    ASSERT_TRUE(g1c5 == clear_score(*m) || b5c5 == clear_score(*m));
+    ASSERT_TRUE(b5c5 == clear_score(*m));
 
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
-    ASSERT_TRUE(g1c5 == clear_score(*m) || b5c5 == clear_score(*m));
+    ASSERT_TRUE(g1c5 == clear_score(*m));
 }
 
 
@@ -195,6 +200,7 @@ TEST(next_test, moves_not_repeated)
     endp = gen_legal_moves(moves, &pos, false, true);
     move_t pv_move = NO_MOVE;
     move_t hash_move = NO_MOVE;
+    move_t hash_move2 = NO_MOVE;
     for (move_t* mp = moves; mp<endp; mp++) {
         if (*mp == 0) 
         {
@@ -208,15 +214,22 @@ TEST(next_test, moves_not_repeated)
         {
             hash_move = *mp;
         }
+        else if (hash_move2 == NO_MOVE)
+        {
+            hash_move2 = *mp;
+        }
     }
     ASSERT_NE(pv_move, NO_MOVE);
     ASSERT_NE(hash_move, NO_MOVE);
+    ASSERT_NE(hash_move2, NO_MOVE);
     ASSERT_NE(pv_move, hash_move);
+    ASSERT_NE(pv_move, hash_move2);
+    ASSERT_NE(hash_move, hash_move2);
 
 
     // initialize move ordering and select moves
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, pv_move, 
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, hash_move2, pv_move, 
         hash_move, true, true);
 
     uint32_t num_selected = 0U;
