@@ -51,20 +51,24 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
     }
 
     uint64_t val = (uint64_t)entry_type;
-    val |= ((uint64_t)depth) << 2;
+
+    assert(depth < 256);
+    val |= ((uint64_t)depth & 0xFF) << 2;
+
+    /* TODO: replace this IF with an addition */
     if (score >= 0) 
     {
-        val |= ((uint64_t)score) << 18;
+        val |= ((uint64_t)score) << 10;
     } 
     else 
     {
-        val |= ((uint64_t)-score) << 18;
-        val |= ((uint64_t)1) << 34;
+        val |= ((uint64_t)-score) << 10;
+        val |= ((uint64_t)1) << 26;
     }
-    /* the left shift here clears the score as it is stored in the high
-     * order 32 bits 
-     */
-    val |= ((uint64_t)mv) << 35;    
+ 
+    val |= ((uint64_t)clear_score(mv)) << 27;  
+
+    /* TODO: add an 8 bit age counter */
 
     return val;
 }
@@ -92,7 +96,7 @@ hash_entry_type_t get_hash_entry_type(uint64_t val)
  */
 int32_t get_hash_entry_depth(uint64_t val) 
 {
-    return (int32_t)((val >> 2) & 0xFFFF);
+    return (int32_t)((val >> 2) & 0xFF);
 }
 
 
@@ -106,8 +110,8 @@ int32_t get_hash_entry_depth(uint64_t val)
 int32_t get_hash_entry_score(uint64_t val) 
 {
     assert(get_hash_entry_type(val) != MOVE_ONLY);
-    int32_t score = ((val >> 18) & 0xFFFF);
-    if ((val >> 34) & 1) 
+    int32_t score = ((val >> 10) & 0xFFFF);
+    if ((val >> 26) & 1) 
     {
         return -score;
     } 
@@ -127,7 +131,7 @@ int32_t get_hash_entry_score(uint64_t val)
  */
 move_t get_hash_entry_move(uint64_t val) 
 {
-    move_t mv = val >> 35;
+    move_t mv = val >> 27;
     assert(get_move_score(mv)==0);
     return mv;
 }

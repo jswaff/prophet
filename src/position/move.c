@@ -211,6 +211,7 @@ void set_move_score(move_t* m, int32_t score)
     *m &= 0xFFFFFFFF;
 
     /* now set score */
+    /* TODO: replace the conditional with an ADD */
     if (score >= 0) 
     {
         *m |= ((uint64_t)score)<<32;

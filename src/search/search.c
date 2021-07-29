@@ -149,6 +149,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         }
 
         /* hash table slot 1 */
+        /* TODO: if this is helpful, see about cleaning up the redundancy */
         hash_val2 = probe_hash(&htbl, pos->hash_key, 1);
         if (hash_val2 != 0 && get_hash_entry_depth(hash_val2) >= depth) 
         {

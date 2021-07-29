@@ -26,9 +26,9 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
      * slot. 
      */
 
+    /* TODO: consider age */
     if (get_hash_entry_depth(val) >= get_hash_entry_depth(he->val))
     {
-	    /* TODO: shift va1 to val2? */
 	    he->key = key;
 	    he->val = val;
     }
