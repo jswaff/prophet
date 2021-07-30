@@ -56,6 +56,9 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
     val |= ((uint64_t)depth & 0xFF) << 2;
 
     /* TODO: replace this IF with an addition */
+    /* FIRST - need to get a bound on the score */
+    assert(score >= -INF);
+    assert(score <= INF);
     if (score >= 0) 
     {
         val |= ((uint64_t)score) << 10;
