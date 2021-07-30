@@ -100,8 +100,8 @@ move_line_t iterate(const iterator_options_t* opts,
         }
 
         /* set up the search */
-        int32_t alpha_bound = -INF;
-        int32_t beta_bound = INF;
+        int32_t alpha_bound = -CHECKMATE;
+        int32_t beta_bound = CHECKMATE;
         move_line_t search_pv; search_pv.n = 0;
 
         /* start the search */

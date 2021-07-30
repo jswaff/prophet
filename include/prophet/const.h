@@ -21,7 +21,7 @@ extern "C" {
 
 
 #define INF                        200000
-#define CHECKMATE                   65535
+#define CHECKMATE                   32767
 #define DRAWSCORE                       0
 #define NO_MOVE                         0U
 

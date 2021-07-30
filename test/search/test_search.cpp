@@ -24,7 +24,7 @@ TEST(search_test, depth0_no_bounds)
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
-    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -INF, INF, moves, undos, 
+    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -CHECKMATE, CHECKMATE, moves, undos, 
         &stats, &opts));
     ASSERT_EQ(0, pv.n);
     ASSERT_EQ(0U, stats.nodes);
@@ -45,7 +45,7 @@ TEST(search_test, mate_in_1)
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
-    ASSERT_EQ(CHECKMATE-1, search(&pos, &pv, 2, -INF, INF, moves, undos, 
+    ASSERT_EQ(CHECKMATE-1, search(&pos, &pv, 2, -CHECKMATE, CHECKMATE, moves, undos, 
         &stats, &opts));
     ASSERT_EQ(1, pv.n);
     ASSERT_EQ(to_move(QUEEN, D6, E7), pv.mv[0]);
@@ -65,7 +65,7 @@ TEST(search_test, mate_in_2)
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
-    ASSERT_EQ(CHECKMATE-3, search(&pos, &pv, 4, -INF, INF, moves, undos, 
+    ASSERT_EQ(CHECKMATE-3, search(&pos, &pv, 4, -CHECKMATE, CHECKMATE, moves, undos, 
         &stats, &opts));
     ASSERT_EQ(3, pv.n);
     ASSERT_EQ(to_move(QUEEN, D2, H6), pv.mv[0]);
@@ -87,7 +87,7 @@ TEST(search_test, mate_in_3)
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
-    ASSERT_EQ(CHECKMATE-5, search(&pos, &pv, 6, -INF, INF, moves, undos, 
+    ASSERT_EQ(CHECKMATE-5, search(&pos, &pv, 6, -CHECKMATE, CHECKMATE, moves, undos, 
         &stats, &opts));
     ASSERT_EQ(5, pv.n);
     ASSERT_EQ(to_move(ROOK, F6, A6), pv.mv[0]);
@@ -111,7 +111,7 @@ TEST(search_test, stalemate)
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
-    ASSERT_EQ(0, search(&pos, &pv, 1, -INF, INF, moves, undos, &stats, &opts));
+    ASSERT_EQ(0, search(&pos, &pv, 1, -CHECKMATE, CHECKMATE, moves, undos, &stats, &opts));
     ASSERT_EQ(0, pv.n);
 }
 
@@ -131,7 +131,7 @@ TEST(search_test, stop_search)
     stop_search = true;
 
     // start a depth 3 search
-    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 3, -INF, INF, moves, undos, 
+    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 3, -CHECKMATE, CHECKMATE, moves, undos, 
         &stats, &opts));
 
     // visit one node per depth, down the left side of the tree
@@ -161,7 +161,7 @@ TEST(search_test, search_stops_on_time)
     opts.start_time = milli_timer();
     opts.stop_time = opts.start_time + 500;
     opts.nodes_between_time_checks = 1000UL;
-    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 30, -INF, INF, moves, undos, 
+    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 30, -CHECKMATE, CHECKMATE, moves, undos, 
         &stats, &opts));
     uint64_t stop_time = milli_timer();
 

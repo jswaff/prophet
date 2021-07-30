@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <string.h>
 
+
 move_line_t last_pv;
 bool volatile stop_search;
 bool volatile skip_time_checks = false;
@@ -82,8 +83,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     stats_t* stats, search_options_t* opts)
 {
     assert(depth >= 0);
-    assert(alpha >= -INF);
-    assert(beta <= INF);
+    assert(alpha >= -CHECKMATE);
+    assert(beta <= CHECKMATE);
     assert(alpha < beta);
 
     parent_pv->n = 0;
@@ -336,6 +337,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     {
         tet = EXACT_SCORE;
     }
+    assert(alpha > -65536);
     store_hash_entry(&htbl, pos->hash_key, 
         build_hash_val(tet, depth, alpha, best_move));
 
