@@ -35,6 +35,7 @@ TEST(search_test, mate_in_1)
 {
     position_t pos;
     set_pos(&pos, "4k3/8/3Q4/2B5/8/8/1K6/8 w - -");
+
     move_line_t pv;
     stats_t stats;
     memset(&stats, 0, sizeof(stats_t));

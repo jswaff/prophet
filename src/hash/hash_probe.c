@@ -30,10 +30,8 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key, int slot)
 
     if (slot==0 && he->val != 0) 
     {
-        /* do full signature match */
         if (he->key == key)
         {
-            /* success */
             tbl->hits++;
             return he->val;
         }

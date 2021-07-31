@@ -21,13 +21,16 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
     uint32_t tbl_index = key % tbl->capacity;
     hash_entry_t *he = tbl->tbl + tbl_index;
 
-    /* if there is an existing entry in slot 1, the depth of the new entry must
-     * be greater than or equal to replace it.  If not, store in the second
-     * slot. 
+    /* Write to the first slot if any of these conditions are true:
+     * 1. the full key is a match
+     * 2. the existing entry is from an older search
+     * 3. the depth of this entry is at least that of the existing entry
+     *
+     * Otherwise, write to the second slot. 
      */
-
-    /* TODO: consider age */
-    if (get_hash_entry_depth(val) >= get_hash_entry_depth(he->val))
+    if (key==he->key ||
+        get_hash_entry_age(val) < get_hash_entry_age(he->val) ||
+        get_hash_entry_depth(val) >= get_hash_entry_depth(he->val))
     {
 	    he->key = key;
 	    he->val = val;

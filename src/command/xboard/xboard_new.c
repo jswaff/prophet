@@ -10,7 +10,8 @@
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
-extern volatile int32_t max_depth;
+extern int32_t volatile max_depth;
+extern uint32_t volatile hash_age;
 
 /**
  * \brief Execute the xboard new command 
@@ -51,6 +52,7 @@ int xboard_new(const char* input)
     xboard_force_mode = false;
 
     max_depth = 0;
+    hash_age = 0;
 
     return 0;
 }

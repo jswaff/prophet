@@ -82,18 +82,34 @@ TEST(hash_test, replacement_strategy)
     ASSERT_EQ(val, probe_hash(&hash_table, key, 0));
     ASSERT_EQ(0U, probe_hash(&hash_table, key, 1));
 
-    // store another value using the same key, but a shallower depth.  It
-    // should be written to the second slot
-    uint64_t val2 = build_hash_val(LOWER_BOUND, 5, 99, NO_MOVE, 2);
-    store_hash_entry(&hash_table, key, val2);
-    ASSERT_EQ(val, probe_hash(&hash_table, key, 0));
-    ASSERT_EQ(val2, probe_hash(&hash_table, key, 1));
+    // store another value using the same key, with the same age and
+    // a greater depth.  Because it uses the same key, it should go to
+    // slot 1.
+    uint64_t key2 = key;
+    uint64_t val2 = build_hash_val(LOWER_BOUND, 9, 99, NO_MOVE, 1);
+    store_hash_entry(&hash_table, key2, val2);
+    ASSERT_EQ(val2, probe_hash(&hash_table, key2, 0));
+    ASSERT_EQ(0U, probe_hash(&hash_table, key2, 1));
 
-    // store yet another value with the same key, but to a greater depth.  It
-    // should overwrite entry 1.
-    uint64_t val3 = build_hash_val(UPPER_BOUND, 8, 101, NO_MOVE, 3);
-    store_hash_entry(&hash_table, key, val3);
-    ASSERT_EQ(val3, probe_hash(&hash_table, key, 0));
-    ASSERT_EQ(val2, probe_hash(&hash_table, key, 1));
+    // store another value with a different key, and a greater depth
+    // than the previous entry, and the same age.  It should replace the
+    // value in slot 1.
+    uint64_t key3 = 3;
+    uint64_t val3 = build_hash_val(UPPER_BOUND, 10, -76, NO_MOVE, 1);
+    store_hash_entry(&hash_table, key3, val3);
+    ASSERT_EQ(val3, probe_hash(&hash_table, key3, 0));
+    ASSERT_EQ(0U, probe_hash(&hash_table, key3, 1));
+
+
+    // store yet another value with a different key that maps to the
+    // same bucket, a shallower depth, and the same age.  It should be 
+    // written to slot 2.
+    uint64_t key4 = 13;
+    uint64_t val4 = build_hash_val(UPPER_BOUND, 5, 101, NO_MOVE, 1);
+    store_hash_entry(&hash_table, key4, val4);
+    ASSERT_EQ(0U, probe_hash(&hash_table, key4, 0));
+    ASSERT_EQ(val4, probe_hash(&hash_table, key4, 1));
+    ASSERT_EQ(val3, probe_hash(&hash_table, key3, 0));
+    
 }
 

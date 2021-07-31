@@ -128,9 +128,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             else
             {
                 /* defer bad capture for later */
-                assert(see_score > -INF);
                 assert(see_score < 0);
-                set_move_score(mo->current, see_score);
+                set_move_score(mo->current, see_score < -CHECKMATE ? -CHECKMATE : see_score);
                 mo->current++;
                 bestcap = index_best_capture(mo->current, mo->end);
             }
