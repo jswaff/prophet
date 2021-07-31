@@ -299,7 +299,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         {
             stats->fail_highs++;
             store_hash_entry(&htbl, pos->hash_key, 
-                build_hash_val(LOWER_BOUND, depth, beta, *mp));
+                build_hash_val(LOWER_BOUND, depth, beta, *mp, 0));
             if (!is_capture(*mp) && !get_promopiece(*mp))
             {
                 add_killer(*mp, ply);
@@ -337,9 +337,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     {
         tet = EXACT_SCORE;
     }
-    assert(alpha > -65536);
     store_hash_entry(&htbl, pos->hash_key, 
-        build_hash_val(tet, depth, alpha, best_move));
+        build_hash_val(tet, depth, alpha, best_move, 0));
 
     return alpha;
 }

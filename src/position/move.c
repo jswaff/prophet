@@ -207,11 +207,13 @@ int32_t get_move_score(move_t mv)
  */
 void set_move_score(move_t* m, int32_t score)
 {
+    assert(score >= -32767);
+    assert(score <= 32767);
+
     /* clear high order bits */
     *m &= 0xFFFFFFFF;
 
     /* now set score */
-    /* TODO: replace the conditional with an ADD */
     if (score >= 0) 
     {
         *m |= ((uint64_t)score)<<32;

@@ -77,21 +77,21 @@ TEST(hash_test, replacement_strategy)
     ASSERT_EQ(0U, probe_hash(&hash_table, key, 1));
 
     // store a value.  It should go directly into slot 1.
-    uint64_t val = build_hash_val(LOWER_BOUND, 7, 100, NO_MOVE); 
+    uint64_t val = build_hash_val(LOWER_BOUND, 7, 100, NO_MOVE, 1); 
     store_hash_entry(&hash_table, key, val);
     ASSERT_EQ(val, probe_hash(&hash_table, key, 0));
     ASSERT_EQ(0U, probe_hash(&hash_table, key, 1));
 
     // store another value using the same key, but a shallower depth.  It
     // should be written to the second slot
-    uint64_t val2 = build_hash_val(LOWER_BOUND, 5, 99, NO_MOVE);
+    uint64_t val2 = build_hash_val(LOWER_BOUND, 5, 99, NO_MOVE, 2);
     store_hash_entry(&hash_table, key, val2);
     ASSERT_EQ(val, probe_hash(&hash_table, key, 0));
     ASSERT_EQ(val2, probe_hash(&hash_table, key, 1));
 
     // store yet another value with the same key, but to a greater depth.  It
     // should overwrite entry 1.
-    uint64_t val3 = build_hash_val(UPPER_BOUND, 8, 101, NO_MOVE);
+    uint64_t val3 = build_hash_val(UPPER_BOUND, 8, 101, NO_MOVE, 3);
     store_hash_entry(&hash_table, key, val3);
     ASSERT_EQ(val3, probe_hash(&hash_table, key, 0));
     ASSERT_EQ(val2, probe_hash(&hash_table, key, 1));
