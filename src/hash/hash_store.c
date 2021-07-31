@@ -37,7 +37,7 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
     }
     else
     {
-    	he->key2 = key;
-    	he->val2 = val;
+        he->key2 = key;
+        he->val2 = val;
     }
 }

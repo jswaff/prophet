@@ -62,8 +62,8 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
 
     /* fold in the score.  Note we add 32767 to make it a positive
      * value that can be stored with 16 bits */
-    assert(score > -32767);
-    assert(score < 32767);
+    assert(score >= -32767);
+    assert(score <= 32767);
     val |= ((uint64_t)score + 32767) << 10;
 
 

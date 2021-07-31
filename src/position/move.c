@@ -2,8 +2,6 @@
 
 #include <assert.h>
 
-#include <stdio.h>
-
 /**
  * \brief Create a non-capturing move
  *
@@ -209,10 +207,6 @@ int32_t get_move_score(move_t mv)
  */
 void set_move_score(move_t* m, int32_t score)
 {
-    if (score < -32767)
-    {
-        printf("*** setting move score: %d\n", score);
-    }
     assert(score >= -32767);
     assert(score <= 32767);
 
