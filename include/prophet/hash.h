@@ -22,13 +22,11 @@ typedef struct
     uint64_t ep[65]; /* include NO_SQUARE */
 } zobrist_keys;
 
-
+#define NUM_HASH_SLOTS_PER_BUCKET 2
 typedef struct 
 {
-    uint64_t key;
-    uint64_t val;
-    uint64_t key2;
-    uint64_t val2;
+    uint64_t key[NUM_HASH_SLOTS_PER_BUCKET];
+    uint64_t val[NUM_HASH_SLOTS_PER_BUCKET];
 } hash_entry_t;
 
 

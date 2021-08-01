@@ -26,20 +26,16 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
     uint32_t tbl_index = key % tbl->capacity;
     hash_entry_t *he = tbl->tbl + tbl_index;
 
-    uint64_t retval = 0;
-    if (he->key == key)
+    for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++)
     {
-        retval = he->val;
-    }
-    else if (he->key2 == key)
-    {
-        retval = he->val2;
-    }
-
-    if (retval != 0) 
-    {
-        tbl->hits++;
+        if (he->key[i] == key)
+        {
+            tbl->hits++;
+            return he->val[i];
+        }
     }
 
-    return retval;
+    /* miss */
+
+    return 0;
 }

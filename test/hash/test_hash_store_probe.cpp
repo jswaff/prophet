@@ -49,9 +49,9 @@ TEST(hash_test, store_and_probe)
     EXPECT_EQ(6U, hash_table.probes);
     EXPECT_EQ(3U, hash_table.hits);
 
-    ASSERT_EQ(0U, probe_hash(&hash_table, 12));
+    ASSERT_EQ(val, probe_hash(&hash_table, 12));
     EXPECT_EQ(7U, hash_table.probes);
-    EXPECT_EQ(3U, hash_table.hits);
+    EXPECT_EQ(4U, hash_table.hits);
 }
 
 TEST(hash_test, replacement_strategy)
