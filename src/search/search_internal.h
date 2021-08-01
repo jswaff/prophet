@@ -17,7 +17,7 @@ static const int32_t see_queen_val = 1000;
 
 enum move_order_stage_t 
 { 
-   PV, HASH_MOVE, HASH_MOVE2, GEN_CAPS, GOOD_CAPTURES_PROMOS, KILLER1, KILLER2, 
+   PV, HASH_MOVE, GEN_CAPS, GOOD_CAPTURES_PROMOS, KILLER1, KILLER2, 
    GEN_NONCAPS, NONCAPS, INIT_BAD_CAPTURES, BAD_CAPTURES
 };
 typedef enum move_order_stage_t move_order_stage_t;
@@ -59,15 +59,14 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo);
  * \param stackptr      pointer to move stack to place new moves on
  * \param pv_move       pv move
  * \param hash_move     hash move
- * \param hash_move2    hash move 2
  * \param killer1       killer move 1
  * \param killer2       killer move 2
  * \param gen_noncaps   whether to generate non-capturing moves
  * \param play_badcaps  whether to play bad captures 
  */
 void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
-    move_t pv_move, move_t hash_move, move_t hash_move2, move_t killer1, 
-    move_t killer2, bool gen_noncaps, bool play_badcaps);
+    move_t pv_move, move_t hash_move, move_t killer1, move_t killer2, 
+    bool gen_noncaps, bool play_badcaps);
 
 
 /**

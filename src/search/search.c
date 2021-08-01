@@ -112,7 +112,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     /* this is an interior node */
     stats->nodes++;
 
-    uint64_t hash_val = 0, hash_val2 = 0;
+    uint64_t hash_val = 0;
 
     /* try to get an early exit, iff this isn't the root. */
     if (ply > 0) 
@@ -187,8 +187,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     move_order_dto mo_dto;
     move_t pv_move = first && last_pv.n > ply ? last_pv.mv[ply] : NO_MOVE;
     move_t hash_move = hash_val == 0 ? NO_MOVE : get_hash_entry_move(hash_val);
-    move_t hash_move2 = hash_val2 == 0 ? NO_MOVE : get_hash_entry_move(hash_val2);    
-    initialize_move_ordering(&mo_dto, move_stack, pv_move, hash_move, hash_move2,
+    initialize_move_ordering(&mo_dto, move_stack, pv_move, hash_move, 
         killer1[ply], killer2[ply], true, true);
 
     move_t best_move = NO_MOVE;
