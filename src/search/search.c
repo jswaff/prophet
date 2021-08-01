@@ -124,8 +124,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             return 0;
         }
 
-        /* hash table slot 0 */
-        hash_val = probe_hash(&htbl, pos->hash_key, 0);
+        /* probe the hash table */
+        hash_val = probe_hash(&htbl, pos->hash_key);
         if (hash_val != 0 && get_hash_entry_depth(hash_val) >= depth) 
         {
             hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val);
@@ -151,37 +151,6 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             {
                 stats->hash_exact_scores++;
                 return get_hash_entry_score(hash_val);
-            }
-        }
-
-        /* hash table slot 1 */
-        /* TODO: if this is helpful, see about cleaning up the redundancy */
-        hash_val2 = probe_hash(&htbl, pos->hash_key, 1);
-        if (hash_val2 != 0 && get_hash_entry_depth(hash_val2) >= depth) 
-        {
-            hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val2);
-            if (hash_entry_type == LOWER_BOUND) 
-            {
-                if (get_hash_entry_score(hash_val2) >= beta) 
-                {
-                    stats->fail_highs++;
-                    stats->hash_fail_highs++;
-                    return beta;
-                }
-            } 
-            else if (hash_entry_type == UPPER_BOUND) 
-            {
-                if (get_hash_entry_score(hash_val2) <= alpha) 
-                {
-                    stats->fail_lows++;
-                    stats->hash_fail_lows++;
-                    return alpha;
-                }
-            } 
-            else if (hash_entry_type == EXACT_SCORE) 
-            {
-                stats->hash_exact_scores++;
-                return get_hash_entry_score(hash_val2);
             }
         }
 
