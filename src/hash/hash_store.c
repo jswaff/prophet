@@ -33,6 +33,19 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
         }
     }
 
+    /* if a slot is empty, fill it */
+    if (selected_slot == -1)
+    {
+        for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++)
+        {
+            if (he->key[i]==0)
+            {
+                selected_slot = i;
+                break;
+            }
+        }
+    }
+
     /* otherwise, if any entry is from a previous search, overwrite it. */
     if (selected_slot == -1)
     {
