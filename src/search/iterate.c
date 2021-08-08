@@ -65,6 +65,8 @@ move_line_t iterate(const iterator_options_t* opts,
     stats_t stats;
     memset(&stats, 0, sizeof(stats_t));
     hash_age++;
+    //out(stdout, "# hash age: %d\n", hash_age);
+
 
     /* set up options */
     search_options_t search_opts;

@@ -141,3 +141,10 @@ TEST(hash_test, transform_exact_score_mated)
     ASSERT_EQ(mv, get_hash_entry_move(val));
     ASSERT_EQ(hash_age, get_hash_entry_age(val));
 }
+
+
+TEST(hash_test, empty_val_is_NO_MOVE)
+{
+    uint64_t val = 0;
+    ASSERT_EQ(NO_MOVE, get_hash_entry_move(val));
+}
