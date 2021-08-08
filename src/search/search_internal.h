@@ -30,7 +30,6 @@ typedef struct
     move_t* current;
     move_t pv_move;
     move_t hash_move;
-    move_t hash_move2;
     move_t killer1;
     move_t killer2;
     bool gen_noncaps;

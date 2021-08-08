@@ -52,6 +52,7 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
     }
 
     uint64_t val = (uint64_t)entry_type;
+    assert(val < 4);
 
 
     /* fold in the depth */

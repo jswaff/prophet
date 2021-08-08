@@ -49,7 +49,6 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
         }
     }
 
-
     if (mo->next_stage == GEN_CAPS)
     {
         mo->next_stage = GOOD_CAPTURES_PROMOS;
