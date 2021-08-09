@@ -112,7 +112,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     /* this is an interior node */
     stats->nodes++;
 
-    uint64_t hash_val = 0;
+    /* probe the hash table */
+    uint64_t hash_val = probe_hash(&htbl, pos->hash_key);
 
     /* try to get an early exit, iff this isn't the root. */
     if (ply > 0) 
@@ -124,8 +125,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             return 0;
         }
 
-        /* probe the hash table */
-        hash_val = probe_hash(&htbl, pos->hash_key);
+        /* see if the hash entry allows an early exit */
         if (hash_val != 0 && get_hash_entry_depth(hash_val) >= depth) 
         {
             hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val);
