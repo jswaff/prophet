@@ -22,13 +22,13 @@ int main(int argc, char* argv[])
 
     out(stdout, "Hello!  This is the Prophet4 Chess Engine.\n\n");
 
-    retval = init();
+    retval = commandline_process_options(argc, argv);
     if (0 != retval)
     {
         goto done;
     }
 
-    retval = commandline_process_options(argc, argv);
+    retval = init();
     if (0 != retval)
     {
         goto done;

@@ -27,12 +27,12 @@ int commandline_process_options(int argc, char* argv[])
     static struct option long_options[] = {
         {"random",      no_argument,       0, 'r'},
         {"set depth",   required_argument, 0, 'd'},
-        {"set hash size in bytes", required_argument, 0, 'h'}
+        {"set hash size in mb", required_argument, 0, 'h'}
     };
 
     int long_index = 0;
     int opt = 0;
-    while ((opt = getopt_long(argc, argv, "rd:",
+    while ((opt = getopt_long(argc, argv, "rd:h:",
         long_options, &long_index)) != -1)
     {
         switch (opt)
@@ -46,8 +46,8 @@ int commandline_process_options(int argc, char* argv[])
                 max_depth = atoi(optarg);
                 break;
             case 'h':
-                out(stdout, "setting hash table size to %s bytes\n", optarg);
-                hash_size = atoi(optarg);
+                out(stdout, "setting hash table size to %s mb\n", optarg);
+                hash_size = atoi(optarg) * 1024 * 1024;
                 break;
             default:
                 commandline_print_usage();
