@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <string.h>
 
+
 move_line_t last_pv;
 bool volatile stop_search;
 bool volatile skip_time_checks = false;
@@ -16,6 +17,8 @@ bool volatile skip_time_checks = false;
 extern hash_table_t htbl;
 extern move_t killer1[MAX_PLY];
 extern move_t killer2[MAX_PLY];
+extern uint32_t volatile hash_age;
+
 
 static int32_t adjust_score_for_mate(const position_t* pos, int32_t score, 
     int num_moves_searched, int ply);
@@ -81,7 +84,10 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     bool incheck, bool null_move_ok, move_t* move_stack, undo_t* undo_stack, 
     stats_t* stats, search_options_t* opts)
 {
-    assert (depth >= 0);
+    assert(depth >= 0);
+    assert(alpha >= -CHECKMATE);
+    assert(beta <= CHECKMATE);
+    assert(alpha < beta);
 
     parent_pv->n = 0;
 
@@ -106,7 +112,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     /* this is an interior node */
     stats->nodes++;
 
-    /* check the hash table */
+    /* probe the hash table */
     uint64_t hash_val = probe_hash(&htbl, pos->hash_key);
 
     /* try to get an early exit, iff this isn't the root. */
@@ -119,6 +125,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             return 0;
         }
 
+        /* see if the hash entry allows an early exit */
         if (hash_val != 0 && get_hash_entry_depth(hash_val) >= depth) 
         {
             hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val);
@@ -179,7 +186,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
 
     move_order_dto mo_dto;
     move_t pv_move = first && last_pv.n > ply ? last_pv.mv[ply] : NO_MOVE;
-    move_t hash_move = hash_val == 0 ? NO_MOVE : get_hash_entry_move(hash_val);
+    move_t hash_move = get_hash_entry_move(hash_val);
     initialize_move_ordering(&mo_dto, move_stack, pv_move, hash_move, 
         killer1[ply], killer2[ply], true, true);
 
@@ -262,7 +269,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         {
             stats->fail_highs++;
             store_hash_entry(&htbl, pos->hash_key, 
-                build_hash_val(LOWER_BOUND, depth, beta, *mp));
+                build_hash_val(LOWER_BOUND, depth, beta, *mp, hash_age));
             if (!is_capture(*mp) && !get_promopiece(*mp))
             {
                 add_killer(*mp, ply);
@@ -301,7 +308,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         tet = EXACT_SCORE;
     }
     store_hash_entry(&htbl, pos->hash_key, 
-        build_hash_val(tet, depth, alpha, best_move));
+        build_hash_val(tet, depth, alpha, best_move, hash_age));
 
     return alpha;
 }

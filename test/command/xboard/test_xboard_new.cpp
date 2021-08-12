@@ -9,6 +9,8 @@
 extern position_t gpos;
 extern bool xboard_force_mode;
 extern int32_t max_depth;
+extern uint32_t volatile hash_age;
+
 
 TEST(xboard_test, xboard_new_incorrect_cmd)
 {
@@ -26,6 +28,9 @@ TEST(xboard_test, xboard_new)
     // and there is a depth constraint
     max_depth = 10;
 
+    // and there is a hash age
+    hash_age = 99;
+
     ASSERT_EQ(0, xboard_new("new"));
 
     // the global position should now be reset.
@@ -40,4 +45,6 @@ TEST(xboard_test, xboard_new)
 
     // depth constraints should be removed
     EXPECT_EQ(0, max_depth);
+
+    EXPECT_EQ(0U, hash_age);
 }

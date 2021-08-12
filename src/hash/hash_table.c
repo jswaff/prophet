@@ -7,9 +7,10 @@
 #include <string.h>
 
 /* the default hash table size is 256 MB */
-uint32_t hash_size = 134217728 * 2; 
+uint32_t hash_size = 134217728 * 4;  /* 512 */
 
 hash_table_t htbl;
+
 
 /* forward decls */
 static int init_hash_table(hash_table_t *tbl, uint32_t size);

@@ -11,11 +11,12 @@
  * \param depth         the depth of the search backing the score
  * \param score         the score to hash
  * \param mv            the move
+ * \param hash_age      age counter
  *
  * \return - the encoded value
  */
 uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth, 
-    int32_t score, move_t mv)
+    int32_t score, move_t mv, uint32_t hash_age)
 {
 
     /* convert mate scores */
@@ -51,20 +52,30 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
     }
 
     uint64_t val = (uint64_t)entry_type;
+    assert(val < 4);
+
+
+    /* fold in the depth */
+    assert(depth >= 0);
+    assert(depth < 256);
     val |= ((uint64_t)depth) << 2;
-    if (score >= 0) 
-    {
-        val |= ((uint64_t)score) << 18;
-    } 
-    else 
-    {
-        val |= ((uint64_t)-score) << 18;
-        val |= ((uint64_t)1) << 34;
-    }
-    /* the left shift here clears the score as it is stored in the high
-     * order 32 bits 
-     */
-    val |= ((uint64_t)mv) << 35;    
+
+
+    /* fold in the score.  Note we add 32767 to make it a positive
+     * value that can be stored with 16 bits */
+    assert(score >= -32767);
+    assert(score <= 32767);
+    val |= ((uint64_t)score + 32767) << 10;
+
+
+    /* fold in the move */ 
+    uint64_t hash_move = (uint64_t)clear_score(mv);
+    assert((hash_move & 0xFFFFFF) == hash_move);
+    val |= hash_move << 26;  
+
+    /* fold in an age counter */
+    assert(hash_age < 1024);
+    val |= ((uint64_t)hash_age) << 50;
 
     return val;
 }
@@ -92,7 +103,7 @@ hash_entry_type_t get_hash_entry_type(uint64_t val)
  */
 int32_t get_hash_entry_depth(uint64_t val) 
 {
-    return (int32_t)((val >> 2) & 0xFFFF);
+    return (int32_t)((val >> 2) & 0xFF);
 }
 
 
@@ -106,15 +117,7 @@ int32_t get_hash_entry_depth(uint64_t val)
 int32_t get_hash_entry_score(uint64_t val) 
 {
     assert(get_hash_entry_type(val) != MOVE_ONLY);
-    int32_t score = ((val >> 18) & 0xFFFF);
-    if ((val >> 34) & 1) 
-    {
-        return -score;
-    } 
-    else 
-    {
-        return score;
-    }
+    return ((val >> 10) & 0xFFFF) - 32767;
 }
 
 
@@ -127,7 +130,18 @@ int32_t get_hash_entry_score(uint64_t val)
  */
 move_t get_hash_entry_move(uint64_t val) 
 {
-    move_t mv = val >> 35;
-    assert(get_move_score(mv)==0);
-    return mv;
+    return (val >> 26) & 0xFFFFFF;
+}
+
+
+/**
+ * \brief Get the hash entry age
+ *
+ * \param val           the hashed value
+ *
+ * \return - the hash entry age
+ */
+uint32_t get_hash_entry_age(uint64_t val)
+{
+    return (val >> 50) & 0x3FF;
 }

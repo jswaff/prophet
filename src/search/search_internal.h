@@ -17,8 +17,8 @@ static const int32_t see_queen_val = 1000;
 
 enum move_order_stage_t 
 { 
-   PV, HASH_MOVE, GEN_CAPS, GOOD_CAPTURES_PROMOS, KILLER1, KILLER2, GEN_NONCAPS, 
-   NONCAPS, INIT_BAD_CAPTURES, BAD_CAPTURES
+   PV, HASH_MOVE, GEN_CAPS, GOOD_CAPTURES_PROMOS, KILLER1, KILLER2, 
+   GEN_NONCAPS, NONCAPS, INIT_BAD_CAPTURES, BAD_CAPTURES
 };
 typedef enum move_order_stage_t move_order_stage_t;
 

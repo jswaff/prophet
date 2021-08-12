@@ -29,8 +29,8 @@ TEST(next_test, pv_move)
     ASSERT_NE(pv_move, NO_MOVE);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, NO_MOVE, 
-        NO_MOVE, true, true);
+    initialize_move_ordering(&mo_dto, moves, pv_move, NO_MOVE, 
+        NO_MOVE, NO_MOVE, true, true);
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
     ASSERT_EQ(pv_move, clear_score(*m));
@@ -48,8 +48,8 @@ TEST(next_test, no_pv_then_hash_move)
     // randomly make the 5th move the hash move
     move_t hash_move = moves[5];
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, hash_move, NO_MOVE, 
-        NO_MOVE, true, true);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, hash_move,
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -65,13 +65,13 @@ TEST(next_text, pv_then_hash)
     move_t moves[MAX_MOVES_PER_PLY];
     gen_legal_moves(moves, &pos, true, true);
 
-    // make move 4 the PV move and move 2 the hash move
+    // make move 4 the PV move and move 2 the hash move 
     move_t pv_move = moves[4];
     move_t hash_move = moves[2];
     move_order_dto mo_dto;
 
-    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
-        NO_MOVE, true, true);
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move,
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -90,13 +90,13 @@ TEST(next_test, pv_and_hash_same_move)
     move_t moves[MAX_MOVES_PER_PLY];
     gen_legal_moves(moves, &pos, true, true);
 
-    // make move 9 the PV move and the hash move
+    // make move 9 the PV move, the hash move, and the second hash move
     move_t pv_move = moves[9];
     move_t hash_move = moves[9];
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, NO_MOVE, 
-        NO_MOVE, true, true);
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, 
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -129,8 +129,8 @@ TEST(next_text, pv_then_hash_then_captures)
     move_t g8g7 = to_move(ROOK, G8, G7);
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, g8g7, d5c6, NO_MOVE, 
-        NO_MOVE, true, true);
+    initialize_move_ordering(&mo_dto, moves, g8g7, d5c6,
+        NO_MOVE, NO_MOVE, true, true);
 
     move_t* m;
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
@@ -140,10 +140,10 @@ TEST(next_text, pv_then_hash_then_captures)
     ASSERT_EQ(d5c6, clear_score(*m));
 
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
-    ASSERT_TRUE(g1c5 == clear_score(*m) || b5c5 == clear_score(*m));
+    ASSERT_TRUE(g1c5 == clear_score(*m));
 
     ASSERT_TRUE(next(&pos, &m, &mo_dto));
-    ASSERT_TRUE(g1c5 == clear_score(*m) || b5c5 == clear_score(*m));
+    ASSERT_TRUE(b5c5 == clear_score(*m));
 }
 
 
@@ -216,8 +216,8 @@ TEST(next_test, moves_not_repeated)
 
     // initialize move ordering and select moves
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, pv_move, 
-        hash_move, true, true);
+    initialize_move_ordering(&mo_dto, moves, pv_move, hash_move, 
+        pv_move, hash_move, true, true);
 
     uint32_t num_selected = 0U;
     move_t* mp;
@@ -240,8 +240,8 @@ TEST(next_test, noncaps_generated_only_when_requested)
     move_t moves[50],*m;
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
-        NO_MOVE, true, true);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, 
+        NO_MOVE, NO_MOVE, true, true);
 
     // we should get 20 moves 
     for (uint32_t i = 0; i < 20; i++)
@@ -254,7 +254,7 @@ TEST(next_test, noncaps_generated_only_when_requested)
 
 
     // now without noncaps - no moves
-    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, NO_MOVE, 
-        NO_MOVE, false, true);
+    initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, 
+        NO_MOVE, NO_MOVE, false, true);
     ASSERT_FALSE(next(&pos, &m, &mo_dto));    
 }

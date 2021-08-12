@@ -13,11 +13,13 @@
 
 uint32_t volatile max_depth = 0;
 uint32_t volatile max_time_ms = 0;
+uint32_t volatile hash_age = 0;
+
 
 extern move_line_t last_pv;
 extern hash_table_t htbl;
-extern volatile bool stop_search;
-extern volatile bool skip_time_checks;
+extern bool volatile stop_search;
+extern bool volatile skip_time_checks;
 
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
@@ -62,6 +64,7 @@ move_line_t iterate(const iterator_options_t* opts,
     int32_t score = 0;
     stats_t stats;
     memset(&stats, 0, sizeof(stats_t));
+    hash_age++;
 
     /* set up options */
     search_options_t search_opts;
@@ -100,8 +103,8 @@ move_line_t iterate(const iterator_options_t* opts,
         }
 
         /* set up the search */
-        int32_t alpha_bound = -INF;
-        int32_t beta_bound = INF;
+        int32_t alpha_bound = -CHECKMATE;
+        int32_t beta_bound = CHECKMATE;
         move_line_t search_pv; search_pv.n = 0;
 
         /* start the search */

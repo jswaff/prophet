@@ -25,20 +25,17 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
     tbl->probes++;
     uint32_t tbl_index = key % tbl->capacity;
     hash_entry_t *he = tbl->tbl + tbl_index;
-    if (he->val != 0) 
+
+    for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++)
     {
-        /* do full signature match */
-        if (he->key == key)
+        if (he->key[i] == key)
         {
-            /* success */
             tbl->hits++;
-            return he->val;
-        }
-        else
-        {
-            tbl->collisions++;
+            return he->val[i];
         }
     }
+
+    /* miss */
 
     return 0;
 }
