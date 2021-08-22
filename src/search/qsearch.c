@@ -64,6 +64,14 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
     while (next(pos, &mp, &mo_dto))
     {
         assert(get_move_score(*mp)==0);
+
+        /* if this is a capture, can it possibly raise alpha? (delta pruning) */
+        if (is_capture(*mp) && get_promopiece(*mp)==NO_PIECE && 
+            stand_pat + eval_piece(get_captured_piece(*mp)) + pawn_val * 2 < alpha)
+        {
+            continue;
+        }
+
         apply_move(pos, *mp, uptr);
 
         /* verify the move was legal */
