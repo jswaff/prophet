@@ -221,7 +221,7 @@ bool is_lack_of_mating_material(const position_t* pos);
  *
  * \return true if the position is drawn by repetition, otherwise false.
  */
-bool is_draw_rep(const position_t* pos, const undo_t* u);
+bool is_draw_rep(const position_t* pos, const undo_t* u, int prev_reps);
 
 
 /**
