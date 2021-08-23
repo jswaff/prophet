@@ -374,7 +374,7 @@ static bool is_draw(const position_t* pos, const undo_t* undo_stack)
 {
     return pos->fifty_counter >= 100 
         || is_lack_of_mating_material(pos)
-        || is_draw_rep(pos, undo_stack);
+        || is_draw_rep(pos, undo_stack, 1);
 }
 
 static square_t apply_null_move(position_t* pos) 

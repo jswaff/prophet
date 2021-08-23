@@ -42,7 +42,7 @@ bool endgame_check()
     {
         result = "1/2-1/2 {50 move rule}";
     }
-    else if (is_draw_rep(&gpos, gundos))
+    else if (is_draw_rep(&gpos, gundos, 2))
     {
         result = "1/2-1/2 {Draw by repetition}";
     }
