@@ -218,6 +218,8 @@ bool is_lack_of_mating_material(const position_t* pos);
  * \param u             a pointer to the start of an array of undo_t's
  *                      It's expected that the array has at least enough 
  *                      capacity for the position's move count.
+ * \param prev_reps     The number of previous repetitions required to 
+ *                      declare the current position as a draw.
  *
  * \return true if the position is drawn by repetition, otherwise false.
  */
