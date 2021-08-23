@@ -131,11 +131,6 @@ move_line_t iterate(const iterator_options_t* opts,
             print_pv(&pv, depth, score, elapsed, stats.nodes);
         }
 
-        /* if the search discovered a checkmate, stop */
-        if (abs(score) > CHECKMATE - 500)
-        {
-            stop_iterator = true;
-        }
 
         /* if the search discovered a checkmate, stop.  but we have to search at
          * least to the mating distance, and a little more to ensure we've found
