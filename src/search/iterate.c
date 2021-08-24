@@ -141,6 +141,13 @@ move_line_t iterate(const iterator_options_t* opts,
             stop_iterator = true;
         }
 
+
+        /* if the search has reached the max user defined  depth, stop */
+        if (opts->max_depth > 0 && depth >= opts->max_depth)
+        {
+            stop_iterator = true;
+        }
+
         /* if we've hit the max system defined depth, stop */
         if (depth >= MAX_ITERATIONS)
         {
