@@ -132,11 +132,8 @@ move_line_t iterate(const iterator_options_t* opts,
         }
 
 
-        /* if the search discovered a checkmate, stop.  but we have to search at
-         * least to the mating distance, and a little more to ensure we've found
-         * the fastest mate.
-         */
-        if (depth > 3 && abs(score) > (CHECKMATE - depth + 3))
+        /* if the search discovered a checkmate, stop. */
+        if (abs(score) > (CHECKMATE - 500))
         {
             stop_iterator = true;
         }
