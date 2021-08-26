@@ -49,7 +49,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
     {
         if (stand_pat >= beta) 
         {
-            return beta;
+            return stand_pat;
         }
         /* the static evaulation is our lower bound */
         alpha = stand_pat;
@@ -94,7 +94,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
         if (score >= beta)
         {
-            return beta;
+            return score;
         }
         if (score > alpha)
         {
