@@ -1,4 +1,5 @@
 #include <prophet/const.h>
+#include <prophet/eval.h>
 #include <prophet/hash.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
@@ -197,6 +198,22 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
     while (next(pos, &mp, &mo_dto))
     {
         assert(get_move_score(*mp)==0);
+
+        /* futility pruning - if the move appears unlikely to help just skip it. */
+        if (num_moves_searched > 0 && !incheck && depth==1 && 
+            alpha > (-CHECKMATE+500) && beta < (CHECKMATE-500) && 
+            get_promopiece(*mp)==NO_PIECE && *mp != killer1[ply] && *mp != killer2[ply])
+        {
+            int32_t mat = eval(pos, true);
+            int32_t mat_gain = eval_piece(get_captured_piece(*mp));
+            const int32_t futil_margin = pawn_val * 2;
+            if (mat + mat_gain + futil_margin <= alpha)
+            {
+                continue;
+            }
+        }
+
+
         apply_move(pos, *mp, uptr);
 
         /* verify the move was legal */
