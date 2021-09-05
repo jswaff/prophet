@@ -1,3 +1,5 @@
+#include <prophet/bitmap.h>
+
 #include "eval_internal.h"
 
 #include  <assert.h>
@@ -27,4 +29,18 @@ int32_t eval_bishop(const position_t* pos, square_t sq)
 
   
     return score;    
+}
+
+
+/**
+ * \brief Evaluate the position for bishop pairs.
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return a score for the bishop.
+ */
+int32_t eval_bishop_pair(const position_t* pos)
+{
+    return (popcnt(pos->white_bishops) > 1 ? bishop_pair : 0) -
+        (popcnt(pos->black_bishops) > 1 ? bishop_pair : 0);
 }

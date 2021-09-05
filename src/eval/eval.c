@@ -41,6 +41,7 @@ int32_t eval(const position_t* pos, bool material_only)
         score +=
             eval_accumulator(pos, pos->white_bishops, &eval_bishop) -
             eval_accumulator(pos, pos->black_bishops, &eval_bishop);
+        score += eval_bishop_pair(pos);
 
         /* fold in rook positional features */
         score +=

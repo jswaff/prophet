@@ -31,6 +31,8 @@ static const int32_t doubled_pawn                    = -10;
 /* knight terms */
 static const int32_t knight_tropism                  =  -2;
 
+/* bishop terms */
+static const int32_t bishop_pair                     =  50;
 
 /* rook terms */
 static const int32_t rook_open_file                  =  25;
@@ -144,6 +146,7 @@ static inline int32_t eval_scale(int32_t score, int32_t material)
     return score * material / all_nonpawn_pieces_val();
 }
 
+
 /**
  * \brief Evaluate a single bishop.
  *
@@ -153,6 +156,16 @@ static inline int32_t eval_scale(int32_t score, int32_t material)
  * \return a score for the bishop.
  */
 int32_t eval_bishop(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Evaluate the position for bishop pairs.
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return a score for the bishop.
+ */
+int32_t eval_bishop_pair(const position_t* pos);
 
 
 /**
