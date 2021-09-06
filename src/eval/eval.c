@@ -8,8 +8,7 @@
  * well known heuristics, such as king safety, passed pawns, isolated
  * pawns, rooks on open files, and several others.  
  *
- * This method will not detect end-of-game scenarios such as checkmate or draw
- * by lack of material.
+ * This method will not detect end-of-game scenarios such as checkmate.
  *
  * \param pos             a pointer to a chess position
  * \param material_only   if the evaluation should consider material only
@@ -18,6 +17,11 @@
  */
 int32_t eval(const position_t* pos, bool material_only)
 {
+    if (eval_draw(pos))
+    {
+        return 0;
+    }
+
     /* establish a baseline score using material, from white's perspective. */
     int32_t score = 
         eval_nonpawn_material(pos, true) -     /* white non-pawn material */
