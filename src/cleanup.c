@@ -1,5 +1,5 @@
 #include <prophet/hash.h>
-
+#include <prophet/util/output.h>
 
 bool cleanup_done = false;
 
@@ -13,6 +13,7 @@ int cleanup()
     if (!cleanup_done)
     {
         free_hash_tables();
+        close_logfile();
         cleanup_done = true;
     }
 

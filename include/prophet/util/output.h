@@ -8,6 +8,21 @@
 extern "C" {
 #endif  
 
+
+/**
+ * \brief Initialize logging.
+ *
+ */
+void init_logging();
+
+
+/**
+ * \brief Close the logfile.
+ *
+ */
+void close_logfile();
+
+
 /**
  * \brief Write an error message to stderr.
  *
@@ -15,6 +30,15 @@ extern "C" {
  *                      list of arguments.
  */
 void error(const char* format, ...);
+
+
+/**
+ * \brief Write a message to stdout and the logfile.
+ *
+ * \param format        formatted string, followed by variable length
+ *                      list of arguments.
+ */
+void logout(const char* format, ...);
 
 
 /**
