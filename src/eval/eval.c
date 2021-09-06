@@ -23,7 +23,8 @@ int32_t eval(const position_t* pos, bool material_only)
         eval_nonpawn_material(pos, true) -     /* white non-pawn material */
         eval_nonpawn_material(pos, false) +    /* black non-pawn material */
         eval_pawn_material(pos, true) -        /* white pawn material */
-        eval_pawn_material(pos, false);        /* black pawn material */
+        eval_pawn_material(pos, false) +       /* black pawn material */
+        eval_bishop_pair(pos);
 
     if (!material_only)
     {
@@ -41,8 +42,7 @@ int32_t eval(const position_t* pos, bool material_only)
         score +=
             eval_accumulator(pos, pos->white_bishops, &eval_bishop) -
             eval_accumulator(pos, pos->black_bishops, &eval_bishop);
-        score += eval_bishop_pair(pos);
-
+    
         /* fold in rook positional features */
         score +=
             eval_accumulator(pos, pos->white_rooks, &eval_rook) -
