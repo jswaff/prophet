@@ -8,10 +8,10 @@ TEST(eval_test, eval_scale_large_val)
 
 	// we expect the term to be scaled down progressivly as material is 
 	// removed from the board.
-	EXPECT_EQ(89, eval_scale(100, 
+	EXPECT_EQ(88, eval_scale(100, 
 		queen_val + rook_val*2 + bishop_val + knight_val*2));
 
-	EXPECT_EQ(80, eval_scale(100, 
+	EXPECT_EQ(78, eval_scale(100, 
 		queen_val + rook_val*2 + bishop_val + knight_val));
 
 	EXPECT_EQ(44, eval_scale(100, queen_val + rook_val));
@@ -31,7 +31,7 @@ TEST(eval_test, eval_scale_small_val)
 	EXPECT_EQ(4, eval_scale(5, 
 		queen_val + rook_val*2 + bishop_val + knight_val*2));
 
-	EXPECT_EQ(4, eval_scale(5, 
+	EXPECT_EQ(3, eval_scale(5, 
 		queen_val + rook_val*2 + bishop_val + knight_val));
 
 	EXPECT_EQ(2, eval_scale(5, queen_val + rook_val));
@@ -56,7 +56,7 @@ TEST(eval_test, eval_scale_negative_val)
 
 	EXPECT_EQ(-14, eval_scale(-33, queen_val + rook_val));
 
-	EXPECT_EQ(-5, eval_scale(-33, rook_val));
+	EXPECT_EQ(-4, eval_scale(-33, rook_val));
 
 	EXPECT_EQ(-3, eval_scale(-33, knight_val));
 }
