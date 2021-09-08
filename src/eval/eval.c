@@ -23,8 +23,7 @@ int32_t eval(const position_t* pos, bool material_only)
         eval_nonpawn_material(pos, true) -     /* white non-pawn material */
         eval_nonpawn_material(pos, false) +    /* black non-pawn material */
         eval_pawn_material(pos, true) -        /* white pawn material */
-        eval_pawn_material(pos, false) +       /* black pawn material */
-        eval_bishop_pair(pos);
+        eval_pawn_material(pos, false);        /* black pawn material */
 
     if (!material_only)
     {
