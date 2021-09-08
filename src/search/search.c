@@ -213,7 +213,6 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             }
         }
 
-
         apply_move(pos, *mp, uptr);
 
         /* verify the move was legal */
