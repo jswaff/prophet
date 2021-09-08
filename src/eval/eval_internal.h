@@ -1,6 +1,7 @@
 #ifndef _EVAL_INTERNAL_H_
 #define _EVAL_INTERNAL_H_
 
+#include <prophet/bitmap.h>
 #include <prophet/eval.h>
 
 /* make this header C++ friendly. */
@@ -148,6 +149,23 @@ static inline int32_t eval_scale(int32_t score, int32_t material)
 
 
 /**
+ * \brief Determine the game phase.
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return the game phase
+ */
+static inline int32_t eval_phase(const position_t* pos)
+{
+  return 24 -
+      popcnt(pos->white_queens | pos->black_queens) * 4 -
+      popcnt(pos->white_rooks | pos->black_rooks) * 2 -
+      popcnt(pos->white_bishops | pos->black_bishops | 
+          pos->white_knights | pos->black_knights);
+}
+
+
+/**
  * \brief Evaluate a single bishop.
  *
  * \param pos           a pointer to a chess position
@@ -188,7 +206,7 @@ int32_t eval_bishop_pair(const position_t* pos);
  *
  * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq);
+int32_t eval_king(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
