@@ -157,6 +157,14 @@ static inline int32_t eval_scale(int32_t score, int32_t material)
  */
 int32_t eval_bishop(const position_t* pos, square_t sq);
 
+/**
+ * \brief Evaluate a position for draw by lack of mating material.
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return whether the position is drawn or not.
+ */
+bool eval_draw(const position_t* pos);
 
 /**
  * \brief Evaluate the position for bishop pairs.

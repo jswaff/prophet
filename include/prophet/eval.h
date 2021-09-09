@@ -24,8 +24,7 @@ static const int32_t queen_val = 975;
  * well known heuristics, such as king safety, passed pawns, isolated
  * pawns, rooks on open files, and several others.  
  *
- * This method will not detect end-of-game scenarios such as checkmate or draw
- * by lack of material.
+ * This method will not detect end-of-game scenarios such as checkmate.
  *
  * \param pos             a pointer to a chess position
  * \param material_only   if the evaluation should consider material only
