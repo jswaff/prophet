@@ -71,7 +71,7 @@ static void test_with_symmetry(const char* fen, bool draw)
     position_t pos;
     ASSERT_TRUE(set_pos(&pos, fen));
 
-	EXPECT_EQ(draw, eval_draw(&pos));
+    EXPECT_EQ(draw, eval_draw(&pos));
 
     position_t flipped_pos = position_flip(&pos);
     
