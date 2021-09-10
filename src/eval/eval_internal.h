@@ -134,27 +134,6 @@ static const int rook_pst[64] = {
 typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
 
 
-/**
- * \brief Determine the game phase.
- *
- * The phase is in the range [0, 24], with 0 indicating there 
- * are no major or minor pieces on the board (just kings and pawns),
- * and 24 indicating all majors and minors are on the board.
- *
- * \param pos           a pointer to a chess position
- *
- * \return the game phase
- */
-static inline int32_t eval_phase(const position_t* pos)
-{
-  int32_t phase = 
-      (pos->piece_counts[0][QUEEN] + pos->piece_counts[1][QUEEN]) * 4 +
-      (pos->piece_counts[0][ROOK] + pos->piece_counts[1][ROOK]) * 2 +
-      pos->piece_counts[0][BISHOP] + pos->piece_counts[1][BISHOP] + 
-      pos->piece_counts[0][KNIGHT] + pos->piece_counts[1][KNIGHT];
-
-  return phase > 24 ? 24 : phase;
-}
 
 
 /**
@@ -268,6 +247,25 @@ int32_t eval_queen(const position_t* pos, square_t sq);
  * \return a score for the rook.
  */
 int32_t eval_rook(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Calculate a tapered score.
+ *
+ * Given a "middle game score", an "end game score", calculate a blended
+ * score in the range [mg, eg] depending on how much material is on the
+ * board.  Positions with the majority of major/minor pieces will be 
+ * weighted heavily towards the middle game score.  Likewise, positions with
+ * few or no major/minor pieces will be weighted towards the end game
+ * score.
+
+ * \param pos           a pointer to a chess position
+ * \param mg_score      the middle game score
+ * \param eg_score      the end game score
+ *
+ * \return the tapered score
+ */
+int32_t eval_taper(const position_t* pos, int32_t mg_score, int32_t eg_score);
 
 
 /**
