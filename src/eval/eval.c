@@ -17,10 +17,10 @@
  */
 int32_t eval(const position_t* pos, bool material_only)
 {
-    if (eval_draw(pos))
+    /*if (eval_draw(pos))
     {
         return 0;
-    }
+    }*/
 
     /* establish a baseline score using material, from white's perspective. */
     int32_t mat_score = 
