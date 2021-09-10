@@ -135,21 +135,11 @@ typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
 
 
 /**
- * \brief Scale a score by non-pawn material on the board.
- *
- * \param score         the score to scale
- * \param material      the amount of non-pawn material on the board
- *
- * \return the scaled score.
- */
-static inline int32_t eval_scale(int32_t score, int32_t material)
-{
-    return score * material / all_nonpawn_pieces_val();
-}
-
-
-/**
  * \brief Determine the game phase.
+ *
+ * The phase is in the range [0, 24], with 0 indicating there 
+ * are no major or minor pieces on the board (just kings and pawns),
+ * and 24 indicating all majors and minors are on the board.
  *
  * \param pos           a pointer to a chess position
  *
@@ -157,11 +147,13 @@ static inline int32_t eval_scale(int32_t score, int32_t material)
  */
 static inline int32_t eval_phase(const position_t* pos)
 {
-  return 24 -
-      popcnt(pos->white_queens | pos->black_queens) * 4 -
-      popcnt(pos->white_rooks | pos->black_rooks) * 2 -
-      popcnt(pos->white_bishops | pos->black_bishops | 
-          pos->white_knights | pos->black_knights);
+  int32_t phase = 
+      (pos->piece_counts[0][QUEEN] + pos->piece_counts[1][QUEEN]) * 4 +
+      (pos->piece_counts[0][ROOK] + pos->piece_counts[1][ROOK]) * 2 +
+      pos->piece_counts[0][BISHOP] + pos->piece_counts[1][BISHOP] + 
+      pos->piece_counts[0][KNIGHT] + pos->piece_counts[1][KNIGHT];
+
+  return phase > 24 ? 24 : phase;
 }
 
 

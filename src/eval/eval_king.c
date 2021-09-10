@@ -23,7 +23,6 @@ int32_t eval_king(const position_t* pos, square_t sq, bool endgame)
 
     if (is_white_piece(pos->piece[sq]))
     {
-        int32_t enemy_np_mat = eval_nonpawn_material(pos, false);
         if (endgame)
         {
             score = king_endgame_pst[sq];
@@ -31,12 +30,11 @@ int32_t eval_king(const position_t* pos, square_t sq, bool endgame)
         else
         {
             score = king_pst[sq];
-            score += eval_scale(eval_king_safety(pos, true), enemy_np_mat);
+            score += eval_king_safety(pos, true);
         }
     }
     else
     {
-        int32_t enemy_np_mat = eval_nonpawn_material(pos, true);
         if (endgame)
         {
             score = king_endgame_pst[flip_rank[sq]];
@@ -44,7 +42,7 @@ int32_t eval_king(const position_t* pos, square_t sq, bool endgame)
         else
         {
             score = king_pst[flip_rank[sq]];
-            score += eval_scale(eval_king_safety(pos, false), enemy_np_mat);
+            score += eval_king_safety(pos, false);
         }
     }
 
