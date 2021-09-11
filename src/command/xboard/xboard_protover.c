@@ -41,7 +41,7 @@ int xboard_protover(const char* input)
     }
 
     /* print the features that are supported and not supported */
-    out(stdout, 
+    plog(
         "feature analyze=0 colors=0 draw=0 debug=1 "
         "memory=1 myname=\"Prophet4\" name=0 nps=0 "
         "ping=1 setboard=1 sigint=0 sigterm=0 usermove=1 "

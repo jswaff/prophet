@@ -6,6 +6,7 @@ using namespace std;
 
 extern "C" 
 {
+    extern bool logging_enabled;
     extern int init();
     extern int cleanup();
 }
@@ -15,6 +16,7 @@ GTEST_API_ int main(int argc, char* argv[])
     cout << "Running main() from " << __FILE__ << endl;
     ::testing::InitGoogleTest(&argc, argv);
 
+    logging_enabled = false;
     bool perft = false;
 
     for (int i=1; i<argc; i++) 

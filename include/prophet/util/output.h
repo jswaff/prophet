@@ -38,7 +38,7 @@ void error(const char* format, ...);
  * \param format        formatted string, followed by variable length
  *                      list of arguments.
  */
-void logout(const char* format, ...);
+void plog(const char* format, ...);
 
 
 /**

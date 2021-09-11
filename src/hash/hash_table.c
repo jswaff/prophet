@@ -59,7 +59,7 @@ int init_hash_tables()
  */
 void free_hash_tables()
 {
-    out(stdout, "# freeing hash tables\n");
+    plog("# freeing hash tables\n");
     assert(htbl.tbl);
     free(htbl.tbl);
 }
@@ -87,7 +87,7 @@ int resize_hash_table(hash_table_t *tbl, uint32_t size)
     tbl->tbl = new_table_ptr;
     clear_hash_table(tbl);    
 
-    out(stdout, "# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
+    plog("# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
 
     /* success */
     return 0;
@@ -113,7 +113,7 @@ static int init_hash_table(hash_table_t *tbl, uint32_t size)
     }
     clear_hash_table(tbl);    
 
-    out(stdout, "# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
+    plog("# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
 
     /* success */
     return 0;

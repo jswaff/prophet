@@ -1,7 +1,10 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <pthread.h>
 
+
+bool logging_enabled = true;
 
 static pthread_mutex_t error_mutex;
 static pthread_mutex_t output_mutex;
@@ -14,7 +17,7 @@ static FILE* logfile = 0;
  */
 void init_logging()
 {
-    if (!logfile)
+    if (logging_enabled && !logfile)
     {
         logfile = fopen("prophet.log", "w");
     }
@@ -57,7 +60,7 @@ void error(const char* format, ...)
  * \param format        formatted string, followed by variable length
  *                      list of arguments.
  */
-void logout(const char* format, ...)
+void plog(const char* format, ...)
 {
     pthread_mutex_lock(&output_mutex);
 
@@ -66,10 +69,13 @@ void logout(const char* format, ...)
     vfprintf(stdout, format, stdout_args);
     va_end(stdout_args);
 
-    va_list log_args;
-    va_start(log_args, format);
-    vfprintf(logfile, format, log_args);
-    va_end(log_args);
+    if (logging_enabled)
+    {
+        va_list log_args;
+        va_start(log_args, format);
+        vfprintf(logfile, format, log_args);
+        va_end(log_args);
+    }
 
     pthread_mutex_unlock(&output_mutex);
 }

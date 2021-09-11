@@ -45,7 +45,7 @@ int parse_and_execute(const char* input, bool* exit_status)
          * another protocol is added in the future, push this into a protocol
          * specific error handler. */
         /* TODO: translate error code to text descriptions */
-        out(stdout, "Error (invocation failed with code %d): %s\n", cmd_retval, input);
+        plog("Error (invocation failed with code %d): %s\n", cmd_retval, input);
     }
 
 cleanup_user_command:

@@ -49,7 +49,7 @@ bool endgame_check()
 
     if (result != 0)
     {
-        out(stdout, "%s\n", result);
+        plog("%s\n", result);
         return true;
     }
 

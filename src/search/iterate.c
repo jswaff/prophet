@@ -179,7 +179,7 @@ static void print_pv(move_line_t* pv, int32_t depth, int32_t score,
 {
     char* pv_buf = move_line_to_str(pv);
     uint64_t time_centis = elapsed / 10;
-    out(stdout, "%2d %5d %5llu %7llu %s\n", depth, score, time_centis,
+    plog("%2d %5d %5llu %7llu %s\n", depth, score, time_centis,
         num_nodes, pv_buf);
     free(pv_buf);
 }
@@ -189,8 +189,8 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
     const stats_t* stats)
 {
 
-    out(stdout, "\n");
-    out(stdout, "# depth: %d\n", last_depth);
+    plog("\n");
+    plog("# depth: %d\n", last_depth);
 
     /* print node counts */
     uint64_t total_nodes = stats->nodes + stats->qnodes;
@@ -198,7 +198,7 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
     float interior_pct = stats->nodes / (total_nodes/100.0);
     float qnode_pct = stats->qnodes / (total_nodes/100.0);    
 
-    out(stdout, 
+    plog( 
         "# nodes: %lluk, interior: %lluk (%.2f%%), quiescence: %lluk (%.2f%%)\n",
         total_nodes/1000, stats->nodes/1000, interior_pct, stats->qnodes/1000, 
         qnode_pct);
@@ -207,7 +207,7 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
     uint64_t search_time_ms = milli_timer() - start_time + 1; 
     float search_time = search_time_ms / 1000.0;
     uint64_t nps = total_nodes / search_time_ms;
-    out(stdout, "# search time: %.2f seconds, rate: %llu kn/s\n",
+    plog("# search time: %.2f seconds, rate: %llu kn/s\n",
         search_time,nps);
 
     /* display hash stats */
@@ -216,7 +216,7 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
     uint64_t hash_collisions = htbl.collisions;
     float hash_hit_pct = hash_hits / (hash_probes/100.0);
     float hash_collision_pct = hash_collisions / (hash_probes/100.0);
-    out(stdout, "# hash probes: %lluk, hits: %lluk (%.2f%%), "
+    plog("# hash probes: %lluk, hits: %lluk (%.2f%%), "
         "collisions: %lluk (%.2f%%)\n",
         hash_probes/1000,
         hash_hits/1000, hash_hit_pct,
@@ -226,7 +226,7 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
     float hash_fail_low_pct = stats->hash_fail_lows / (hash_probes/100.0);
     float hash_exact_score_pct = stats->hash_exact_scores / (hash_probes/100.0);
 
-    out(stdout, "# hash fail highs: %lluk (%.2f%%), "
+    plog("# hash fail highs: %lluk (%.2f%%), "
         "fail lows: %lluk (%.2f%%), exact scores: %lluk (%.2f%%)\n",
         stats->fail_highs, hash_fail_high_pct,
         stats->fail_lows, hash_fail_low_pct,
