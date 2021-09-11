@@ -38,15 +38,15 @@ int commandline_process_options(int argc, char* argv[])
         switch (opt)
         {
             case 'r':
-                out(stdout, "random mode enabled.\n");
+                plog("random mode enabled.\n");
                 random_mode = true;
                 break;
             case 'd':
-                out(stdout, "setting max depth to %s\n", optarg);
+                plog("setting max depth to %s\n", optarg);
                 max_depth = atoi(optarg);
                 break;
             case 'h':
-                out(stdout, "setting hash table size to %s mb\n", optarg);
+                plog("setting hash table size to %s mb\n", optarg);
                 hash_size = atoi(optarg) * 1024 * 1024;
                 break;
             default:

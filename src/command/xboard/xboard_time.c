@@ -81,7 +81,7 @@ int xboard_time(const char* input)
         }
 
         max_time_ms = base_time_ms + increment_ms;
-        out(stdout, 
+        plog(
             "# setting max_time_ms: %d, remaining: %d, base: %d, inc: %d\n", 
             max_time_ms, time_remaining_millis, base_time_ms, increment_ms);
     }

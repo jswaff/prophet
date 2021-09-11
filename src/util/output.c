@@ -1,9 +1,40 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <pthread.h>
 
+
+bool logging_enabled = true;
+
 static pthread_mutex_t error_mutex;
 static pthread_mutex_t output_mutex;
+static FILE* logfile = 0;
+
+
+/**
+ * \brief Initialize logging.
+ *
+ */
+void init_logging()
+{
+    if (logging_enabled && !logfile)
+    {
+        logfile = fopen("prophet.log", "w");
+    }
+}
+
+
+/**
+ * \brief Close the logfile.
+ *
+ */
+void close_logfile() 
+{
+    if (logfile)
+    {
+        fclose(logfile);
+    }
+}
 
 
 /**
@@ -20,6 +51,33 @@ void error(const char* format, ...)
     vfprintf(stderr, format, args);
     va_end(args);
     pthread_mutex_unlock(&error_mutex);
+}
+
+
+/**
+ * \brief Write a message to stdout and the logfile.
+ *
+ * \param format        formatted string, followed by variable length
+ *                      list of arguments.
+ */
+void plog(const char* format, ...)
+{
+    pthread_mutex_lock(&output_mutex);
+
+    va_list stdout_args;
+    va_start(stdout_args, format);
+    vfprintf(stdout, format, stdout_args);
+    va_end(stdout_args);
+
+    if (logging_enabled)
+    {
+        va_list log_args;
+        va_start(log_args, format);
+        vfprintf(logfile, format, log_args);
+        va_end(log_args);
+    }
+
+    pthread_mutex_unlock(&output_mutex);
 }
 
 

@@ -23,7 +23,7 @@ int xboard_quit(const char* input)
 
     int retval = block_on_search_thread(true);
 
-    out(stdout, "bye.\n");
+    plog("bye.\n");
 
     return retval;
 }

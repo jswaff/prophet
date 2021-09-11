@@ -43,7 +43,7 @@ int xboard_ping(const char* input)
         return retval;
     }
 
-    out(stdout, "pong %d\n", n);
+    plog("pong %d\n", n);
   
     return 0;
 }

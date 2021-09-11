@@ -175,7 +175,7 @@ static int make_move_otb(move_t mv)
 
     apply_move(&gpos, mv, gundos + gpos.move_counter);
     char* str_engine_mv = move_to_str(mv);
-    out(stdout, "move %s\n", str_engine_mv);
+    plog("move %s\n", str_engine_mv);
     free(str_engine_mv);
     endgame_check();
 

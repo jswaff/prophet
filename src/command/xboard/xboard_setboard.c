@@ -35,7 +35,7 @@ int xboard_setboard(const char* input)
     /* set the board */
     if (!set_pos(&gpos, input + 9))
     {
-        out(stdout, "tellusererror Illegal position\n");
+        plog("tellusererror Illegal position\n");
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN;
     }
 

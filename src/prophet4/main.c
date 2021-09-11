@@ -19,8 +19,9 @@ int main(int argc, char* argv[])
 
     setbuf(stdin, NULL);
     setbuf(stdout, NULL);
+    init_logging();
 
-    out(stdout, "Hello!  This is the Prophet4 Chess Engine.\n\n");
+    plog("Hello!  This is the Prophet 4.0 Chess Engine.\n\n");
 
     retval = commandline_process_options(argc, argv);
     if (0 != retval)
@@ -39,7 +40,7 @@ int main(int argc, char* argv[])
 done:
     if (0 != retval)
     {
-        out(stdout, "exiting with value: %d\n", retval);
+        plog("exiting with value: %d\n", retval);
     }
 
     cleanup();
