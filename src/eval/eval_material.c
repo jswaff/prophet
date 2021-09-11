@@ -14,13 +14,26 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white)
 {
     int color = for_white ? WHITE : BLACK;
 
+    int num_pawns = pos->piece_counts[color][PAWN];
+    int num_knights = pos->piece_counts[color][KNIGHT];
     int num_bishops = pos->piece_counts[color][BISHOP];
+    int num_rooks = pos->piece_counts[color][ROOK];
+    int num_queens = pos->piece_counts[color][QUEEN];
 
-    return pos->piece_counts[color][ROOK] * rook_val +
-        pos->piece_counts[color][KNIGHT] * knight_val +
-        num_bishops * bishop_val +
-        pos->piece_counts[color][QUEEN] * queen_val +
-        (num_bishops > 1 ? bishop_pair : 0);
+    /* raise the knight's value 1/16 for each pawn above 5, and lower for each
+     * pawn below 5.
+     */
+    int32_t knight_adj = (num_pawns - 5) * 6;
+
+    /* lower the rook's value 1/8 for each pawn above 5, and raise for each
+     * pawn above 5.
+     */
+    int32_t rook_adj = (num_pawns - 5) * -12;
+
+    return num_rooks * (rook_val + rook_adj) +
+        num_knights * (knight_val + knight_adj) +
+        num_bishops * bishop_val + (num_bishops > 1 ? bishop_pair : 0) +
+        num_queens * queen_val;
 }
 
 
