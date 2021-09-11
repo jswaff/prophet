@@ -13,3 +13,16 @@ TEST(eval_test, eval_bishop)
     /* test the symmetry */
     EXPECT_EQ(eval_bishop(&pos, C1), eval_bishop(&pos, C8));
 }
+
+
+TEST(eval_test, eval_bishop_pair)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    EXPECT_EQ(0, eval_bishop_pair(&pos));
+
+    set_pos(&pos, "1rb1r1k1/2q2pb1/pp1p4/2n1pPPQ/Pn1BP3/1NN4R/1PP4P/R5K1 b - -");
+    
+    EXPECT_EQ(-bishop_pair, eval_bishop_pair(&pos));
+}

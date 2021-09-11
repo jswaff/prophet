@@ -2,7 +2,7 @@
 
 #include "../../src/eval/eval_internal.h"
 
-TEST(eval_test, eval_nonpawn_material_initial_pos)
+TEST(eval_test, nonpawn_material_initial_pos)
 {
     position_t pos;
     reset_pos(&pos);

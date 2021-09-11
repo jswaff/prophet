@@ -10,10 +10,11 @@ extern "C" {
 #endif    //__cplusplus
 
 static const int32_t pawn_val = 100;
-static const int32_t knight_val = 300;
-static const int32_t bishop_val = 320;
+static const int32_t knight_val = 325;
+static const int32_t bishop_val = 325;
+static const int32_t bishop_pair = 50;
 static const int32_t rook_val = 500;
-static const int32_t queen_val = 900;
+static const int32_t queen_val = 975;
 
 /**
  * \brief Evaluate a chess position for the side to move.
@@ -23,8 +24,7 @@ static const int32_t queen_val = 900;
  * well known heuristics, such as king safety, passed pawns, isolated
  * pawns, rooks on open files, and several others.  
  *
- * This method will not detect end-of-game scenarios such as checkmate or draw
- * by lack of material.
+ * This method will not detect end-of-game scenarios such as checkmate.
  *
  * \param pos             a pointer to a chess position
  * \param material_only   if the evaluation should consider material only

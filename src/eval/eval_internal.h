@@ -1,6 +1,7 @@
 #ifndef _EVAL_INTERNAL_H_
 #define _EVAL_INTERNAL_H_
 
+#include <prophet/bitmap.h>
 #include <prophet/eval.h>
 
 /* make this header C++ friendly. */
@@ -12,7 +13,7 @@ extern "C" {
 /* piece values */
 static inline int32_t all_nonpawn_pieces_val()
 {
-  return  queen_val + rook_val*2 + bishop_val*2 + knight_val*2;
+  return  queen_val + rook_val*2 + bishop_val*2 + bishop_pair + knight_val*2;
 }  
 
 /* king safety terms */
@@ -30,6 +31,8 @@ static const int32_t doubled_pawn                    = -10;
 
 /* knight terms */
 static const int32_t knight_tropism                  =  -2;
+
+/* bishop terms */
 
 
 /* rook terms */
@@ -132,19 +135,6 @@ typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
 
 
 /**
- * \brief Scale a score by non-pawn material on the board.
- *
- * \param score         the score to scale
- * \param material      the amount of non-pawn material on the board
- *
- * \return the scaled score.
- */
-static inline int32_t eval_scale(int32_t score, int32_t material)
-{
-    return score * material / all_nonpawn_pieces_val();
-}
-
-/**
  * \brief Evaluate a single bishop.
  *
  * \param pos           a pointer to a chess position
@@ -153,6 +143,24 @@ static inline int32_t eval_scale(int32_t score, int32_t material)
  * \return a score for the bishop.
  */
 int32_t eval_bishop(const position_t* pos, square_t sq);
+
+/**
+ * \brief Evaluate a position for draw by lack of mating material.
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return whether the position is drawn or not.
+ */
+bool eval_draw(const position_t* pos);
+
+/**
+ * \brief Evaluate the position for bishop pairs.
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return a score for the bishop.
+ */
+int32_t eval_bishop_pair(const position_t* pos);
 
 
 /**
@@ -167,7 +175,7 @@ int32_t eval_bishop(const position_t* pos, square_t sq);
  *
  * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq);
+int32_t eval_king(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
@@ -237,6 +245,25 @@ int32_t eval_queen(const position_t* pos, square_t sq);
  * \return a score for the rook.
  */
 int32_t eval_rook(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Calculate a tapered score.
+ *
+ * Given a "middle game score", an "end game score", calculate a blended
+ * score in the range [mg, eg] depending on how much material is on the
+ * board.  Positions with the majority of major/minor pieces will be 
+ * weighted heavily towards the middle game score.  Likewise, positions with
+ * few or no major/minor pieces will be weighted towards the end game
+ * score.
+
+ * \param pos           a pointer to a chess position
+ * \param mg_score      the middle game score
+ * \param eg_score      the end game score
+ *
+ * \return the tapered score
+ */
+int32_t eval_taper(const position_t* pos, int32_t mg_score, int32_t eg_score);
 
 
 /**
