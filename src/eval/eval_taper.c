@@ -23,7 +23,7 @@ static int32_t eval_phase(const position_t* pos);
  */
 int32_t eval_taper(const position_t* pos, int32_t mg_score, int32_t eg_score)
 {
-	int32_t mg_phase = eval_phase(pos);
+    int32_t mg_phase = eval_phase(pos);
     int32_t eg_phase = 24 - mg_phase;
 
     return (mg_score * mg_phase + eg_score * eg_phase) / 24;
