@@ -32,11 +32,11 @@ int32_t eval_taper(const position_t* pos, int32_t mg_score, int32_t eg_score)
 
 static int32_t eval_phase(const position_t* pos)
 {
-  int32_t phase = 
-      (pos->piece_counts[0][QUEEN] + pos->piece_counts[1][QUEEN]) * 4 +
-      (pos->piece_counts[0][ROOK] + pos->piece_counts[1][ROOK]) * 2 +
-      pos->piece_counts[0][BISHOP] + pos->piece_counts[1][BISHOP] + 
-      pos->piece_counts[0][KNIGHT] + pos->piece_counts[1][KNIGHT];
+	int32_t phase = 
+        (pos->piece_counts[0][QUEEN] + pos->piece_counts[1][QUEEN]) * 4 + 
+        (pos->piece_counts[0][ROOK] + pos->piece_counts[1][ROOK]) * 2 + 
+        pos->piece_counts[0][BISHOP] + pos->piece_counts[1][BISHOP] + 
+        pos->piece_counts[0][KNIGHT] + pos->piece_counts[1][KNIGHT];
 
-  return phase > 24 ? 24 : phase;
+    return phase > 24 ? 24 : phase;
 }

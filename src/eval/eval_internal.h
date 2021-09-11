@@ -134,8 +134,6 @@ static const int rook_pst[64] = {
 typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
 
 
-
-
 /**
  * \brief Evaluate a single bishop.
  *
