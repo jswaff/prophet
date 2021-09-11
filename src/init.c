@@ -7,6 +7,7 @@
 
 bool initialized = false;
 
+extern void init_logging();
 extern void init_bitmap_lsb_msb();
 extern void init_bitmap_file_rank();
 extern void init_bitmap_ray();
@@ -39,6 +40,7 @@ int init()
         time_t t;
         srand((unsigned) time(&t));
 
+        init_logging();
         init_bitmap_lsb_msb();
         init_bitmap_file_rank();
         init_squares();
