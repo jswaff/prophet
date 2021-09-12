@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 extern volatile uint32_t max_depth;
+extern bool logging_enabled;
 extern uint32_t hash_size;
 extern bool random_mode;
 
@@ -25,28 +26,33 @@ int commandline_process_options(int argc, char* argv[])
 
     /* specify options */
     static struct option long_options[] = {
-        {"random",      no_argument,       0, 'r'},
-        {"set depth",   required_argument, 0, 'd'},
+        {"enable logging", no_argument,       0, 'l' },
+        {"random",         no_argument,       0, 'r'},
+        {"set depth",      required_argument, 0, 'd'},
         {"set hash size in mb", required_argument, 0, 'h'}
     };
 
     int long_index = 0;
     int opt = 0;
-    while ((opt = getopt_long(argc, argv, "rd:h:",
+    while ((opt = getopt_long(argc, argv, "lrd:h:",
         long_options, &long_index)) != -1)
     {
         switch (opt)
         {
+            case 'l':
+                logging_enabled = true;
+                out(stdout, "logging enabled\n");
+                break;
             case 'r':
-                plog("random mode enabled.\n");
+                out(stdout, "random mode enabled\n");
                 random_mode = true;
                 break;
             case 'd':
-                plog("setting max depth to %s\n", optarg);
+                out(stdout, "setting max depth to %s\n", optarg);
                 max_depth = atoi(optarg);
                 break;
             case 'h':
-                plog("setting hash table size to %s mb\n", optarg);
+                out(stdout, "setting hash table size to %s mb\n", optarg);
                 hash_size = atoi(optarg) * 1024 * 1024;
                 break;
             default:
