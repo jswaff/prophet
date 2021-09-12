@@ -124,6 +124,10 @@ static const int rook_pst[64] = {
      0,  0,  0,  0,  0,  0,  0,  0 };
 
 
+enum material_type_t { KK, KNK, KBK, KBKP, KNKP, OTHER };
+typedef enum material_type_t material_type_t;
+
+
 /* define a generic signature for piece type eval functions */
 typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
 
@@ -207,6 +211,14 @@ int32_t eval_knight(const position_t* pos, square_t sq);
  */
 int32_t eval_major_on_7th(const position_t* pos, square_t sq);
 
+/**
+ * \brief Evaluate the position's "material type".
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return the material type
+ */
+material_type_t eval_material_type(const position_t* pos);
 
 /**
  * \brief Evaluate a single pawn.
