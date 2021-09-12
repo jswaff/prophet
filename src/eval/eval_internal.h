@@ -10,12 +10,6 @@ extern "C" {
 #endif  
 
 
-/* piece values */
-static inline int32_t all_nonpawn_pieces_val()
-{
-  return  queen_val + rook_val*2 + bishop_val*2 + bishop_pair + knight_val*2;
-}  
-
 /* king safety terms */
 static const int32_t king_safety_pawn_one_away       = -10;
 static const int32_t king_safety_pawn_two_away       = -20;
