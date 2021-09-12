@@ -26,7 +26,7 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white)
     int32_t knight_adj = (num_pawns - 5) * 6;
 
     /* lower the rook's value 1/8 for each pawn above 5, and raise for each
-     * pawn above 5.
+     * pawn below 5.
      */
     int32_t rook_adj = (num_pawns - 5) * -12;
 
