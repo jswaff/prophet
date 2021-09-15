@@ -33,13 +33,15 @@ int32_t eval(const position_t* pos, bool material_only)
      * returned.  Others that are "drawish" are further evaluated but later
      * tapered down.
      */
-    material_type_t mt = eval_material_type(pos);
-    int draw_factor = 1;
-    if (KK==mt || KBK==mt || KNK==mt)
+    int immediate_draw = 0;
+    material_type_t mt = eval_material_type(pos, &immediate_draw);
+    if (immediate_draw)
     {
         return 0;
     }
-    if (KBKP==mt || KNKP==mt)
+
+    int draw_factor = 1;
+    if (KPKN==mt || KNKP==mt || KPKB==mt || KBKP==mt)
     {
         draw_factor = 8;
     }
