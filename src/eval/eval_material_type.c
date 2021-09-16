@@ -131,8 +131,8 @@ material_type_t eval_material_type(const position_t* pos, int* draw_flag)
         }
     }
 
-    if ((num_white_pawns == 0 && num_white_minors < 2 && 
-        num_black_pawns==0 && num_black_minors < 2) || 
+    if ((!num_white_pawns && !num_white_majors && num_white_minors < 2 && 
+        !num_black_pawns && !num_black_majors && num_black_minors < 2) || 
         retval == KKNN || retval == KNNK)
     {
         *draw_flag = 1;
