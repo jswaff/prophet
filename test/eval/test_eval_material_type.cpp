@@ -8,7 +8,7 @@ static void test_with_symmetry(const char* fen, material_type_t material_type,
 
 TEST(eval_test, eval_material_type)
 {
-	test_with_symmetry("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -", OTHER, OTHER, 0);
+    test_with_symmetry("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -", OTHER, OTHER, 0);
     test_with_symmetry("k7/8/8/8/8/8/8/K7 w - -", KK, KK, 1);
     test_with_symmetry("kn6/8/8/8/8/8/8/K7 w - -", KKN, KNK, 1);
     test_with_symmetry("kb6/8/8/8/8/8/8/K7 w - -", KKB, KBK, 1);
