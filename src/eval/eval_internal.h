@@ -124,6 +124,11 @@ static const int rook_pst[64] = {
      0,  0,  0,  0,  0,  0,  0,  0 };
 
 
+enum material_type_t { KK, KKN, KKB, KKNN, KPKN, KPKB, KNK, KNKP, KNKN, KNKB, 
+                       KNNK, KBK, KBKP, KBKN, KBKB, OTHER };
+typedef enum material_type_t material_type_t;
+
+
 /* define a generic signature for piece type eval functions */
 typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
 
@@ -138,14 +143,6 @@ typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
  */
 int32_t eval_bishop(const position_t* pos, square_t sq);
 
-/**
- * \brief Evaluate a position for draw by lack of mating material.
- *
- * \param pos           a pointer to a chess position
- *
- * \return whether the position is drawn or not.
- */
-bool eval_draw(const position_t* pos);
 
 /**
  * \brief Evaluate the position for bishop pairs.
@@ -207,6 +204,15 @@ int32_t eval_knight(const position_t* pos, square_t sq);
  */
 int32_t eval_major_on_7th(const position_t* pos, square_t sq);
 
+/**
+ * \brief Evaluate the position's "material type".
+ *
+ * \param pos           a pointer to a chess position
+ * \param draw_flag     a pointer to an integer to set the IMMEDIATE_DRAW flag
+ *
+ * \return the material type
+ */
+material_type_t eval_material_type(const position_t* pos, int* draw_flag);
 
 /**
  * \brief Evaluate a single pawn.
