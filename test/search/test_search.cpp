@@ -132,8 +132,7 @@ TEST(search_test, stop_search)
     stop_search = true;
 
     // start a depth 3 search
-    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 3, -CHECKMATE, CHECKMATE, moves, undos, 
-        &stats, &opts));
+    search(&pos, &pv, 3, -CHECKMATE, CHECKMATE, moves, undos, &stats, &opts);
 
     // visit one node per depth, down the left side of the tree
     ASSERT_EQ(3U, stats.nodes);
