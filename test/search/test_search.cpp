@@ -1,5 +1,6 @@
 #include <prophet/const.h>
 #include <prophet/eval.h>
+#include <prophet/hash.h>
 #include <prophet/parameters.h>
 #include <prophet/search.h>
 #include <prophet/util/p4time.h>
@@ -12,6 +13,7 @@ extern bool stop_search;
 
 TEST(search_test, depth0_no_bounds)
 {
+    clear_hash_tables();
     position_t pos;
     reset_pos(&pos);
     move_line_t pv;
@@ -33,6 +35,7 @@ TEST(search_test, depth0_no_bounds)
 
 TEST(search_test, mate_in_1)
 {
+    clear_hash_tables();
     position_t pos;
     set_pos(&pos, "4k3/8/3Q4/2B5/8/8/1K6/8 w - -");
 
@@ -54,6 +57,7 @@ TEST(search_test, mate_in_1)
 
 TEST(search_test, mate_in_2)
 {
+    clear_hash_tables();
     position_t pos;
     set_pos(&pos, "r1bq2r1/b4pk1/p1pp1p2/1p2pP2/1P2P1PB/3P4/1PPQ2P1/R3K2R w - -");
     move_line_t pv;
@@ -76,6 +80,7 @@ TEST(search_test, mate_in_2)
 
 TEST(search_test, mate_in_3)
 {
+    clear_hash_tables();
     position_t pos;
     set_pos(&pos, "r5rk/5p1p/5R2/4B3/8/8/7P/7K w - -");
     move_line_t pv;
@@ -100,6 +105,7 @@ TEST(search_test, mate_in_3)
 
 TEST(search_test, stalemate)
 {
+    clear_hash_tables();
     position_t pos;
     set_pos(&pos, "8/6p1/5p2/5k1K/7P/8/8/8 w - -");
     move_line_t pv;
@@ -119,6 +125,7 @@ TEST(search_test, stalemate)
 
 TEST(search_test, stop_search)
 {
+    clear_hash_tables();
     position_t pos;
     reset_pos(&pos);
     move_line_t pv;
@@ -145,6 +152,7 @@ TEST(search_test, stop_search)
 
 TEST(search_test, search_stops_on_time)
 {
+    clear_hash_tables();
     position_t pos;
     reset_pos(&pos);
     move_line_t pv;
