@@ -59,5 +59,5 @@ I plan to focus on improving the evaluation function for a while.  At some point
 
 The search is still single threaded.  That is actually a regression of sorts; Prophet 2 was SMP capable (using Young Brothers Wait), but it will come.  I just choose to focus on the eval for a bit first.
 
-You can see the full backlog here: https://trello.com/b/dhcOEaCO/chess4j-board .
+You can see the combined Prophet / chess4j backlog here: https://trello.com/b/dhcOEaCO/chess4j-board .
 
