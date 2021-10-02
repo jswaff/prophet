@@ -130,9 +130,9 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
         if (hash_val != 0 && get_hash_entry_depth(hash_val) >= depth) 
         {
             hash_entry_type_t hash_entry_type = get_hash_entry_type(hash_val);
-            int32_t hash_score = get_hash_entry_score(hash_val);
             if (hash_entry_type == LOWER_BOUND) 
             {
+                int32_t hash_score = get_hash_entry_score(hash_val);
                 if (hash_score >= beta) 
                 {
                     stats->fail_highs++;
@@ -142,6 +142,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             } 
             else if (hash_entry_type == UPPER_BOUND) 
             {
+                int32_t hash_score = get_hash_entry_score(hash_val);
                 if (hash_score <= alpha) 
                 {
                     stats->fail_lows++;
@@ -152,7 +153,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             else if (hash_entry_type == EXACT_SCORE) 
             {
                 stats->hash_exact_scores++;
-                return hash_score;
+                return get_hash_entry_score(hash_val);
             }
         }
 
