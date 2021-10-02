@@ -34,14 +34,14 @@ If you have the proper build tools, just do:
 
 ```
 make
-./prophet
+./prophet4
 ```
 
 If you want to build the tests, you'll also need g++, and a copy of  Google Test from https://github.com/google/googletest .  Finally, set an environment variable GTEST_DIR to point to the 'googletest' project (we don't need the googlemock stuff).  Then do:
 
 ```
 make test
-./prophet_test
+./prophet4_test
 ```
 
 ## How Strong is it?
