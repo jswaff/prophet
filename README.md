@@ -9,7 +9,7 @@ Prophet is a chess playing program written in C.  Technically it's a chess engin
 
 ## Design Goals
 
-This codebase is the third major rewrite of Prophet.  The last version of the codebase (https://github.com/jswaff/prophet3) was retired in 2018.  Some design goals for this codebase were:
+This codebase is the third major rewrite of Prophet.  The first verson was started in 2000.  The second version (first rewrite) was started sometime around 2007, and the last version (second rewrite) around 2011.  The last version of the codebase (https://github.com/jswaff/prophet3) was retired in 2018.  Some design goals for this codebase were:
 
 * Use pure C.  
 * Modularize.  Group source files into directories according to functionality.  E.g. movegen, eval, search, etc.
@@ -17,7 +17,7 @@ This codebase is the third major rewrite of Prophet.  The last version of the co
 * Make better use of static functions.
 * Make better use of the const qualifier.
 * Improve the documentation.  Each function should have at least a brief description of its purpose, a listing of arguments and return value.
-* Improve testing coverage.  In general Prophet3 is well tested, but there are some areas the coverage could improve.  
+* Improve unit testing.  In general Prophet3 is well tested, but there are some areas the coverage could improve.  
 * Use a proper test harness, e.g. GoogleTest or the like.  The release binary should not contain the test code.  Prophet3 uses assertions exclusively, and all the test code is built into the binary (even though it can't be executed when compiled with the NDEBUG flag).
 * Make use of memory leak detectors such as Valgrind on each release.
 * Produce a static library containing the move generation, evaluation, and search related functions.  The intent is to modularize the core functionality for inclusion in other projects.
@@ -43,6 +43,12 @@ If you want to build the tests, you'll also need g++, and a copy of  Google Test
 make test
 ./prophet_test
 ```
+
+## How Strong is it?
+
+Strong enough to beat most humans, but not that strong as far as chess engines go. (I hope to change this.)
+
+I estimate a 64 bit build would land somewhere in the 2200-2300 range on the CCRL list.
 
 
 ## Status and Roadmap
