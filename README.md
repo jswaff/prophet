@@ -57,5 +57,5 @@ The "great rewrite", which started in 2019, is finally complete! This version is
 
 I plan to focus on improving the evaluation function for a while.  At some point I'd like to try my hand at implementing a neural network, but in the short term I want to improve the "Hand Crafted Evaluation".  The first step in doing that will be to add some automated tuning using logistic regression ("Texel Tuning").  Once the existing weights are optimized, I can think of several new terms that need to be added.  Prophet doesn't understand pawns very well, and king safety is crude.  It lacks knowledge of even basic endgames.
 
-The search is still single threaded.  That is actually a regression of sorts -- Prophet 2 was SMP capable (using Young Brother's Wait), but it will come.  I just choose to focus on the eval for a bit first.
+The search is still single threaded.  That is actually a regression of sorts; Prophet 2 was SMP capable (using Young Brothers Wait), but it will come.  I just choose to focus on the eval for a bit first.
 
