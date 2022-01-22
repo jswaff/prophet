@@ -1,4 +1,5 @@
 #include <prophet/bitmap.h>
+#include <prophet/parameters.h>
 
 #include "eval_internal.h"
 
@@ -13,10 +14,11 @@ static int32_t eval_rook_open_file(const position_t* pos, square_t sq);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the rook is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the rook.
  */
-int32_t eval_rook(const position_t* pos, square_t sq)
+int32_t eval_rook(const position_t* pos, square_t sq, bool UNUSED(endgame))
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK);
 

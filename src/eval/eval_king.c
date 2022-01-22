@@ -11,6 +11,7 @@
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the king is on
+ * \param endgame       if the eval should be done in the endgame phase
  *
  * \return a score for the king.
  */

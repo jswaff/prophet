@@ -135,7 +135,7 @@ typedef enum material_type_t material_type_t;
 
 
 /* define a generic signature for piece type eval functions */
-typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
+typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
@@ -143,10 +143,11 @@ typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the bishop is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the bishop.
  */
-int32_t eval_bishop(const position_t* pos, square_t sq);
+int32_t eval_bishop(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
@@ -168,6 +169,7 @@ int32_t eval_bishop_pair(const position_t* pos);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the king is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the king.
  */
@@ -190,10 +192,11 @@ int32_t eval_king_safety(const position_t* pos, bool wtm);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the knight is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the knight.
  */
-int32_t eval_knight(const position_t* pos, square_t sq);
+int32_t eval_knight(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
@@ -224,10 +227,11 @@ material_type_t eval_material_type(const position_t* pos, int* draw_flag);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the pawn is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the pawn.
  */
-int32_t eval_pawn(const position_t* pos, square_t sq);
+int32_t eval_pawn(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
@@ -235,10 +239,11 @@ int32_t eval_pawn(const position_t* pos, square_t sq);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the queen is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the queen.
  */
-int32_t eval_queen(const position_t* pos, square_t sq);
+int32_t eval_queen(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
@@ -246,10 +251,11 @@ int32_t eval_queen(const position_t* pos, square_t sq);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the rook is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the rook.
  */
-int32_t eval_rook(const position_t* pos, square_t sq);
+int32_t eval_rook(const position_t* pos, square_t sq, bool endgame);
 
 
 /**
@@ -313,12 +319,13 @@ bool pawn_passed(const position_t* pos, square_t pawn_sq);
  *
  * \param pos           a pointer to a chess position
  * \param piece_map     a set of pieces to evaluate
+ * \param endgame       if the eval should be done in the endgame phase 
  * \param eval_func     the evaluation function to use for each piece
  *
  * \return the cumulative score.
  */
 int32_t eval_accumulator(const position_t* pos, uint64_t piece_map, 
-  eval_func_t eval_func);
+  bool endgame, eval_func_t eval_func);
 
 
 

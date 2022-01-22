@@ -1,3 +1,5 @@
+#include <prophet/parameters.h>
+
 #include "eval_internal.h"
 
 #include  <assert.h>
@@ -7,10 +9,11 @@
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the pawn is on
+ * \param endgame       if the eval should be done in the endgame phase 
  *
  * \return a score for the pawn.
  */
-int32_t eval_pawn(const position_t* pos, square_t sq)
+int32_t eval_pawn(const position_t* pos, square_t sq, bool UNUSED(endgame))
 {
     assert(pos->piece[sq] == PAWN || pos->piece[sq] == -PAWN);
 

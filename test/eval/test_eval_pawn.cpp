@@ -8,10 +8,10 @@ TEST(eval_test, eval_pawn)
     reset_pos(&pos);
 
     /* test the piece square term */
-    EXPECT_EQ(pawn_pst[E2], eval_pawn(&pos, E2));
+    EXPECT_EQ(pawn_pst[E2], eval_pawn(&pos, E2, false));
 
     /* test the symmetry */
-    EXPECT_EQ(eval_pawn(&pos, E2), eval_pawn(&pos, E7));
+    EXPECT_EQ(eval_pawn(&pos, E2, false), eval_pawn(&pos, E7, false));
 }
 
 
@@ -35,9 +35,9 @@ TEST(eval_test, eval_pawn_wiki3)
 
     /* the white pawn on B6 is passed */
     EXPECT_EQ(pawn_pst[B6] + passed_pawn,
-        eval_pawn(&pos, B6));
+        eval_pawn(&pos, B6, false));
 
     /* the black pawn on A2 is passed and isolated */
     EXPECT_EQ(pawn_pst[A7] + passed_pawn + isolated_pawn,
-        eval_pawn(&pos, A2));
+        eval_pawn(&pos, A2, false));
 }

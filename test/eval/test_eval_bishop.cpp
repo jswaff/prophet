@@ -8,10 +8,10 @@ TEST(eval_test, eval_bishop)
     reset_pos(&pos);
 
     EXPECT_EQ(
-        bishop_pst[C1], eval_bishop(&pos, C1));
+        bishop_pst[C1], eval_bishop(&pos, C1, false));
 
     /* test the symmetry */
-    EXPECT_EQ(eval_bishop(&pos, C1), eval_bishop(&pos, C8));
+    EXPECT_EQ(eval_bishop(&pos, C1, false), eval_bishop(&pos, C8, false));
 }
 
 
