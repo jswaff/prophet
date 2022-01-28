@@ -46,7 +46,7 @@ LIBS = -lprophet4lib $(COMMON_LIBS)
 .PHONY: ALL clean test
 
 ALL: $(EXE_SRC_OBJECTS) main.o libprophet4lib.a
-	$(CC) $(CFLAGS) -o prophet4_1 -L. $(EXE_SRC_OBJECTS) \
+	$(CC) $(CFLAGS) -o prophet4_2 -L. $(EXE_SRC_OBJECTS) \
 	$(SRC_BUILD_DIR)/prophet4/main.o $(LIBS)
 
 # source build objects
@@ -81,7 +81,7 @@ test: $(LIB_SRC_OBJECTS) $(EXE_SRC_OBJECTS) $(TEST_OBJECTS) $(GTEST_OBJ)
 	$(GTEST_OBJ) $(COMMON_LIBS)
 
 clean:
-	rm -f ./prophet4_1
+	rm -f ./prophet4_2
 	rm -f ./libprophet4lib.a
 	rm -f ./prophet4_test
 	rm -rf $(BUILD_DIR)
