@@ -13,7 +13,7 @@
  *
  * \return a score for the pawn.
  */
-int32_t eval_pawn(const position_t* pos, square_t sq, bool UNUSED(endgame))
+int32_t eval_pawn(const position_t* pos, square_t sq, bool endgame)
 {
     assert(pos->piece[sq] == PAWN || pos->piece[sq] == -PAWN);
 
@@ -22,11 +22,11 @@ int32_t eval_pawn(const position_t* pos, square_t sq, bool UNUSED(endgame))
     /* start with the piece square value */
     if (is_white_piece(pos->piece[sq]))
     {
-        score = pawn_pst[sq];
+        score = endgame ? pawn_endgame_pst[sq] : pawn_pst[sq];
     }
     else
     {
-        score = pawn_pst[flip_rank[sq]];
+        score = endgame ? pawn_endgame_pst[flip_rank[sq]] : pawn_pst[flip_rank[sq]];
     }
 
     /* add a bonus for the pawn being passed */

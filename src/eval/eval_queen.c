@@ -13,7 +13,7 @@
  *
  * \return a score for the queen.
  */
-int32_t eval_queen(const position_t* pos, square_t sq, bool UNUSED(endgame))
+int32_t eval_queen(const position_t* pos, square_t sq, bool endgame)
 {
     assert(pos->piece[sq] == QUEEN || pos->piece[sq] == -QUEEN);
 
@@ -21,11 +21,11 @@ int32_t eval_queen(const position_t* pos, square_t sq, bool UNUSED(endgame))
 
     if (is_white_piece(pos->piece[sq]))
     {
-        score = queen_pst[sq];
+        score = endgame ? queen_endgame_pst[sq] : queen_pst[sq];
     }
     else
     {
-        score = queen_pst[flip_rank[sq]];
+        score = endgame ? queen_endgame_pst[flip_rank[sq]] : queen_pst[flip_rank[sq]];
     }
 
     score += eval_major_on_7th(pos, sq);
