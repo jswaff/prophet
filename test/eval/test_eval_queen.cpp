@@ -14,6 +14,20 @@ TEST(eval_test, eval_queen)
     EXPECT_EQ(eval_queen(&pos, D1, false), eval_queen(&pos, D8, false));
 }
 
+
+TEST(eval_test, eval_queen_endgame)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    EXPECT_EQ(
+        queen_endgame_pst[D1], eval_queen(&pos, D1, true));
+
+    /* test the symmetry */
+    EXPECT_EQ(eval_queen(&pos, D1, true), eval_queen(&pos, D8, true));
+}
+
+
 TEST(eval_test, eval_queen_7th_king_back_rank)
 {
     position_t pos;

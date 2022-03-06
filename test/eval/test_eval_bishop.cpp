@@ -14,6 +14,18 @@ TEST(eval_test, eval_bishop)
     EXPECT_EQ(eval_bishop(&pos, C1, false), eval_bishop(&pos, C8, false));
 }
 
+TEST(eval_test, eval_bishop_endgame)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    EXPECT_EQ(
+        bishop_endgame_pst[C1], eval_bishop(&pos, C1, true));
+
+    /* test the symmetry */
+    EXPECT_EQ(eval_bishop(&pos, C1, true), eval_bishop(&pos, C8, true));
+}
+
 
 TEST(eval_test, eval_bishop_pair)
 {

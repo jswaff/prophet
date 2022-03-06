@@ -14,6 +14,19 @@ TEST(eval_test, eval_rook)
     EXPECT_EQ(eval_rook(&pos, A1, false), eval_rook(&pos, A8, false));
 }
 
+
+TEST(eval_test, eval_rook_endgame)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    EXPECT_EQ(
+        rook_endgame_pst[A1], eval_rook(&pos, A1, true));
+
+    /* test the symmetry */
+    EXPECT_EQ(eval_rook(&pos, A1, true), eval_rook(&pos, A8, true));
+}
+
 TEST(eval_test, eval_rook_7th_king_back_rank)
 {
     position_t pos;

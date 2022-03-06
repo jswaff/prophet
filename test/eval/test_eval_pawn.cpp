@@ -14,6 +14,18 @@ TEST(eval_test, eval_pawn)
     EXPECT_EQ(eval_pawn(&pos, E2, false), eval_pawn(&pos, E7, false));
 }
 
+TEST(eval_test, eval_pawn_endgame)
+{
+    position_t pos;
+    reset_pos(&pos);
+
+    /* test the piece square term */
+    EXPECT_EQ(pawn_endgame_pst[E2], eval_pawn(&pos, E2, true));
+
+    /* test the symmetry */
+    EXPECT_EQ(eval_pawn(&pos, E2, true), eval_pawn(&pos, E7, true));
+}
+
 
 TEST(eval_test, eval_pawn_wiki3)
 {

@@ -13,7 +13,7 @@
  *
  * \return a score for the knight.
  */
-int32_t eval_knight(const position_t* pos, square_t sq, bool UNUSED(endgame))
+int32_t eval_knight(const position_t* pos, square_t sq, bool endgame)
 {
     assert(pos->piece[sq] == KNIGHT || pos->piece[sq] == -KNIGHT);
 
@@ -21,12 +21,12 @@ int32_t eval_knight(const position_t* pos, square_t sq, bool UNUSED(endgame))
 
     if (is_white_piece(pos->piece[sq]))
     {
-        score = knight_pst[sq];
+        score = endgame ? knight_endgame_pst[sq] : knight_pst[sq];
         score += knight_tropism * distance(sq, pos->black_king);
     }
     else
     {
-        score = knight_pst[flip_rank[sq]];
+        score = endgame ? knight_endgame_pst[flip_rank[sq]] : knight_pst[flip_rank[sq]];
         score += knight_tropism * distance(sq, pos->white_king);
     }
 

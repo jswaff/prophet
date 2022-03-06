@@ -18,7 +18,7 @@ static int32_t eval_rook_open_file(const position_t* pos, square_t sq);
  *
  * \return a score for the rook.
  */
-int32_t eval_rook(const position_t* pos, square_t sq, bool UNUSED(endgame))
+int32_t eval_rook(const position_t* pos, square_t sq, bool endgame)
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK);
 
@@ -26,11 +26,11 @@ int32_t eval_rook(const position_t* pos, square_t sq, bool UNUSED(endgame))
 
     if (is_white_piece(pos->piece[sq]))
     {
-        score = rook_pst[sq];
+        score = endgame ? rook_endgame_pst[sq] : rook_pst[sq];
     }
     else
     {
-        score = rook_pst[flip_rank[sq]];
+        score = endgame ? rook_endgame_pst[flip_rank[sq]] : rook_pst[flip_rank[sq]];
     }
 
     score += eval_major_on_7th(pos, sq);

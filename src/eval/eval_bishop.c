@@ -14,7 +14,7 @@
  *
  * \return a score for the bishop.
  */
-int32_t eval_bishop(const position_t* pos, square_t sq, bool UNUSED(endgame))
+int32_t eval_bishop(const position_t* pos, square_t sq, bool endgame)
 {
     assert(pos->piece[sq] == BISHOP || pos->piece[sq] == -BISHOP);
 
@@ -22,11 +22,11 @@ int32_t eval_bishop(const position_t* pos, square_t sq, bool UNUSED(endgame))
 
     if (is_white_piece(pos->piece[sq]))
     {
-        score = bishop_pst[sq];
+        score = endgame ? bishop_endgame_pst[sq] : bishop_pst[sq];
     }
     else
     {
-        score = bishop_pst[flip_rank[sq]];
+        score = endgame ? bishop_endgame_pst[flip_rank[sq]] : bishop_pst[flip_rank[sq]];
     }
 
   
