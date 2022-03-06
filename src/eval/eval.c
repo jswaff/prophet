@@ -53,41 +53,43 @@ int32_t eval(const position_t* pos, bool material_only)
     mg_score +=
         eval_accumulator(pos, pos->white_pawns, false, &eval_pawn) -
         eval_accumulator(pos, pos->black_pawns, false, &eval_pawn);
-    eg_score +=
+    /*eg_score +=
         eval_accumulator(pos, pos->white_pawns, true, &eval_pawn) -
-        eval_accumulator(pos, pos->black_pawns, true, &eval_pawn);
+        eval_accumulator(pos, pos->black_pawns, true, &eval_pawn);*/
 
     /* fold in knight positional features */
     mg_score +=
         eval_accumulator(pos, pos->white_knights, false, &eval_knight) -
         eval_accumulator(pos, pos->black_knights, false, &eval_knight);
-    eg_score +=
+    /*eg_score +=
         eval_accumulator(pos, pos->white_knights, true, &eval_knight) -
-        eval_accumulator(pos, pos->black_knights, true, &eval_knight);
+        eval_accumulator(pos, pos->black_knights, true, &eval_knight);*/
 
     /* fold in bishop positional features */
     mg_score +=
         eval_accumulator(pos, pos->white_bishops, false, &eval_bishop) -
         eval_accumulator(pos, pos->black_bishops, false, &eval_bishop);
-    eg_score +=
+    /*eg_score +=
         eval_accumulator(pos, pos->white_bishops, true, &eval_bishop) -
-        eval_accumulator(pos, pos->black_bishops, true, &eval_bishop);
+        eval_accumulator(pos, pos->black_bishops, true, &eval_bishop);*/
 
     /* fold in rook positional features */
     mg_score +=
         eval_accumulator(pos, pos->white_rooks, false, &eval_rook) -
         eval_accumulator(pos, pos->black_rooks, false, &eval_rook);
-    eg_score +=
+    /*eg_score +=
         eval_accumulator(pos, pos->white_rooks, true, &eval_rook) -
-        eval_accumulator(pos, pos->black_rooks, true, &eval_rook);
+        eval_accumulator(pos, pos->black_rooks, true, &eval_rook);*/
 
     /* fold in queen positional features */
     mg_score +=
         eval_accumulator(pos, pos->white_queens, false, &eval_queen) -
         eval_accumulator(pos, pos->black_queens, false, &eval_queen);
-    eg_score +=
+    /*eg_score +=
         eval_accumulator(pos, pos->white_queens, true, &eval_queen) -
-        eval_accumulator(pos, pos->black_queens, true, &eval_queen);
+        eval_accumulator(pos, pos->black_queens, true, &eval_queen);*/
+
+    eg_score = mg_score;
 
     /* fold in king positional features.  This includes king safety. */
     mg_score += eval_king(pos, pos->white_king, false) - 
