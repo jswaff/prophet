@@ -35,10 +35,10 @@ int xboard_protover(const char* input)
     }
 
     /* this program support protocol version 2 and higher */
-    if (n < 2)
+    /*if (n < 2)
     {
         return P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED;
-    }
+    }*/
 
     /* print the features that are supported and not supported */
     plog(
