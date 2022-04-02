@@ -99,6 +99,14 @@ int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
         }
     }
 
+    /* if string is move only per xboard protocol 1*/
+    if (strlen(input)>=4 && strlen(input)<=5)
+    {
+        cmd->cmd_func = xboard_move;
+        goto done;
+    }
+
+
     /* Note - this error message is part of the xboard protocol */
     plog("Error (unknown command): %s\n", input);
     cmd->cmd_func = &command_no_op;

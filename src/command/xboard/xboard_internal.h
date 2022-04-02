@@ -237,6 +237,21 @@ int xboard_usermove(const char* input);
 
 
 /**
+ * \brief Execute the xboard move string command - xboard protocol 1 
+ * 
+ * If the move is illegal, print an error message; see the section "Commands 
+ * from the engine to xboard". If the move is legal and in turn, make it. If 
+ * not in force mode, stop the opponent's clock, start the engine's clock, 
+ * start thinking, and eventually make a move. 
+ *
+ * \param input         the user entered input 
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int xboard_move(const char* input);
+
+
+/**
  * \brief Select a move, and apply it to the game position.  If the game is
  * over, print the result.
  *

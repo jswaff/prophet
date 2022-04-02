@@ -15,11 +15,11 @@ TEST(xboard_test, xboard_protover_missing_n)
         xboard_protover("protover"));
 }
 
-TEST(xboard_test, xboard_protover_unsupported_version)
+/*TEST(xboard_test, xboard_protover_unsupported_version)
 {
     EXPECT_EQ(P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED, 
         xboard_protover("protover 1"));
-}
+}*/
 
 TEST(xboard_test, xboard_protover)
 {
