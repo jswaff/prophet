@@ -56,15 +56,6 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white);
 int32_t eval_pawn_material(const position_t* pos, bool for_white);
 
 
-/**
- * \brief Evaluate a piece.
- *
- * \param piece         the piece to evaluate
- *
- * \return the score
- */
-int32_t eval_piece(int32_t piece);
-
 
 // make this header C++ friendly.
 #ifdef     __cplusplus

@@ -33,21 +33,21 @@ int32_t eval(const position_t* pos, bool material_only)
      * returned.  Others that are "drawish" are further evaluated but later
      * tapered down.
      */
-    int immediate_draw = 0;
+    /*int immediate_draw = 0;
     material_type_t mt = eval_material_type(pos, &immediate_draw);
     if (immediate_draw)
     {
         return 0;
-    }
+    }*/
 
-    int draw_factor = 1;
-    if (KPKN==mt || KPKB==mt || KNKP==mt || KBKP==mt)
+    /*int draw_factor = 1;*/
+    /*if (KPKN==mt || KPKB==mt || KNKP==mt || KBKP==mt)
     {
         draw_factor = 8;
-    }
+    }*/
 
     int32_t mg_score = mat_score;
-    int32_t eg_score = mat_score;
+    /*int32_t eg_score = mat_score;*/
 
     /* fold in pawn positional features */
     mg_score +=
@@ -90,18 +90,19 @@ int32_t eval(const position_t* pos, bool material_only)
         eval_accumulator(pos, pos->white_queens, true, &eval_queen) -
         eval_accumulator(pos, pos->black_queens, true, &eval_queen);*/
 
-    eg_score = mg_score;
+    /*eg_score = mg_score;*/
 
     /* fold in king positional features.  This includes king safety. */
     mg_score += eval_king(pos, pos->white_king, false) - 
         eval_king(pos, pos->black_king, false);
-    eg_score += eval_king(pos, pos->white_king, true) - 
-        eval_king(pos, pos->black_king, true);
+    /*eg_score += eval_king(pos, pos->white_king, true) - 
+        eval_king(pos, pos->black_king, true);*/
 
     /* calculate a score between [mg_score, eg_score], weighted by the
      * amount of material on the board.  then use the draw factor to pull
      * the score towards a draw. */
-    int32_t tapered_score = eval_taper(pos, mg_score, eg_score) / draw_factor;
+    /*int32_t tapered_score = eval_taper(pos, mg_score, eg_score) / draw_factor;*/
+    int32_t tapered_score = mg_score;
 
     /* return the score from the perspective of the player on move */
     return pos->player == WHITE ? tapered_score : -tapered_score;    

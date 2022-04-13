@@ -61,15 +61,15 @@ int32_t eval_king_safety(const position_t* pos, bool wtm)
             {
                 if (pos->piece[H3] == PAWN)
                 {
-                    score += king_safety_pawn_one_away / 2;
+                    score += king_safety_pawn_one_away;
                 }
                 else if (pos->piece[H4] == PAWN)
                 {
-                    score += king_safety_pawn_two_away / 2;
+                    score += king_safety_pawn_two_away;
                 }
                 else
                 {
-                    score += king_safety_pawn_far_away / 2;
+                    score += king_safety_pawn_far_away;
                 }
             }
         }
@@ -115,15 +115,15 @@ int32_t eval_king_safety(const position_t* pos, bool wtm)
             {
                 if (pos->piece[A3] == PAWN)
                 {
-                    score += king_safety_pawn_one_away / 2;
+                    score += king_safety_pawn_one_away;
                 }
                 else if (pos->piece[A4] == PAWN)
                 {
-                    score += king_safety_pawn_two_away / 2;
+                    score += king_safety_pawn_two_away;
                 }
                 else 
                 {
-                    score += king_safety_pawn_far_away / 2;
+                    score += king_safety_pawn_far_away;
                 }
             }
         }
@@ -183,15 +183,15 @@ int32_t eval_king_safety(const position_t* pos, bool wtm)
             {
                 if (pos->piece[H6] == -PAWN)
                 {
-                    score += king_safety_pawn_one_away / 2;
+                    score += king_safety_pawn_one_away;
                 }
                 else if (pos->piece[H5] == -PAWN)
                 {
-                    score += king_safety_pawn_two_away / 2;
+                    score += king_safety_pawn_two_away;
                 }
                 else
                 {
-                    score += king_safety_pawn_far_away / 2;
+                    score += king_safety_pawn_far_away;
                 }
             }
         }
@@ -237,15 +237,15 @@ int32_t eval_king_safety(const position_t* pos, bool wtm)
             {
                 if (pos->piece[A6] == -PAWN)
                 {
-                    score += king_safety_pawn_one_away / 2;
+                    score += king_safety_pawn_one_away;
                 }
                 else if (pos->piece[A5] == -PAWN)
                 {
-                    score += king_safety_pawn_two_away / 2;
+                    score += king_safety_pawn_two_away;
                 }
                 else 
                 {
-                    score += king_safety_pawn_far_away / 2;
+                    score += king_safety_pawn_far_away;
                 }
             }
         }

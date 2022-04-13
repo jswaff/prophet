@@ -67,7 +67,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
         /* if this is a capture, can it possibly raise alpha? (delta pruning) */
         if (is_capture(*mp) && get_promopiece(*mp)==NO_PIECE && 
-            stand_pat + eval_piece(get_captured_piece(*mp)) + pawn_val * 2 < alpha)
+            stand_pat + see_eval_piece(get_captured_piece(*mp)) + see_pawn_val * 2 < alpha)
         {
             continue;
         }
