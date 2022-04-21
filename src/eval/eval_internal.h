@@ -9,56 +9,57 @@
 extern "C" {
 #endif  
 
+
 /* king safety terms */
 /*
-KING_SAFETY_PAWN_FAR_AWAY=-20
-KING_SAFETY_PAWN_TWO_AWAY=-14
-KING_SAFETY_PAWN_ONE_AWAY=5
-KING_SAFETY_MIDDLE_OPEN_FILE=-57
+KING_SAFETY_PAWN_ONE_AWAY=-7
+KING_SAFETY_MIDDLE_OPEN_FILE=-14
+KING_SAFETY_PAWN_FAR_AWAY=-6
+KING_SAFETY_PAWN_TWO_AWAY=-6
 */
-static const int32_t king_safety_pawn_one_away       =   5;
-static const int32_t king_safety_pawn_two_away       = -14;
-static const int32_t king_safety_pawn_far_away       = -20;
-static const int32_t king_safety_middle_open_file    = -57;
+static const int32_t king_safety_pawn_one_away       =  -7;
+static const int32_t king_safety_pawn_two_away       =  -6;
+static const int32_t king_safety_pawn_far_away       =  -6;
+static const int32_t king_safety_middle_open_file    = -14;
 
 
 /* pawn terms */
 /*
-ISOLATED_PAWN=-12
+ISOLATED_PAWN=-13
 DOUBLED_PAWN=-7
-PASSED_PAWN=36
+PASSED_PAWN=35
 */
-static const int32_t passed_pawn                     =  36;
-static const int32_t isolated_pawn                   = -12;
+static const int32_t passed_pawn                     =  35;
+static const int32_t isolated_pawn                   = -13;
 static const int32_t doubled_pawn                    =  -7;
 
 
 /* knight terms */
 /*
-KNIGHT_TROPISM=-7
+KNIGHT_TROPISM=-6
 */
-static const int32_t knight_tropism                  =  -7;
+static const int32_t knight_tropism                  =  -6;
 
 /* bishop terms */
 
 
 /* rook terms */
 /*
-ROOK_OPEN_FILE=43
-ROOK_HALF_OPEN_FILE=29
-MAJOR_ON_7TH=36
-CONNECTED_MAJORS_ON_7TH=79
+ROOK_OPEN_FILE=42
+CONNECTED_MAJORS_ON_7TH=77
+ROOK_HALF_OPEN_FILE=30
+MAJOR_ON_7TH=34
 */
-static const int32_t rook_open_file                  =  43;
-static const int32_t rook_half_open_file             =  29;
+static const int32_t rook_open_file                  =  42;
+static const int32_t rook_half_open_file             =  30;
 
 
-static const int32_t major_on_7th                    =  36;
-static const int32_t connected_majors_on_7th         =  79;
+static const int32_t major_on_7th                    =  34;
+static const int32_t connected_majors_on_7th         =  77;
 
 
 static const int bishop_pst[64] = {
-   -2,-2,-3,-2,0,-1,-1,-2,-3,6,7,6,7,8,7,-5,-3,10,19,17,16,18,10,1,-1,11,18,27,27,20,12,0,-1,11,23,30,27,18,6,0,-2,10,20,28,23,23,10,-1,-1,7,9,3,10,8,23,-3,-6,-1,-20,-5,-5,-16,-3,-4
+   -3,-1,-4,-2,-1,-2,-2,-2,-4,7,6,4,9,8,7,-7,-2,11,18,19,17,21,11,1,-1,12,22,32,32,22,12,3,-1,15,24,34,31,16,6,-1,-1,13,22,24,23,22,13,1,-2,6,10,2,10,9,26,-5,-10,-2,-22,-8,-5,-19,-4,-6
 };
 
 static const int bishop_endgame_pst[64] = {
@@ -74,7 +75,7 @@ static const int bishop_endgame_pst[64] = {
 
 
 static const int king_pst[64] = {
-   -30,-30,-30,-30,-30,-30,-30,-30,-30,-29,-30,-29,-30,-29,-29,-30,-29,-29,-29,-30,-30,-28,-28,-30,-30,-29,-29,-29,-29,-28,-28,-30,-31,-30,-29,-30,-30,-29,-29,-32,-20,-20,-20,-21,-21,-20,-18,-23,-11,-10,-10,-21,-22,-9,0,-2,-3,13,19,-34,-5,-38,36,-2
+   -31,-31,-31,-30,-30,-29,-29,-30,-29,-24,-23,-24,-26,-23,-23,-29,-26,-20,-19,-23,-24,-12,-11,-25,-29,-18,-13,-15,-12,-6,-10,-30,-34,-27,-11,-13,-10,-4,-19,-38,-27,-20,-12,-15,-10,-8,-13,-34,-24,-17,-12,-31,-29,-12,-12,-29,-21,-16,-15,-50,-39,-44,-18,-43
 };
 
 
@@ -83,7 +84,7 @@ static const int king_endgame_pst[64] = {
 };
 
 static const int knight_pst[64] = {
-   -37,-32,-33,-33,-32,-34,-33,-34,-35,-32,-27,-28,-30,-31,-34,-35,-35,-27,-20,-15,-24,-23,-28,-35,-32,-15,-15,-1,4,-13,-18,-30,-32,-28,-12,-4,-3,-10,-27,-31,-34,-24,-1,-12,-10,6,-12,-33,-16,-16,-21,-11,-8,-10,-14,-14,-4,-33,5,-30,-11,-28,-27,-3
+   -39,-34,-31,-36,-33,-38,-34,-38,-37,-35,-26,-27,-34,-32,-37,-37,-37,-24,-11,-9,-19,-19,-24,-36,-33,-14,-5,9,12,-6,-12,-30,-33,-26,-5,1,6,-6,-24,-33,-37,-22,-3,-6,-9,6,-10,-36,-20,-19,-23,-12,-11,-12,-18,-18,-6,-37,-1,-34,-17,-31,-32,-4
 };
 
 static const int knight_endgame_pst[64] = {
@@ -99,7 +100,7 @@ static const int knight_endgame_pst[64] = {
 
 
 static const int pawn_pst[64] = {
-   0,0,0,0,0,0,0,0,79,68,56,52,46,47,46,57,63,58,45,39,34,42,43,48,16,10,4,8,8,8,9,2,-14,-12,-14,-4,-4,-14,-12,-23,-19,-18,-17,-19,-12,-17,-12,-24,-21,-16,-25,-34,-22,-1,-4,-26,0,0,0,0,0,0,0,0
+   0,0,0,0,0,0,0,0,102,90,71,65,56,56,58,72,72,70,57,46,41,49,55,54,10,5,0,3,1,4,4,-2,-18,-18,-21,-12,-10,-21,-18,-27,-23,-22,-22,-25,-18,-18,-13,-26,-27,-24,-33,-44,-33,-6,-9,-32,0,0,0,0,0,0,0,0
 };
 
 static const int pawn_endgame_pst[64] = {
@@ -115,7 +116,7 @@ static const int pawn_endgame_pst[64] = {
 
 
 static const int queen_pst[64] = {
-   -5,3,3,3,4,3,1,2,-12,-15,-2,1,1,5,3,2,-4,-2,3,8,10,10,7,7,-6,-4,3,6,12,10,7,5,-9,0,3,7,10,9,8,1,-4,2,4,7,6,7,6,-1,-8,-3,11,1,10,2,-1,-2,-1,-8,-7,13,-4,-8,-2,-4
+   -7,4,7,6,8,5,2,5,-17,-24,-2,2,5,7,5,3,-9,-3,4,12,13,15,10,12,-8,-5,4,10,18,18,11,10,-9,-2,4,10,14,12,14,5,-5,-1,7,5,7,11,7,1,-10,-5,14,4,12,4,-3,-1,-4,-11,-8,13,-5,-12,-3,-6
 };
 
 static const int queen_endgame_pst[64] = {
@@ -130,7 +131,7 @@ static const int queen_endgame_pst[64] = {
 };
 
 static const int rook_pst[64] = {
-   14,10,7,8,7,4,3,5,6,5,5,2,2,8,4,2,3,8,7,5,2,4,6,-1,0,0,6,2,2,4,-1,0,-7,0,0,-1,-1,-1,0,-6,-9,-2,-6,-3,-5,-1,-1,-9,-16,-4,-5,-2,-5,0,-3,-17,-4,-3,6,6,5,14,-16,-12
+   18,11,9,13,9,8,6,8,7,10,7,5,-1,9,4,5,6,11,8,9,3,6,6,-3,1,2,6,3,3,7,-2,1,-7,0,1,-1,-1,-1,0,-8,-13,-2,-7,-6,-7,-4,0,-11,-19,-3,-7,-5,-6,2,-4,-25,-5,0,6,9,10,17,-21,-21
 };
 
 static const int rook_endgame_pst[64] = {

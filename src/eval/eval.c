@@ -90,13 +90,14 @@ int32_t eval(const position_t* pos, bool material_only)
         eval_accumulator(pos, pos->white_queens, true, &eval_queen) -
         eval_accumulator(pos, pos->black_queens, true, &eval_queen);*/
 
-    eg_score = mg_score;
-
     /* fold in king positional features.  This includes king safety. */
     mg_score += eval_king(pos, pos->white_king, false) - 
         eval_king(pos, pos->black_king, false);
-    eg_score += eval_king(pos, pos->white_king, true) - 
-        eval_king(pos, pos->black_king, true);
+    /*eg_score += eval_king(pos, pos->white_king, true) - 
+        eval_king(pos, pos->black_king, true);*/
+
+    eg_score = mg_score;
+
 
     /* calculate a score between [mg_score, eg_score], weighted by the
      * amount of material on the board.  then use the draw factor to pull
