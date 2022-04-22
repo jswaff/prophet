@@ -19,7 +19,7 @@ KING_SAFETY_PAWN_TWO_AWAY=-6
 */
 static const int32_t king_safety_pawn_one_away       =  -9;
 static const int32_t king_safety_pawn_two_away       =  -6;
-static const int32_t king_safety_pawn_far_away       =  -6;
+static const int32_t king_safety_pawn_far_away       =  -8;
 static const int32_t king_safety_middle_open_file    = -14;
 
 
