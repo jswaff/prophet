@@ -13,18 +13,18 @@ extern "C" {
 /*
 BISHOP_PAIR=32
 PAWN_VAL=100
-ROOK_VAL=522
+ROOK_VAL=527
 KNIGHT_VAL=383
-QUEEN_VAL=996
-BISHOP_VAL=333
+QUEEN_VAL=1006
+BISHOP_VAL=335
 */
 
 static const int32_t pawn_val = 100;
 static const int32_t knight_val = 383;
-static const int32_t bishop_val = 333;
+static const int32_t bishop_val = 335;
 static const int32_t bishop_pair = 32;
-static const int32_t rook_val = 522;
-static const int32_t queen_val = 996;
+static const int32_t rook_val = 527;
+static const int32_t queen_val = 1006;
 
 /**
  * \brief Evaluate a chess position for the side to move.
