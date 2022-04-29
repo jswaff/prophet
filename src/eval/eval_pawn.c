@@ -9,43 +9,53 @@
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the pawn is on
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score for the pawn.
  */
-int32_t eval_pawn(const position_t* pos, square_t sq, bool endgame)
+void eval_pawn(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
     assert(pos->piece[sq] == PAWN || pos->piece[sq] == -PAWN);
 
-    int32_t score = 0; 
+    int32_t pm;
 
     /* start with the piece square value */
     if (is_white_piece(pos->piece[sq]))
     {
-        score = endgame ? pawn_endgame_pst[sq] : pawn_pst[sq];
+        pm = 1;
+        *mgscore += pawn_pst[sq];
+        *egscore += pawn_endgame_pst[sq];
     }
     else
     {
-        score = endgame ? pawn_endgame_pst[flip_rank[sq]] : pawn_pst[flip_rank[sq]];
+        pm = -1;
+        int32_t flipsq = flip_rank[sq];
+        *mgscore -= pawn_pst[flipsq];
+        *egscore -= pawn_endgame_pst[flipsq];
     }
 
     /* add a bonus for the pawn being passed */
     if (pawn_passed(pos, sq)) 
     {
-        score += passed_pawn;
+        int32_t pp = passed_pawn * pm;
+        *mgscore += pp;
+        *egscore += pp;
     }
     
     /* add a penalty for the pawn being doubled */
     if (pawn_doubled(pos, sq)) 
     {
-        score += doubled_pawn;
+        int32_t dp = doubled_pawn * pm;
+        *mgscore += dp;
+        *egscore += dp;
     }
 
     /* add a penalty for the pawn being isolated */
     if (pawn_isolated(pos, sq)) 
     {
-        score += isolated_pawn;
+        int32_t ip = isolated_pawn * pm;
+        *mgscore += ip;
+        *egscore += ip;
     }
-    
-    return score;    
+
 }

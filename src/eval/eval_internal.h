@@ -236,11 +236,11 @@ material_type_t eval_material_type(const position_t* pos, int* draw_flag);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the pawn is on
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score for the pawn.
  */
-int32_t eval_pawn(const position_t* pos, square_t sq, bool endgame);
+void eval_pawn(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
 /**
