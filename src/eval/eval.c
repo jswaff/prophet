@@ -78,14 +78,13 @@ int32_t eval(const position_t* pos, bool material_only)
     }
 
     /* fold in queen positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_queens, false, &eval_queen) -
-        eval_accumulator(pos, pos->black_queens, false, &eval_queen);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_queens, true, &eval_queen) -
-        eval_accumulator(pos, pos->black_queens, true, &eval_queen);*/
-
-    eg_score = mg_score;
+    uint64_t all_queens = pos->white_queens | pos->black_queens;
+    while (all_queens)
+    {
+        square_t sq = (square_t)get_lsb(all_queens);
+        eval_queen(pos, sq, &mg_score, &eg_score);
+        all_queens ^= square_to_bitmap(sq);
+    }
 
     /* fold in pawn positional features */
     // mg_score +=

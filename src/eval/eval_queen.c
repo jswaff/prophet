@@ -9,26 +9,26 @@
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the queen is on
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score for the queen.
  */
-int32_t eval_queen(const position_t* pos, square_t sq, bool endgame)
+void eval_queen(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
     assert(pos->piece[sq] == QUEEN || pos->piece[sq] == -QUEEN);
 
-    int32_t score = 0; 
+    int32_t s = eval_major_on_7th(pos, sq);
 
     if (is_white_piece(pos->piece[sq]))
     {
-        score = endgame ? queen_endgame_pst[sq] : queen_pst[sq];
+        *mgscore += queen_pst[sq] + s;
+        *egscore += queen_endgame_pst[sq] + s;
     }
     else
     {
-        score = endgame ? queen_endgame_pst[flip_rank[sq]] : queen_pst[flip_rank[sq]];
+        int32_t flipsq = flip_rank[sq];
+        *mgscore -= queen_pst[flipsq] + s;
+        *egscore -= queen_endgame_pst[flipsq] + s;
     }
 
-    score += eval_major_on_7th(pos, sq);
-  
-    return score;    
 }
