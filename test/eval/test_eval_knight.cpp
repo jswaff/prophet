@@ -7,24 +7,15 @@ TEST(eval_test, eval_knight)
     position_t pos;
     reset_pos(&pos);
 
-    EXPECT_EQ(
-        knight_pst[B1] + knight_tropism * (int32_t)distance(B1, E8),
-        eval_knight(&pos, B1, false));
+    /* test the piece square term */
+    int32_t mg = 0; int32_t eg = 0;
+    eval_knight(&pos, B1, &mg, &eg);
+    EXPECT_EQ(knight_pst[B1] + knight_tropism * (int32_t)distance(B1, E8), mg);
+    EXPECT_EQ(knight_endgame_pst[B1] + knight_tropism * (int32_t)distance(B1, E8), eg);
 
     /* test the symmetry */
-    EXPECT_EQ(eval_knight(&pos, B1, false), eval_knight(&pos, B8, false));
-}
-
-
-TEST(eval_test, eval_knight_endgame)
-{
-    position_t pos;
-    reset_pos(&pos);
-
-    EXPECT_EQ(
-        knight_endgame_pst[B1] + knight_tropism * (int32_t)distance(B1, E8),
-        eval_knight(&pos, B1, true));
-
-    /* test the symmetry */
-    EXPECT_EQ(eval_knight(&pos, B1, true), eval_knight(&pos, B8, true));
+    int32_t mg2 = 0; int32_t eg2 = 0;
+    eval_knight(&pos, B8, &mg2, &eg2);
+    EXPECT_EQ(mg, -mg2);
+    EXPECT_EQ(eg, -eg2);
 }

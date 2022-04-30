@@ -200,11 +200,11 @@ int32_t eval_king_safety(const position_t* pos, bool wtm);
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the knight is on
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score for the knight.
  */
-int32_t eval_knight(const position_t* pos, square_t sq, bool endgame);
+void eval_knight(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
 /**

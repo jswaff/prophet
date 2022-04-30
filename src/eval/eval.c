@@ -51,12 +51,13 @@ int32_t eval(const position_t* pos, bool material_only)
 
 
     /* fold in knight positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_knights, false, &eval_knight) -
-        eval_accumulator(pos, pos->black_knights, false, &eval_knight);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_knights, true, &eval_knight) -
-        eval_accumulator(pos, pos->black_knights, true, &eval_knight);*/
+    uint64_t all_knights = pos->white_knights | pos->black_knights;
+    while (all_knights)
+    {
+        square_t sq = (square_t)get_lsb(all_knights);
+        eval_knight(pos, sq, &mg_score, &eg_score);
+        all_knights ^= square_to_bitmap(sq);
+    }
 
     /* fold in bishop positional features */
     mg_score +=
