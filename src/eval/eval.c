@@ -60,12 +60,13 @@ int32_t eval(const position_t* pos, bool material_only)
     }
 
     /* fold in bishop positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_bishops, false, &eval_bishop) -
-        eval_accumulator(pos, pos->black_bishops, false, &eval_bishop);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_bishops, true, &eval_bishop) -
-        eval_accumulator(pos, pos->black_bishops, true, &eval_bishop);*/
+    uint64_t all_bishops = pos->white_bishops | pos->black_bishops;
+    while (all_bishops)
+    {
+        square_t sq = (square_t)get_lsb(all_bishops);
+        eval_bishop(pos, sq, &mg_score, &eg_score);
+        all_bishops ^= square_to_bitmap(sq);
+    }
 
     /* fold in rook positional features */
     mg_score +=
