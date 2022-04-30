@@ -69,12 +69,13 @@ int32_t eval(const position_t* pos, bool material_only)
     }
 
     /* fold in rook positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_rooks, false, &eval_rook) -
-        eval_accumulator(pos, pos->black_rooks, false, &eval_rook);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_rooks, true, &eval_rook) -
-        eval_accumulator(pos, pos->black_rooks, true, &eval_rook);*/
+    uint64_t all_rooks = pos->white_rooks | pos->black_rooks;
+    while (all_rooks)
+    {
+        square_t sq = (square_t)get_lsb(all_rooks);
+        eval_rook(pos, sq, &mg_score, &eg_score);
+        all_rooks ^= square_to_bitmap(sq);
+    }
 
     /* fold in queen positional features */
     mg_score +=
