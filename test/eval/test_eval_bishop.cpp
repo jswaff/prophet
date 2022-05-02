@@ -7,23 +7,18 @@ TEST(eval_test, eval_bishop)
     position_t pos;
     reset_pos(&pos);
 
-    EXPECT_EQ(
-        bishop_pst[C1], eval_bishop(&pos, C1, false));
+    /* test the piece square term */
+    int32_t mg = 0; int32_t eg = 0;
+    eval_bishop(&pos, C1, &mg, &eg);
+    EXPECT_EQ(bishop_pst[C1], mg);
+    EXPECT_EQ(bishop_endgame_pst[C1], eg);
+
 
     /* test the symmetry */
-    EXPECT_EQ(eval_bishop(&pos, C1, false), eval_bishop(&pos, C8, false));
-}
-
-TEST(eval_test, eval_bishop_endgame)
-{
-    position_t pos;
-    reset_pos(&pos);
-
-    EXPECT_EQ(
-        bishop_endgame_pst[C1], eval_bishop(&pos, C1, true));
-
-    /* test the symmetry */
-    EXPECT_EQ(eval_bishop(&pos, C1, true), eval_bishop(&pos, C8, true));
+    int32_t mg2 = 0; int32_t eg2 = 0;
+    eval_bishop(&pos, C8, &mg2, &eg2);
+    EXPECT_EQ(mg, -mg2);
+    EXPECT_EQ(eg, -eg2);
 }
 
 
