@@ -34,17 +34,17 @@ int32_t eval(const position_t* pos, bool material_only)
      * tapered down.
      */
     int immediate_draw = 0;
-    /*material_type_t mt = */ eval_material_type(pos, &immediate_draw);
+    material_type_t mt = eval_material_type(pos, &immediate_draw);
     if (immediate_draw)
     {
         return 0;
     }
 
     int draw_factor = 1;
-    /*if (KPKN==mt || KPKB==mt || KNKP==mt || KBKP==mt)
+    if (KPKN==mt || KPKB==mt || KNKP==mt || KBKP==mt)
     {
         draw_factor = 8;
-    }*/
+    }
 
     int32_t mg_score = mat_score;
     int32_t eg_score = mat_score;
