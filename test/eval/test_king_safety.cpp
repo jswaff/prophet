@@ -86,6 +86,6 @@ TEST(eval_test, king_safety_queen_side)
         "1krq1bnr/1ppppppp/8/8/p7/8/PPPPPPPP/1KRQ1BNR b - - 0 1"));
 
     EXPECT_EQ(0, eval_king_safety(&pos, true));
-    EXPECT_EQ(king_safety_pawn_far_away, 
+    EXPECT_EQ(king_safety_wing_pawn_far_away, 
         eval_king_safety(&pos, false));
 }
