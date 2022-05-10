@@ -14,7 +14,7 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white)
 {
     int color = for_white ? WHITE : BLACK;
 
-    /*int num_pawns = pos->piece_counts[color][PAWN];*/
+    int num_pawns = pos->piece_counts[color][PAWN];
     int num_knights = pos->piece_counts[color][KNIGHT];
     int num_bishops = pos->piece_counts[color][BISHOP];
     int num_rooks = pos->piece_counts[color][ROOK];
@@ -23,12 +23,12 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white)
     /* raise the knight's value 1/16 for each pawn above 5, and lower for each
      * pawn below 5.
      */
-    int32_t knight_adj = 0; /*(num_pawns - 5) * 6;*/
+    int32_t knight_adj = (num_pawns - 5) * knight_kaufman_adj;
 
     /* lower the rook's value 1/8 for each pawn above 5, and raise for each
      * pawn below 5.
      */
-    int32_t rook_adj = 0; /*(num_pawns - 5) * -12;*/
+    int32_t rook_adj = (num_pawns - 5) * rook_kaufman_adj;
 
     return num_rooks * (rook_val + rook_adj) +
         num_knights * (knight_val + knight_adj) +

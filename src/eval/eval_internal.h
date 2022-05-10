@@ -12,12 +12,12 @@ extern "C" {
 
 /* king safety terms */
 /*
-KING_SAFETY_WING_PAWN_FAR_AWAY=-24
-KING_SAFETY_PAWN_FAR_AWAY=-23
+KING_SAFETY_PAWN_ONE_AWAY=-4
+KING_SAFETY_WING_PAWN_ONE_AWAY=0
 KING_SAFETY_PAWN_TWO_AWAY=-14
 KING_SAFETY_WING_PAWN_TWO_AWAY=-9
-KING_SAFETY_WING_PAWN_ONE_AWAY=0
-KING_SAFETY_PAWN_ONE_AWAY=-4
+KING_SAFETY_PAWN_FAR_AWAY=-23
+KING_SAFETY_WING_PAWN_FAR_AWAY=-24
 KING_SAFETY_MIDDLE_OPEN_FILE=-39
 */
 static const int32_t king_safety_pawn_one_away       =  -4;
@@ -31,20 +31,20 @@ static const int32_t king_safety_middle_open_file    = -39;
 
 /* pawn terms */
 /*
-DOUBLED_PAWN=-8
-PASSED_PAWN=28
 ISOLATED_PAWN=-13
+DOUBLED_PAWN=-7
+PASSED_PAWN=31
 */
-static const int32_t passed_pawn                     =  28;
+static const int32_t passed_pawn                     =  31;
 static const int32_t isolated_pawn                   = -13;
-static const int32_t doubled_pawn                    =  -8;
+static const int32_t doubled_pawn                    =  -7;
 
 
 /* knight terms */
 /*
-KNIGHT_TROPISM=-7
+KNIGHT_TROPISM=-8
 */
-static const int32_t knight_tropism                  =  -7;
+static const int32_t knight_tropism                  =  -8;
 
 /* bishop terms */
 
