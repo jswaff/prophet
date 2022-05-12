@@ -11,27 +11,26 @@ TEST(eval_test, eval_king)
     ASSERT_TRUE(set_pos(&pos, 
         "rnbq1rk1/pppppppp/bn6/8/BN6/5P2/PPPPP1PP/RNBQ1RK1 w - - 0 1"));
 
-    int32_t wk = eval_king(&pos, G1, false);
-    EXPECT_EQ(
-        king_pst[G1] + eval_king_safety(&pos, true), 
-        wk);
-
-
-    EXPECT_EQ(
-        king_pst[G1] + eval_king_safety(&pos, false),
-        eval_king(&pos, G8, false));
+    int32_t mg = 0; int32_t eg = 0;
+    eval_king(&pos, G1, &mg, &eg);
+    EXPECT_EQ(king_pst[G1] + eval_king_safety(&pos, true), mg);
+    EXPECT_EQ(king_endgame_pst[G1], eg);
 }
 
 
-TEST(eval_test, eval_king_endgame)
+TEST(eval_test, eval_king2)
 {
-    // this position has no non-pawn material, so king safety isn't considered.
     position_t pos;
     ASSERT_TRUE(set_pos(&pos,"8/p3k3/8/8/8/8/4K3/8 w - - 0 1"));
 
-    EXPECT_EQ(
-        king_endgame_pst[E2], eval_king(&pos, E2, true));
+    int32_t mg = 0; int32_t eg = 0;
+    eval_king(&pos, E2, &mg, &eg);
+    EXPECT_EQ(king_pst[E2] + eval_king_safety(&pos, true), mg);
+    EXPECT_EQ(king_endgame_pst[E2], eg);
 
     // test the symmetry
-    EXPECT_EQ(eval_king(&pos, E2, true), eval_king(&pos, E7, true));
+    int32_t mg2 = 0; int32_t eg2 = 0;
+    eval_king(&pos, E7, &mg2, &eg2);
+    EXPECT_EQ(mg, -mg2);
+    EXPECT_EQ(eg, -eg2);
 }

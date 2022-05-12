@@ -5,48 +5,29 @@
 /**
  * \brief Evaluate a single king.
  * 
- * TODO: separate endgame evaluation to another method.  Do not scale king
- * safety in this function.  Instead, try to smooth the two scores based
- * on material on the board.
- *
  * \param pos           a pointer to a chess position
  * \param sq            the square the king is on
- * \param endgame       if the eval should be done in the endgame phase
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq, bool endgame)
+void eval_king(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
     assert(pos->piece[sq] == KING || pos->piece[sq] == -KING);
     assert(sq == pos->white_king || sq == pos->black_king);
 
-    int32_t score = 0; 
-
     if (is_white_piece(pos->piece[sq]))
     {
-        if (endgame)
-        {
-            score = king_endgame_pst[sq];
-        }
-        else
-        {
-            score = king_pst[sq];
-            score += eval_king_safety(pos, true);
-        }
+        *mgscore += king_pst[sq];
+        *mgscore += eval_king_safety(pos, true);
+        *egscore += king_endgame_pst[sq];
     }
     else
     {
-        if (endgame)
-        {
-            score = king_endgame_pst[flip_rank[sq]];
-        }
-        else
-        {
-            score = king_pst[flip_rank[sq]];
-            score += eval_king_safety(pos, false);
-        }
+        int32_t flipsq = flip_rank[sq];
+        *mgscore -= king_pst[flipsq];
+        *mgscore -= eval_king_safety(pos, false);
+        *egscore -= king_endgame_pst[flipsq];
     }
 
-  
-    return score;    
 }

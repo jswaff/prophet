@@ -118,7 +118,7 @@ typedef enum material_type_t material_type_t;
 
 
 /* define a generic signature for piece type eval functions */
-typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq, bool endgame);
+typedef void (*eval_func_t)(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
 /**
@@ -146,17 +146,13 @@ int32_t eval_bishop_pair(const position_t* pos);
 /**
  * \brief Evaluate a single king.
  * 
- * TODO: separate endgame evaluation to another method.  Do not scale king
- * safety in this function.  Instead, try to smooth the two scores based
- * on material on the board.
- *
  * \param pos           a pointer to a chess position
  * \param sq            the square the king is on
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score for the king.
  */
-int32_t eval_king(const position_t* pos, square_t sq, bool endgame);
+void eval_king(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
 /**
@@ -302,13 +298,13 @@ bool pawn_passed(const position_t* pos, square_t pawn_sq);
  *
  * \param pos           a pointer to a chess position
  * \param piece_map     a set of pieces to evaluate
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  * \param eval_func     the evaluation function to use for each piece
  *
- * \return the cumulative score.
  */
-int32_t eval_accumulator(const position_t* pos, uint64_t piece_map, 
-  bool endgame, eval_func_t eval_func);
+void eval_accumulator(const position_t* pos, uint64_t piece_map, 
+  int32_t* mgscore, int32_t* egscore, eval_func_t eval_func);
 
 
 

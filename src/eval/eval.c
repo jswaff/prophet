@@ -49,6 +49,14 @@ int32_t eval(const position_t* pos, bool material_only)
     int32_t mg_score = mat_score;
     int32_t eg_score = mat_score;
 
+    /* fold in pawn positional features */
+    uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
+    while (all_pawns)
+    {
+        square_t sq = (square_t)get_lsb(all_pawns);
+        eval_pawn(pos, sq, &mg_score, &eg_score);
+        all_pawns ^= square_to_bitmap(sq);
+    }
 
     /* fold in knight positional features */
     uint64_t all_knights = pos->white_knights | pos->black_knights;
@@ -57,7 +65,7 @@ int32_t eval(const position_t* pos, bool material_only)
         square_t sq = (square_t)get_lsb(all_knights);
         eval_knight(pos, sq, &mg_score, &eg_score);
         all_knights ^= square_to_bitmap(sq);
-    }
+    }    
 
     /* fold in bishop positional features */
     uint64_t all_bishops = pos->white_bishops | pos->black_bishops;
@@ -86,26 +94,10 @@ int32_t eval(const position_t* pos, bool material_only)
         all_queens ^= square_to_bitmap(sq);
     }
 
-    /* fold in pawn positional features */
-    // mg_score +=
-    //     eval_accumulator(pos, pos->white_pawns, false, &eval_pawn) -
-    //     eval_accumulator(pos, pos->black_pawns, false, &eval_pawn);
-    // eg_score +=
-    //     eval_accumulator(pos, pos->white_pawns, true, &eval_pawn) -
-    //     eval_accumulator(pos, pos->black_pawns, true, &eval_pawn);
-    uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
-    while (all_pawns)
-    {
-        square_t sq = (square_t)get_lsb(all_pawns);
-        eval_pawn(pos, sq, &mg_score, &eg_score);
-        all_pawns ^= square_to_bitmap(sq);
-    }
 
     /* fold in king positional features.  This includes king safety. */
-    mg_score += eval_king(pos, pos->white_king, false) - 
-        eval_king(pos, pos->black_king, false);
-    eg_score += eval_king(pos, pos->white_king, true) - 
-        eval_king(pos, pos->black_king, true);
+    eval_king(pos, pos->white_king, &mg_score, &eg_score);
+    eval_king(pos, pos->black_king, &mg_score, &eg_score);
 
 
     /* calculate a score between [mg_score, eg_score], weighted by the
