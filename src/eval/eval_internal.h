@@ -118,7 +118,7 @@ typedef enum material_type_t material_type_t;
 
 
 /* define a generic signature for piece type eval functions */
-typedef int32_t (*eval_func_t)(const position_t* pos, square_t sq, bool endgame);
+typedef void (*eval_func_t)(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
 /**
@@ -302,13 +302,13 @@ bool pawn_passed(const position_t* pos, square_t pawn_sq);
  *
  * \param pos           a pointer to a chess position
  * \param piece_map     a set of pieces to evaluate
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  * \param eval_func     the evaluation function to use for each piece
  *
- * \return the cumulative score.
  */
-int32_t eval_accumulator(const position_t* pos, uint64_t piece_map, 
-  bool endgame, eval_func_t eval_func);
+void eval_accumulator(const position_t* pos, uint64_t piece_map, 
+  int32_t* mgscore, int32_t* egscore, eval_func_t eval_func);
 
 
 

@@ -51,61 +51,23 @@ int32_t eval(const position_t* pos, bool material_only)
 
 
     /* fold in knight positional features */
-    uint64_t all_knights = pos->white_knights | pos->black_knights;
-    while (all_knights)
-    {
-        square_t sq = (square_t)get_lsb(all_knights);
-        eval_knight(pos, sq, &mg_score, &eg_score);
-        all_knights ^= square_to_bitmap(sq);
-    }
+    eval_accumulator(pos, pos->white_knights | pos->black_knights, &mg_score, &eg_score, &eval_knight);
 
     /* fold in bishop positional features */
-    uint64_t all_bishops = pos->white_bishops | pos->black_bishops;
-    while (all_bishops)
-    {
-        square_t sq = (square_t)get_lsb(all_bishops);
-        eval_bishop(pos, sq, &mg_score, &eg_score);
-        all_bishops ^= square_to_bitmap(sq);
-    }
+    eval_accumulator(pos, pos->white_bishops | pos->black_bishops, &mg_score, &eg_score, &eval_bishop);
 
     /* fold in rook positional features */
-    uint64_t all_rooks = pos->white_rooks | pos->black_rooks;
-    while (all_rooks)
-    {
-        square_t sq = (square_t)get_lsb(all_rooks);
-        eval_rook(pos, sq, &mg_score, &eg_score);
-        all_rooks ^= square_to_bitmap(sq);
-    }
+    eval_accumulator(pos, pos->white_rooks | pos->black_rooks, &mg_score, &eg_score, &eval_rook);
 
     /* fold in queen positional features */
-    uint64_t all_queens = pos->white_queens | pos->black_queens;
-    while (all_queens)
-    {
-        square_t sq = (square_t)get_lsb(all_queens);
-        eval_queen(pos, sq, &mg_score, &eg_score);
-        all_queens ^= square_to_bitmap(sq);
-    }
+    eval_accumulator(pos, pos->white_queens | pos->black_queens, &mg_score, &eg_score, &eval_queen);
 
     /* fold in pawn positional features */
-    // mg_score +=
-    //     eval_accumulator(pos, pos->white_pawns, false, &eval_pawn) -
-    //     eval_accumulator(pos, pos->black_pawns, false, &eval_pawn);
-    // eg_score +=
-    //     eval_accumulator(pos, pos->white_pawns, true, &eval_pawn) -
-    //     eval_accumulator(pos, pos->black_pawns, true, &eval_pawn);
-    uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
-    while (all_pawns)
-    {
-        square_t sq = (square_t)get_lsb(all_pawns);
-        eval_pawn(pos, sq, &mg_score, &eg_score);
-        all_pawns ^= square_to_bitmap(sq);
-    }
+    eval_accumulator(pos, pos->white_pawns | pos->black_pawns, &mg_score, &eg_score, &eval_pawn);
 
     /* fold in king positional features.  This includes king safety. */
-    mg_score += eval_king(pos, pos->white_king, false) - 
-        eval_king(pos, pos->black_king, false);
-    eg_score += eval_king(pos, pos->white_king, true) - 
-        eval_king(pos, pos->black_king, true);
+    mg_score += eval_king(pos, pos->white_king, false) - eval_king(pos, pos->black_king, false);
+    eg_score += eval_king(pos, pos->white_king, true) - eval_king(pos, pos->black_king, true);
 
 
     /* calculate a score between [mg_score, eg_score], weighted by the
