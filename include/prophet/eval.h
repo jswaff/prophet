@@ -9,12 +9,26 @@
 extern "C" {
 #endif    //__cplusplus
 
+
+/*
+BISHOP_PAIR=34
+PAWN_VAL=100
+ROOK_VAL=541
+KNIGHT_VAL=387
+QUEEN_VAL=1040
+BISHOP_VAL=344
+KNIGHT_KAUFMAN_ADJ=0
+ROOK_KAUFMAN_ADJ=0
+*/
+
 static const int32_t pawn_val = 100;
-static const int32_t knight_val = 325;
-static const int32_t bishop_val = 325;
-static const int32_t bishop_pair = 50;
-static const int32_t rook_val = 500;
-static const int32_t queen_val = 975;
+static const int32_t knight_val = 387;
+static const int32_t bishop_val = 344;
+static const int32_t bishop_pair = 34;
+static const int32_t rook_val = 541;
+static const int32_t queen_val = 1040;
+static const int32_t knight_kaufman_adj = 0;
+static const int32_t rook_kaufman_adj = 0;
 
 /**
  * \brief Evaluate a chess position for the side to move.
@@ -55,15 +69,6 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white);
  */
 int32_t eval_pawn_material(const position_t* pos, bool for_white);
 
-
-/**
- * \brief Evaluate a piece.
- *
- * \param piece         the piece to evaluate
- *
- * \return the score
- */
-int32_t eval_piece(int32_t piece);
 
 
 // make this header C++ friendly.

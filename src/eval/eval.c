@@ -49,48 +49,57 @@ int32_t eval(const position_t* pos, bool material_only)
     int32_t mg_score = mat_score;
     int32_t eg_score = mat_score;
 
-    /* fold in pawn positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_pawns, false, &eval_pawn) -
-        eval_accumulator(pos, pos->black_pawns, false, &eval_pawn);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_pawns, true, &eval_pawn) -
-        eval_accumulator(pos, pos->black_pawns, true, &eval_pawn);
-    */
 
     /* fold in knight positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_knights, false, &eval_knight) -
-        eval_accumulator(pos, pos->black_knights, false, &eval_knight);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_knights, true, &eval_knight) -
-        eval_accumulator(pos, pos->black_knights, true, &eval_knight);*/
+    uint64_t all_knights = pos->white_knights | pos->black_knights;
+    while (all_knights)
+    {
+        square_t sq = (square_t)get_lsb(all_knights);
+        eval_knight(pos, sq, &mg_score, &eg_score);
+        all_knights ^= square_to_bitmap(sq);
+    }
 
     /* fold in bishop positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_bishops, false, &eval_bishop) -
-        eval_accumulator(pos, pos->black_bishops, false, &eval_bishop);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_bishops, true, &eval_bishop) -
-        eval_accumulator(pos, pos->black_bishops, true, &eval_bishop);*/
+    uint64_t all_bishops = pos->white_bishops | pos->black_bishops;
+    while (all_bishops)
+    {
+        square_t sq = (square_t)get_lsb(all_bishops);
+        eval_bishop(pos, sq, &mg_score, &eg_score);
+        all_bishops ^= square_to_bitmap(sq);
+    }
 
     /* fold in rook positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_rooks, false, &eval_rook) -
-        eval_accumulator(pos, pos->black_rooks, false, &eval_rook);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_rooks, true, &eval_rook) -
-        eval_accumulator(pos, pos->black_rooks, true, &eval_rook);*/
+    uint64_t all_rooks = pos->white_rooks | pos->black_rooks;
+    while (all_rooks)
+    {
+        square_t sq = (square_t)get_lsb(all_rooks);
+        eval_rook(pos, sq, &mg_score, &eg_score);
+        all_rooks ^= square_to_bitmap(sq);
+    }
 
     /* fold in queen positional features */
-    mg_score +=
-        eval_accumulator(pos, pos->white_queens, false, &eval_queen) -
-        eval_accumulator(pos, pos->black_queens, false, &eval_queen);
-    /*eg_score +=
-        eval_accumulator(pos, pos->white_queens, true, &eval_queen) -
-        eval_accumulator(pos, pos->black_queens, true, &eval_queen);*/
+    uint64_t all_queens = pos->white_queens | pos->black_queens;
+    while (all_queens)
+    {
+        square_t sq = (square_t)get_lsb(all_queens);
+        eval_queen(pos, sq, &mg_score, &eg_score);
+        all_queens ^= square_to_bitmap(sq);
+    }
 
-    eg_score = mg_score;
+    /* fold in pawn positional features */
+    // mg_score +=
+    //     eval_accumulator(pos, pos->white_pawns, false, &eval_pawn) -
+    //     eval_accumulator(pos, pos->black_pawns, false, &eval_pawn);
+    // eg_score +=
+    //     eval_accumulator(pos, pos->white_pawns, true, &eval_pawn) -
+    //     eval_accumulator(pos, pos->black_pawns, true, &eval_pawn);
+    uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
+    while (all_pawns)
+    {
+        square_t sq = (square_t)get_lsb(all_pawns);
+        eval_pawn(pos, sq, &mg_score, &eg_score);
+        all_pawns ^= square_to_bitmap(sq);
+    }
 
     /* fold in king positional features.  This includes king safety. */
     mg_score += eval_king(pos, pos->white_king, false) - 
@@ -98,10 +107,12 @@ int32_t eval(const position_t* pos, bool material_only)
     eg_score += eval_king(pos, pos->white_king, true) - 
         eval_king(pos, pos->black_king, true);
 
+
     /* calculate a score between [mg_score, eg_score], weighted by the
      * amount of material on the board.  then use the draw factor to pull
      * the score towards a draw. */
     int32_t tapered_score = eval_taper(pos, mg_score, eg_score) / draw_factor;
+
 
     /* return the score from the perspective of the player on move */
     return pos->player == WHITE ? tapered_score : -tapered_score;    

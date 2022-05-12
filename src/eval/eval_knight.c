@@ -9,27 +9,31 @@
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the knight is on
- * \param endgame       if the eval should be done in the endgame phase 
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score for the knight.
  */
-int32_t eval_knight(const position_t* pos, square_t sq, bool endgame)
+void eval_knight(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
     assert(pos->piece[sq] == KNIGHT || pos->piece[sq] == -KNIGHT);
 
-    int32_t score = 0; 
-
     if (is_white_piece(pos->piece[sq]))
     {
-        score = endgame ? knight_endgame_pst[sq] : knight_pst[sq];
-        score += knight_tropism * distance(sq, pos->black_king);
+        *mgscore += knight_pst[sq];
+        *egscore += knight_endgame_pst[sq];
+        int32_t ts = knight_tropism * distance(sq, pos->black_king);
+        *mgscore += ts;
+        *egscore += ts;
     }
     else
     {
-        score = endgame ? knight_endgame_pst[flip_rank[sq]] : knight_pst[flip_rank[sq]];
-        score += knight_tropism * distance(sq, pos->white_king);
+        int32_t flipsq = flip_rank[sq];
+        *mgscore -= knight_pst[flipsq];
+        *egscore -= knight_endgame_pst[flipsq];
+        int32_t ts = knight_tropism * distance(sq, pos->white_king);
+        *mgscore -= ts;
+        *egscore -= ts;
     }
 
-  
-    return score;    
+
 }
