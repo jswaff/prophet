@@ -66,8 +66,8 @@ int32_t eval(const position_t* pos, bool material_only)
     eval_accumulator(pos, pos->white_pawns | pos->black_pawns, &mg_score, &eg_score, &eval_pawn);
 
     /* fold in king positional features.  This includes king safety. */
-    mg_score += eval_king(pos, pos->white_king, false) - eval_king(pos, pos->black_king, false);
-    eg_score += eval_king(pos, pos->white_king, true) - eval_king(pos, pos->black_king, true);
+    eval_king(pos, pos->white_king, &mg_score, &eg_score);
+    eval_king(pos, pos->black_king, &mg_score, &eg_score);
 
 
     /* calculate a score between [mg_score, eg_score], weighted by the
