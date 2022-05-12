@@ -49,21 +49,51 @@ int32_t eval(const position_t* pos, bool material_only)
     int32_t mg_score = mat_score;
     int32_t eg_score = mat_score;
 
+    /* fold in pawn positional features */
+    uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
+    while (all_pawns)
+    {
+        square_t sq = (square_t)get_lsb(all_pawns);
+        eval_pawn(pos, sq, &mg_score, &eg_score);
+        all_pawns ^= square_to_bitmap(sq);
+    }
 
     /* fold in knight positional features */
-    eval_accumulator(pos, pos->white_knights | pos->black_knights, &mg_score, &eg_score, &eval_knight);
+    uint64_t all_knights = pos->white_knights | pos->black_knights;
+    while (all_knights)
+    {
+        square_t sq = (square_t)get_lsb(all_knights);
+        eval_knight(pos, sq, &mg_score, &eg_score);
+        all_knights ^= square_to_bitmap(sq);
+    }    
 
     /* fold in bishop positional features */
-    eval_accumulator(pos, pos->white_bishops | pos->black_bishops, &mg_score, &eg_score, &eval_bishop);
+    uint64_t all_bishops = pos->white_bishops | pos->black_bishops;
+    while (all_bishops)
+    {
+        square_t sq = (square_t)get_lsb(all_bishops);
+        eval_bishop(pos, sq, &mg_score, &eg_score);
+        all_bishops ^= square_to_bitmap(sq);
+    }
 
     /* fold in rook positional features */
-    eval_accumulator(pos, pos->white_rooks | pos->black_rooks, &mg_score, &eg_score, &eval_rook);
+    uint64_t all_rooks = pos->white_rooks | pos->black_rooks;
+    while (all_rooks)
+    {
+        square_t sq = (square_t)get_lsb(all_rooks);
+        eval_rook(pos, sq, &mg_score, &eg_score);
+        all_rooks ^= square_to_bitmap(sq);
+    }
 
     /* fold in queen positional features */
-    eval_accumulator(pos, pos->white_queens | pos->black_queens, &mg_score, &eg_score, &eval_queen);
+    uint64_t all_queens = pos->white_queens | pos->black_queens;
+    while (all_queens)
+    {
+        square_t sq = (square_t)get_lsb(all_queens);
+        eval_queen(pos, sq, &mg_score, &eg_score);
+        all_queens ^= square_to_bitmap(sq);
+    }
 
-    /* fold in pawn positional features */
-    eval_accumulator(pos, pos->white_pawns | pos->black_pawns, &mg_score, &eg_score, &eval_pawn);
 
     /* fold in king positional features.  This includes king safety. */
     eval_king(pos, pos->white_king, &mg_score, &eg_score);
