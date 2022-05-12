@@ -17,6 +17,8 @@ ROOK_VAL=541
 KNIGHT_VAL=387
 QUEEN_VAL=1040
 BISHOP_VAL=344
+KNIGHT_KAUFMAN_ADJ=0
+ROOK_KAUFMAN_ADJ=0
 */
 
 static const int32_t pawn_val = 100;
@@ -25,6 +27,8 @@ static const int32_t bishop_val = 344;
 static const int32_t bishop_pair = 34;
 static const int32_t rook_val = 541;
 static const int32_t queen_val = 1040;
+static const int32_t knight_kaufman_adj = 0;
+static const int32_t rook_kaufman_adj = 0;
 
 /**
  * \brief Evaluate a chess position for the side to move.

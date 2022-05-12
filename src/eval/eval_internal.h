@@ -12,12 +12,12 @@ extern "C" {
 
 /* king safety terms */
 /*
-KING_SAFETY_WING_PAWN_FAR_AWAY=-24
-KING_SAFETY_PAWN_FAR_AWAY=-23
+KING_SAFETY_PAWN_ONE_AWAY=-4
+KING_SAFETY_WING_PAWN_ONE_AWAY=0
 KING_SAFETY_PAWN_TWO_AWAY=-14
 KING_SAFETY_WING_PAWN_TWO_AWAY=-9
-KING_SAFETY_WING_PAWN_ONE_AWAY=0
-KING_SAFETY_PAWN_ONE_AWAY=-4
+KING_SAFETY_PAWN_FAR_AWAY=-23
+KING_SAFETY_WING_PAWN_FAR_AWAY=-24
 KING_SAFETY_MIDDLE_OPEN_FILE=-39
 */
 static const int32_t king_safety_pawn_one_away       =  -4;
@@ -31,9 +31,9 @@ static const int32_t king_safety_middle_open_file    = -39;
 
 /* pawn terms */
 /*
+ISOLATED_PAWN=-13
 DOUBLED_PAWN=-8
 PASSED_PAWN=28
-ISOLATED_PAWN=-13
 */
 static const int32_t passed_pawn                     =  28;
 static const int32_t isolated_pawn                   = -13;
@@ -52,9 +52,9 @@ static const int32_t knight_tropism                  =  -7;
 /* rook terms */
 /*
 MAJOR_ON_7TH=17
-ROOK_OPEN_FILE=33
 CONNECTED_MAJORS_ON_7TH=64
 ROOK_HALF_OPEN_FILE=20
+ROOK_OPEN_FILE=33
 */
 static const int32_t rook_open_file                  =  33;
 static const int32_t rook_half_open_file             =  20;
