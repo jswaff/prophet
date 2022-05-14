@@ -47,6 +47,8 @@ KNIGHT_TROPISM=-7
 static const int32_t knight_tropism                  =  -7;
 
 /* bishop terms */
+static const int32_t bishop_mobility                 =   2;
+static const int32_t bishop_endgame_mobility         =   3;
 
 
 /* rook terms */

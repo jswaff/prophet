@@ -33,3 +33,15 @@ TEST(eval_test, eval_bishop_pair)
     
     EXPECT_EQ(-bishop_pair, eval_bishop_pair(&pos));
 }
+
+
+TEST(eval_test, eval_bishop_mobility)
+{
+    position_t pos;
+    set_pos(&pos, "r2qk2r/3bbppp/p1pppn2/6B1/3NP3/2N5/PPP2PPP/R2QR1K1 w - -");
+
+    int32_t mg = 0; int32_t eg = 0;
+    eval_bishop(&pos, G5, &mg, &eg);
+    EXPECT_EQ(bishop_pst[G5] + 6 * bishop_mobility, mg);
+    EXPECT_EQ(bishop_endgame_pst[G5] + 6 * bishop_endgame_mobility, eg);
+}
