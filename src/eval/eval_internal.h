@@ -31,13 +31,13 @@ static const int32_t king_safety_middle_open_file    = -39;
 
 /* pawn terms */
 /*
+DOUBLED_PAWN=-7
+PASSED_PAWN=30
 ISOLATED_PAWN=-13
-DOUBLED_PAWN=-8
-PASSED_PAWN=28
 */
-static const int32_t passed_pawn                     =  28;
+static const int32_t passed_pawn                     =  30;
 static const int32_t isolated_pawn                   = -13;
-static const int32_t doubled_pawn                    =  -8;
+static const int32_t doubled_pawn                    =  -7;
 
 
 /* knight terms */
@@ -47,14 +47,20 @@ KNIGHT_TROPISM=-7
 static const int32_t knight_tropism                  =  -7;
 
 /* bishop terms */
+/*
+BISHOP_MOBILITY=2
+BISHOP_ENDGAME_MOBILITY=1
+*/
+static const int32_t bishop_mobility                 =   2;
+static const int32_t bishop_endgame_mobility         =   1;
 
 
 /* rook terms */
 /*
+ROOK_OPEN_FILE=33
 MAJOR_ON_7TH=17
 CONNECTED_MAJORS_ON_7TH=64
 ROOK_HALF_OPEN_FILE=20
-ROOK_OPEN_FILE=33
 */
 static const int32_t rook_open_file                  =  33;
 static const int32_t rook_half_open_file             =  20;

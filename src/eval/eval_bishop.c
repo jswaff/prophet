@@ -1,4 +1,5 @@
 #include <prophet/bitmap.h>
+#include <prophet/movegen.h>
 #include <prophet/parameters.h>
 
 #include "eval_internal.h"
@@ -18,16 +19,21 @@ void eval_bishop(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
 {
     assert(pos->piece[sq] == BISHOP || pos->piece[sq] == -BISHOP);
 
+    uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
+    uint32_t mobility = popcnt(get_bishop_moves(pos, sq, empty_squares));
+    uint32_t mobility_mg = mobility * bishop_mobility;
+    uint32_t mobility_eg = mobility * bishop_endgame_mobility;
+
     if (is_white_piece(pos->piece[sq]))
     {
-        *mgscore += bishop_pst[sq];
-        *egscore += bishop_endgame_pst[sq];
+        *mgscore += bishop_pst[sq] + mobility_mg;
+        *egscore += bishop_endgame_pst[sq] + mobility_eg;
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
-        *mgscore -= bishop_pst[flipsq];
-        *egscore -= bishop_endgame_pst[flipsq];
+        *mgscore -= (bishop_pst[flipsq] + mobility_mg);
+        *egscore -= (bishop_endgame_pst[flipsq] + mobility_eg);
     }
 }
 
