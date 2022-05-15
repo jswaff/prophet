@@ -66,6 +66,11 @@ static const int32_t rook_open_file                  =  33;
 static const int32_t rook_half_open_file             =  20;
 
 
+/* queen terms */
+static const int32_t queen_mobility                  =   1;
+static const int32_t queen_endgame_mobility          =   1;
+
+
 static const int32_t major_on_7th                    =  17;
 static const int32_t connected_majors_on_7th         =  64;
 
