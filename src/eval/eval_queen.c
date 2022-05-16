@@ -1,4 +1,6 @@
+#include <prophet/bitmap.h>
 #include <prophet/parameters.h>
+#include <prophet/movegen.h>
 
 #include "eval_internal.h"
 
@@ -17,18 +19,23 @@ void eval_queen(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* e
 {
     assert(pos->piece[sq] == QUEEN || pos->piece[sq] == -QUEEN);
 
-    int32_t s = eval_major_on_7th(pos, sq);
+    uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
+    uint32_t mobility = popcnt(get_queen_moves(pos, sq, empty_squares));
+    uint32_t mobility_mg = mobility * queen_mobility;
+    uint32_t mobility_eg = mobility * queen_endgame_mobility;
+
+    int32_t m7 = eval_major_on_7th(pos, sq);
 
     if (is_white_piece(pos->piece[sq]))
     {
-        *mgscore += queen_pst[sq] + s;
-        *egscore += queen_endgame_pst[sq] + s;
+        *mgscore += queen_pst[sq] + mobility_mg + m7;
+        *egscore += queen_endgame_pst[sq] + mobility_eg + m7;
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
-        *mgscore -= queen_pst[flipsq] + s;
-        *egscore -= queen_endgame_pst[flipsq] + s;
+        *mgscore -= queen_pst[flipsq] + mobility_mg + m7;
+        *egscore -= queen_endgame_pst[flipsq] + mobility_eg + m7;
     }
 
 }
