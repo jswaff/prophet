@@ -10,19 +10,8 @@ extern "C" {
 #endif    //__cplusplus
 
 
-/*
-BISHOP_PAIR=34
-PAWN_VAL=100
-ROOK_VAL=541
-ROOK_KAUFMAN_ADJ=0
-KNIGHT_VAL=387
-KNIGHT_KAUFMAN_ADJ=4
-QUEEN_VAL=1040
-BISHOP_VAL=342
-*/
-
 static const int32_t pawn_val = 100;
-static const int32_t knight_val = 387;
+static int32_t knight_val = 387;
 static const int32_t bishop_val = 342;
 static const int32_t bishop_pair = 34;
 static const int32_t rook_val = 541;
