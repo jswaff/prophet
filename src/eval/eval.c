@@ -1,14 +1,50 @@
 #include "eval_internal.h"
 
-/* eval feature weights */
-int32_t pawn_val = 100;
-int32_t knight_val;
-int32_t bishop_val = 342;
-int32_t bishop_pair = 34;
-int32_t rook_val = 541;
-int32_t queen_val = 1040;
-int32_t knight_kaufman_adj = 4;
-int32_t rook_kaufman_adj = 0;
+/* material values */
+int32_t pawn_val                        =  100;
+int32_t knight_val                      =  325;
+int32_t bishop_val                      =  342;
+int32_t bishop_pair                     =   34;
+int32_t rook_val                        =  541;
+int32_t queen_val                       = 1040;
+int32_t knight_kaufman_adj              =    4;
+int32_t rook_kaufman_adj                =    0;
+
+/* king safety */
+int32_t king_safety_pawn_one_away       =   -4;
+int32_t king_safety_wing_pawn_one_away  =    0;
+int32_t king_safety_pawn_two_away       =  -14;
+int32_t king_safety_wing_pawn_two_away  =   -9;
+int32_t king_safety_pawn_far_away       =  -23;
+int32_t king_safety_wing_pawn_far_away  =  -24;
+int32_t king_safety_middle_open_file    =  -39;
+
+
+/* pawn terms */
+int32_t passed_pawn                     =   31;
+int32_t isolated_pawn                   =  -13;
+int32_t doubled_pawn                    =   -7;
+
+
+/* knight terms */
+int32_t knight_tropism                  =   -7;
+
+/* bishop terms */
+int32_t bishop_mobility                 =    3;
+int32_t bishop_endgame_mobility         =    1;
+
+
+/* rook terms */
+int32_t rook_open_file                  =   33;
+int32_t rook_half_open_file             =   20;
+
+
+/* queen terms */
+int32_t queen_mobility                  =    1;
+int32_t queen_endgame_mobility          =    2;
+
+int32_t major_on_7th                    =   17;
+int32_t connected_majors_on_7th         =   64;
 
 /**
  * \brief Evaluate a chess position for the side to move.

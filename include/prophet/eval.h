@@ -18,6 +18,26 @@ extern int32_t rook_val;
 extern int32_t queen_val;
 extern int32_t knight_kaufman_adj;
 extern int32_t rook_kaufman_adj;
+extern int32_t king_safety_pawn_one_away;
+extern int32_t king_safety_wing_pawn_one_away;
+extern int32_t king_safety_pawn_two_away;
+extern int32_t king_safety_wing_pawn_two_away;
+extern int32_t king_safety_pawn_far_away;
+extern int32_t king_safety_wing_pawn_far_away;
+extern int32_t king_safety_middle_open_file;
+extern int32_t passed_pawn;
+extern int32_t isolated_pawn;
+extern int32_t doubled_pawn;
+extern int32_t knight_tropism;
+extern int32_t bishop_mobility;
+extern int32_t bishop_endgame_mobility;
+extern int32_t rook_open_file;
+extern int32_t rook_half_open_file;
+extern int32_t queen_mobility;
+extern int32_t queen_endgame_mobility;
+extern int32_t major_on_7th;
+extern int32_t connected_majors_on_7th;
+
 
 /**
  * \brief Evaluate a chess position for the side to move.
