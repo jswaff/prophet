@@ -50,4 +50,6 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(2, queen_mobility);
 	EXPECT_EQ(3, queen_endgame_mobility);
 
+	EXPECT_EQ(15, major_on_7th);
+	EXPECT_EQ(61, connected_majors_on_7th);
 }
