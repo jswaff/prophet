@@ -19,12 +19,10 @@ int32_t king_safety_pawn_far_away       =  -23;
 int32_t king_safety_wing_pawn_far_away  =  -24;
 int32_t king_safety_middle_open_file    =  -39;
 
-
 /* pawn terms */
 int32_t passed_pawn                     =   31;
 int32_t isolated_pawn                   =  -13;
 int32_t doubled_pawn                    =   -7;
-
 
 /* knight terms */
 int32_t knight_tropism                  =   -7;
@@ -33,11 +31,9 @@ int32_t knight_tropism                  =   -7;
 int32_t bishop_mobility                 =    3;
 int32_t bishop_endgame_mobility         =    1;
 
-
 /* rook terms */
 int32_t rook_open_file                  =   33;
 int32_t rook_half_open_file             =   20;
-
 
 /* queen terms */
 int32_t queen_mobility                  =    1;
