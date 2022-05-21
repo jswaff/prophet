@@ -23,7 +23,7 @@ int commandline_load_properties(const char* props_file)
 	fp = fopen(props_file, "r");
 	if (fp == NULL)
 	{
-		return 1;
+		return P4_ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE;
 	}
 
 	while ((read = getline(&line, &len, fp)) != -1)
