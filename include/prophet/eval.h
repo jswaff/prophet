@@ -10,14 +10,14 @@ extern "C" {
 #endif    //__cplusplus
 
 
-static const int32_t pawn_val = 100;
-static int32_t knight_val = 387;
-static const int32_t bishop_val = 342;
-static const int32_t bishop_pair = 34;
-static const int32_t rook_val = 541;
-static const int32_t queen_val = 1040;
-static const int32_t knight_kaufman_adj = 4;
-static const int32_t rook_kaufman_adj = 0;
+extern int32_t pawn_val;
+extern int32_t knight_val;
+extern int32_t bishop_val;
+extern int32_t bishop_pair;
+extern int32_t rook_val;
+extern int32_t queen_val;
+extern int32_t knight_kaufman_adj;
+extern int32_t rook_kaufman_adj;
 
 /**
  * \brief Evaluate a chess position for the side to move.

@@ -20,9 +20,9 @@ TEST(commandline_test, commandline_eval_props)
 
     EXPECT_EQ(100, pawn_val);
     EXPECT_EQ(326, knight_val);
-    //EXPECT_EQ(327, bishop_val);
-    //EXPECT_EQ(510, rook_val);
-    //EXPECT_EQ(1003, queen_val);
-    //EXPECT_EQ(51, bishop_pair);
+    EXPECT_EQ(327, bishop_val);
+    EXPECT_EQ(510, rook_val);
+    EXPECT_EQ(1003, queen_val);
+    EXPECT_EQ(51, bishop_pair);
 
 }

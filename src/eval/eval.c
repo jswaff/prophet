@@ -1,5 +1,15 @@
 #include "eval_internal.h"
 
+/* eval feature weights */
+int32_t pawn_val = 100;
+int32_t knight_val;
+int32_t bishop_val = 342;
+int32_t bishop_pair = 34;
+int32_t rook_val = 541;
+int32_t queen_val = 1040;
+int32_t knight_kaufman_adj = 4;
+int32_t rook_kaufman_adj = 0;
+
 /**
  * \brief Evaluate a chess position for the side to move.
  *

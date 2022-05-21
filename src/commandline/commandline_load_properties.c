@@ -15,7 +15,12 @@ struct eval_weight_table_entry
 
 /* a table of property->variable pointer mappings */
 struct eval_weight_table_entry eval_weight_table[] = {
-    {"KNIGHT_VAL", &knight_val}
+    {"PAWN_VAL", &pawn_val},
+    {"KNIGHT_VAL", &knight_val},
+    {"BISHOP_VAL", &bishop_val},
+    {"ROOK_VAL", &rook_val},
+    {"QUEEN_VAL", &queen_val},
+    {"BISHOP_PAIR", &bishop_pair}
 };
 
 /**
@@ -37,7 +42,6 @@ int commandline_load_properties(const char* props_file)
     }
 
     int nprops = sizeof(eval_weight_table) / sizeof(struct eval_weight_table_entry);
-    out(stdout, "nprops: %d\n", nprops);
 
     while ((read = getline(&line, &len, fp)) != -1)
     {
@@ -48,15 +52,15 @@ int commandline_load_properties(const char* props_file)
             char* val = strtok(NULL, "=");
             out(stdout, "key: %s val:%s\n", key, val);
 
-            /* map the key */
+            /* map the key to a variable and set the value */
             for (int i=0; i<nprops; i++)
             {
                 struct eval_weight_table_entry te = eval_weight_table[i];
                 if (!strncmp(key, te.property_name, strlen(key)))
                 {
-                    out(stdout, "**** mapping KNIGHT_VAL to %s\n", val);
                     int32_t* valptr = te.val_ptr;
                     *valptr = atoi(val);
+                    break;
                 }
             }
 
