@@ -18,6 +18,7 @@ extern int32_t rook_val;
 extern int32_t queen_val;
 extern int32_t knight_kaufman_adj;
 extern int32_t rook_kaufman_adj;
+
 extern int32_t king_safety_pawn_one_away;
 extern int32_t king_safety_wing_pawn_one_away;
 extern int32_t king_safety_pawn_two_away;
@@ -25,6 +26,7 @@ extern int32_t king_safety_wing_pawn_two_away;
 extern int32_t king_safety_pawn_far_away;
 extern int32_t king_safety_wing_pawn_far_away;
 extern int32_t king_safety_middle_open_file;
+
 extern int32_t passed_pawn;
 extern int32_t isolated_pawn;
 extern int32_t doubled_pawn;

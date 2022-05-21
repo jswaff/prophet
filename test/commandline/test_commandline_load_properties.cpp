@@ -25,4 +25,12 @@ TEST(commandline_test, commandline_eval_props)
     EXPECT_EQ(1003, queen_val);
     EXPECT_EQ(51, bishop_pair);
 
+	EXPECT_EQ(-3, king_safety_pawn_one_away);
+	EXPECT_EQ(-4, king_safety_wing_pawn_one_away);
+	EXPECT_EQ(-5, king_safety_pawn_two_away);
+	EXPECT_EQ(-6, king_safety_wing_pawn_two_away);
+	EXPECT_EQ(-7, king_safety_pawn_far_away);
+	EXPECT_EQ(-8, king_safety_wing_pawn_far_away);
+	EXPECT_EQ(-41, king_safety_middle_open_file);
+
 }

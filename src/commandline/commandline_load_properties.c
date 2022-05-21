@@ -20,7 +20,16 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"BISHOP_VAL", &bishop_val},
     {"ROOK_VAL", &rook_val},
     {"QUEEN_VAL", &queen_val},
-    {"BISHOP_PAIR", &bishop_pair}
+    {"BISHOP_PAIR", &bishop_pair}, 
+
+    {"KING_SAFETY_PAWN_ONE_AWAY", &king_safety_pawn_one_away},
+    {"KING_SAFETY_WING_PAWN_ONE_AWAY", &king_safety_wing_pawn_one_away}, 
+    {"KING_SAFETY_PAWN_TWO_AWAY", &king_safety_pawn_two_away}, 
+    {"KING_SAFETY_WING_PAWN_TWO_AWAY", &king_safety_wing_pawn_two_away}, 
+    {"KING_SAFETY_PAWN_FAR_AWAY", &king_safety_pawn_far_away}, 
+    {"KING_SAFETY_WING_PAWN_FAR_AWAY", &king_safety_wing_pawn_far_away}, 
+    {"KING_SAFETY_MIDDLE_OPEN_FILE", &king_safety_middle_open_file}
+
 };
 
 /**
