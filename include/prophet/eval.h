@@ -35,6 +35,7 @@ extern int32_t knight_tropism;
 
 extern int32_t bishop_mobility;
 extern int32_t bishop_endgame_mobility;
+
 extern int32_t rook_open_file;
 extern int32_t rook_half_open_file;
 extern int32_t queen_mobility;

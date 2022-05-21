@@ -38,4 +38,8 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(-3, doubled_pawn);
 
 	EXPECT_EQ(-5, knight_tropism);
+
+	EXPECT_EQ(2, bishop_mobility);
+	EXPECT_EQ(3, bishop_endgame_mobility);
+	
 }

@@ -34,7 +34,10 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"ISOLATED_PAWN", &isolated_pawn},
     {"DOUBLED_PAWN", &doubled_pawn},
 
-    {"KNIGHT_TROPISM", &knight_tropism}
+    {"KNIGHT_TROPISM", &knight_tropism},
+
+    {"BISHOP_MOBILITY", &bishop_mobility},
+    {"BISHOP_ENDGAME_MOBILITY", &bishop_endgame_mobility}
 
 };
 
