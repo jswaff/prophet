@@ -43,7 +43,10 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"BISHOP_ENDGAME_MOBILITY", &bishop_endgame_mobility},
 
     {"ROOK_OPEN_FILE", &rook_open_file},
-    {"ROOK_HALF_OPEN_FILE", &rook_half_open_file}
+    {"ROOK_HALF_OPEN_FILE", &rook_half_open_file},
+
+    {"QUEEN_MOBILITY", &queen_mobility},
+    {"QUEEN_ENDGAME_MOBILITY", &queen_endgame_mobility}
 
 };
 

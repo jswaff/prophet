@@ -46,4 +46,8 @@ TEST(commandline_test, commandline_eval_props)
 
 	EXPECT_EQ(25, rook_open_file);
 	EXPECT_EQ(18, rook_half_open_file);
+
+	EXPECT_EQ(2, queen_mobility);
+	EXPECT_EQ(3, queen_endgame_mobility);
+
 }
