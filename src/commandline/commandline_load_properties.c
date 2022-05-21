@@ -21,6 +21,9 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"ROOK_VAL", &rook_val},
     {"QUEEN_VAL", &queen_val},
     {"BISHOP_PAIR", &bishop_pair}, 
+    {"KNIGHT_KAUFMAN_ADJ", &knight_kaufman_adj},
+    {"ROOK_KAUFMAN_ADJ", &rook_kaufman_adj},
+
 
     {"KING_SAFETY_PAWN_ONE_AWAY", &king_safety_pawn_one_away},
     {"KING_SAFETY_WING_PAWN_ONE_AWAY", &king_safety_wing_pawn_one_away}, 

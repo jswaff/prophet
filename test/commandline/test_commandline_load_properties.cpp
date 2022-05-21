@@ -24,6 +24,8 @@ TEST(commandline_test, commandline_eval_props)
     EXPECT_EQ(510, rook_val);
     EXPECT_EQ(1003, queen_val);
     EXPECT_EQ(51, bishop_pair);
+    EXPECT_EQ(5, knight_kaufman_adj);
+    EXPECT_EQ(-11, rook_kaufman_adj);
 
 	EXPECT_EQ(-3, king_safety_pawn_one_away);
 	EXPECT_EQ(-4, king_safety_wing_pawn_one_away);
