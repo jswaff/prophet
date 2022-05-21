@@ -30,6 +30,7 @@ extern int32_t king_safety_middle_open_file;
 extern int32_t passed_pawn;
 extern int32_t isolated_pawn;
 extern int32_t doubled_pawn;
+
 extern int32_t knight_tropism;
 extern int32_t bishop_mobility;
 extern int32_t bishop_endgame_mobility;
