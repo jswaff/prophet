@@ -52,7 +52,10 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"CONNECTED_MAJORS_ON_7TH", &connected_majors_on_7th},
 
     {"PAWN_PST", &pawn_pst[0]},
-    {"PAWN_ENDGAME_PST", &pawn_endgame_pst[0]}
+    {"PAWN_ENDGAME_PST", &pawn_endgame_pst[0]},
+
+    {"KNIGHT_PST", &knight_pst[0]},
+    {"KNIGHT_ENDGAME_PST", &knight_endgame_pst[0]}
 };
 
 /**

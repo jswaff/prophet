@@ -53,8 +53,31 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(15, major_on_7th);
 	EXPECT_EQ(61, connected_majors_on_7th);
 
-	EXPECT_EQ(1,pawn_pst[0]);
+	EXPECT_EQ(1, pawn_pst[0]);
 	EXPECT_EQ(101, pawn_pst[8]);
 	EXPECT_EQ(3, pawn_pst[63]);
+
+	EXPECT_EQ(2, pawn_endgame_pst[0]);
+	EXPECT_EQ(113, pawn_endgame_pst[8]);
+	EXPECT_EQ(4, pawn_endgame_pst[63]);
+
+	EXPECT_EQ(-39, knight_pst[0]);
+	EXPECT_EQ(-31, knight_pst[1]);
+	EXPECT_EQ(-7, knight_pst[63]);
+
+	EXPECT_EQ(-30, knight_endgame_pst[0]);
+	EXPECT_EQ(-31, knight_endgame_pst[1]);
+	EXPECT_EQ(-5, knight_endgame_pst[63]);
+
+/*
+extern int32_t bishop_pst[64];
+extern int32_t bishop_endgame_pst[64];
+extern int32_t rook_pst[64];
+extern int32_t rook_endgame_pst[64];
+extern int32_t queen_pst[64];
+extern int32_t queen_endgame_pst[64];
+extern int32_t king_pst[64];
+extern int32_t king_endgame_pst[64];
+*/
 
 }
