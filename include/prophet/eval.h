@@ -46,8 +46,19 @@ extern int32_t major_on_7th;
 extern int32_t connected_majors_on_7th;
 
 /* psts */
-extern int pawn_pst[64];
-extern int pawn_endgame_pst[64];
+extern int32_t pawn_pst[64];
+extern int32_t pawn_endgame_pst[64];
+extern int32_t knight_pst[64];
+extern int32_t knight_endgame_pst[64];
+extern int32_t bishop_pst[64];
+extern int32_t bishop_endgame_pst[64];
+extern int32_t rook_pst[64];
+extern int32_t rook_endgame_pst[64];
+extern int32_t queen_pst[64];
+extern int32_t queen_endgame_pst[64];
+extern int32_t king_pst[64];
+extern int32_t king_endgame_pst[64];
+
 
 /**
  * \brief Evaluate a chess position for the side to move.
