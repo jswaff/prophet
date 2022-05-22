@@ -1,8 +1,8 @@
 #include <prophet/commandline.h>
 #include <prophet/eval.h>
 #include <prophet/error_codes.h>
-#include <prophet/util/output.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -94,12 +94,10 @@ int commandline_load_properties(const char* props_file)
 
     while ((read = getline(&line, &len, fp)) != -1)
     {
-        out(stdout, "%s", line);
         if (strchr(line, '=')) 
         {
             char* key = strtok_r(line, "=", &line_buffer);
             char* val = strtok_r(NULL, "=", &line_buffer);
-            out(stdout, "key: %s val:%s\n", key, val);
 
             /* map the key to a variable and set the value */
             for (int i=0; i<nprops; i++)
