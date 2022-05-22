@@ -49,8 +49,10 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"QUEEN_ENDGAME_MOBILITY", &queen_endgame_mobility},
 
     {"MAJOR_ON_7TH", &major_on_7th},
-    {"CONNECTED_MAJORS_ON_7TH", &connected_majors_on_7th}
+    {"CONNECTED_MAJORS_ON_7TH", &connected_majors_on_7th},
 
+    {"PAWN_PST", &pawn_pst[0]},
+    {"PAWN_ENDGAME_PST", &pawn_endgame_pst[0]}
 };
 
 /**
@@ -62,6 +64,8 @@ int commandline_load_properties(const char* props_file)
 {
     FILE* fp;
     char* line = NULL;
+    char* line_buffer = NULL;
+    char* val_buffer = NULL;
     size_t len = 0;
     ssize_t read;
 
@@ -78,8 +82,8 @@ int commandline_load_properties(const char* props_file)
         out(stdout, "%s", line);
         if (strchr(line, '=')) 
         {
-            char* key = strtok(line, "=");
-            char* val = strtok(NULL, "=");
+            char* key = strtok_r(line, "=", &line_buffer);
+            char* val = strtok_r(NULL, "=", &line_buffer);
             out(stdout, "key: %s val:%s\n", key, val);
 
             /* map the key to a variable and set the value */
@@ -89,7 +93,14 @@ int commandline_load_properties(const char* props_file)
                 if (!strncmp(key, te.property_name, strlen(key)))
                 {
                     int32_t* valptr = te.val_ptr;
-                    *valptr = atoi(val);
+                    char* v = strtok_r(val, ",", &val_buffer);
+                    int i = 0;
+                    while (v)
+                    {
+                        *(valptr+i) = atoi(v);
+                        v = strtok_r(NULL, ",", &val_buffer);
+                        ++i;
+                    }
                     break;
                 }
             }

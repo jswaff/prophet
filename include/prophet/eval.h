@@ -45,6 +45,9 @@ extern int32_t queen_endgame_mobility;
 extern int32_t major_on_7th;
 extern int32_t connected_majors_on_7th;
 
+/* psts */
+extern int pawn_pst[64];
+extern int pawn_endgame_pst[64];
 
 /**
  * \brief Evaluate a chess position for the side to move.
