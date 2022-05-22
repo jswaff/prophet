@@ -55,7 +55,10 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"PAWN_ENDGAME_PST", &pawn_endgame_pst[0]},
 
     {"KNIGHT_PST", &knight_pst[0]},
-    {"KNIGHT_ENDGAME_PST", &knight_endgame_pst[0]}
+    {"KNIGHT_ENDGAME_PST", &knight_endgame_pst[0]},
+
+    {"BISHOP_PST", &bishop_pst[0]},
+    {"BISHOP_ENDGAME_PST", &bishop_endgame_pst[0]}
 };
 
 /**

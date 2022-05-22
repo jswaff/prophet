@@ -69,9 +69,15 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(-31, knight_endgame_pst[1]);
 	EXPECT_EQ(-5, knight_endgame_pst[63]);
 
+	EXPECT_EQ(11, bishop_pst[0]);
+	EXPECT_EQ(12, bishop_pst[1]);
+	EXPECT_EQ(13, bishop_pst[63]);
+
+	EXPECT_EQ(14, bishop_endgame_pst[0]);
+	EXPECT_EQ(15, bishop_endgame_pst[1]);
+	EXPECT_EQ(16, bishop_endgame_pst[63]);
+
 /*
-extern int32_t bishop_pst[64];
-extern int32_t bishop_endgame_pst[64];
 extern int32_t rook_pst[64];
 extern int32_t rook_endgame_pst[64];
 extern int32_t queen_pst[64];
