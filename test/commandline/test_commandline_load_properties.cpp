@@ -92,11 +92,12 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(51, queen_endgame_pst[0]);
 	EXPECT_EQ(52, queen_endgame_pst[1]);
 	EXPECT_EQ(53, queen_endgame_pst[63]);
-/*
-extern int32_t queen_pst[64];
-extern int32_t queen_endgame_pst[64];
-extern int32_t king_pst[64];
-extern int32_t king_endgame_pst[64];
-*/
 
+	EXPECT_EQ(61, king_pst[0]);
+	EXPECT_EQ(62, king_pst[1]);
+	EXPECT_EQ(63, king_pst[63]);
+
+	EXPECT_EQ(71, king_endgame_pst[0]);
+	EXPECT_EQ(72, king_endgame_pst[1]);
+	EXPECT_EQ(73, king_endgame_pst[63]);
 }
