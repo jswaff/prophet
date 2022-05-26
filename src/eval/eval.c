@@ -1,8 +1,18 @@
 #include "eval_internal.h"
 
+/*
+PAWN_VAL=100
+BISHOP_PAIR=34
+ROOK_VAL=541
+KNIGHT_VAL=387
+QUEEN_VAL=1040
+BISHOP_VAL=342
+KNIGHT_KAUFMAN_ADJ=4
+ROOK_KAUFMAN_ADJ=0
+*/
 /* material values */
 int32_t pawn_val                        =  100;
-int32_t knight_val                      =  325;
+int32_t knight_val                      =  387;
 int32_t bishop_val                      =  342;
 int32_t bishop_pair                     =   34;
 int32_t rook_val                        =  541;
@@ -10,6 +20,15 @@ int32_t queen_val                       = 1040;
 int32_t knight_kaufman_adj              =    4;
 int32_t rook_kaufman_adj                =    0;
 
+/*
+KING_SAFETY_WING_PAWN_FAR_AWAY=-24
+KING_SAFETY_PAWN_FAR_AWAY=-23
+KING_SAFETY_PAWN_TWO_AWAY=-14
+KING_SAFETY_WING_PAWN_TWO_AWAY=-9
+KING_SAFETY_WING_PAWN_ONE_AWAY=0
+KING_SAFETY_PAWN_ONE_AWAY=-4
+KING_SAFETY_MIDDLE_OPEN_FILE=-39
+*/
 /* king safety */
 int32_t king_safety_pawn_one_away       =   -4;
 int32_t king_safety_wing_pawn_one_away  =    0;
@@ -19,26 +38,48 @@ int32_t king_safety_pawn_far_away       =  -23;
 int32_t king_safety_wing_pawn_far_away  =  -24;
 int32_t king_safety_middle_open_file    =  -39;
 
+/*
+ISOLATED_PAWN=-13
+DOUBLED_PAWN=-7
+PASSED_PAWN=31
+*/
 /* pawn terms */
 int32_t passed_pawn                     =   31;
 int32_t isolated_pawn                   =  -13;
 int32_t doubled_pawn                    =   -7;
 
+/* KNIGHT_TROPISM=-7 */
 /* knight terms */
 int32_t knight_tropism                  =   -7;
 
+/*
+BISHOP_MOBILITY=3
+BISHOP_ENDGAME_MOBILITY=1
+*/
 /* bishop terms */
 int32_t bishop_mobility                 =    3;
 int32_t bishop_endgame_mobility         =    1;
 
+/*
+ROOK_OPEN_FILE=33
+ROOK_HALF_OPEN_FILE=20
+*/
 /* rook terms */
 int32_t rook_open_file                  =   33;
 int32_t rook_half_open_file             =   20;
 
+/*
+QUEEN_MOBILITY=1
+QUEEN_ENDGAME_MOBILITY=2
+*/
 /* queen terms */
 int32_t queen_mobility                  =    1;
 int32_t queen_endgame_mobility          =    2;
 
+/*
+MAJOR_ON_7TH=17
+CONNECTED_MAJORS_ON_7TH=64
+*/
 int32_t major_on_7th                    =   17;
 int32_t connected_majors_on_7th         =   64;
 
