@@ -10,25 +10,55 @@ extern "C" {
 #endif    //__cplusplus
 
 
-/*
-BISHOP_PAIR=34
-PAWN_VAL=100
-ROOK_VAL=541
-ROOK_KAUFMAN_ADJ=0
-KNIGHT_VAL=387
-KNIGHT_KAUFMAN_ADJ=4
-QUEEN_VAL=1040
-BISHOP_VAL=342
-*/
+extern int32_t pawn_val;
+extern int32_t knight_val;
+extern int32_t bishop_val;
+extern int32_t bishop_pair;
+extern int32_t rook_val;
+extern int32_t queen_val;
+extern int32_t knight_kaufman_adj;
+extern int32_t rook_kaufman_adj;
 
-static const int32_t pawn_val = 100;
-static const int32_t knight_val = 387;
-static const int32_t bishop_val = 342;
-static const int32_t bishop_pair = 34;
-static const int32_t rook_val = 541;
-static const int32_t queen_val = 1040;
-static const int32_t knight_kaufman_adj = 4;
-static const int32_t rook_kaufman_adj = 0;
+extern int32_t king_safety_pawn_one_away;
+extern int32_t king_safety_wing_pawn_one_away;
+extern int32_t king_safety_pawn_two_away;
+extern int32_t king_safety_wing_pawn_two_away;
+extern int32_t king_safety_pawn_far_away;
+extern int32_t king_safety_wing_pawn_far_away;
+extern int32_t king_safety_middle_open_file;
+
+extern int32_t passed_pawn;
+extern int32_t isolated_pawn;
+extern int32_t doubled_pawn;
+
+extern int32_t knight_tropism;
+
+extern int32_t bishop_mobility;
+extern int32_t bishop_endgame_mobility;
+
+extern int32_t rook_open_file;
+extern int32_t rook_half_open_file;
+
+extern int32_t queen_mobility;
+extern int32_t queen_endgame_mobility;
+
+extern int32_t major_on_7th;
+extern int32_t connected_majors_on_7th;
+
+/* psts */
+extern int32_t pawn_pst[64];
+extern int32_t pawn_endgame_pst[64];
+extern int32_t knight_pst[64];
+extern int32_t knight_endgame_pst[64];
+extern int32_t bishop_pst[64];
+extern int32_t bishop_endgame_pst[64];
+extern int32_t rook_pst[64];
+extern int32_t rook_endgame_pst[64];
+extern int32_t queen_pst[64];
+extern int32_t queen_endgame_pst[64];
+extern int32_t king_pst[64];
+extern int32_t king_endgame_pst[64];
+
 
 /**
  * \brief Evaluate a chess position for the side to move.

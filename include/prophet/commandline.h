@@ -7,6 +7,13 @@
 extern "C" {
 #endif  
 
+/**
+ * \brief Load eval properties
+ *
+ * \return 0 on successful execution, and non-zero on failure
+ */
+int commandline_load_properties(const char* props_file);
+
 
 /**
  * \brief Print command line options.
