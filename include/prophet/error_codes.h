@@ -192,6 +192,13 @@ extern "C" {
 #define P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE            0x400
 
 
+/**
+ * \brief This error is thrown when the eval properties file could not be 
+ * opened.
+ */
+#define P4_ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE      0x500
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

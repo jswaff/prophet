@@ -21,8 +21,8 @@ EXE_SRC_OBJECTS=$(patsubst %.c,$(SRC_BUILD_DIR)/%.o,$(EXE_STRIPPED_SOURCES))
 
 # test source files
 TEST_DIRS=$(TEST_DIR) $(TEST_DIR)/bitmap $(TEST_DIR)/command \
-    $(TEST_DIR)/command/xboard $(TEST_DIR)/eval $(TEST_DIR)/hash \
-    $(TEST_DIR)/movegen $(TEST_DIR)/position $(TEST_DIR)/search \
+    $(TEST_DIR)/commandline $(TEST_DIR)/command/xboard $(TEST_DIR)/eval \
+    $(TEST_DIR)/hash $(TEST_DIR)/movegen $(TEST_DIR)/position $(TEST_DIR)/search \
     $(TEST_DIR)/util
 TEST_SOURCES=$(foreach d,$(TEST_DIRS),$(wildcard $(d)/*.cpp))
 STRIPPED_TEST_SOURCES=$(patsubst $(TEST_DIR)/%,%,$(TEST_SOURCES))
