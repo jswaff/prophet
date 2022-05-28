@@ -6,10 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* the default hash table size is 256 MB */
-uint32_t hash_size = 134217728 * 4;  /* 512 */
+/* default hash table and pawn hash table sizes */
+uint32_t hash_size = 134217728 * 4;      /* 512 mb */
+uint32_t pawn_hash_size = 134217728;     /* 128 mb */
 
 hash_table_t htbl;
+hash_table_t phtbl;
 
 
 /* forward decls */
@@ -36,6 +38,7 @@ void clear_hash_table(hash_table_t *tbl)
 void clear_hash_tables()
 {
     clear_hash_table(&htbl);
+    clear_hash_table(&phtbl);
 }
 
 
@@ -48,7 +51,12 @@ void clear_hash_tables()
  */
 int init_hash_tables()
 {
-    return init_hash_table(&htbl, hash_size);
+    int retval = init_hash_table(&htbl, hash_size);
+    if (0 != retval)
+    {
+        return retval;
+    }
+    return init_hash_table(&phtbl, pawn_hash_size);
 }
 
 
@@ -61,6 +69,8 @@ void free_hash_tables()
     plog("# freeing hash tables\n");
     assert(htbl.tbl);
     free(htbl.tbl);
+    assert(phtbl.tbl);
+    free(phtbl.tbl);
 }
 
 
