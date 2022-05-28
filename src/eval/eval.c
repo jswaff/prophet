@@ -135,6 +135,9 @@ int32_t king_endgame_pst[64] = {
    -30,-30,-30,-30,-30,-30,-30,-30,-30,-20,-26,-30,-30,-23,-19,-30,-27,-11,-9,-17,-18,-2,-3,-29,-27,-9,1,-3,-3,7,-1,-28,-30,-18,-1,1,3,0,-10,-34,-31,-20,-14,-11,-11,-13,-23,-39,-21,-24,-23,-31,-28,-20,-28,-46,-19,-21,-29,-55,-63,-40,-41,-69
 };
 
+#ifndef NDEBUG
+static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t eg_score);
+#endif
 
 /**
  * \brief Evaluate a chess position for the side to move.
@@ -191,6 +194,7 @@ int32_t eval(const position_t* pos, bool material_only)
     {
         mg_score += get_pawn_hash_entry_mg_score(pawn_hash_val);
         eg_score += get_pawn_hash_entry_eg_score(pawn_hash_val);
+        assert(verify_pawn_scores(pos, mg_score - mat_score, eg_score - mat_score));
     }
     else
     {
@@ -257,3 +261,23 @@ int32_t eval(const position_t* pos, bool material_only)
     /* return the score from the perspective of the player on move */
     return pos->player == WHITE ? tapered_score : -tapered_score;    
 }
+
+#ifndef NDEBUG
+static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t eg_score)
+{
+    int32_t my_mg_score = 0;
+    int32_t my_eg_score = 0;
+    uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
+    while (all_pawns)
+    {
+        square_t sq = (square_t)get_lsb(all_pawns);
+        eval_pawn(pos, sq, &my_mg_score, &my_eg_score);
+        all_pawns ^= square_to_bitmap(sq);
+    }
+
+    assert(mg_score==my_mg_score);
+    assert(eg_score==my_eg_score);
+
+    return mg_score==my_mg_score && eg_score==my_eg_score;
+}
+#endif
