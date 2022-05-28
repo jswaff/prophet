@@ -1,4 +1,7 @@
+#include <prophet/hash.h>
 #include "eval_internal.h"
+
+extern hash_table_t phtbl;
 
 /*
 PAWN_VAL=100
@@ -182,13 +185,25 @@ int32_t eval(const position_t* pos, bool material_only)
     int32_t mg_score = mat_score;
     int32_t eg_score = mat_score;
 
-    /* fold in pawn positional features */
-    uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
-    while (all_pawns)
+    /* fold in pawn positional features. try the pawn hash first. */
+    uint64_t pawn_hash_val = probe_hash(&phtbl, pos->pawn_key);
+    if (pawn_hash_val != 0)
     {
-        square_t sq = (square_t)get_lsb(all_pawns);
-        eval_pawn(pos, sq, &mg_score, &eg_score);
-        all_pawns ^= square_to_bitmap(sq);
+        mg_score += get_pawn_hash_entry_mg_score(pawn_hash_val);
+        eg_score += get_pawn_hash_entry_eg_score(pawn_hash_val);
+    }
+    else
+    {
+        uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
+        while (all_pawns)
+        {
+            square_t sq = (square_t)get_lsb(all_pawns);
+            eval_pawn(pos, sq, &mg_score, &eg_score);
+            all_pawns ^= square_to_bitmap(sq);
+        }
+        /* store the scores */
+        store_hash_entry(&phtbl, pos->pawn_key, 
+            build_pawn_hash_val(mg_score - mat_score, eg_score - mat_score));
     }
 
     /* fold in knight positional features */
