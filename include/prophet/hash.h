@@ -38,6 +38,9 @@ typedef struct
     /* the capacity, in number of elements */
     uint32_t capacity;
 
+    /* mask to be applied to hash key to determine bucket */
+    uint64_t mask;
+
     /* the number of times the table has been probed */
     uint64_t probes;
 
@@ -88,11 +91,11 @@ void free_hash_tables();
  * \brief Resize a hash table.  
  *
  * \param tbl           a pointer to hash table
- * \param size          the number of bytes to allocate 
+ * \param size          the maximum number of bytes to allocate 
  *
  * \return - 0 on success, or non-zero on failure
  */
-int resize_hash_table(hash_table_t *tbl, uint32_t size);
+int resize_hash_table(hash_table_t *tbl, uint32_t max_size);
 
 
 

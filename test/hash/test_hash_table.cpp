@@ -7,9 +7,10 @@ TEST(hash_test, clear_table)
 {
     // create a test hash table
     hash_table_t hash_table;
-    hash_entry_t tbl[10];
-    memset(tbl, 0, 10 * sizeof(hash_entry_t));
-    hash_table.capacity = 10;
+    hash_entry_t tbl[16];
+    memset(tbl, 0, 16 * sizeof(hash_entry_t));
+    hash_table.capacity = 16;
+    hash_table.mask = 15;
     hash_table.tbl = tbl;
 
     // store something in it
@@ -37,15 +38,17 @@ TEST(hash_test, resize_table)
     // create a test hash table.  Note the resize operation does a free, which assumes
     // dynamic memory allocation
     hash_table_t* hash_table = (hash_table_t*)malloc(sizeof(hash_table_t));
-    hash_table->tbl = (hash_entry_t*)malloc(10 * sizeof(hash_entry_t));
-    memset(hash_table->tbl, 0, 10 * sizeof(hash_entry_t));
-    hash_table->capacity = 10;
-    EXPECT_EQ(10U, hash_table->capacity);
+    hash_table->tbl = (hash_entry_t*)malloc(16 * sizeof(hash_entry_t));
+    memset(hash_table->tbl, 0, 16 * sizeof(hash_entry_t));
+    hash_table->capacity = 16;
+    hash_table->mask = 15;
 
-    // resize it large enough for 100 elements
+    // resize it large enough for 100 elements.  This will set the capacity to the largest power
+    // of 2 possible to remain within the alloted size.
     uint32_t size_bytes = sizeof(hash_entry_t) * 100;
     resize_hash_table(hash_table, size_bytes);
-    ASSERT_EQ(100U, hash_table->capacity);
+    ASSERT_EQ(64U, hash_table->capacity);
+    ASSERT_EQ(63U, hash_table->mask);
 
     // cleanup
     free(hash_table->tbl);
