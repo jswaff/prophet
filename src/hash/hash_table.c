@@ -6,16 +6,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* the default hash table size is 256 MB */
-uint32_t hash_size = 134217728 * 4;  /* 512 */
+/* default hash table and pawn hash table sizes */
+uint32_t hash_size = 134217728 * 4;      /* 512 mb */
+uint32_t pawn_hash_size = 134217728;     /* 128 mb */
 
 hash_table_t htbl;
+hash_table_t phtbl;
 
 
 /* forward decls */
-static int init_hash_table(hash_table_t *tbl, uint32_t size);
-
-
+static int init_hash_table(hash_table_t *tbl, uint32_t max_size);
+static void set_capacity(hash_table_t *tbl, uint32_t max_size);
 
 /**
  * \brief Clear a hash table
@@ -37,6 +38,7 @@ void clear_hash_table(hash_table_t *tbl)
 void clear_hash_tables()
 {
     clear_hash_table(&htbl);
+    clear_hash_table(&phtbl);
 }
 
 
@@ -49,7 +51,12 @@ void clear_hash_tables()
  */
 int init_hash_tables()
 {
-    return init_hash_table(&htbl, hash_size);
+    int retval = init_hash_table(&htbl, hash_size);
+    if (0 != retval)
+    {
+        return retval;
+    }
+    return init_hash_table(&phtbl, pawn_hash_size);
 }
 
 
@@ -62,6 +69,8 @@ void free_hash_tables()
     plog("# freeing hash tables\n");
     assert(htbl.tbl);
     free(htbl.tbl);
+    assert(phtbl.tbl);
+    free(phtbl.tbl);
 }
 
 
@@ -69,25 +78,22 @@ void free_hash_tables()
  * \brief Resize a hash table.  
  *
  * \param tbl           a pointer to hash table
- * \param size          the number of bytes to allocate 
+ * \param size          the maximum number of bytes to allocate 
  *
  * \return - 0 on success, or non-zero on failure
  */
-int resize_hash_table(hash_table_t *tbl, uint32_t size)
+int resize_hash_table(hash_table_t *tbl, uint32_t max_size)
 {
     assert(tbl->tbl);
-   
-    tbl->capacity = size / sizeof(hash_entry_t);
-    hash_entry_t* new_table_ptr = (hash_entry_t*)realloc(
-        tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
+    set_capacity(tbl, max_size);
+
+    hash_entry_t* new_table_ptr = (hash_entry_t*)realloc(tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
     if (NULL == new_table_ptr)
     {
         return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
     }
     tbl->tbl = new_table_ptr;
     clear_hash_table(tbl);    
-
-    plog("# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
 
     /* success */
     return 0;
@@ -97,15 +103,14 @@ int resize_hash_table(hash_table_t *tbl, uint32_t size)
  * \brief Initialize a hash table.  
  *
  * \param tbl           a pointer to hash table
- * \param size          the number of bytes to allocate 
+ * \param max_size      the maximum number of bytes to allocate 
  *
  * \return - 0 on success, or non-zero on failure
  */
-static int init_hash_table(hash_table_t *tbl, uint32_t size)
+static int init_hash_table(hash_table_t *tbl, uint32_t max_size)
 {
-    assert(size > 0);
+    set_capacity(tbl, max_size);
 
-    tbl->capacity = size / sizeof(hash_entry_t);
     tbl->tbl = (hash_entry_t*)malloc(tbl->capacity * sizeof(hash_entry_t));
     if (NULL == tbl->tbl)
     {
@@ -113,8 +118,45 @@ static int init_hash_table(hash_table_t *tbl, uint32_t size)
     }
     clear_hash_table(tbl);    
 
-    plog("# P4 hash size: %d bytes ==> %d elements.\n", size, tbl->capacity);
 
     /* success */
     return 0;
+}
+
+/**
+ * \brief Set the capacity and mask for a hash table.
+ *
+ * The capacity is set to the largest possible power of 2 to remain within the max_size.
+ * Since the capacity is a power of 2, the mask will be capacity - 1, which are guaranteed
+ * to be consecutive low order bits.  The mask can be applied to the hash key to quickly
+ * determine the proper bucket.
+ *
+ * \param tbl           a pointer to hash table
+ * \param max_size      the maximum number of bytes to allocate 
+ *
+ */
+
+static void set_capacity(hash_table_t *tbl, uint32_t max_size)
+{
+    assert(max_size > 0);
+
+    plog("# max hash size: %d bytes\n", max_size);
+    plog("# hash entry size: %d bytes\n", sizeof(hash_entry_t));
+    uint32_t max_entries = max_size / sizeof(hash_entry_t);
+    plog("# max hash entries: %d\n", max_entries);
+
+    /* find the largest power of 2 that is <= size */
+    tbl->capacity = 1;
+    while (tbl->capacity <= max_entries)
+    {
+        tbl->capacity *= 2;
+    }
+    tbl->capacity /= 2;
+
+    uint32_t actual_size = tbl->capacity * sizeof(hash_entry_t);
+    plog("# actual hash size: %d bytes\n", actual_size);
+    plog("# actual hash entries: %d\n", tbl->capacity);
+
+    /* set the mask for determining the proper bucket given a key */
+    tbl->mask = tbl->capacity - 1;    
 }

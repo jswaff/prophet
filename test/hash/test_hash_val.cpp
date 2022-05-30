@@ -148,3 +148,15 @@ TEST(hash_test, empty_val_is_NO_MOVE)
     uint64_t val = 0;
     ASSERT_EQ(NO_MOVE, get_hash_entry_move(val));
 }
+
+
+TEST(hash_test, pawn_score)
+{
+    int32_t mg_score = -33;
+    int32_t eg_score = 17;
+
+    uint64_t val = build_pawn_hash_val(mg_score, eg_score);
+
+    ASSERT_EQ(mg_score, get_pawn_hash_entry_mg_score(val));
+    ASSERT_EQ(eg_score, get_pawn_hash_entry_eg_score(val));
+}

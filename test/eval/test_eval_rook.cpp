@@ -21,7 +21,6 @@ TEST(eval_test, eval_rook)
 }
 
 
-
 TEST(eval_test, eval_rook_7th_king_back_rank)
 {
     position_t pos;
@@ -40,9 +39,9 @@ TEST(eval_test, eval_rook_open_file)
     ASSERT_TRUE(set_pos(&pos, "3r3k/8/8/8/8/8/8/7K b - - 0 1"));
 
     int32_t mg = 0; int32_t eg = 0;
-    eval_rook(&pos, D1, &mg, &eg);
-    EXPECT_EQ(-rook_pst[D8] - rook_open_file, mg);
-    EXPECT_EQ(-rook_endgame_pst[D8] - rook_open_file, eg);
+    eval_rook(&pos, D8, &mg, &eg);
+    EXPECT_EQ(-(rook_pst[D1] + rook_open_file), mg);
+    EXPECT_EQ(-(rook_endgame_pst[D1] + rook_open_file), eg);
 }
 
 TEST(eval_test, eval_rook_half_open_file)

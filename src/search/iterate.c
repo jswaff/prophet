@@ -18,6 +18,7 @@ uint32_t volatile hash_age = 0;
 
 extern move_line_t last_pv;
 extern hash_table_t htbl;
+extern hash_table_t phtbl;
 extern bool volatile stop_search;
 extern bool volatile skip_time_checks;
 
@@ -222,6 +223,19 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
         hash_hits/1000, hash_hit_pct,
         hash_collisions/1000, hash_collision_pct);
 
+    /* display pawn hash stats */
+    uint64_t pawn_hash_hits = phtbl.hits;
+    uint64_t pawn_hash_probes = phtbl.probes;
+    uint64_t pawn_hash_collisions = phtbl.collisions;
+    float pawn_hash_hit_pct = pawn_hash_hits / (pawn_hash_probes/100.0);
+    float pawn_hash_collision_pct = pawn_hash_collisions / (pawn_hash_probes/100.0);
+    plog("# pawn hash probes: %lluk, hits: %lluk (%.2f%%), "
+        "collisions: %lluk (%.2f%%)\n",
+        pawn_hash_probes/1000,
+        pawn_hash_hits/1000, pawn_hash_hit_pct,
+        pawn_hash_collisions/1000, pawn_hash_collision_pct);
+
+    /* fail high metrics */
     float hash_fail_high_pct = stats->hash_fail_highs / (hash_probes/100.0);
     float hash_fail_low_pct = stats->hash_fail_lows / (hash_probes/100.0);
     float hash_exact_score_pct = stats->hash_exact_scores / (hash_probes/100.0);
