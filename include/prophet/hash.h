@@ -36,7 +36,7 @@ typedef struct
     hash_entry_t *tbl;
 
     /* the capacity, in number of elements */
-    uint32_t capacity;
+    uint64_t capacity;
 
     /* mask to be applied to hash key to determine bucket */
     uint64_t mask;
@@ -95,7 +95,7 @@ void free_hash_tables();
  *
  * \return - 0 on success, or non-zero on failure
  */
-int resize_hash_table(hash_table_t *tbl, uint32_t max_size);
+int resize_hash_table(hash_table_t *tbl, uint64_t max_size);
 
 
 

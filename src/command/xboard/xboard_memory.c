@@ -1,11 +1,14 @@
 #include <prophet/error_codes.h>
 #include <prophet/hash.h>
+#include <prophet/util/output.h>
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 extern hash_table_t htbl;
+extern hash_table_t phtbl;
 
 /**
  * \brief Execute the xboard memory command 
@@ -30,15 +33,22 @@ int xboard_memory(const char* input)
 
     /* attempt to read the SIZE parameter */
     uint32_t size_mb;
-    if (1 != sscanf(input + 7, "%d", &size_mb))
+    if (1 != sscanf(input + 7,  "%u", &size_mb))
     {
         return P4_ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
     }
 
+    plog("# memory: %u mb; per table: %u mb\n", size_mb, size_mb/2);
 
-    /* resize the hash table */
-    int retval = resize_hash_table(&htbl, size_mb * 1024 * 1024);
 
+    /* resize the hash tables */
+    uint64_t size_bytes_per_table = (uint64_t)size_mb/2 * 1024 * 1024;
+    int retval = resize_hash_table(&htbl, size_bytes_per_table);
+    if (0 != retval)
+    {
+        return retval;
+    }
+    retval = resize_hash_table(&phtbl, size_bytes_per_table);
 
     return retval;
 }

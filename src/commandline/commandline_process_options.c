@@ -9,8 +9,8 @@
 
 extern volatile uint32_t max_depth;
 extern bool logging_enabled;
-extern uint32_t hash_size;
-extern uint32_t pawn_hash_size;
+extern uint64_t hash_size;
+extern uint64_t pawn_hash_size;
 extern bool random_mode;
 
 
@@ -56,11 +56,11 @@ int commandline_process_options(int argc, char* argv[])
                 break;
             case 'h':
                 out(stdout, "setting hash table size to %s mb\n", optarg);
-                hash_size = atoi(optarg) * 1024 * 1024;
+                hash_size = atoll(optarg) * 1024 * 1024;
                 break;
             case 'p':
                 out(stdout, "setting pawn hash table size to %s mb\n", optarg);
-                pawn_hash_size = atoi(optarg) * 1024 * 1024;
+                pawn_hash_size = atoll(optarg) * 1024 * 1024;
                 break;
             case 'e':
                 out(stdout, "loading eval properties from %s\n", optarg);

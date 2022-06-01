@@ -7,6 +7,7 @@
 #include "../../../src/command/xboard/xboard_internal.h"
 
 extern hash_table_t htbl;
+extern hash_table_t phtbl;
 
 TEST(xboard_test, xboard_memory_incorrect_cmd)
 {
@@ -23,6 +24,7 @@ TEST(xboard_test, xboard_memory)
     EXPECT_NE(0U, htbl.capacity);
     EXPECT_NE(orig_capacity, htbl.capacity);
 
-    uint32_t expected_capacity = (uint32_t)(64 * 1024 * 1024) / sizeof(hash_entry_t);
+    uint64_t expected_capacity = (uint64_t)(32 * 1024 * 1024) / sizeof(hash_entry_t);
     EXPECT_EQ(expected_capacity, htbl.capacity);
+    EXPECT_EQ(expected_capacity, phtbl.capacity);
 }
