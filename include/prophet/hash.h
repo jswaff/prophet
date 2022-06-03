@@ -36,7 +36,10 @@ typedef struct
     hash_entry_t *tbl;
 
     /* the capacity, in number of elements */
-    uint32_t capacity;
+    uint64_t capacity;
+
+    /* mask to be applied to hash key to determine bucket */
+    uint64_t mask;
 
     /* the number of times the table has been probed */
     uint64_t probes;
@@ -88,11 +91,11 @@ void free_hash_tables();
  * \brief Resize a hash table.  
  *
  * \param tbl           a pointer to hash table
- * \param size          the number of bytes to allocate 
+ * \param size          the maximum number of bytes to allocate 
  *
  * \return - 0 on success, or non-zero on failure
  */
-int resize_hash_table(hash_table_t *tbl, uint32_t size);
+int resize_hash_table(hash_table_t *tbl, uint64_t max_size);
 
 
 
@@ -145,6 +148,17 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
 
 
 /**
+ * \brief Build a pawn hash value.
+ *
+ * \param mg_score      the middle game score to hash
+ * \param eg_score      the end game score to hash
+ *
+ * \return - the encoded value
+ */
+uint64_t build_pawn_hash_val(int32_t mg_score, int32_t eg_score);
+
+
+/**
  * \brief Get the hash entry type
  *
  * \param val           the hashed value
@@ -192,6 +206,26 @@ move_t get_hash_entry_move(uint64_t val);
  * \return - the hash entry age
  */
 uint32_t get_hash_entry_age(uint64_t val);
+
+
+/**
+ * \brief Get the middle game score from a pawn hash value
+ *
+ * \param val           the hashed value
+ *
+ * \return - the middle game score
+ */
+int32_t get_pawn_hash_entry_mg_score(uint64_t val);
+
+
+/**
+ * \brief Get the end game score from a pawn hash value
+ *
+ * \param val           the hashed value
+ *
+ * \return - the end game score
+ */
+int32_t get_pawn_hash_entry_eg_score(uint64_t val);
 
 
 /* make this header C++ friendly. */

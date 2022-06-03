@@ -18,7 +18,8 @@
 void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
 {
     assert(tbl->tbl);
-    uint32_t tbl_index = key % tbl->capacity;
+    assert(tbl->mask);
+    uint64_t tbl_index = key & tbl->mask;
     hash_entry_t *he = tbl->tbl + tbl_index;
 
     int selected_slot = -1;

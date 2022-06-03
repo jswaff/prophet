@@ -80,6 +80,27 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
     return val;
 }
 
+/**
+ * \brief Build a pawn hash value.
+ *
+ * \param mg_score      the middle game score to hash
+ * \param eg_score      the end game score to hash
+ *
+ * \return - the encoded value
+ */
+uint64_t build_pawn_hash_val(int32_t mg_score, int32_t eg_score)
+{
+    assert(mg_score >= -32767);
+    assert(mg_score <= 32767);
+
+    assert(eg_score >= -32767);
+    assert(eg_score <= 32767);
+
+    uint64_t val = ((uint64_t)mg_score + 32767) << 32;
+    val |= ((uint64_t)eg_score + 32767);
+
+    return val;
+}
 
 /**
  * \brief Get the hash entry type
@@ -144,4 +165,30 @@ move_t get_hash_entry_move(uint64_t val)
 uint32_t get_hash_entry_age(uint64_t val)
 {
     return (val >> 50) & 0x3FF;
+}
+
+
+/**
+ * \brief Get the middle game score from a pawn hash value
+ *
+ * \param val           the hashed value
+ *
+ * \return - the middle game score
+ */
+int32_t get_pawn_hash_entry_mg_score(uint64_t val)
+{
+    return ((val >> 32) & 0xFFFF) - 32767;
+}
+
+
+/**
+ * \brief Get the end game score from a pawn hash value
+ *
+ * \param val           the hashed value
+ *
+ * \return - the end game score
+ */
+int32_t get_pawn_hash_entry_eg_score(uint64_t val)
+{
+    return (val & 0xFFFF) - 32767;
 }

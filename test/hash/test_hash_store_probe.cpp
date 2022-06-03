@@ -7,8 +7,9 @@ TEST(hash_test, store_and_probe)
     hash_table_t hash_table;
 
     // define a small table
-    hash_entry_t tbl[10];
-    hash_table.capacity = 10;
+    hash_entry_t tbl[16];
+    hash_table.capacity = 16;
+    hash_table.mask = 15;
     hash_table.tbl = tbl;
     clear_hash_table(&hash_table);
     EXPECT_EQ(0U, hash_table.probes);
@@ -28,29 +29,29 @@ TEST(hash_test, store_and_probe)
 
 
     // using key > capacity
-    ASSERT_EQ(0U, probe_hash(&hash_table, 12));
+    ASSERT_EQ(0U, probe_hash(&hash_table, 18));
     EXPECT_EQ(3U, hash_table.probes);
     EXPECT_EQ(1U, hash_table.hits);
 
-    store_hash_entry(&hash_table, 12, val);
-    ASSERT_EQ(val, probe_hash(&hash_table, 12));
+    store_hash_entry(&hash_table, 18, val);
+    ASSERT_EQ(val, probe_hash(&hash_table, 18));
     EXPECT_EQ(4U, hash_table.probes);
     EXPECT_EQ(2U, hash_table.hits);
 
     // key collision - this would pull from the same bucket, 
     // but the key doesn't match. 
-    ASSERT_EQ(0U, probe_hash(&hash_table, 2));
+    ASSERT_EQ(0U, probe_hash(&hash_table, 3));
     EXPECT_EQ(5U, hash_table.probes);
     EXPECT_EQ(2U, hash_table.hits);
 
     // now store in the bucket we just probed
-    store_hash_entry(&hash_table, 2, val);
-    ASSERT_EQ(val, probe_hash(&hash_table, 2));
+    store_hash_entry(&hash_table, 3, val);
+    ASSERT_EQ(val, probe_hash(&hash_table, 3));
     EXPECT_EQ(6U, hash_table.probes);
     EXPECT_EQ(3U, hash_table.hits);
 
     // the previous entry should still be there as there are multiple slots
-    ASSERT_EQ(val, probe_hash(&hash_table, 12));
+    ASSERT_EQ(val, probe_hash(&hash_table, 18));
     EXPECT_EQ(7U, hash_table.probes);
     EXPECT_EQ(4U, hash_table.hits);
 }
@@ -60,8 +61,9 @@ TEST(hash_test, replacement_strategy)
     hash_table_t hash_table;
 
     // define a small table
-    hash_entry_t tbl[10];
-    hash_table.capacity = 10;
+    hash_entry_t tbl[16];
+    hash_table.capacity = 16;
+    hash_table.mask = 15;
     hash_table.tbl = tbl;
     clear_hash_table(&hash_table);
 
@@ -97,7 +99,7 @@ TEST(hash_test, replacement_strategy)
     // same bucket, a shallower depth, and the same age.  It should 
     // not overwrite the previous entry, but be written to the next
     // slot.
-    uint64_t key4 = 13;
+    uint64_t key4 = 19;
     uint64_t val4 = build_hash_val(UPPER_BOUND, 5, 101, NO_MOVE, 1);
     store_hash_entry(&hash_table, key4, val4);
     ASSERT_EQ(val4, probe_hash(&hash_table, key4));
@@ -111,8 +113,9 @@ TEST(hash_test, replacement_strategy2)
     hash_table_t hash_table;
 
     // define a small table
-    hash_entry_t tbl[10];
-    hash_table.capacity = 10;
+    hash_entry_t tbl[16];
+    hash_table.capacity = 16;
+    hash_table.mask = 15;
     hash_table.tbl = tbl;
     clear_hash_table(&hash_table);
 
@@ -132,11 +135,11 @@ TEST(hash_test, replacement_strategy2)
     for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++)
     {
         uint64_t v = build_hash_val(UPPER_BOUND, depth-i, score, m, age);
-        store_hash_entry(&hash_table, k + (i*10), v);
+        store_hash_entry(&hash_table, k + (i*16), v);
     }
 
     // verify the values of the last entry 
-    uint64_t last_key = k + (NUM_HASH_SLOTS_PER_BUCKET-1) * 10;
+    uint64_t last_key = k + (NUM_HASH_SLOTS_PER_BUCKET-1) * 16;
     uint64_t found = probe_hash(&hash_table, last_key);
     ASSERT_EQ(UPPER_BOUND, get_hash_entry_type(found));
     ASSERT_EQ(depth-NUM_HASH_SLOTS_PER_BUCKET+1, get_hash_entry_depth(found));
@@ -146,7 +149,7 @@ TEST(hash_test, replacement_strategy2)
 
     // write one more with a smaller depth but same age.  it should displace the last entry.
     uint64_t v2 = build_hash_val(UPPER_BOUND, depth-NUM_HASH_SLOTS_PER_BUCKET, 101, NO_MOVE, age);
-    store_hash_entry(&hash_table, k + NUM_HASH_SLOTS_PER_BUCKET * 10, v2);
+    store_hash_entry(&hash_table, k + NUM_HASH_SLOTS_PER_BUCKET * 16, v2);
     ASSERT_EQ(0U, probe_hash(&hash_table, last_key));
 
     // verify the initial entry
@@ -160,6 +163,6 @@ TEST(hash_test, replacement_strategy2)
 
     // write an entry with greater age.  it should displace the first entry.
     uint64_t v3 = build_hash_val(UPPER_BOUND, 1, 200, NO_MOVE, age+1);
-    store_hash_entry(&hash_table, k + (NUM_HASH_SLOTS_PER_BUCKET+1)*10, v3);
+    store_hash_entry(&hash_table, k + (NUM_HASH_SLOTS_PER_BUCKET+1)*16, v3);
     ASSERT_EQ(0U, probe_hash(&hash_table, first_key));
 }

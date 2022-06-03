@@ -21,9 +21,10 @@
 uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
 {
     assert(tbl->tbl);
+    assert(tbl->mask);
 
     tbl->probes++;
-    uint32_t tbl_index = key % tbl->capacity;
+    uint64_t tbl_index = key & tbl->mask;
     hash_entry_t *he = tbl->tbl + tbl_index;
 
     for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++)
