@@ -34,22 +34,30 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"KING_SAFETY_MIDDLE_OPEN_FILE", &king_safety_middle_open_file},
 
     {"PASSED_PAWN", &passed_pawn},
+    {"PASSED_PAWN_ENDGAME", &passed_pawn_endgame},
     {"ISOLATED_PAWN", &isolated_pawn},
+    {"ISOLATED_PAWN_ENDGAME", &isolated_pawn_endgame},
     {"DOUBLED_PAWN", &doubled_pawn},
+    {"DOUBLED_PAWN_ENDGAME", &doubled_pawn_endgame},
 
     {"KNIGHT_TROPISM", &knight_tropism},
+    {"KNIGHT_TROPISM_ENDGAME", &knight_tropism_endgame},
 
     {"BISHOP_MOBILITY", &bishop_mobility},
     {"BISHOP_ENDGAME_MOBILITY", &bishop_endgame_mobility},
 
     {"ROOK_OPEN_FILE", &rook_open_file},
+    {"ROOK_OPEN_FILE_ENDGAME", &rook_open_file_endgame},
     {"ROOK_HALF_OPEN_FILE", &rook_half_open_file},
+    {"ROOK_HALF_OPEN_FILE_ENDGAME", &rook_half_open_file_endgame},
 
     {"QUEEN_MOBILITY", &queen_mobility},
     {"QUEEN_ENDGAME_MOBILITY", &queen_endgame_mobility},
 
     {"MAJOR_ON_7TH", &major_on_7th},
+    {"MAJOR_ON_7TH_ENDGAME", &major_on_7th_endgame},
     {"CONNECTED_MAJORS_ON_7TH", &connected_majors_on_7th},
+    {"CONNECTED_MAJORS_ON_7TH_ENDGAME", &connected_majors_on_7th_endgame},
 
     {"PAWN_PST", &pawn_pst[0]},
     {"PAWN_ENDGAME_PST", &pawn_endgame_pst[0]},
