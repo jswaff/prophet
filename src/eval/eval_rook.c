@@ -6,7 +6,7 @@
 #include  <assert.h>
 
 /* forward decls */
-static int32_t eval_rook_open_file(const position_t* pos, square_t sq);
+static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
 /**
@@ -22,20 +22,20 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK);
 
-    int32_t s = eval_major_on_7th(pos, sq) + eval_rook_open_file(pos, sq);
-
     if (is_white_piece(pos->piece[sq]))
     {
-        *mgscore += rook_pst[sq] + s;
-        *egscore += rook_endgame_pst[sq] + s;
+        *mgscore += rook_pst[sq];
+        *egscore += rook_endgame_pst[sq];
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
-        *mgscore -= rook_pst[flipsq] + s;
-        *egscore -= rook_endgame_pst[flipsq] + s;
+        *mgscore -= rook_pst[flipsq];
+        *egscore -= rook_endgame_pst[flipsq];
     }
 
+    eval_major_on_7th(pos, sq, mgscore, egscore);
+    eval_rook_open_file(pos, sq, mgscore, egscore);
 }
 
 
@@ -47,15 +47,15 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the rook is on
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a bonus for an open or half open file.
  */ 
-static int32_t eval_rook_open_file(const position_t* pos, square_t sq)
+void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
-    int32_t score = 0;
-
     uint64_t friends, enemies;
-    if (is_white_piece(pos->piece[sq]))
+    bool wtm = is_white_piece(pos->piece[sq]);
+    if (wtm)
     {
         friends = pos->white_pawns;
         enemies = pos->black_pawns;
@@ -71,13 +71,30 @@ static int32_t eval_rook_open_file(const position_t* pos, square_t sq)
     {
         if (file_mask & enemies)
         {
-            score = rook_half_open_file;
+            if (wtm) 
+            {
+                *mgscore += rook_half_open_file;
+                *egscore += rook_half_open_file_endgame;
+            }
+            else
+            {
+                *mgscore -= rook_half_open_file;
+                *egscore -= rook_half_open_file_endgame;
+            }
         }
         else
         {
-            score = rook_open_file;
+            if (wtm)
+            {
+                *mgscore += rook_open_file;
+                *egscore += rook_open_file_endgame;
+            }
+            else
+            {
+                *mgscore -= rook_open_file;
+                *egscore -= rook_open_file_endgame;
+            }
         }
     }
 
-    return score;
 }

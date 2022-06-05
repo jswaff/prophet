@@ -48,12 +48,16 @@ PASSED_PAWN=31
 */
 /* pawn terms */
 int32_t passed_pawn                     =   31;
+int32_t passed_pawn_endgame             =   32;
 int32_t isolated_pawn                   =  -13;
+int32_t isolated_pawn_endgame           =  -14;
 int32_t doubled_pawn                    =   -7;
+int32_t doubled_pawn_endgame            =   -8;
 
 /* KNIGHT_TROPISM=-7 */
 /* knight terms */
 int32_t knight_tropism                  =   -7;
+int32_t knight_tropism_endgame          =   -8;
 
 /*
 BISHOP_MOBILITY=3
@@ -69,7 +73,9 @@ ROOK_HALF_OPEN_FILE=20
 */
 /* rook terms */
 int32_t rook_open_file                  =   33;
+int32_t rook_open_file_endgame          =   34;
 int32_t rook_half_open_file             =   20;
+int32_t rook_half_open_file_endgame     =   21;
 
 /*
 QUEEN_MOBILITY=1
@@ -84,7 +90,9 @@ MAJOR_ON_7TH=17
 CONNECTED_MAJORS_ON_7TH=64
 */
 int32_t major_on_7th                    =   17;
+int32_t major_on_7th_endgame            =   18;
 int32_t connected_majors_on_7th         =   64;
+int32_t connected_majors_on_7th_endgame =   65;
 
 /* psts */
 int32_t pawn_pst[64] = {

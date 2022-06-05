@@ -29,5 +29,6 @@ TEST(eval_test, eval_queen_7th_king_back_rank)
     int32_t mg = 0; int32_t eg = 0;
     eval_queen(&pos, C7, &mg, &eg);
     EXPECT_EQ(queen_pst[C7] + major_on_7th + connected_majors_on_7th + 20 * queen_mobility, mg);
-    EXPECT_EQ(queen_endgame_pst[C7] + major_on_7th + connected_majors_on_7th + 20 * queen_endgame_mobility, eg);
+    EXPECT_EQ(queen_endgame_pst[C7] + major_on_7th_endgame + connected_majors_on_7th_endgame + 
+        20 * queen_endgame_mobility, eg);
 }

@@ -13,15 +13,15 @@
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the major piece is on
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score 
  */
-int32_t eval_major_on_7th(const position_t* pos, square_t sq)
+void eval_major_on_7th(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK
         || pos->piece[sq] == QUEEN || pos->piece[sq] == -QUEEN);
 
-    int32_t score = 0; 
 
     /* get the rook moves to the east in order to look for connected majors */
     uint64_t rook_moves = get_rook_moves(pos, sq, ray(sq, EAST));
@@ -30,10 +30,12 @@ int32_t eval_major_on_7th(const position_t* pos, square_t sq)
     {
         if (get_rank(sq)==RANK_7 && get_rank(pos->black_king)==RANK_8)
         {
-            score += major_on_7th;
+            *mgscore += major_on_7th;
+            *egscore += major_on_7th_endgame;
             if (rook_moves & (pos->white_rooks | pos->white_queens))
             {
-                score += connected_majors_on_7th;
+                *mgscore += connected_majors_on_7th;
+                *egscore += connected_majors_on_7th_endgame;
             }
         }
     }
@@ -41,14 +43,13 @@ int32_t eval_major_on_7th(const position_t* pos, square_t sq)
     {
         if (get_rank(sq)==RANK_2 && get_rank(pos->white_king)==RANK_1)
         {
-            score += major_on_7th;
+            *mgscore -= major_on_7th;
+            *egscore -= major_on_7th_endgame;
             if (rook_moves & (pos->black_rooks | pos->black_queens))
             {
-                score += connected_majors_on_7th;
+                *mgscore -= connected_majors_on_7th;
+                *egscore -= connected_majors_on_7th_endgame;
             }
         }
     }
-
-  
-    return score;    
 }

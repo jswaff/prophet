@@ -84,10 +84,11 @@ void eval_knight(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
  *
  * \param pos           a pointer to a chess position
  * \param sq            the square the major piece is on
+ * \param mgscore       a pointer to the middle game score accumulator
+ * \param egscore       a pointer to the endgame score accumulator
  *
- * \return a score 
  */
-int32_t eval_major_on_7th(const position_t* pos, square_t sq);
+void eval_major_on_7th(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 /**
  * \brief Evaluate the position's "material type".

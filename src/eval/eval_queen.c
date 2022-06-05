@@ -24,18 +24,18 @@ void eval_queen(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* e
     uint32_t mobility_mg = mobility * queen_mobility;
     uint32_t mobility_eg = mobility * queen_endgame_mobility;
 
-    int32_t m7 = eval_major_on_7th(pos, sq);
 
     if (is_white_piece(pos->piece[sq]))
     {
-        *mgscore += queen_pst[sq] + mobility_mg + m7;
-        *egscore += queen_endgame_pst[sq] + mobility_eg + m7;
+        *mgscore += queen_pst[sq] + mobility_mg;
+        *egscore += queen_endgame_pst[sq] + mobility_eg;
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
-        *mgscore -= queen_pst[flipsq] + mobility_mg + m7;
-        *egscore -= queen_endgame_pst[flipsq] + mobility_eg + m7;
+        *mgscore -= queen_pst[flipsq] + mobility_mg;
+        *egscore -= queen_endgame_pst[flipsq] + mobility_eg;
     }
 
+    eval_major_on_7th(pos, sq, mgscore, egscore);
 }

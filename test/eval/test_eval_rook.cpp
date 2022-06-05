@@ -29,7 +29,7 @@ TEST(eval_test, eval_rook_7th_king_back_rank)
     int32_t mg = 0; int32_t eg = 0;
     eval_rook(&pos, F7, &mg, &eg);
     EXPECT_EQ(rook_pst[F7] + major_on_7th + rook_open_file, mg);
-    EXPECT_EQ(rook_endgame_pst[F7] + major_on_7th + rook_open_file, eg);
+    EXPECT_EQ(rook_endgame_pst[F7] + major_on_7th_endgame + rook_open_file_endgame, eg);
 }
 
 
@@ -41,7 +41,7 @@ TEST(eval_test, eval_rook_open_file)
     int32_t mg = 0; int32_t eg = 0;
     eval_rook(&pos, D8, &mg, &eg);
     EXPECT_EQ(-(rook_pst[D1] + rook_open_file), mg);
-    EXPECT_EQ(-(rook_endgame_pst[D1] + rook_open_file), eg);
+    EXPECT_EQ(-(rook_endgame_pst[D1] + rook_open_file_endgame), eg);
 }
 
 TEST(eval_test, eval_rook_half_open_file)
@@ -62,5 +62,5 @@ TEST(eval_test, eval_rook_half_open_file)
     int32_t mg2 = 0; int32_t eg2 = 0;
     eval_rook(&pos, C5, &mg2, &eg2);
     EXPECT_EQ(rook_pst[C5] + rook_half_open_file , mg2);
-    EXPECT_EQ(rook_endgame_pst[C5] + rook_half_open_file, eg2);
+    EXPECT_EQ(rook_endgame_pst[C5] + rook_half_open_file_endgame, eg2);
 }
