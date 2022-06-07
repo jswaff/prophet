@@ -24,14 +24,14 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
 
     if (is_white_piece(pos->piece[sq]))
     {
-        *mgscore += rook_pst[sq];
-        *egscore += rook_endgame_pst[sq];
+        *mgscore += rook_pst_mg[sq];
+        *egscore += rook_pst_eg[sq];
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
-        *mgscore -= rook_pst[flipsq];
-        *egscore -= rook_endgame_pst[flipsq];
+        *mgscore -= rook_pst_mg[flipsq];
+        *egscore -= rook_pst_eg[flipsq];
     }
 
     eval_major_on_7th(pos, sq, mgscore, egscore);
@@ -73,26 +73,26 @@ void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, i
         {
             if (wtm) 
             {
-                *mgscore += rook_half_open_file;
-                *egscore += rook_half_open_file_endgame;
+                *mgscore += rook_half_open_file_mg;
+                *egscore += rook_half_open_file_eg;
             }
             else
             {
-                *mgscore -= rook_half_open_file;
-                *egscore -= rook_half_open_file_endgame;
+                *mgscore -= rook_half_open_file_mg;
+                *egscore -= rook_half_open_file_eg;
             }
         }
         else
         {
             if (wtm)
             {
-                *mgscore += rook_open_file;
-                *egscore += rook_open_file_endgame;
+                *mgscore += rook_open_file_mg;
+                *egscore += rook_open_file_eg;
             }
             else
             {
-                *mgscore -= rook_open_file;
-                *egscore -= rook_open_file_endgame;
+                *mgscore -= rook_open_file_mg;
+                *egscore -= rook_open_file_eg;
             }
         }
     }

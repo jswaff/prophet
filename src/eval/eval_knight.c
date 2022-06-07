@@ -20,16 +20,14 @@ void eval_knight(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
     if (is_white_piece(pos->piece[sq]))
     {
         uint32_t d = distance(sq, pos->black_king);
-        *mgscore += knight_pst[sq] + knight_tropism * d;
-        *egscore += knight_endgame_pst[sq] + knight_tropism_endgame * d;
+        *mgscore += knight_pst_mg[sq] + knight_tropism_mg * d;
+        *egscore += knight_pst_eg[sq] + knight_tropism_eg * d;
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
         uint32_t d = distance(sq, pos->white_king);
-        *mgscore -= knight_pst[flipsq] + knight_tropism * d;
-        *egscore -= knight_endgame_pst[flipsq] + knight_tropism_endgame * d;
+        *mgscore -= knight_pst_mg[flipsq] + knight_tropism_mg * d;
+        *egscore -= knight_pst_eg[flipsq] + knight_tropism_eg * d;
     }
-
-
 }

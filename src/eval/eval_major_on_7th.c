@@ -30,12 +30,12 @@ void eval_major_on_7th(const position_t* pos, square_t sq, int32_t* mgscore, int
     {
         if (get_rank(sq)==RANK_7 && get_rank(pos->black_king)==RANK_8)
         {
-            *mgscore += major_on_7th;
-            *egscore += major_on_7th_endgame;
+            *mgscore += major_on_7th_mg;
+            *egscore += major_on_7th_eg;
             if (rook_moves & (pos->white_rooks | pos->white_queens))
             {
-                *mgscore += connected_majors_on_7th;
-                *egscore += connected_majors_on_7th_endgame;
+                *mgscore += connected_majors_on_7th_mg;
+                *egscore += connected_majors_on_7th_eg;
             }
         }
     }
@@ -43,12 +43,12 @@ void eval_major_on_7th(const position_t* pos, square_t sq, int32_t* mgscore, int
     {
         if (get_rank(sq)==RANK_2 && get_rank(pos->white_king)==RANK_1)
         {
-            *mgscore -= major_on_7th;
-            *egscore -= major_on_7th_endgame;
+            *mgscore -= major_on_7th_mg;
+            *egscore -= major_on_7th_eg;
             if (rook_moves & (pos->black_rooks | pos->black_queens))
             {
-                *mgscore -= connected_majors_on_7th;
-                *egscore -= connected_majors_on_7th_endgame;
+                *mgscore -= connected_majors_on_7th_mg;
+                *egscore -= connected_majors_on_7th_eg;
             }
         }
     }

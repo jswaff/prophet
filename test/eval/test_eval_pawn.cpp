@@ -10,8 +10,8 @@ TEST(eval_test, eval_pawn)
     /* test the piece square term */
     int32_t mg = 0; int32_t eg = 0;
     eval_pawn(&pos, E2, &mg, &eg);
-    EXPECT_EQ(pawn_pst[E2], mg);
-    EXPECT_EQ(pawn_endgame_pst[E2], eg);
+    EXPECT_EQ(pawn_pst_mg[E2], mg);
+    EXPECT_EQ(pawn_pst_eg[E2], eg);
 
     /* test the symmetry */
     int32_t mg2 = 0; int32_t eg2 = 0;
@@ -42,11 +42,13 @@ TEST(eval_test, eval_pawn_wiki3)
     /* the white pawn on B6 is passed */
     int32_t mg = 0; int32_t eg = 0;
     eval_pawn(&pos, B6, &mg, &eg);
-    EXPECT_EQ(pawn_pst[B6] + passed_pawn, mg);
+    EXPECT_EQ(pawn_pst_mg[B6] + passed_pawn_mg, mg);
+    EXPECT_EQ(pawn_pst_eg[B6] + passed_pawn_eg, eg);
 
 
     /* the black pawn on A2 is passed and isolated */
     int32_t mg2 = 0; int32_t eg2 = 0;
     eval_pawn(&pos, A2, &mg2, &eg2);
-    EXPECT_EQ(-pawn_pst[A7] - passed_pawn - isolated_pawn, mg2);
+    EXPECT_EQ(-pawn_pst_mg[A7] - passed_pawn_mg - isolated_pawn_mg, mg2);
+    EXPECT_EQ(-pawn_pst_eg[A7] - passed_pawn_eg - isolated_pawn_eg, eg2);
 }

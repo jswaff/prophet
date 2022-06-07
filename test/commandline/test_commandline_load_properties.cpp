@@ -35,69 +35,77 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(-8, king_safety_wing_pawn_far_away);
 	EXPECT_EQ(-41, king_safety_middle_open_file);
 
-	EXPECT_EQ(1, passed_pawn);
-	EXPECT_EQ(-2, isolated_pawn);
-	EXPECT_EQ(-3, doubled_pawn);
+	EXPECT_EQ(1, passed_pawn_mg);
+	EXPECT_EQ(-1, passed_pawn_eg);
+	EXPECT_EQ(2, isolated_pawn_mg);
+	EXPECT_EQ(-2, isolated_pawn_eg);
+	EXPECT_EQ(3, doubled_pawn_mg);
+	EXPECT_EQ(-3, doubled_pawn_eg);
 
-	EXPECT_EQ(-5, knight_tropism);
+	EXPECT_EQ(5, knight_tropism_mg);
+	EXPECT_EQ(-5, knight_tropism_eg);
 
-	EXPECT_EQ(2, bishop_mobility);
-	EXPECT_EQ(3, bishop_endgame_mobility);
+	EXPECT_EQ(2, bishop_mobility_mg);
+	EXPECT_EQ(3, bishop_mobility_eg);
 
-	EXPECT_EQ(25, rook_open_file);
-	EXPECT_EQ(18, rook_half_open_file);
+	EXPECT_EQ(25, rook_open_file_mg);
+	EXPECT_EQ(26, rook_open_file_eg);
+	EXPECT_EQ(18, rook_half_open_file_mg);
+	EXPECT_EQ(19, rook_half_open_file_eg);
 
-	EXPECT_EQ(2, queen_mobility);
-	EXPECT_EQ(3, queen_endgame_mobility);
+	EXPECT_EQ(2, queen_mobility_mg);
+	EXPECT_EQ(3, queen_mobility_eg);
 
-	EXPECT_EQ(15, major_on_7th);
-	EXPECT_EQ(61, connected_majors_on_7th);
+	EXPECT_EQ(15, major_on_7th_mg);
+	EXPECT_EQ(16, major_on_7th_eg);
+	EXPECT_EQ(61, connected_majors_on_7th_mg);
+	EXPECT_EQ(62, connected_majors_on_7th_eg);
 
-	EXPECT_EQ(1, pawn_pst[0]);
-	EXPECT_EQ(101, pawn_pst[8]);
-	EXPECT_EQ(3, pawn_pst[63]);
+	EXPECT_EQ(1, pawn_pst_mg[0]);
+	EXPECT_EQ(101, pawn_pst_mg[8]);
+	EXPECT_EQ(3, pawn_pst_mg[63]);
 
-	EXPECT_EQ(2, pawn_endgame_pst[0]);
-	EXPECT_EQ(113, pawn_endgame_pst[8]);
-	EXPECT_EQ(4, pawn_endgame_pst[63]);
+	EXPECT_EQ(2, pawn_pst_eg[0]);
+	EXPECT_EQ(113, pawn_pst_eg[8]);
+	EXPECT_EQ(4, pawn_pst_eg[63]);
 
-	EXPECT_EQ(-39, knight_pst[0]);
-	EXPECT_EQ(-31, knight_pst[1]);
-	EXPECT_EQ(-7, knight_pst[63]);
+	EXPECT_EQ(-39, knight_pst_mg[0]);
+	EXPECT_EQ(-31, knight_pst_mg[1]);
+	EXPECT_EQ(-7, knight_pst_mg[63]);
 
-	EXPECT_EQ(-30, knight_endgame_pst[0]);
-	EXPECT_EQ(-31, knight_endgame_pst[1]);
-	EXPECT_EQ(-5, knight_endgame_pst[63]);
+	EXPECT_EQ(-30, knight_pst_eg[0]);
+	EXPECT_EQ(-31, knight_pst_eg[1]);
+	EXPECT_EQ(-5, knight_pst_eg[63]);
 
-	EXPECT_EQ(11, bishop_pst[0]);
-	EXPECT_EQ(12, bishop_pst[1]);
-	EXPECT_EQ(13, bishop_pst[63]);
+	EXPECT_EQ(11, bishop_pst_mg[0]);
+	EXPECT_EQ(12, bishop_pst_mg[1]);
+	EXPECT_EQ(13, bishop_pst_mg[63]);
 
-	EXPECT_EQ(14, bishop_endgame_pst[0]);
-	EXPECT_EQ(15, bishop_endgame_pst[1]);
-	EXPECT_EQ(16, bishop_endgame_pst[63]);
+	EXPECT_EQ(14, bishop_pst_eg[0]);
+	EXPECT_EQ(15, bishop_pst_eg[1]);
+	EXPECT_EQ(16, bishop_pst_eg[63]);
 
-	EXPECT_EQ(21, rook_pst[0]);
-	EXPECT_EQ(22, rook_pst[1]);
-	EXPECT_EQ(23, rook_pst[63]);
+	EXPECT_EQ(21, rook_pst_mg[0]);
+	EXPECT_EQ(22, rook_pst_mg[1]);
+	EXPECT_EQ(23, rook_pst_mg[63]);
 
-	EXPECT_EQ(31, rook_endgame_pst[0]);
-	EXPECT_EQ(32, rook_endgame_pst[1]);
-	EXPECT_EQ(33, rook_endgame_pst[63]);
+	EXPECT_EQ(31, rook_pst_eg[0]);
+	EXPECT_EQ(32, rook_pst_eg[1]);
+	EXPECT_EQ(33, rook_pst_eg[63]);
 
-	EXPECT_EQ(41, queen_pst[0]);
-	EXPECT_EQ(42, queen_pst[1]);
-	EXPECT_EQ(43, queen_pst[63]);
+	EXPECT_EQ(41, queen_pst_mg[0]);
+	EXPECT_EQ(42, queen_pst_mg[1]);
+	EXPECT_EQ(43, queen_pst_mg[63]);
 
-	EXPECT_EQ(51, queen_endgame_pst[0]);
-	EXPECT_EQ(52, queen_endgame_pst[1]);
-	EXPECT_EQ(53, queen_endgame_pst[63]);
+	EXPECT_EQ(51, queen_pst_eg[0]);
+	EXPECT_EQ(52, queen_pst_eg[1]);
+	EXPECT_EQ(53, queen_pst_eg[63]);
 
-	EXPECT_EQ(61, king_pst[0]);
-	EXPECT_EQ(62, king_pst[1]);
-	EXPECT_EQ(63, king_pst[63]);
+	EXPECT_EQ(61, king_pst_mg[0]);
+	EXPECT_EQ(62, king_pst_mg[1]);
+	EXPECT_EQ(63, king_pst_mg[63]);
 
-	EXPECT_EQ(71, king_endgame_pst[0]);
-	EXPECT_EQ(72, king_endgame_pst[1]);
-	EXPECT_EQ(73, king_endgame_pst[63]);
+	EXPECT_EQ(71, king_pst_eg[0]);
+	EXPECT_EQ(72, king_pst_eg[1]);
+	EXPECT_EQ(73, king_pst_eg[63]);
 }
