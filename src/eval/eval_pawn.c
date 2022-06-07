@@ -17,45 +17,45 @@ void eval_pawn(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
 {
     assert(pos->piece[sq] == PAWN || pos->piece[sq] == -PAWN);
 
-    int32_t pm;
-
-    /* start with the piece square value */
     if (is_white_piece(pos->piece[sq]))
     {
-        pm = 1;
-        *mgscore += pawn_pst[sq];
-        *egscore += pawn_endgame_pst[sq];
+        *mgscore += pawn_pst_mg[sq];
+        *egscore += pawn_pst_eg[sq];
+        if (pawn_passed(pos, sq)) 
+        {
+            *mgscore += passed_pawn_mg;
+            *egscore += passed_pawn_eg;
+        }
+        if (pawn_doubled(pos, sq)) 
+        {
+            *mgscore += doubled_pawn_mg;
+            *egscore += doubled_pawn_eg;
+        }
+        if (pawn_isolated(pos, sq)) 
+        {
+            *mgscore += isolated_pawn_mg;
+            *egscore += isolated_pawn_eg;
+        }
     }
     else
     {
-        pm = -1;
         int32_t flipsq = flip_rank[sq];
-        *mgscore -= pawn_pst[flipsq];
-        *egscore -= pawn_endgame_pst[flipsq];
+        *mgscore -= pawn_pst_mg[flipsq];
+        *egscore -= pawn_pst_eg[flipsq];
+        if (pawn_passed(pos, sq)) 
+        {
+            *mgscore -= passed_pawn_mg;
+            *egscore -= passed_pawn_eg;
+        }
+        if (pawn_doubled(pos, sq)) 
+        {
+            *mgscore -= doubled_pawn_mg;
+            *egscore -= doubled_pawn_eg;
+        }
+        if (pawn_isolated(pos, sq)) 
+        {
+            *mgscore -= isolated_pawn_mg;
+            *egscore -= isolated_pawn_eg;
+        }
     }
-
-    /* add a bonus for the pawn being passed */
-    if (pawn_passed(pos, sq)) 
-    {
-        int32_t pp = passed_pawn * pm;
-        *mgscore += pp;
-        *egscore += pp;
-    }
-    
-    /* add a penalty for the pawn being doubled */
-    if (pawn_doubled(pos, sq)) 
-    {
-        int32_t dp = doubled_pawn * pm;
-        *mgscore += dp;
-        *egscore += dp;
-    }
-
-    /* add a penalty for the pawn being isolated */
-    if (pawn_isolated(pos, sq)) 
-    {
-        int32_t ip = isolated_pawn * pm;
-        *mgscore += ip;
-        *egscore += ip;
-    }
-
 }

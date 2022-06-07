@@ -33,41 +33,49 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"KING_SAFETY_WING_PAWN_FAR_AWAY", &king_safety_wing_pawn_far_away}, 
     {"KING_SAFETY_MIDDLE_OPEN_FILE", &king_safety_middle_open_file},
 
-    {"PASSED_PAWN", &passed_pawn},
-    {"ISOLATED_PAWN", &isolated_pawn},
-    {"DOUBLED_PAWN", &doubled_pawn},
+    {"PASSED_PAWN_MG", &passed_pawn_mg},
+    {"PASSED_PAWN_EG", &passed_pawn_eg},
+    {"ISOLATED_PAWN_MG", &isolated_pawn_mg},
+    {"ISOLATED_PAWN_EG", &isolated_pawn_eg},
+    {"DOUBLED_PAWN_MG", &doubled_pawn_mg},
+    {"DOUBLED_PAWN_EG", &doubled_pawn_eg},
 
-    {"KNIGHT_TROPISM", &knight_tropism},
+    {"KNIGHT_TROPISM_MG", &knight_tropism_mg},
+    {"KNIGHT_TROPISM_EG", &knight_tropism_eg},
 
-    {"BISHOP_MOBILITY", &bishop_mobility},
-    {"BISHOP_ENDGAME_MOBILITY", &bishop_endgame_mobility},
+    {"BISHOP_MOBILITY_MG", &bishop_mobility_mg},
+    {"BISHOP_MOBILITY_EG", &bishop_mobility_eg},
 
-    {"ROOK_OPEN_FILE", &rook_open_file},
-    {"ROOK_HALF_OPEN_FILE", &rook_half_open_file},
+    {"ROOK_OPEN_FILE_MG", &rook_open_file_mg},
+    {"ROOK_OPEN_FILE_EG", &rook_open_file_eg},
+    {"ROOK_HALF_OPEN_FILE_MG", &rook_half_open_file_mg},
+    {"ROOK_HALF_OPEN_FILE_EG", &rook_half_open_file_eg},
 
-    {"QUEEN_MOBILITY", &queen_mobility},
-    {"QUEEN_ENDGAME_MOBILITY", &queen_endgame_mobility},
+    {"QUEEN_MOBILITY_MG", &queen_mobility_mg},
+    {"QUEEN_MOBILITY_EG", &queen_mobility_eg},
 
-    {"MAJOR_ON_7TH", &major_on_7th},
-    {"CONNECTED_MAJORS_ON_7TH", &connected_majors_on_7th},
+    {"MAJOR_ON_7TH_MG", &major_on_7th_mg},
+    {"MAJOR_ON_7TH_EG", &major_on_7th_eg},
+    {"CONNECTED_MAJORS_ON_7TH_MG", &connected_majors_on_7th_mg},
+    {"CONNECTED_MAJORS_ON_7TH_EG", &connected_majors_on_7th_eg},
 
-    {"PAWN_PST", &pawn_pst[0]},
-    {"PAWN_ENDGAME_PST", &pawn_endgame_pst[0]},
+    {"PAWN_PST_MG", &pawn_pst_mg[0]},
+    {"PAWN_PST_EG", &pawn_pst_eg[0]},
 
-    {"KNIGHT_PST", &knight_pst[0]},
-    {"KNIGHT_ENDGAME_PST", &knight_endgame_pst[0]},
+    {"KNIGHT_PST_MG", &knight_pst_mg[0]},
+    {"KNIGHT_PST_EG", &knight_pst_eg[0]},
 
-    {"BISHOP_PST", &bishop_pst[0]},
-    {"BISHOP_ENDGAME_PST", &bishop_endgame_pst[0]},
+    {"BISHOP_PST_MG", &bishop_pst_mg[0]},
+    {"BISHOP_PST_EG", &bishop_pst_eg[0]},
 
-    {"ROOK_PST", &rook_pst[0]},
-    {"ROOK_ENDGAME_PST", &rook_endgame_pst[0]},
+    {"ROOK_PST_MG", &rook_pst_mg[0]},
+    {"ROOK_PST_EG", &rook_pst_eg[0]},
 
-    {"QUEEN_PST", &queen_pst[0]},
-    {"QUEEN_ENDGAME_PST", &queen_endgame_pst[0]},
+    {"QUEEN_PST_MG", &queen_pst_mg[0]},
+    {"QUEEN_PST_EG", &queen_pst_eg[0]},
 
-    {"KING_PST", &king_pst[0]},
-    {"KING_ENDGAME_PST", &king_endgame_pst[0]}
+    {"KING_PST_MG", &king_pst_mg[0]},
+    {"KING_PST_EG", &king_pst_eg[0]}
 };
 
 /**

@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
         goto done;
     }
 
-    /* welcome message, indicates initializing was successful */
+    /* welcome message, indicates initialization was successful */
     plog("Hello!  This is the Prophet Chess Engine, version 4.2.\n\n");
 
     retval = command_loop();

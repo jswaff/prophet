@@ -13,8 +13,8 @@ TEST(eval_test, eval_king)
 
     int32_t mg = 0; int32_t eg = 0;
     eval_king(&pos, G1, &mg, &eg);
-    EXPECT_EQ(king_pst[G1] + eval_king_safety(&pos, true), mg);
-    EXPECT_EQ(king_endgame_pst[G1], eg);
+    EXPECT_EQ(king_pst_mg[G1] + eval_king_safety(&pos, true), mg);
+    EXPECT_EQ(king_pst_eg[G1], eg);
 }
 
 
@@ -25,8 +25,8 @@ TEST(eval_test, eval_king2)
 
     int32_t mg = 0; int32_t eg = 0;
     eval_king(&pos, E2, &mg, &eg);
-    EXPECT_EQ(king_pst[E2] + eval_king_safety(&pos, true), mg);
-    EXPECT_EQ(king_endgame_pst[E2], eg);
+    EXPECT_EQ(king_pst_mg[E2] + eval_king_safety(&pos, true), mg);
+    EXPECT_EQ(king_pst_eg[E2], eg);
 
     // test the symmetry
     int32_t mg2 = 0; int32_t eg2 = 0;

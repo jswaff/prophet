@@ -27,37 +27,45 @@ extern int32_t king_safety_pawn_far_away;
 extern int32_t king_safety_wing_pawn_far_away;
 extern int32_t king_safety_middle_open_file;
 
-extern int32_t passed_pawn;
-extern int32_t isolated_pawn;
-extern int32_t doubled_pawn;
+extern int32_t passed_pawn_mg;
+extern int32_t passed_pawn_eg;
+extern int32_t isolated_pawn_mg;
+extern int32_t isolated_pawn_eg;
+extern int32_t doubled_pawn_mg;
+extern int32_t doubled_pawn_eg;
 
-extern int32_t knight_tropism;
+extern int32_t knight_tropism_mg;
+extern int32_t knight_tropism_eg;
 
-extern int32_t bishop_mobility;
-extern int32_t bishop_endgame_mobility;
+extern int32_t bishop_mobility_mg;
+extern int32_t bishop_mobility_eg;
 
-extern int32_t rook_open_file;
-extern int32_t rook_half_open_file;
+extern int32_t rook_open_file_mg;
+extern int32_t rook_open_file_eg;
+extern int32_t rook_half_open_file_mg;
+extern int32_t rook_half_open_file_eg;
 
-extern int32_t queen_mobility;
-extern int32_t queen_endgame_mobility;
+extern int32_t queen_mobility_mg;
+extern int32_t queen_mobility_eg;
 
-extern int32_t major_on_7th;
-extern int32_t connected_majors_on_7th;
+extern int32_t major_on_7th_mg;
+extern int32_t major_on_7th_eg;
+extern int32_t connected_majors_on_7th_mg;
+extern int32_t connected_majors_on_7th_eg;
 
 /* psts */
-extern int32_t pawn_pst[64];
-extern int32_t pawn_endgame_pst[64];
-extern int32_t knight_pst[64];
-extern int32_t knight_endgame_pst[64];
-extern int32_t bishop_pst[64];
-extern int32_t bishop_endgame_pst[64];
-extern int32_t rook_pst[64];
-extern int32_t rook_endgame_pst[64];
-extern int32_t queen_pst[64];
-extern int32_t queen_endgame_pst[64];
-extern int32_t king_pst[64];
-extern int32_t king_endgame_pst[64];
+extern int32_t pawn_pst_mg[64];
+extern int32_t pawn_pst_eg[64];
+extern int32_t knight_pst_mg[64];
+extern int32_t knight_pst_eg[64];
+extern int32_t bishop_pst_mg[64];
+extern int32_t bishop_pst_eg[64];
+extern int32_t rook_pst_mg[64];
+extern int32_t rook_pst_eg[64];
+extern int32_t queen_pst_mg[64];
+extern int32_t queen_pst_eg[64];
+extern int32_t king_pst_mg[64];
+extern int32_t king_pst_eg[64];
 
 
 /**
