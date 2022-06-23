@@ -23,7 +23,7 @@ This codebase is the third major rewrite of Prophet.  The first verson was start
 * Produce a static library containing the move generation, evaluation, and search related functions.  The intent is to modularize the core functionality for inclusion in other projects.
 
 
-To elaborate on that last point, although Prophet is a fully functional standalone chess engine, I tend to use it more as a "plug in engine" within chess4j more than I do as a standalone engine.  This hybrid approach allows me to enjoy the benefits of programming non-critical-path functions in a higher level language while still getting the raw speed of native code. Consequently, I have made a decision to NOT build an opening book or pondering support directly into Prophet, as both are handled by chess4j.  
+To elaborate on that last point, although Prophet is a fully functional standalone chess engine, I tend to use it more as a "plug in engine" within chess4j more than I do as a standalone engine.  This hybrid approach allows me to enjoy the benefits of programming non-critical-path functions in a higher level language while still getting the raw speed of native code. Consequently, I have made a decision to NOT build an opening book or pondering support directly into Prophet, as both are handled by chess4j.  (Of course I may change my mind in the future!)
 
 
 ## Installing
@@ -48,14 +48,32 @@ make test
 
 Strong enough to beat most humans, but not that strong as far as chess engines go. (I hope to change this.)
 
-I estimate a 64 bit build would land somewhere in the 2200-2300 range on the CCRL list.
+The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.1 to be around 2359.  Prophet 4.2 should be around 50 ELO stronger based on the results below:
+
+Rank Name               Elo    +    - games score oppo. draws
+   1 tantabus-2.0.0      82    3    3 46250   63%   -10   22%
+   2 arasan-13.4         67    3    3 46250   60%    -8   21%
+   3 barbarossa-0.6.0    58    3    3 46250   59%    -7   20%
+   4 qapla-0.1.1         31    3    3 46250   55%    -4   24%
+   5 prophet-4.2         24    3    3 40000   53%     5   24%
+   6 loki-3.5            23    3    3 46250   54%    -3   23%
+   7 myrddin-0.88        -2    3    3 46250   50%     0   24%
+   8 prophet-4.1        -36    3    3 40000   44%     5   23%
+   9 tjchess-1.3        -83    3    3 46250   37%     8   21%
+  10 jazz-840          -134    3    3 46250   30%    14   19%
+  11 prophet4          -141    7    7 10000   30%     5   18%
 
 
 ## Status and Roadmap
 
-The "great rewrite", which started in 2019, is finally complete! This version is approximately 75 ELO stronger than P3, even though hardly anything new has been introduced.  That's mainly due to careful testing along the way.
+The focus of the 4.2 release was to improve the evaluation.
 
-I plan to focus on improving the evaluation function for a while.  At some point I'd like to try my hand at implementing a neural network, but in the short term I want to improve the "Hand Crafted Evaluation".  The first step in doing that will be to add some automated tuning using logistic regression ("Texel Tuning").  Once the existing weights are optimized, I can think of several new terms that need to be added.  Prophet doesn't understand pawns very well, and king safety is crude.  It lacks knowledge of even basic endgames.
+* Evaluation terms were tuned using logistic regression with gradient descent (within chess4j)
+* Fully implemented tapered evaluation
+* Added simple mobility terms for bishop and queen
+* Added a pawn hash table
+
+I plan to continue to focus on improving the evaluation function for a while, particularly pawns and endgames.  Eventually I'd like to implement a neural network.
 
 The search is still single threaded.  That is actually a regression of sorts; Prophet 2 was SMP capable (using Young Brothers Wait), but it will come.  I just choose to focus on the eval for a bit first.
 
