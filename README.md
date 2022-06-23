@@ -50,18 +50,19 @@ Strong enough to beat most humans, but not that strong as far as chess engines g
 
 The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.1 to be around 2359.  Prophet 4.2 should be around 50 ELO stronger based on the results below:
 
-Rank Name               Elo    +    - games score oppo. draws
-   1 tantabus-2.0.0      82    3    3 46250   63%   -10   22%
-   2 arasan-13.4         67    3    3 46250   60%    -8   21%
-   3 barbarossa-0.6.0    58    3    3 46250   59%    -7   20%
-   4 qapla-0.1.1         31    3    3 46250   55%    -4   24%
-   5 prophet-4.2         24    3    3 40000   53%     5   24%
-   6 loki-3.5            23    3    3 46250   54%    -3   23%
-   7 myrddin-0.88        -2    3    3 46250   50%     0   24%
-   8 prophet-4.1        -36    3    3 40000   44%     5   23%
-   9 tjchess-1.3        -83    3    3 46250   37%     8   21%
-  10 jazz-840          -134    3    3 46250   30%    14   19%
-  11 prophet4          -141    7    7 10000   30%     5   18%
+|Rank |Name               |Elo    |+    |- |games |score |oppo. |draws
+|-----|-------------------|-------|-----|--|------|------|------|
+|   1 |tantabus-2.0.0     | 82    |3    |3 |46250 |  63% |  -10 |  22%
+|   2 |arasan-13.4        | 67    |3    |3 |46250 |  60% |   -8 |  21%
+|   3 |barbarossa-0.6.0   | 58    |3    |3 |46250 |  59% |   -7 |  20%
+|   4 |qapla-0.1.1        | 31    |3    |3 |46250 |  55% |   -4 |  24%
+|   5 |prophet-4.2        | 24    |3    |3 |40000 |  53% |    5 |  24%
+|   6 |loki-3.5           | 23    |3    |3 |46250 |  54% |   -3 |  23%
+|   7 |myrddin-0.88       | -2    |3    |3 |46250 |  50% |    0 |  24%
+|   8 |prophet-4.1        |-36    |3    |3 |40000 |  44% |    5 |  23%
+|   9 |tjchess-1.3        |-83    |3    |3 |46250 |  37% |    8 |  21%
+|  10 |jazz-840          |-134    |3    |3 |46250 |  30% |   14 |  19%
+|  11 |prophet4          |-141    |7    |7 |10000 |  30% |    5 |  18%
 
 
 ## Status and Roadmap
