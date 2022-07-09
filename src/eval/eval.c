@@ -24,8 +24,8 @@ int32_t king_safety_wing_pawn_far_away  =  -26;
 int32_t king_safety_middle_open_file    =  -46;
 
 /* pawn terms */
-int32_t passed_pawn_mg                  =   -1;
-int32_t passed_pawn_eg                  =   48;
+int32_t passed_pawn_mg[8]               =   { 0,50,40,30,20,10,0,0 };
+int32_t passed_pawn_eg[8]               =   { 0,100,70,60,40,20,0,0 };
 int32_t isolated_pawn_mg                =  -13;
 int32_t isolated_pawn_eg                =  -14;
 int32_t doubled_pawn_mg                 =   -5;

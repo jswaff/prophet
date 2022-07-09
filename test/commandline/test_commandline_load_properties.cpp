@@ -35,8 +35,10 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(-8, king_safety_wing_pawn_far_away);
 	EXPECT_EQ(-41, king_safety_middle_open_file);
 
-	EXPECT_EQ(1, passed_pawn_mg);
-	EXPECT_EQ(-1, passed_pawn_eg);
+	EXPECT_EQ(1, passed_pawn_mg[0]);
+	EXPECT_EQ(8, passed_pawn_mg[7]);
+	EXPECT_EQ(-1, passed_pawn_eg[0]);
+	EXPECT_EQ(-8, passed_pawn_eg[7]);
 	EXPECT_EQ(2, isolated_pawn_mg);
 	EXPECT_EQ(-2, isolated_pawn_eg);
 	EXPECT_EQ(3, doubled_pawn_mg);
