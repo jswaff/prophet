@@ -43,16 +43,16 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"KNIGHT_TROPISM_MG", &knight_tropism_mg},
     {"KNIGHT_TROPISM_EG", &knight_tropism_eg},
 
-    {"BISHOP_MOBILITY_MG", &bishop_mobility_mg},
-    {"BISHOP_MOBILITY_EG", &bishop_mobility_eg},
+    {"BISHOP_MOBILITY_MG", &bishop_mobility_mg[0]},
+    {"BISHOP_MOBILITY_EG", &bishop_mobility_eg[0]},
 
     {"ROOK_OPEN_FILE_MG", &rook_open_file_mg},
     {"ROOK_OPEN_FILE_EG", &rook_open_file_eg},
     {"ROOK_HALF_OPEN_FILE_MG", &rook_half_open_file_mg},
     {"ROOK_HALF_OPEN_FILE_EG", &rook_half_open_file_eg},
 
-    {"QUEEN_MOBILITY_MG", &queen_mobility_mg},
-    {"QUEEN_MOBILITY_EG", &queen_mobility_eg},
+    {"QUEEN_MOBILITY_MG", &queen_mobility_mg[0]},
+    {"QUEEN_MOBILITY_EG", &queen_mobility_eg[0]},
 
     {"MAJOR_ON_7TH_MG", &major_on_7th_mg},
     {"MAJOR_ON_7TH_EG", &major_on_7th_eg},
