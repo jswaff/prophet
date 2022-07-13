@@ -33,8 +33,8 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"KING_SAFETY_WING_PAWN_FAR_AWAY", &king_safety_wing_pawn_far_away}, 
     {"KING_SAFETY_MIDDLE_OPEN_FILE", &king_safety_middle_open_file},
 
-    {"PASSED_PAWN_MG", &passed_pawn_mg},
-    {"PASSED_PAWN_EG", &passed_pawn_eg},
+    {"PASSED_PAWN_MG", &passed_pawn_mg[0]},
+    {"PASSED_PAWN_EG", &passed_pawn_eg[0]},
     {"ISOLATED_PAWN_MG", &isolated_pawn_mg},
     {"ISOLATED_PAWN_EG", &isolated_pawn_eg},
     {"DOUBLED_PAWN_MG", &doubled_pawn_mg},

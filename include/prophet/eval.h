@@ -27,8 +27,8 @@ extern int32_t king_safety_pawn_far_away;
 extern int32_t king_safety_wing_pawn_far_away;
 extern int32_t king_safety_middle_open_file;
 
-extern int32_t passed_pawn_mg;
-extern int32_t passed_pawn_eg;
+extern int32_t passed_pawn_mg[8];
+extern int32_t passed_pawn_eg[8];
 extern int32_t isolated_pawn_mg;
 extern int32_t isolated_pawn_eg;
 extern int32_t doubled_pawn_mg;

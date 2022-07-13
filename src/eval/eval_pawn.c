@@ -23,8 +23,9 @@ void eval_pawn(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
         *egscore += pawn_pst_eg[sq];
         if (pawn_passed(pos, sq)) 
         {
-            *mgscore += passed_pawn_mg;
-            *egscore += passed_pawn_eg;
+            int32_t r = get_rank(sq);
+            *mgscore += passed_pawn_mg[r];
+            *egscore += passed_pawn_eg[r];
         }
         if (pawn_doubled(pos, sq)) 
         {
@@ -44,8 +45,9 @@ void eval_pawn(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
         *egscore -= pawn_pst_eg[flipsq];
         if (pawn_passed(pos, sq)) 
         {
-            *mgscore -= passed_pawn_mg;
-            *egscore -= passed_pawn_eg;
+            int32_t flipr = get_rank(flipsq);
+            *mgscore -= passed_pawn_mg[flipr];
+            *egscore -= passed_pawn_eg[flipr];
         }
         if (pawn_doubled(pos, sq)) 
         {
