@@ -36,8 +36,8 @@ int32_t knight_tropism_mg               =   -8;
 int32_t knight_tropism_eg               =   -9;
 
 /* bishop terms */
-int32_t bishop_mobility_mg              =    4;
-int32_t bishop_mobility_eg              =    4;
+int32_t bishop_mobility_mg[14]          =    { -25,-11,-6,-1,3,6,9,12,14,17,19,21,23,25 };
+int32_t bishop_mobility_eg[14]          =    { -50,-22,-11,-2,6,12,18,24,29,34,38,42,46,50 };
 
 /* rook terms */
 int32_t rook_open_file_mg               =   36;
@@ -46,8 +46,8 @@ int32_t rook_half_open_file_mg          =   20;
 int32_t rook_half_open_file_eg          =   14;
 
 /* queen terms */
-int32_t queen_mobility_mg               =    0;
-int32_t queen_mobility_eg               =    8;
+int32_t queen_mobility_mg[28]           =    { -10,-6,-5,-4,-2,-2,-1,0,1,2,2,3,3,4,4,5,6,6,6,7,7,8,8,9,9,10,10,10 };
+int32_t queen_mobility_eg[28]           =    { -50,-30,-22,-16,-10,-6,-2,2,6,10,13,16,19,22,24,27,30,32,34,37,39,41,43,45,47,50,51,53 };
 
 int32_t major_on_7th_mg                 =    6;
 int32_t major_on_7th_eg                 =   29;
