@@ -40,6 +40,8 @@ extern int32_t knight_tropism_eg;
 extern int32_t bishop_mobility_mg[14];
 extern int32_t bishop_mobility_eg[14];
 
+extern int32_t rook_mobility_mg[15];
+extern int32_t rook_mobility_eg[15];
 extern int32_t rook_open_file_mg;
 extern int32_t rook_open_file_eg;
 extern int32_t rook_half_open_file_mg;

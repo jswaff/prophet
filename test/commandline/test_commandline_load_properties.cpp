@@ -50,6 +50,8 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(20, bishop_mobility_mg[0]);
 	EXPECT_EQ(40, bishop_mobility_eg[0]);
 
+	EXPECT_EQ(10, rook_mobility_mg[0]);
+	EXPECT_EQ(11, rook_mobility_eg[0]);
 	EXPECT_EQ(25, rook_open_file_mg);
 	EXPECT_EQ(26, rook_open_file_eg);
 	EXPECT_EQ(18, rook_half_open_file_mg);
