@@ -1,4 +1,5 @@
 #include <prophet/bitmap.h>
+#include <prophet/movegen.h>
 #include <prophet/parameters.h>
 
 #include "eval_internal.h"
@@ -22,16 +23,21 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK);
 
+    uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
+    uint32_t mobility = popcnt(get_rook_moves(pos, sq, empty_squares));
+    uint32_t mobility_mg = rook_mobility_mg[mobility];
+    uint32_t mobility_eg = rook_mobility_eg[mobility];
+
     if (is_white_piece(pos->piece[sq]))
     {
-        *mgscore += rook_pst_mg[sq];
-        *egscore += rook_pst_eg[sq];
+        *mgscore += rook_pst_mg[sq] + mobility_mg;
+        *egscore += rook_pst_eg[sq] + mobility_eg;
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
-        *mgscore -= rook_pst_mg[flipsq];
-        *egscore -= rook_pst_eg[flipsq];
+        *mgscore -= (rook_pst_mg[flipsq] + mobility_mg);
+        *egscore -= (rook_pst_eg[flipsq] + mobility_eg);
     }
 
     eval_major_on_7th(pos, sq, mgscore, egscore);

@@ -40,6 +40,8 @@ int32_t bishop_mobility_mg[14]          =    { -25,-11,-6,-1,3,6,9,12,14,17,19,2
 int32_t bishop_mobility_eg[14]          =    { -50,-22,-11,-2,6,12,18,24,29,34,38,42,46,50 };
 
 /* rook terms */
+int32_t rook_mobility_mg[15]            =    { 10,-4,-2,0,2,3,4,5,6,8,8,9,10,11,12 };
+int32_t rook_mobility_eg[15]            =    { 11,-3,-1,1,2,3,4,5,6,8,8,9,10,11,12 };
 int32_t rook_open_file_mg               =   36;
 int32_t rook_open_file_eg               =   27;
 int32_t rook_half_open_file_mg          =   20;
