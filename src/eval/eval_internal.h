@@ -193,6 +193,17 @@ bool pawn_passed(const position_t* pos, square_t pawn_sq);
 
 
 /**
+ * \brief Determine if a pawn supports a sq.
+ *
+ * \param pos           a pointer to a chess position
+ * \param pawn_sq       the pawn square
+ *
+ * \return true if a friendly pawn supports, otherwise false.
+ */ 
+bool pawn_supports(const position_t* pos, square_t sq);
+
+
+/**
  * \brief Accumulate the score for a set of pieces.
  *
  * \param pos           a pointer to a chess position

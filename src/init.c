@@ -20,6 +20,7 @@ extern void init_bishop_movegen();
 extern void init_rook_movegen();
 
 extern void init_pawn_isolated();
+extern void init_pawn_attacked();
 extern void init_pawn_passed();
 
 extern position_t gpos;
@@ -51,6 +52,7 @@ int init()
         init_rook_movegen();
         init_pawn_isolated();
         init_bitmap_ray();
+        init_pawn_attacked();
         init_pawn_passed();
         retval = init_hash_tables();
         if (0 != retval)
