@@ -46,7 +46,9 @@ TEST(commandline_test, commandline_eval_props)
 
 	EXPECT_EQ(5, knight_tropism_mg);
 	EXPECT_EQ(-5, knight_tropism_eg);
-
+	EXPECT_EQ(1, knight_outpost[0]);
+	EXPECT_EQ(2, knight_supported_outpost[0]);
+	
 	EXPECT_EQ(20, bishop_mobility_mg[0]);
 	EXPECT_EQ(40, bishop_mobility_eg[0]);
 

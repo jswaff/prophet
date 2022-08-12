@@ -36,6 +36,8 @@ extern int32_t doubled_pawn_eg;
 
 extern int32_t knight_tropism_mg;
 extern int32_t knight_tropism_eg;
+extern int32_t knight_outpost[64];
+extern int32_t knight_supported_outpost[64];
 
 extern int32_t bishop_mobility_mg[14];
 extern int32_t bishop_mobility_eg[14];
