@@ -22,6 +22,17 @@ void eval_knight(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
         uint32_t d = distance(sq, pos->black_king);
         *mgscore += knight_pst_mg[sq] + knight_tropism_mg * d;
         *egscore += knight_pst_eg[sq] + knight_tropism_eg * d;
+
+        if (outpost(pos, sq, true))
+        {
+            int32_t outpost_score = knight_outpost[sq];
+            if (pawn_supports(pos, sq))
+            {
+                outpost_score += knight_supported_outpost[sq];
+            }
+            *mgscore += outpost_score;
+            *egscore += outpost_score;
+        }
     }
     else
     {
@@ -29,5 +40,16 @@ void eval_knight(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
         uint32_t d = distance(sq, pos->white_king);
         *mgscore -= knight_pst_mg[flipsq] + knight_tropism_mg * d;
         *egscore -= knight_pst_eg[flipsq] + knight_tropism_eg * d;
+
+        if (outpost(pos, sq, false))
+        {
+            int32_t outpost_score = knight_outpost[flipsq];
+            if (pawn_supports(pos, sq))
+            {
+                outpost_score += knight_supported_outpost[flipsq];
+            }
+            *mgscore -= outpost_score;
+            *egscore -= outpost_score;
+        }
     }
 }
