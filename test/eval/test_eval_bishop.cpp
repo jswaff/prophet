@@ -45,3 +45,15 @@ TEST(eval_test, eval_bishop_mobility)
     EXPECT_EQ(bishop_pst_mg[G5] + bishop_mobility_mg[6], mg);
     EXPECT_EQ(bishop_pst_eg[G5] + bishop_mobility_eg[6], eg);
 }
+
+
+TEST(eval_test, eval_bishop_trapped)
+{
+    position_t pos;
+    set_pos(&pos, "8/pp2k1p1/4pp2/1P6/7p/P3P1P1/5PKb/2B5 b - - 0 1");
+
+    int32_t mg = 0; int32_t eg = 0;
+    eval_bishop(&pos, H2, &mg, &eg);
+    EXPECT_EQ(-bishop_pst_mg[flip_rank[H2]] - bishop_mobility_mg[1] - bishop_trapped, mg);
+    EXPECT_EQ(-bishop_pst_eg[flip_rank[H2]] - bishop_mobility_eg[1] - bishop_trapped, eg);
+}
