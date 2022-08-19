@@ -28,12 +28,22 @@ void eval_bishop(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
     {
         *mgscore += bishop_pst_mg[sq] + mobility_mg;
         *egscore += bishop_pst_eg[sq] + mobility_eg;
+        if (trapped_bishop(pos, sq, true))
+        {
+            *mgscore += bishop_trapped;
+            *egscore += bishop_trapped;
+        }
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
         *mgscore -= (bishop_pst_mg[flipsq] + mobility_mg);
         *egscore -= (bishop_pst_eg[flipsq] + mobility_eg);
+        if (trapped_bishop(pos, sq, false))
+        {
+            *mgscore -= bishop_trapped;
+            *egscore -= bishop_trapped;
+        }
     }
 }
 
