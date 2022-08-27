@@ -51,6 +51,7 @@ TEST(commandline_test, commandline_eval_props)
 	
 	EXPECT_EQ(20, bishop_mobility_mg[0]);
 	EXPECT_EQ(40, bishop_mobility_eg[0]);
+	EXPECT_EQ(-40, bishop_trapped);
 
 	EXPECT_EQ(10, rook_mobility_mg[0]);
 	EXPECT_EQ(11, rook_mobility_eg[0]);

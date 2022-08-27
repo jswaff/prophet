@@ -165,6 +165,7 @@ int32_t eval_taper(const position_t* pos, int32_t mg_score, int32_t eg_score);
  */
 bool outpost(const position_t* pos, square_t sq, bool white_pov);
 
+
 /**
  * \brief Determine if a pawn is doubled.
  *
@@ -211,6 +212,18 @@ bool pawn_passed(const position_t* pos, square_t pawn_sq);
  * \return true if a friendly pawn supports, otherwise false.
  */ 
 bool pawn_supports(const position_t* pos, square_t sq);
+
+
+/**
+ * \brief Determine if bishop on square would be trapped.
+ *
+ * \param pos           a pointer to a chess position
+ * \param pawn_sq       the square
+ * \param is_white      whether to examine from white's POV
+ *
+ * \return true if the bishop would be trapped, otherwise false.
+ */
+bool trapped_bishop(const position_t* pos, square_t sq, bool is_white);
 
 
 /**
