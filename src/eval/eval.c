@@ -42,7 +42,7 @@ int32_t knight_supported_outpost[64]    =    { 0,0,0,0,0,0,0,0,0,1,1,1,2,0,0,0,1
 /* bishop terms */
 int32_t bishop_mobility_mg[14]          =    { -24,-19,-13,-10,-5,1,3,3,6,9,17,20,5,7 };
 int32_t bishop_mobility_eg[14]          =    { -19,-37,-30,-16,-1,9,17,23,27,26,21,21,8,11 };
-int32_t bishop_trapped                  =   -100;
+int32_t bishop_trapped                  =   -125;
 
 /* rook terms */
 int32_t rook_mobility_mg[15]            =    { -35,-31,-25,-24,-26,-21,-19,-15,-11,-10,-5,-4,7,16,12 };
