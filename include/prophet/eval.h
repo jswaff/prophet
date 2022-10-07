@@ -46,9 +46,13 @@ extern int32_t bishop_trapped;
 extern int32_t rook_mobility_mg[15];
 extern int32_t rook_mobility_eg[15];
 extern int32_t rook_open_file_mg;
+extern int32_t rook_open_file_supported_mg;
 extern int32_t rook_open_file_eg;
+extern int32_t rook_open_file_supported_eg;
 extern int32_t rook_half_open_file_mg;
+extern int32_t rook_half_open_file_supported_mg;
 extern int32_t rook_half_open_file_eg;
+extern int32_t rook_half_open_file_supported_eg;
 
 extern int32_t queen_mobility_mg[28];
 extern int32_t queen_mobility_eg[28];
