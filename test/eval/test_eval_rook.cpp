@@ -46,7 +46,7 @@ TEST(eval_test, eval_rook_open_file)
     EXPECT_EQ(-(rook_pst_eg[D1] + rook_open_file_eg + rook_mobility_eg[13]), eg);
 }
 
-TEST(eval_test, eval_rook_open_file_supported)
+TEST(eval_test, DISABLED_eval_rook_open_file_supported)
 {
     position_t pos;
     ASSERT_TRUE(set_pos(&pos, "7k/8/8/8/8/3R4/8/3R3K w - - 0 1"));

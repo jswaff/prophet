@@ -59,46 +59,46 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
  */ 
 void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
-    uint64_t friendly_pawns, enemy_pawns, friendly_rooks;
+    uint64_t friendly_pawns, enemy_pawns /*, friendly_rooks */;
     bool wtm = is_white_piece(pos->piece[sq]);
     if (wtm)
     {
         friendly_pawns = pos->white_pawns;
         enemy_pawns = pos->black_pawns;
-        friendly_rooks = pos->white_rooks;
+        /* friendly_rooks = pos->white_rooks; */
     }
     else
     {
         friendly_pawns = pos->black_pawns;
         enemy_pawns = pos->white_pawns;
-        friendly_rooks = pos->black_rooks;
+        /* friendly_rooks = pos->black_rooks; */
     }
 
     uint64_t file_mask = sq_to_file_bitmap(sq);
     if (!(file_mask & friendly_pawns))
     {
-        uint64_t rook_file_moves = get_rook_moves(pos, sq, sq_to_file_bitmap(sq));
+        /*uint64_t rook_file_moves = get_rook_moves(pos, sq, sq_to_file_bitmap(sq));*/
         if (file_mask & enemy_pawns)
         {
             if (wtm) 
             {
                 *mgscore += rook_half_open_file_mg;
                 *egscore += rook_half_open_file_eg;
-                if (rook_file_moves & friendly_rooks)
+                /*if (rook_file_moves & friendly_rooks)
                 {
                     *mgscore += rook_half_open_file_supported_mg;
                     *egscore += rook_half_open_file_supported_eg;
-                }
+                }*/
             }
             else
             {
                 *mgscore -= rook_half_open_file_mg;
                 *egscore -= rook_half_open_file_eg;
-                if (rook_file_moves & friendly_rooks)
+                /*if (rook_file_moves & friendly_rooks)
                 {
                     *mgscore -= rook_half_open_file_supported_mg;
                     *egscore -= rook_half_open_file_supported_eg;
-                }
+                }*/
             }
         }
         else
@@ -107,21 +107,21 @@ void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, i
             {
                 *mgscore += rook_open_file_mg;
                 *egscore += rook_open_file_eg;
-                if (rook_file_moves & friendly_rooks)
+                /*if (rook_file_moves & friendly_rooks)
                 {
                     *mgscore += rook_open_file_supported_mg;
                     *egscore += rook_open_file_supported_eg;
-                }
+                }*/
             }
             else
             {
                 *mgscore -= rook_open_file_mg;
                 *egscore -= rook_open_file_eg;
-                if (rook_file_moves & friendly_rooks)
+                /*if (rook_file_moves & friendly_rooks)
                 {
                     *mgscore -= rook_open_file_supported_mg;
                     *egscore -= rook_open_file_supported_eg;
-                }
+                }*/
             }
         }
     }
