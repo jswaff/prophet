@@ -52,9 +52,13 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"ROOK_MOBILITY_MG", &rook_mobility_mg[0]},
     {"ROOK_MOBILITY_EG", &rook_mobility_eg[0]},
     {"ROOK_OPEN_FILE_MG", &rook_open_file_mg},
+    {"ROOK_OPEN_FILE_SUPPORTED_MG", &rook_open_file_supported_mg},
     {"ROOK_OPEN_FILE_EG", &rook_open_file_eg},
+    {"ROOK_OPEN_FILE_SUPPORTED_EG", &rook_open_file_supported_eg},
     {"ROOK_HALF_OPEN_FILE_MG", &rook_half_open_file_mg},
+    {"ROOK_HALF_OPEN_FILE_SUPPORTED_MG", &rook_half_open_file_supported_mg},
     {"ROOK_HALF_OPEN_FILE_EG", &rook_half_open_file_eg},
+    {"ROOK_HALF_OPEN_FILE_SUPPORTED_EG", &rook_half_open_file_supported_eg},
 
     {"QUEEN_MOBILITY_MG", &queen_mobility_mg[0]},
     {"QUEEN_MOBILITY_EG", &queen_mobility_eg[0]},

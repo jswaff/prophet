@@ -33,9 +33,8 @@ TEST(eval_test, eval_connected_major_on_7th)
     EXPECT_EQ(major_on_7th_mg + connected_majors_on_7th_mg, mg);
     EXPECT_EQ(major_on_7th_eg + connected_majors_on_7th_eg, eg);
 
-    /* the rook does not get the "connected" bonus */
     int32_t mg2= 0; int32_t eg2= 0;
     eval_major_on_7th(&pos, F7, &mg2, &eg2);
-    EXPECT_EQ(major_on_7th_mg, mg2);
-    EXPECT_EQ(major_on_7th_eg, eg2);
+    EXPECT_EQ(major_on_7th_mg + connected_majors_on_7th_mg, mg2);
+    EXPECT_EQ(major_on_7th_eg + connected_majors_on_7th_eg, eg2);
 }

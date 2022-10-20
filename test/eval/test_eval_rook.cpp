@@ -28,8 +28,10 @@ TEST(eval_test, eval_rook_7th_king_back_rank)
 
     int32_t mg = 0; int32_t eg = 0;
     eval_rook(&pos, F7, &mg, &eg);
-    EXPECT_EQ(rook_pst_mg[F7] + major_on_7th_mg + rook_open_file_mg + rook_mobility_mg[11], mg);
-    EXPECT_EQ(rook_pst_eg[F7] + major_on_7th_eg + rook_open_file_eg + rook_mobility_eg[11], eg);
+    EXPECT_EQ(rook_pst_mg[F7] + major_on_7th_mg + connected_majors_on_7th_mg + rook_open_file_mg + 
+        rook_mobility_mg[11], mg);
+    EXPECT_EQ(rook_pst_eg[F7] + major_on_7th_eg + connected_majors_on_7th_eg + rook_open_file_eg + 
+        rook_mobility_eg[11], eg);
 }
 
 
@@ -42,6 +44,17 @@ TEST(eval_test, eval_rook_open_file)
     eval_rook(&pos, D8, &mg, &eg);
     EXPECT_EQ(-(rook_pst_mg[D1] + rook_open_file_mg + rook_mobility_mg[13]), mg);
     EXPECT_EQ(-(rook_pst_eg[D1] + rook_open_file_eg + rook_mobility_eg[13]), eg);
+}
+
+TEST(eval_test, DISABLED_eval_rook_open_file_supported)
+{
+    position_t pos;
+    ASSERT_TRUE(set_pos(&pos, "7k/8/8/8/8/3R4/8/3R3K w - - 0 1"));
+
+    int32_t mg = 0; int32_t eg = 0;
+    eval_rook(&pos, D1, &mg, &eg);
+    EXPECT_EQ(rook_pst_mg[D1] + rook_open_file_mg + rook_open_file_supported_mg + rook_mobility_mg[7], mg);
+    EXPECT_EQ(rook_pst_eg[D1] + rook_open_file_eg + rook_open_file_supported_eg + rook_mobility_eg[7], eg);
 }
 
 TEST(eval_test, eval_rook_half_open_file)
