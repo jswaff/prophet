@@ -34,7 +34,7 @@ If you have the proper build tools, just do:
 
 ```
 make
-./prophet4
+./prophet4_3
 ```
 
 If you want to build the tests, you'll also need g++, and a copy of  Google Test from https://github.com/google/googletest .  Finally, set an environment variable GTEST_DIR to point to the 'googletest' project (we don't need the googlemock stuff).  Then do:
@@ -48,33 +48,40 @@ make test
 
 Strong enough to beat most humans, but not that strong as far as chess engines go. (I hope to change this.)
 
-The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.1 to be around 2359.  Prophet 4.2 should be around 50 ELO stronger based on the results below:
+The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.2 to be rated at 2443.  Prophet 4.3 should be around 50 ELO stronger based on the results below:
 
-|Rank |Name               |Elo    |+    |- |games |score |oppo. |draws  |
-|----:|:------------------|------:|----:|-:|-----:|-----:|-----:|-----: |
-|   1 |tantabus-2.0.0     | 82    |3    |3 |46250 |  63% |  -10 |  22%  |
-|   2 |arasan-13.4        | 67    |3    |3 |46250 |  60% |   -8 |  21%  |
-|   3 |barbarossa-0.6.0   | 58    |3    |3 |46250 |  59% |   -7 |  20%  |
-|   4 |qapla-0.1.1        | 31    |3    |3 |46250 |  55% |   -4 |  24%  |
-|   5 |prophet-4.2        | 24    |3    |3 |40000 |  53% |    5 |  24%  |
-|   6 |loki-3.5           | 23    |3    |3 |46250 |  54% |   -3 |  23%  |
-|   7 |myrddin-0.88       | -2    |3    |3 |46250 |  50% |    0 |  24%  |
-|   8 |prophet-4.1        |-36    |3    |3 |40000 |  44% |    5 |  23%  |
-|   9 |tjchess-1.3        |-83    |3    |3 |46250 |  37% |    8 |  21%  |
-|  10 |jazz-840          |-134    |3    |3 |46250 |  30% |   14 |  19%  |
-|  11 |prophet4          |-141    |7    |7 |10000 |  30% |    5 |  18%  |
-
+Rank Name                              Elo    +    - games score oppo. draws
+   1 tantabus-2.0.0                     75    3    3 51250   61%    -7   22%
+   2 prophet-4.3                        71    3    3 40000   60%    -1   25%
+   3 arasan-13.4                        62    3    3 51250   59%    -6   21%
+   4 barbarossa-0.6.0                   52    3    3 51250   58%    -5   21%
+   5 qapla-0.1.1                        24    3    3 51250   54%    -2   24%
+   6 prophet-4.2                        18    3    3 40000   53%    -1   24%
+   7 loki-3.5                           16    3    3 51250   52%    -1   23%
+   8 myrddin-0.88                       -9    3    3 51250   48%     1   25%
+   9 prophet-4.1                       -42    3    3 40000   44%    -1   23%
+  10 tjchess-1.3                       -88    3    3 51250   36%     9   22%
+  11 jazz-840                         -140    3    3 51250   29%    14   19%
+  12 prophet4                         -147    7    7 10000   30%    -1   18%
 
 ## Status and Roadmap
 
-The focus of the 4.2 release was to improve the evaluation.
+4.3:
+
+* Passed pawn by rank (was a single value)
+* Non-linear mobility (was a single value)
+* Knight outposts
+* Trapped bishop penalty
+
+4.2:
 
 * Evaluation terms were tuned using logistic regression with gradient descent (within chess4j)
 * Fully implemented tapered evaluation
 * Added simple mobility terms for bishop and queen
 * Added a pawn hash table
 
-I plan to continue to focus on improving the evaluation function for a while, particularly pawns and endgames.  Eventually I'd like to implement a neural network.
+
+I would still like to improve Prophet's understanding of pawns, but at this point I'm turning my attention to implementing a neural network.
 
 The search is still single threaded.  That is actually a regression of sorts; Prophet 2 was SMP capable (using Young Brothers Wait), but it will come.  I just choose to focus on the eval for a bit first.
 
