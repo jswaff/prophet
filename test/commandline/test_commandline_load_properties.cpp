@@ -35,8 +35,10 @@ TEST(commandline_test, commandline_eval_props)
 	EXPECT_EQ(-8, king_safety_wing_pawn_far_away);
 	EXPECT_EQ(-41, king_safety_middle_open_file);
 
-	EXPECT_EQ(1, passed_pawn_mg);
-	EXPECT_EQ(-1, passed_pawn_eg);
+	EXPECT_EQ(1, passed_pawn_mg[0]);
+	EXPECT_EQ(8, passed_pawn_mg[7]);
+	EXPECT_EQ(-1, passed_pawn_eg[0]);
+	EXPECT_EQ(-8, passed_pawn_eg[7]);
 	EXPECT_EQ(2, isolated_pawn_mg);
 	EXPECT_EQ(-2, isolated_pawn_eg);
 	EXPECT_EQ(3, doubled_pawn_mg);
@@ -44,17 +46,22 @@ TEST(commandline_test, commandline_eval_props)
 
 	EXPECT_EQ(5, knight_tropism_mg);
 	EXPECT_EQ(-5, knight_tropism_eg);
+	EXPECT_EQ(1, knight_outpost[0]);
+	EXPECT_EQ(2, knight_supported_outpost[0]);
+	
+	EXPECT_EQ(20, bishop_mobility_mg[0]);
+	EXPECT_EQ(40, bishop_mobility_eg[0]);
+	EXPECT_EQ(-40, bishop_trapped);
 
-	EXPECT_EQ(2, bishop_mobility_mg);
-	EXPECT_EQ(3, bishop_mobility_eg);
-
+	EXPECT_EQ(10, rook_mobility_mg[0]);
+	EXPECT_EQ(11, rook_mobility_eg[0]);
 	EXPECT_EQ(25, rook_open_file_mg);
 	EXPECT_EQ(26, rook_open_file_eg);
 	EXPECT_EQ(18, rook_half_open_file_mg);
 	EXPECT_EQ(19, rook_half_open_file_eg);
 
-	EXPECT_EQ(2, queen_mobility_mg);
-	EXPECT_EQ(3, queen_mobility_eg);
+	EXPECT_EQ(-10, queen_mobility_mg[0]);
+	EXPECT_EQ(-50, queen_mobility_eg[0]);
 
 	EXPECT_EQ(15, major_on_7th_mg);
 	EXPECT_EQ(16, major_on_7th_eg);

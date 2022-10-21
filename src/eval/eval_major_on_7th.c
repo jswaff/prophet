@@ -23,15 +23,13 @@ void eval_major_on_7th(const position_t* pos, square_t sq, int32_t* mgscore, int
         || pos->piece[sq] == QUEEN || pos->piece[sq] == -QUEEN);
 
 
-    /* get the rook moves to the east in order to look for connected majors */
-    uint64_t rook_moves = get_rook_moves(pos, sq, ray(sq, EAST));
-
     if (is_white_piece(pos->piece[sq]))
     {
         if (get_rank(sq)==RANK_7 && get_rank(pos->black_king)==RANK_8)
         {
             *mgscore += major_on_7th_mg;
             *egscore += major_on_7th_eg;
+            uint64_t rook_moves = get_rook_moves(pos, sq, sq_to_rank_bitmap(sq));
             if (rook_moves & (pos->white_rooks | pos->white_queens))
             {
                 *mgscore += connected_majors_on_7th_mg;
@@ -45,6 +43,7 @@ void eval_major_on_7th(const position_t* pos, square_t sq, int32_t* mgscore, int
         {
             *mgscore -= major_on_7th_mg;
             *egscore -= major_on_7th_eg;
+            uint64_t rook_moves = get_rook_moves(pos, sq, sq_to_rank_bitmap(sq));
             if (rook_moves & (pos->black_rooks | pos->black_queens))
             {
                 *mgscore -= connected_majors_on_7th_mg;

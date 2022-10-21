@@ -9,8 +9,8 @@ TEST(eval_test, eval_queen)
 
     int32_t mg = 0; int32_t eg = 0;
     eval_queen(&pos, D1, &mg, &eg);
-    EXPECT_EQ(queen_pst_mg[D1], mg);
-    EXPECT_EQ(queen_pst_eg[D1], eg);
+    EXPECT_EQ(queen_pst_mg[D1] + queen_mobility_mg[0], mg);
+    EXPECT_EQ(queen_pst_eg[D1] + queen_mobility_eg[0], eg);
 
 
     /* test the symmetry */
@@ -28,6 +28,6 @@ TEST(eval_test, eval_queen_7th_king_back_rank)
     
     int32_t mg = 0; int32_t eg = 0;
     eval_queen(&pos, C7, &mg, &eg);
-    EXPECT_EQ(queen_pst_mg[C7] + major_on_7th_mg + connected_majors_on_7th_mg + 20 * queen_mobility_mg, mg);
-    EXPECT_EQ(queen_pst_eg[C7] + major_on_7th_eg + connected_majors_on_7th_eg + 20 * queen_mobility_eg, eg);
+    EXPECT_EQ(queen_pst_mg[C7] + major_on_7th_mg + connected_majors_on_7th_mg + queen_mobility_mg[20], mg);
+    EXPECT_EQ(queen_pst_eg[C7] + major_on_7th_eg + connected_majors_on_7th_eg + queen_mobility_eg[20], eg);
 }

@@ -33,8 +33,8 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"KING_SAFETY_WING_PAWN_FAR_AWAY", &king_safety_wing_pawn_far_away}, 
     {"KING_SAFETY_MIDDLE_OPEN_FILE", &king_safety_middle_open_file},
 
-    {"PASSED_PAWN_MG", &passed_pawn_mg},
-    {"PASSED_PAWN_EG", &passed_pawn_eg},
+    {"PASSED_PAWN_MG", &passed_pawn_mg[0]},
+    {"PASSED_PAWN_EG", &passed_pawn_eg[0]},
     {"ISOLATED_PAWN_MG", &isolated_pawn_mg},
     {"ISOLATED_PAWN_EG", &isolated_pawn_eg},
     {"DOUBLED_PAWN_MG", &doubled_pawn_mg},
@@ -42,17 +42,26 @@ struct eval_weight_table_entry eval_weight_table[] = {
 
     {"KNIGHT_TROPISM_MG", &knight_tropism_mg},
     {"KNIGHT_TROPISM_EG", &knight_tropism_eg},
+    {"KNIGHT_OUTPOST", &knight_outpost[0]},
+    {"KNIGHT_SUPPORTED_OUTPOST", &knight_supported_outpost[0]},
 
-    {"BISHOP_MOBILITY_MG", &bishop_mobility_mg},
-    {"BISHOP_MOBILITY_EG", &bishop_mobility_eg},
+    {"BISHOP_MOBILITY_MG", &bishop_mobility_mg[0]},
+    {"BISHOP_MOBILITY_EG", &bishop_mobility_eg[0]},
+    {"BISHOP_TRAPPED", &bishop_trapped},
 
+    {"ROOK_MOBILITY_MG", &rook_mobility_mg[0]},
+    {"ROOK_MOBILITY_EG", &rook_mobility_eg[0]},
     {"ROOK_OPEN_FILE_MG", &rook_open_file_mg},
+    {"ROOK_OPEN_FILE_SUPPORTED_MG", &rook_open_file_supported_mg},
     {"ROOK_OPEN_FILE_EG", &rook_open_file_eg},
+    {"ROOK_OPEN_FILE_SUPPORTED_EG", &rook_open_file_supported_eg},
     {"ROOK_HALF_OPEN_FILE_MG", &rook_half_open_file_mg},
+    {"ROOK_HALF_OPEN_FILE_SUPPORTED_MG", &rook_half_open_file_supported_mg},
     {"ROOK_HALF_OPEN_FILE_EG", &rook_half_open_file_eg},
+    {"ROOK_HALF_OPEN_FILE_SUPPORTED_EG", &rook_half_open_file_supported_eg},
 
-    {"QUEEN_MOBILITY_MG", &queen_mobility_mg},
-    {"QUEEN_MOBILITY_EG", &queen_mobility_eg},
+    {"QUEEN_MOBILITY_MG", &queen_mobility_mg[0]},
+    {"QUEEN_MOBILITY_EG", &queen_mobility_eg[0]},
 
     {"MAJOR_ON_7TH_MG", &major_on_7th_mg},
     {"MAJOR_ON_7TH_EG", &major_on_7th_eg},

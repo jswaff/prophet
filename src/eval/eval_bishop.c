@@ -21,19 +21,29 @@ void eval_bishop(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
 
     uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
     uint32_t mobility = popcnt(get_bishop_moves(pos, sq, empty_squares));
-    uint32_t mobility_mg = mobility * bishop_mobility_mg;
-    uint32_t mobility_eg = mobility * bishop_mobility_eg;
+    uint32_t mobility_mg = bishop_mobility_mg[mobility];
+    uint32_t mobility_eg = bishop_mobility_eg[mobility];
 
     if (is_white_piece(pos->piece[sq]))
     {
         *mgscore += bishop_pst_mg[sq] + mobility_mg;
         *egscore += bishop_pst_eg[sq] + mobility_eg;
+        if (trapped_bishop(pos, sq, true))
+        {
+            *mgscore += bishop_trapped;
+            *egscore += bishop_trapped;
+        }
     }
     else
     {
         int32_t flipsq = flip_rank[sq];
         *mgscore -= (bishop_pst_mg[flipsq] + mobility_mg);
         *egscore -= (bishop_pst_eg[flipsq] + mobility_eg);
+        if (trapped_bishop(pos, sq, false))
+        {
+            *mgscore -= bishop_trapped;
+            *egscore -= bishop_trapped;
+        }
     }
 }
 
