@@ -50,19 +50,20 @@ Strong enough to beat most humans, but not that strong as far as chess engines g
 
 The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.2 to be rated at 2443.  Prophet 4.3 should be around 50 ELO stronger based on the results below:
 
-Rank Name                              Elo    +    - games score oppo. draws |
-   1 tantabus-2.0.0                     75    3    3 51250   61%    -7   22% |
-   2 prophet-4.3                        71    3    3 40000   60%    -1   25% |
-   3 arasan-13.4                        62    3    3 51250   59%    -6   21% |
-   4 barbarossa-0.6.0                   52    3    3 51250   58%    -5   21% |
-   5 qapla-0.1.1                        24    3    3 51250   54%    -2   24% |
-   6 prophet-4.2                        18    3    3 40000   53%    -1   24% |
-   7 loki-3.5                           16    3    3 51250   52%    -1   23% |
-   8 myrddin-0.88                       -9    3    3 51250   48%     1   25% |
-   9 prophet-4.1                       -42    3    3 40000   44%    -1   23% |
-  10 tjchess-1.3                       -88    3    3 51250   36%     9   22% |
-  11 jazz-840                         -140    3    3 51250   29%    14   19% |
-  12 prophet4                         -147    7    7 10000   30%    -1   18% |
+|Rank |Name               |Elo    |+    |- |games |score |oppo. |draws  |
+|----:|:------------------|------:|----:|-:|-----:|-----:|-----:|-----: |
+|   1 | tantabus-2.0.0    |   75  |  3  |3 | 51250|  61% |   -7 |   22% |
+|   2 | prophet-4.3       |   71  |  3  |3 | 40000|  60% |   -1 |   25% |
+|   3 | arasan-13.4       |   62  |  3  |3 | 51250|  59% |   -6 |   21% |
+|   4 | barbarossa-0.6.0  |   52  |  3  |3 | 51250|  58% |   -5 |   21% |
+|   5 | qapla-0.1.1       |   24  |  3  |3 | 51250|  54% |   -2 |   24% |
+|   6 | prophet-4.2       |   18  |  3  |3 | 40000|  53% |   -1 |   24% |
+|   7 | loki-3.5          |   16  |  3  |3 | 51250|  52% |   -1 |   23% |
+|   8 | myrddin-0.88      |   -9  |  3  |3 | 51250|  48% |    1 |   25% |
+|   9 | prophet-4.1       |  -42  |  3  |3 | 40000|  44% |   -1 |   23% |
+|  10 | tjchess-1.3       |  -88  |  3  |3 | 51250|  36% |    9 |   22% |
+|  11 | jazz-840          | -140  |  3  |3 | 51250|  29% |   14 |   19% |
+|  12 | prophet4          | -147  |  7  |7 | 10000|  30% |   -1 |   18% |
 
 ## Status and Roadmap
 
