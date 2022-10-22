@@ -9,7 +9,7 @@ Prophet is a chess playing program written in C.  Technically it's a chess engin
 
 ## Design Goals
 
-This codebase is the third major rewrite of Prophet.  The first verson was started in 2000.  The second version (first rewrite) was started sometime around 2007, and the last version (second rewrite) around 2011.  The last version of the codebase (https://github.com/jswaff/prophet3) was retired in 2018.  Some design goals for this codebase were:
+This codebase is the third major rewrite of Prophet.  The first version was started in 2000.  The second version (first rewrite) was started sometime around 2007, and the last version (second rewrite) around 2011.  The last version of the codebase (https://github.com/jswaff/prophet3) was retired in 2018.  Some design goals for this codebase were:
 
 * Use pure C.  
 * Modularize.  Group source files into directories according to functionality.  E.g. movegen, eval, search, etc.
