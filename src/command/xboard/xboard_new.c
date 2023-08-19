@@ -7,11 +7,16 @@
 
 #include "xboard_internal.h"
 
+/* externs */
 extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
 extern int32_t volatile max_depth;
 extern uint32_t volatile hash_age;
+extern bool random_mode;
+
+/* local variables */
+uint32_t num_random_starting_moves = 0;
 
 /**
  * \brief Execute the xboard new command 
@@ -46,8 +51,22 @@ int xboard_new(const char* input)
     /* clear the undo information */
     memset(gundos, 0, sizeof(gundos));
 
+
     /* clear hash tables */
     clear_hash_tables();
+
+    /* make random starting moves */
+    if (num_random_starting_moves > 0) 
+    {
+        bool save_random_mode = random_mode;
+        random_mode = true;
+        for (uint32_t i=0; i<num_random_starting_moves; i++)
+        {
+            if (!endgame_check()) think_and_make_move(); /* white move */
+            if (!endgame_check()) think_and_make_move(); /* black move */
+        }
+        random_mode = save_random_mode;
+    }
 
     xboard_force_mode = false;
 
