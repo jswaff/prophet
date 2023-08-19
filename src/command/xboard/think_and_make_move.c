@@ -26,7 +26,8 @@ extern bool xboard_force_mode;
 
 
 /* local variables */
-bool random_mode = false;
+uint32_t num_random_starting_moves;
+uint32_t random_moves_counter;
 pthread_t search_thread;
 bool search_thread_running = false;
 pthread_mutex_t search_lock;
@@ -60,9 +61,11 @@ int think_and_make_move()
     assert(!endgame_check());
 
     int retval;
-    if (random_mode)
+    if (random_moves_counter > 0)
     {
+        plog("# selecting random move.  random_moves_counter: %d\n", random_moves_counter);
         retval = select_random_move();
+        random_moves_counter--;
     }
     else
     {

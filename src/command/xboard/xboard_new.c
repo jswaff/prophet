@@ -13,10 +13,9 @@ extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
 extern int32_t volatile max_depth;
 extern uint32_t volatile hash_age;
-extern bool random_mode;
+extern uint32_t num_random_starting_moves;
+extern uint32_t random_moves_counter;
 
-/* local variables */
-uint32_t num_random_starting_moves = 0;
 
 /**
  * \brief Execute the xboard new command 
@@ -55,21 +54,10 @@ int xboard_new(const char* input)
     /* clear hash tables */
     clear_hash_tables();
 
-    /* make random starting moves */
-    if (num_random_starting_moves > 0) 
-    {
-        bool save_random_mode = random_mode;
-        random_mode = true;
-        for (uint32_t i=0; i<num_random_starting_moves; i++)
-        {
-            if (!endgame_check()) think_and_make_move(); /* white move */
-            if (!endgame_check()) think_and_make_move(); /* black move */
-        }
-        random_mode = save_random_mode;
-    }
 
     xboard_force_mode = false;
 
+    random_moves_counter = num_random_starting_moves;
     max_depth = 0;
     hash_age = 0;
 
