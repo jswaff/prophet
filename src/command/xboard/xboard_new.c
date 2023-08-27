@@ -3,7 +3,9 @@
 #include <prophet/hash.h>
 #include <prophet/position/position.h>
 
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "xboard_internal.h"
 
@@ -44,6 +46,8 @@ int xboard_new(const char* input)
     {
         return retval;
     }
+
+    srand(time(0));
 
     reset_pos(&gpos);
 
