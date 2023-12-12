@@ -54,7 +54,6 @@ int xboard_new(const char* input)
     /* clear hash tables */
     clear_hash_tables();
 
-
     xboard_force_mode = false;
 
     random_moves_counter = num_random_starting_moves;
