@@ -39,8 +39,7 @@ int init()
     if (!initialized) 
     {
         /* initialize the random number generator */
-        time_t t;
-        srand((unsigned) time(&t));
+        srand(time(0));
 
         init_logging();
         init_bitmap_lsb_msb();
