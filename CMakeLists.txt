@@ -18,7 +18,7 @@ FetchContent_MakeAvailable(googletest)
 
 # build library
 add_library(${PROJECT_NAME})
-target_sources(${PROJECT_NAME} 
+target_sources(${PROJECT_NAME}
     PRIVATE
         src/cleanup.c
         src/data.c
