@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(prophetlib VERSION 4.3 DESCRIPTION "Prophet Chess" LANGUAGES C)
+project(prophetlib VERSION 4.3 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 
 # Provide option to users on which library version to build
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
@@ -12,6 +12,9 @@ FetchContent_Declare(
  URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
 )
 set(INSTALL_GTEST OFF)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
 # build library
 add_library(${PROJECT_NAME})
@@ -172,7 +175,7 @@ set(public_headers
     include/prophet/util/output.h
     include/prophet/util/p4time.h
     include/prophet/util/prng.h
-    include/prophet/string_utils.h
+    include/prophet/util/string_utils.h
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
 set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
@@ -199,11 +202,11 @@ install(TARGETS ${PROJECT_NAME}
 )
 
 # generate and install export file
-#install(EXPORT "${PROJECT_NAME}Targets"
-#    FILE "${PROJECT_NAME}Targets.cmake"
-#    NAMESPACE mspv::
-#    DESTINATION cmake
-#)
+install(EXPORT "${PROJECT_NAME}Targets"
+    FILE "${PROJECT_NAME}Targets.cmake"
+    NAMESPACE prophet::
+    DESTINATION cmake
+)
 
 include(CMakePackageConfigHelpers)
 
@@ -227,41 +230,109 @@ write_basic_package_version_file(
 #)
 
 # Provide option to control test executable build
-#option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
+option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 
-#if(BUILD_TEST_EXECUTABLE)
+if(BUILD_TEST_EXECUTABLE)
     # build test executable
-#    add_executable(mspvlib_test)
-#    target_sources(mspvlib_test
-#        PRIVATE
-#            test/test_util.cpp
-#            test/camera/test_file_based_motion_sensor_stream.cpp
-#            test/camera/test_file_based_video_stream.cpp
-#            test/matrix/test_conv2.cpp
-#            test/matrix/test_conv3.cpp
-#            test/matrix/test_gaussian_kernel.cpp
-#            test/matrix/test_imfilter.cpp
-#            test/matrix/test_padrepl3.cpp
-#            test/matrix/test_smooth.cpp 
-#            test/matrix/test_smooth3.cpp
-#            test/ml/test_predict_masks.cpp
-#            test/processing/test_hybrid.cpp
-#            test/processing/test_lsc.cpp
-#            test/processing/test_perfusion_index.cpp
-#            test/processing/test_spatial.cpp
-#            test/processing/test_temporal.cpp
-#            test/stats/test_mean.cpp
-#            test/stats/test_prctile.cpp
-#            test/stats/test_stddev.cpp
-#    )
-#    target_include_directories(mspvlib_test PUBLIC "include/")
-#    target_link_libraries(mspvlib_test PRIVATE mspvlib)
-#    target_link_libraries(mspvlib_test PRIVATE gtest_main)
-#    set_property(TARGET mspvlib_test PROPERTY CXX_STANDARD 17)
-#    include(GoogleTest)
-#    gtest_discover_tests(mspvlib_test
-#        PROPERTIES
-#            ENVIRONMENT RESOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}/test/resources
-#        DISCOVERY_MODE PRE_TEST
-#    )
-#endif()
+    add_executable(prophet_test)
+    target_sources(prophet_test
+        PRIVATE
+            test/testmain.cpp
+            test/bitmap/test_bitmap_file_rank.cpp
+            test/bitmap/test_bitmap_isolate.cpp
+            test/bitmap/test_bitmap_lsb_msb.cpp
+            test/bitmap/test_bitmap_popcnt.cpp
+            test/bitmap/test_bitmap_rays.cpp
+            test/command/test_command_db.cpp
+            test/command/test_command_no_op.cpp
+            test/command/test_command_perft.cpp
+            test/command/test_parse_and_execute.cpp
+            test/command/xboard/test_xboard_force.cpp
+            test/command/xboard/test_xboard_go.cpp
+            test/command/xboard/test_xboard_level.cpp
+            test/command/xboard/test_xboard_memory.cpp
+            test/command/xboard/test_xboard_new.cpp
+            test/command/xboard/test_xboard_nopost.cpp
+            test/command/xboard/test_xboard_ping.cpp
+            test/command/xboard/test_xboard_post.cpp
+            test/command/xboard/test_xboard_protover.cpp
+            test/command/xboard/test_xboard_quit.cpp
+            test/command/xboard/test_xboard_remove.cpp
+            test/command/xboard/test_xboard_result.cpp
+            test/command/xboard/test_xboard_sd.cpp
+            test/command/xboard/test_xboard_setboard.cpp
+            test/command/xboard/test_xboard_st.cpp
+            test/command/xboard/test_xboard_time.cpp
+            test/command/xboard/test_xboard_undo.cpp
+            test/command/xboard/test_xboard_usermove.cpp
+            test/commandline/test_commandline_load_properties.cpp
+            test/eval/test_eval_accumulator.cpp
+            test/eval/test_eval_bishop.cpp
+            test/eval/test_eval.cpp
+            test/eval/test_eval_king.cpp
+            test/eval/test_eval_knight.cpp
+            test/eval/test_eval_major_on_7th.cpp
+            test/eval/test_eval_material.cpp
+            test/eval/test_eval_material_type.cpp
+            test/eval/test_eval_pawn.cpp
+            test/eval/test_eval_queen.cpp
+            test/eval/test_eval_rook.cpp
+            test/eval/test_eval_taper.cpp
+            test/eval/test_king_safety.cpp
+            test/eval/test_outpost.cpp
+            test/eval/test_pawn_doubled.cpp
+            test/eval/test_pawn_isolated.cpp
+            test/eval/test_pawn_passed.cpp
+            test/eval/test_pawn_supports.cpp
+            test/eval/test_trapped_bishop.cpp
+            test/hash/test_hash_store_probe.cpp
+            test/hash/test_hash_table.cpp
+            test/hash/test_hash_val.cpp
+            test/hash/test_hash_zkeys.cpp
+            test/movegen/test_attacked.cpp
+            test/movegen/test_attackers.cpp
+            test/movegen/test_bishop_moves.cpp
+            test/movegen/test_good_move.cpp
+            test/movegen/test_king_moves.cpp
+            test/movegen/test_knight_moves.cpp
+            test/movegen/test_movegen.cpp
+            test/movegen/test_movegen_utils.cpp
+            test/movegen/test_pawn_moves.cpp
+            test/movegen/test_perft.cpp
+            test/movegen/test_queen_moves.cpp
+            test/movegen/test_rook_moves.cpp
+            test/position/test_add_piece.cpp
+            test/position/test_apply_move.cpp
+            test/position/test_draw50.cpp
+            test/position/test_draw_material.cpp
+            test/position/test_draw_rep.cpp
+            test/position/test_hash_key.cpp
+            test/position/test_move.cpp
+            test/position/test_pawn_hash_key.cpp
+            test/position/test_piece.cpp
+            test/position/test_position.cpp
+            test/position/test_position_equals.cpp
+            test/position/test_position_flip.cpp
+            test/position/test_remove_piece.cpp
+            test/position/test_square.cpp
+            test/position/test_undo_move.cpp
+            test/search/test_iterate.cpp
+            test/search/test_mvvlva.cpp
+            test/search/test_next.cpp
+            test/search/test_search.cpp
+            test/search/test_see.cpp
+            test/search/test_zugzwang.cpp
+            test/util/test_prng.cpp
+            test/util/test_string_utils.cpp
+    )
+    target_include_directories(prophet_test PUBLIC "include/")
+    target_link_libraries(prophet_test PRIVATE ${PROJECT_NAME})
+    target_link_libraries(prophet_test PRIVATE gtest_main)
+    set_property(TARGET prophet_test PROPERTY CXX_STANDARD 17)
+    include(GoogleTest)
+    gtest_discover_tests(prophet_test
+        PROPERTIES
+            ENVIRONMENT RESOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}/test/resources
+        DISCOVERY_MODE PRE_TEST
+    )
+endif()
