@@ -20,17 +20,17 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"BISHOP_VAL", &bishop_val},
     {"ROOK_VAL", &rook_val},
     {"QUEEN_VAL", &queen_val},
-    {"BISHOP_PAIR", &bishop_pair}, 
+    {"BISHOP_PAIR", &bishop_pair},
     {"KNIGHT_KAUFMAN_ADJ", &knight_kaufman_adj},
     {"ROOK_KAUFMAN_ADJ", &rook_kaufman_adj},
 
 
     {"KING_SAFETY_PAWN_ONE_AWAY", &king_safety_pawn_one_away},
-    {"KING_SAFETY_WING_PAWN_ONE_AWAY", &king_safety_wing_pawn_one_away}, 
-    {"KING_SAFETY_PAWN_TWO_AWAY", &king_safety_pawn_two_away}, 
-    {"KING_SAFETY_WING_PAWN_TWO_AWAY", &king_safety_wing_pawn_two_away}, 
-    {"KING_SAFETY_PAWN_FAR_AWAY", &king_safety_pawn_far_away}, 
-    {"KING_SAFETY_WING_PAWN_FAR_AWAY", &king_safety_wing_pawn_far_away}, 
+    {"KING_SAFETY_WING_PAWN_ONE_AWAY", &king_safety_wing_pawn_one_away},
+    {"KING_SAFETY_PAWN_TWO_AWAY", &king_safety_pawn_two_away},
+    {"KING_SAFETY_WING_PAWN_TWO_AWAY", &king_safety_wing_pawn_two_away},
+    {"KING_SAFETY_PAWN_FAR_AWAY", &king_safety_pawn_far_away},
+    {"KING_SAFETY_WING_PAWN_FAR_AWAY", &king_safety_wing_pawn_far_away},
     {"KING_SAFETY_MIDDLE_OPEN_FILE", &king_safety_middle_open_file},
 
     {"PASSED_PAWN_MG", &passed_pawn_mg[0]},
@@ -111,7 +111,7 @@ int commandline_load_properties(const char* props_file)
 
     while ((read = getline(&line, &len, fp)) != -1)
     {
-        if (strchr(line, '=')) 
+        if (strchr(line, '='))
         {
             char* key = strtok_r(line, "=", &line_buffer);
             char* val = strtok_r(NULL, "=", &line_buffer);
