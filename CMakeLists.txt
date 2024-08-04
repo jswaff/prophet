@@ -127,6 +127,16 @@ target_sources(${PROJECT_NAME}
         src/util/prng.c
         src/util/string_utils.c
 )
+
+# Compiler options
+if (MSVC) # TODO
+    # warning level 4
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wextra -fno-common -fPIC -O3 -DNDEBUG)
+endif()
+
+
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         # where the library itself will look for its internal headers
@@ -180,7 +190,6 @@ set(public_headers
 set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
 set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
 set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${PROJECT_VERSION})
-#set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 # add executable with a dependency on the library
 add_executable(prophet)
@@ -190,7 +199,6 @@ target_sources(prophet
 )
 target_include_directories(prophet PUBLIC "include/")
 target_link_libraries(prophet PRIVATE prophetlib)
-
 
 
 # install
@@ -325,6 +333,13 @@ if(BUILD_TEST_EXECUTABLE)
             test/util/test_prng.cpp
             test/util/test_string_utils.cpp
     )
+
+    # Compiler options
+    if (MSVC) # TODO
+        target_compile_options(${PROJECT_NAME} PRIVATE /W4)
+    else()
+        target_compile_options(${PROJECT_NAME} PRIVATE -g -O0)
+    endif()
     target_include_directories(prophet_test PUBLIC "include/")
     target_link_libraries(prophet_test PRIVATE ${PROJECT_NAME})
     target_link_libraries(prophet_test PRIVATE gtest_main)
