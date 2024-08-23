@@ -129,13 +129,7 @@ target_sources(${PROJECT_NAME}
 )
 
 # Compiler options
-if (MSVC) # TODO
-    # warning level 4
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4)
-else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wextra -fno-common -fPIC -O3 -DNDEBUG)
-endif()
-
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wextra -fno-common -fPIC -O3 -DNDEBUG)
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE
@@ -335,11 +329,7 @@ if(BUILD_TEST_EXECUTABLE)
     )
 
     # Compiler options
-    if (MSVC) # TODO
-        target_compile_options(${PROJECT_NAME} PRIVATE /W4)
-    else()
-        target_compile_options(${PROJECT_NAME} PRIVATE -g -O0)
-    endif()
+    target_compile_options(${PROJECT_NAME} PRIVATE -g -O0)
     target_include_directories(prophet_test PUBLIC "include/")
     target_link_libraries(prophet_test PRIVATE ${PROJECT_NAME})
     target_link_libraries(prophet_test PRIVATE gtest_main)
