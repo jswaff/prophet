@@ -4,7 +4,5 @@
 *.stackdump
 
 build
-prophet4_3
-prophet4_test
 install
 
