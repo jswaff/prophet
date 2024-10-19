@@ -132,7 +132,7 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
  * Performs a static analysis of a chess position.  The score is primarily
  * influenced by material counts, but it also takes into account several
  * well known heuristics, such as king safety, passed pawns, isolated
- * pawns, rooks on open files, and several others.  
+ * pawns, rooks on open files, and several others.
  *
  * This method will not detect end-of-game scenarios such as checkmate.
  *
@@ -144,7 +144,7 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
 int32_t eval(const position_t* pos, bool material_only)
 {
     /* establish a baseline score using material, from white's perspective. */
-    int32_t mat_score = 
+    int32_t mat_score =
         eval_nonpawn_material(pos, true) -     /* white non-pawn material */
         eval_nonpawn_material(pos, false) +    /* black non-pawn material */
         eval_pawn_material(pos, true) -        /* white pawn material */
@@ -155,7 +155,7 @@ int32_t eval(const position_t* pos, bool material_only)
         return pos->player == WHITE ? mat_score : -mat_score;
     }
 
-    /* evaluate for a draw.  positions that are drawn by rule are immediately 
+    /* evaluate for a draw.  positions that are drawn by rule are immediately
      * returned.  Others that are "drawish" are further evaluated but later
      * tapered down.
      */
@@ -193,7 +193,7 @@ int32_t eval(const position_t* pos, bool material_only)
             all_pawns ^= square_to_bitmap(sq);
         }
         /* store the scores */
-        store_hash_entry(&phtbl, pos->pawn_key, 
+        store_hash_entry(&phtbl, pos->pawn_key,
             build_pawn_hash_val(mg_score - mat_score, eg_score - mat_score));
     }
 
@@ -204,7 +204,7 @@ int32_t eval(const position_t* pos, bool material_only)
         square_t sq = (square_t)get_lsb(all_knights);
         eval_knight(pos, sq, &mg_score, &eg_score);
         all_knights ^= square_to_bitmap(sq);
-    }    
+    }
 
     /* fold in bishop positional features */
     uint64_t all_bishops = pos->white_bishops | pos->black_bishops;
@@ -246,7 +246,7 @@ int32_t eval(const position_t* pos, bool material_only)
 
 
     /* return the score from the perspective of the player on move */
-    return pos->player == WHITE ? tapered_score : -tapered_score;    
+    return pos->player == WHITE ? tapered_score : -tapered_score;
 }
 
 #ifndef NDEBUG
