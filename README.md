@@ -28,21 +28,18 @@ To elaborate on that last point, although Prophet is a fully functional standalo
 
 ## Installing
 
-To build Prophet, you'll need a C compiler.  I use gcc and 'make'.
+To build Prophet, you'll need a C compiler.  I use gcc/g++ and 'cmake'.
 
 If you have the proper build tools, just do:
 
 ```
-make
-./prophet4_3
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make install
 ```
 
-If you want to build the tests, you'll also need g++, and a copy of  Google Test from https://github.com/google/googletest .  Finally, set an environment variable GTEST_DIR to point to the 'googletest' project (we don't need the googlemock stuff).  Then do:
+If all went well, the 'prophet' and 'prophet_test' binaries will be in the build folder.
 
-```
-make test
-./prophet4_test
-```
 
 ## How Strong is it?
 
@@ -66,6 +63,10 @@ The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4
 |  12 | prophet4          | -147  |  7  |7 | 10000|  30% |   -1 |   18% |
 
 ## Status and Roadmap
+
+4.4:
+
+* Updated build system, switching from plain make to cmake
 
 4.3:
 
