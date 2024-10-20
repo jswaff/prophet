@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 project(prophetlib VERSION 4.4 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 
 # Provide option to users on which library version to build
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
 # Google Test libs
 enable_testing()
