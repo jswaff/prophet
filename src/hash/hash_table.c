@@ -53,8 +53,7 @@ void clear_hash_tables()
 int init_hash_tables()
 {
     int retval = init_hash_table(&htbl, hash_size);
-    if (0 != retval)
-    {
+    if (0 != retval) {
         return retval;
     }
     return init_hash_table(&phtbl, pawn_hash_size);
@@ -89,8 +88,7 @@ int resize_hash_table(hash_table_t *tbl, uint64_t max_size)
     set_capacity(tbl, max_size);
 
     hash_entry_t* new_table_ptr = (hash_entry_t*)realloc(tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
-    if (NULL == new_table_ptr)
-    {
+    if (NULL == new_table_ptr) {
         return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
     }
     tbl->tbl = new_table_ptr;
@@ -113,8 +111,7 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
     set_capacity(tbl, max_size);
 
     tbl->tbl = (hash_entry_t*)malloc(tbl->capacity * sizeof(hash_entry_t));
-    if (NULL == tbl->tbl)
-    {
+    if (NULL == tbl->tbl) {
         return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
     }
     clear_hash_table(tbl);    
@@ -148,8 +145,7 @@ static void set_capacity(hash_table_t *tbl, uint64_t max_size)
 
     /* find the largest power of 2 that is <= size */
     tbl->capacity = 1;
-    while (tbl->capacity <= max_entries)
-    {
+    while (tbl->capacity <= max_entries) {
         tbl->capacity *= 2;
     }
     tbl->capacity /= 2;

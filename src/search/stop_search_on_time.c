@@ -14,14 +14,13 @@
 bool stop_search_on_time(search_options_t* opts, const stats_t* stats)
 {
     /* if we don't have a stop time, nevermind! */
-    if (!opts->stop_time)
-    {
+    if (!opts->stop_time) {
         return false;
     }
 
     /* avoid doing expensive time checks too often. */
     if (stats->nodes + stats->qnodes - opts->node_count_last_time_check < 
-        opts->nodes_between_time_checks)
+        opts->nodes_between_time_checks) 
     {
         return false;
     }

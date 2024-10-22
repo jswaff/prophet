@@ -47,16 +47,11 @@ void num_moves_in_list(
 {
     *caps = 0; *noncaps = 0;
 
-    for (const move_t* mp=startp; mp<endp; mp++) 
-    {
-        if (*mp != 0) 
-        {
-            if (is_capture(*mp) || get_promopiece(*mp)) 
-            {
+    for (const move_t* mp=startp; mp<endp; mp++) {
+        if (*mp != 0) {
+            if (is_capture(*mp) || get_promopiece(*mp)) {
                 (*caps)++;
-            } 
-            else 
-            {
+            } else {
                 (*noncaps)++;
             }
         }
@@ -87,8 +82,7 @@ bool in_check(const position_t* pos, color_t player)
  */
 bool is_checkmate(const position_t* pos)
 {
-    if (in_check(pos, pos->player))
-    {
+    if (in_check(pos, pos->player)) {
         return num_legal_moves(pos, true, true) == 0;
     } 
 
@@ -104,8 +98,7 @@ bool is_checkmate(const position_t* pos)
  */
 bool is_stalemate(const position_t* pos)
 {
-    if (!in_check(pos, pos->player))
-    {
+    if (!in_check(pos, pos->player)) {
         return num_legal_moves(pos, true, true) == 0;
     } 
 
@@ -144,10 +137,8 @@ bool is_legal_move(move_t mv, const position_t* pos)
  */
 bool move_list_contains(move_t mv, const move_t* start, const move_t* end)
 {
-    for (const move_t* mp=start; mp<end; mp++) 
-    {
-        if (clear_score(*mp) == clear_score(mv)) 
-        {
+    for (const move_t* mp=start; mp<end; mp++) {
+        if (clear_score(*mp) == clear_score(mv)) {
             return true;
         }
     }

@@ -32,12 +32,10 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
     move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
     search_options_t* opts)
 {
-
     assert(alpha < beta);
 
     /* time check */
-    if (!skip_time_checks && stop_search_on_time(opts, stats))
-    {
+    if (!skip_time_checks && stop_search_on_time(opts, stats)) {
         stop_search = true;
         return 0;
     }
@@ -45,10 +43,8 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
     stats->qnodes++;
 
     int32_t stand_pat = eval(pos, false);
-    if (stand_pat > alpha) 
-    {
-        if (stand_pat >= beta) 
-        {
+    if (stand_pat > alpha) {
+        if (stand_pat >= beta) {
             return stand_pat;
         }
         /* the static evaulation is our lower bound */
@@ -61,8 +57,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
-    while (next(pos, &mp, &mo_dto))
-    {
+    while (next(pos, &mp, &mo_dto)) {
         assert(get_move_score(*mp)==0);
 
         /* if this is a capture, can it possibly raise alpha? (delta pruning) */
@@ -75,8 +70,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
         apply_move(pos, *mp, uptr);
 
         /* verify the move was legal */
-        if (in_check(pos, opposite_player(pos->player)))
-        {
+        if (in_check(pos, opposite_player(pos->player))) {
             undo_move(pos, uptr);
             continue;
         }
@@ -87,21 +81,17 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
         undo_move(pos, uptr);
 
         /* if the search was stopped we can't trust these results */
-        if (stop_search)
-        {
+        if (stop_search) {
             return 0;
         }
 
-        if (score >= beta)
-        {
+        if (score >= beta) {
             return score;
         }
-        if (score > alpha)
-        {
+        if (score > alpha) {
             alpha = score;
         }
     }
-
 
     return alpha;
 }

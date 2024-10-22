@@ -33,15 +33,13 @@ uint64_t perft(position_t* pos, uint32_t depth)
 
     move_t* endp = gen_legal_moves(moves, pos, true, true);
 
-    if (depth == 1) 
-    {
+    if (depth == 1) {
         int caps; int noncaps;
         num_moves_in_list(moves, endp, &caps, &noncaps);
         return caps + noncaps;
     }
 
-    for (move_t* mp=moves; mp<endp; mp++) 
-    {
+    for (move_t* mp=moves; mp<endp; mp++) {
         if (*mp==0) continue; /* move purged as illegal */
         apply_move(pos, *mp, &u);
         nodes += perft(pos, depth-1);

@@ -20,31 +20,22 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
 {
 
     /* convert mate scores */
-    if (score >= CHECKMATE-500) 
-    {
-        if (entry_type == UPPER_BOUND) 
-        {
+    if (score >= CHECKMATE-500) {
+        if (entry_type == UPPER_BOUND) {
             /* failing low on mate.  don't allow a cutoff, just store any 
              * associated move
              */
             entry_type = MOVE_ONLY;
-        } 
-        else 
-        {
+        } else {
             /* convert to fail high */
             entry_type = LOWER_BOUND;
             score = CHECKMATE-500;
         }
-    } 
-    else if (score <= -(CHECKMATE-500)) 
-    {
-        if (entry_type == LOWER_BOUND) 
-        {
+    } else if (score <= -(CHECKMATE-500)) {
+        if (entry_type == LOWER_BOUND) {
             /* failing high on -mate. */
             entry_type = MOVE_ONLY;
-        } 
-        else 
-        {
+        } else {
             /* convert to fail low */
             entry_type = UPPER_BOUND;
             score = -(CHECKMATE-500);
@@ -54,19 +45,16 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth,
     uint64_t val = (uint64_t)entry_type;
     assert(val < 4);
 
-
     /* fold in the depth */
     assert(depth >= 0);
     assert(depth < 256);
     val |= ((uint64_t)depth) << 2;
-
 
     /* fold in the score.  Note we add 32767 to make it a positive
      * value that can be stored with 16 bits */
     assert(score >= -32767);
     assert(score <= 32767);
     val |= ((uint64_t)score + 32767) << 10;
-
 
     /* fold in the move */ 
     uint64_t hash_move = (uint64_t)clear_score(mv);

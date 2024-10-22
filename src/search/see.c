@@ -44,12 +44,9 @@ int32_t see(const position_t* pos, move_t mv)
 {
     int32_t score = 0;
 
-    if (get_promopiece(mv) != NO_PIECE)
-    {
+    if (get_promopiece(mv) != NO_PIECE) {
         score = see_eval_piece(get_promopiece(mv)) - pawn_val;
-    }
-    else if (is_capture(mv))
-    {
+    } else if (is_capture(mv)) {
         score = score_capture(pos, mv);
     }
 
@@ -70,12 +67,9 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     /* play out the sequence */
     uint64_t white_attackers = attackers(pos, to_sq, WHITE);
     uint64_t black_attackers = attackers(pos, to_sq, BLACK);
-    if (pos->player == WHITE) 
-    {
+    if (pos->player == WHITE) {
         white_attackers ^= square_to_bitmap(from_sq);
-    }
-    else
-    {
+    } else {
         black_attackers ^= square_to_bitmap(from_sq);
     }
 
@@ -84,8 +78,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     int32_t current_piece = pos->piece[from_sq];
     int32_t attacked_piece_val = see_eval_piece(current_piece);
 
-    while(1)
-    {
+    while(1) {
         /* fold in any xray attackers behind the current piece, in the direction of 
          * to -> current sq 
          */
@@ -100,34 +93,25 @@ static int32_t score_capture(const position_t* pos, move_t mv)
             {
                 xrays = get_rook_moves(pos, current_sq, targets) &
                     (pos->white_rooks | pos->white_queens | pos->black_rooks | pos->black_queens);
-            }
-            else
-            {
+            } else {
                 xrays = get_bishop_moves(pos, current_sq, targets) &
                     (pos->white_bishops | pos->white_queens | pos->black_bishops | pos->black_queens);
             }
-            if (xrays & pos->white_pieces)
-            {
+            if (xrays & pos->white_pieces) {
                 white_attackers |= xrays;
-            }
-            else if (xrays & pos->black_pieces)
-            {
+            } else if (xrays & pos->black_pieces) {
                 black_attackers |= xrays;
             }
         }
 
         current_sq = find_least_valuable(pos, ptm==WHITE ? white_attackers : black_attackers);
-        if (current_sq == NO_SQUARE)
-        {
+        if (current_sq == NO_SQUARE) {
             break;
         }
 
-        if (ptm==WHITE)
-        {
+        if (ptm==WHITE) {
             white_attackers ^= square_to_bitmap(current_sq);
-        }
-        else
-        {
+        } else {
             black_attackers ^= square_to_bitmap(current_sq);
         }
         current_piece = pos->piece[current_sq];
@@ -140,8 +124,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     }
 
     /* evaluate the sequence */
-    while (scores_ind > 1)
-    {
+    while (scores_ind > 1) {
         scores_ind--;
         scores[scores_ind-1] = -max(-scores[scores_ind-1], scores[scores_ind]);
     }
@@ -159,12 +142,10 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
     int32_t lv_sq = NO_SQUARE;
     int32_t lv_score = 0;
 
-    while(attackers_map)
-    {
+    while(attackers_map) {
         uint32_t sq_ind = get_lsb(attackers_map);
         int32_t val = see_eval_piece(pos->piece[sq_ind]);
-        if (lv_sq == NO_SQUARE || val < lv_score)
-        {
+        if (lv_sq == NO_SQUARE || val < lv_score) {
             lv_sq = (int32_t)sq_ind;
             lv_score = val;
         }
@@ -173,4 +154,3 @@ static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map
 
     return lv_sq;
 }
-

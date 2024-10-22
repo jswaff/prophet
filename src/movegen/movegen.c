@@ -64,11 +64,9 @@ move_t* gen_legal_moves(
     move_t* endp = gen_pseudo_legal_moves(m, &cp, caps, noncaps);
     undo_t u;
 
-    for (move_t* mp=m; mp<endp; mp++) 
-    {
+    for (move_t* mp=m; mp<endp; mp++) {
         apply_move(&cp, *mp, &u);
-        if (in_check(&cp, opposite_player(cp.player))) 
-        {
+        if (in_check(&cp, opposite_player(cp.player))) {
             /* mark as 'invalid' */
             *mp = 0;
         }
