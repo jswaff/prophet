@@ -89,3 +89,4 @@ The search is still single threaded.  That is actually a regression of sorts; Pr
 
 You can see the combined Prophet / chess4j backlog here: https://trello.com/b/dhcOEaCO/chess4j-board .
 
+Read about the latest development efforts at https://jamesswafford.dev/ .
