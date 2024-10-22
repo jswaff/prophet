@@ -24,8 +24,7 @@ uint64_t squares_to_bitmap(square_t sq, ...)
     va_list sqs;
     va_start(sqs, sq);
 
-    while (sq >= 0 && sq < 64) 
-    {
+    while (sq >= 0 && sq < 64) {
         val |= (uint64_t)1 << sq;
         sq = va_arg(sqs, int);
     }
@@ -340,21 +339,16 @@ static dir_t get_dir_slow(square_t from, square_t to)
     int32_t f_diff = get_file(from) - get_file(to);
     int32_t r_diff = get_rank(from) - get_rank(to);
 
-    if (f_diff == 0) 
-    {
+    if (f_diff == 0) {
         /* same file */
         if (r_diff < 0) return SOUTH;
         if (r_diff > 0) return NORTH;
-    } 
-    else if (f_diff < 0) 
-    {
+    } else if (f_diff < 0) {
         /* from is west of to */
         if (r_diff == 0) return EAST;
         if (r_diff == f_diff) return SOUTHEAST;
         if (r_diff == -f_diff) return NORTHEAST;
-    } 
-    else 
-    { 
+    } else { 
         /* f_diff > 0 */
         /* from is east of to */
         if (r_diff == 0) return WEST;
@@ -367,10 +361,8 @@ static dir_t get_dir_slow(square_t from, square_t to)
 
 void init_squares()
 {
-    for (int i=0; i<64; i++) 
-    {
-        for (int j=0; j<64; j++) 
-        {
+    for (int i=0; i<64; i++) {
+        for (int j=0; j<64; j++) {
             direction_tbl[i][j] = get_dir_slow((square_t)i,(square_t)j);
         }
     }

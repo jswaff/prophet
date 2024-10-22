@@ -82,16 +82,12 @@ bool set_pos(position_t* pos, const char* fen)
 
     /* Part 1 - Piece Placement */
     fen_part = strtok(my_fen," ");
-    for (uint32_t c=0;c<strlen(fen_part);c++) 
-    {
+    for (uint32_t c=0;c<strlen(fen_part);c++) {
         char ch = *(fen_part+c);
         if (ch == '/') continue;
-        if (ch >= '1' && ch <= '8') 
-        {
+        if (ch >= '1' && ch <= '8') {
             sq += ((int)ch) - 48;  /* '1' == ASC 48, '8' == ASC 56 */
-        } 
-        else 
-        {
+        } else {
             int32_t piece=NO_PIECE;
             if (ch=='K') {
                 pos->white_king = (square_t)sq;
@@ -120,39 +116,31 @@ bool set_pos(position_t* pos, const char* fen)
             } else if (ch=='p') {
                 piece = -PAWN;
             }
-            if (piece == NO_PIECE) 
-            {
+            if (piece == NO_PIECE) {
                 goto restore_and_exit;
             }
             add_piece(pos, piece, (square_t)sq);
             sq++;
         }
     }
-    if (sq != 64)
-    {
+    if (sq != 64) {
         goto restore_and_exit;
     }
     
     /* Part 2 - Active Color */
     fen_part = strtok(NULL," ");
-    if (*fen_part=='w' || *fen_part=='W') 
-    {
+    if (*fen_part=='w' || *fen_part=='W') {
         pos->player = WHITE;
-    } 
-    else if (*fen_part=='b' || *fen_part=='B') 
-    {
+    } else if (*fen_part=='b' || *fen_part=='B') {
         pos->player = BLACK;
-    } 
-    else 
-    {
+    } else {
         error("active color - fen: %s\n", fen);
         goto restore_and_exit;
     }
 
     /* Part 3 - Castling Availability */
     fen_part = strtok(NULL," ");
-    if (!fen_part) 
-    {
+    if (!fen_part) {
         error("castling availability - fen: %s\n", fen);
         goto restore_and_exit;
     }
@@ -168,8 +156,7 @@ bool set_pos(position_t* pos, const char* fen)
 
     /* Part 4 - En Passant Target Square */
     fen_part = strtok(NULL," ");
-    if (!fen_part) 
-    {
+    if (!fen_part) {
         error("en passant target square - fen: %s\n", fen);
         goto restore_and_exit;
     }
@@ -177,24 +164,18 @@ bool set_pos(position_t* pos, const char* fen)
 
     /* Part 5 - Halfmove clock (Note: not part of the EPD spec) */
     fen_part = strtok(NULL," ");
-    if (fen_part) 
-    {
+    if (fen_part) {
         pos->fifty_counter=atoi(fen_part);
-    } 
-    else 
-    {
+    } else {
         pos->fifty_counter = 0;
     }
 
     /* Part 6 - Full Move Counter (Note: not part of the EPD spec)
      * It starts at 1, and is incremented after each Black's move. */
     fen_part = strtok(NULL," ");
-    if (fen_part) 
-    {
+    if (fen_part) {
         pos->move_counter=(atoi(fen_part)-1) * 2;
-    } 
-    else 
-    {
+    } else {
         pos->move_counter = 0;
     }
     if (pos->player==BLACK) pos->move_counter++;
@@ -203,8 +184,7 @@ bool set_pos(position_t* pos, const char* fen)
     pos->pawn_key = build_pawn_key(pos);
 
     /* it appears we've set everything up, but is the position valid? */
-    if (verify_pos(pos))
-    {
+    if (verify_pos(pos)) {
        free(fen_ptr);
        return true;
     }

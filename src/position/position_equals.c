@@ -16,10 +16,8 @@
  */
 bool pos_equals(const position_t* p1, const position_t* p2, bool strict)
 {
-    for (int32_t sq=0; sq<64; sq++) 
-    {
-        if (p1->piece[sq] != p2->piece[sq]) 
-        {
+    for (int32_t sq=0; sq<64; sq++) {
+        if (p1->piece[sq] != p2->piece[sq]) {
             return false;
         }
     }
@@ -74,8 +72,7 @@ bool pos_equals(const position_t* p1, const position_t* p2, bool strict)
     if (p1->white_king != p2->white_king) return false;
     if (p1->black_king != p2->black_king) return false;
 
-    if (strict) 
-    {
+    if (strict) {
         if (p1->move_counter != p2->move_counter) return false;
         if (p1->fifty_counter != p2->fifty_counter) return false;
     }

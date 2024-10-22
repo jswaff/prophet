@@ -38,18 +38,15 @@ bool is_lack_of_mating_material(const position_t* pos)
 
     /* if there are any knights at all, this must be a KNK ending to be a 
      * draw. */
-    if (num_knights > 1)
-    {
+    if (num_knights > 1) {
         return false;
     }   
-    if (num_knights == 1 && num_bishops > 0)
-    {
+    if (num_knights == 1 && num_bishops > 0) {
         return false;
     }
 
     /* if there is more than one bishop on either side, it's not a draw. */
-    if (num_white_bishops > 1 || num_black_bishops > 1)
-    {
+    if (num_white_bishops > 1 || num_black_bishops > 1) {
         return false;
     } 
 
@@ -60,8 +57,7 @@ bool is_lack_of_mating_material(const position_t* pos)
         uint32_t w_sq = get_lsb(pos->white_bishops);
         uint32_t b_sq = get_lsb(pos->black_bishops);
 
-        if (is_light_sq(w_sq) != is_light_sq(b_sq))
-        {
+        if (is_light_sq(w_sq) != is_light_sq(b_sq)) {
             return false;
         }
     }
