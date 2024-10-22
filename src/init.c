@@ -36,8 +36,7 @@ int init()
 {
     int retval = 0;
 
-    if (!initialized) 
-    {
+    if (!initialized) {
         /* initialize the random number generator */
         srand(time(0));
 
@@ -56,8 +55,7 @@ int init()
         init_pawn_attacked();
         init_pawn_passed();
         retval = init_hash_tables();
-        if (0 != retval)
-        {
+        if (0 != retval) {
             goto bailout;
         }
         

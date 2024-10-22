@@ -18,21 +18,18 @@ extern volatile uint32_t max_depth;
 int xboard_sd(const char* input)
 {
     /* verify the command */
-    if (0 != strncmp("sd", input, 2))
-    {
+    if (0 != strncmp("sd", input, 2)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
-    if (strlen(input) < 4)
-    {
+    if (strlen(input) < 4) {
         return P4_ERROR_CMD_XBOARD_SD_MISSING_DEPTH;
     }
 
     /* attempt to read the DEPTH parameter */
     uint32_t depth;
-    if (1 != sscanf(input + 3, "%d", &depth))
-    {
+    if (1 != sscanf(input + 3, "%d", &depth)) {
         return P4_ERROR_CMD_XBOARD_SD_MISSING_DEPTH;
     }
 

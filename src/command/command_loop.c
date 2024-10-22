@@ -21,23 +21,19 @@ int command_loop()
     int retval = 0;
 
     char* input = (char*)malloc(MAX_INPUT_SZ);
-    if (NULL == input)
-    {
+    if (NULL == input) {
         return P4_ERROR_CMD_INPUT_BUFFER;
     }
 
     bool exit_status;
-    do
-    {
-        if (fgets(input, MAX_INPUT_SZ, stdin) == NULL)
-        {
+    do {
+        if (fgets(input, MAX_INPUT_SZ, stdin) == NULL) {
             retval = P4_ERROR_CMD_FGETS_FAILURE;
             goto cleanup;
         }
 
         /* remove trailing newline */
-        if ((strlen(input) > 0) && (input[strlen(input) - 1] == '\n'))
-        {
+        if ((strlen(input) > 0) && (input[strlen(input) - 1] == '\n')) {
             input[strlen(input) - 1] = '\0';
         }
 

@@ -28,13 +28,10 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
     uint32_t mobility_mg = rook_mobility_mg[mobility];
     uint32_t mobility_eg = rook_mobility_eg[mobility];
 
-    if (is_white_piece(pos->piece[sq]))
-    {
+    if (is_white_piece(pos->piece[sq])) {
         *mgscore += rook_pst_mg[sq] + mobility_mg;
         *egscore += rook_pst_eg[sq] + mobility_eg;
-    }
-    else
-    {
+    } else {
         int32_t flipsq = flip_rank[sq];
         *mgscore -= (rook_pst_mg[flipsq] + mobility_mg);
         *egscore -= (rook_pst_eg[flipsq] + mobility_eg);
@@ -61,64 +58,47 @@ void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, i
 {
     uint64_t friendly_pawns, enemy_pawns /*, friendly_rooks */;
     bool wtm = is_white_piece(pos->piece[sq]);
-    if (wtm)
-    {
+    if (wtm) {
         friendly_pawns = pos->white_pawns;
         enemy_pawns = pos->black_pawns;
         /* friendly_rooks = pos->white_rooks; */
-    }
-    else
-    {
+    } else {
         friendly_pawns = pos->black_pawns;
         enemy_pawns = pos->white_pawns;
         /* friendly_rooks = pos->black_rooks; */
     }
 
     uint64_t file_mask = sq_to_file_bitmap(sq);
-    if (!(file_mask & friendly_pawns))
-    {
+    if (!(file_mask & friendly_pawns)) {
         /*uint64_t rook_file_moves = get_rook_moves(pos, sq, sq_to_file_bitmap(sq));*/
-        if (file_mask & enemy_pawns)
-        {
-            if (wtm) 
-            {
+        if (file_mask & enemy_pawns) {
+            if (wtm) {
                 *mgscore += rook_half_open_file_mg;
                 *egscore += rook_half_open_file_eg;
-                /*if (rook_file_moves & friendly_rooks)
-                {
+                /*if (rook_file_moves & friendly_rooks) {
                     *mgscore += rook_half_open_file_supported_mg;
                     *egscore += rook_half_open_file_supported_eg;
                 }*/
-            }
-            else
-            {
+            } else {
                 *mgscore -= rook_half_open_file_mg;
                 *egscore -= rook_half_open_file_eg;
-                /*if (rook_file_moves & friendly_rooks)
-                {
+                /*if (rook_file_moves & friendly_rooks) {
                     *mgscore -= rook_half_open_file_supported_mg;
                     *egscore -= rook_half_open_file_supported_eg;
                 }*/
             }
-        }
-        else
-        {
-            if (wtm)
-            {
+        } else {
+            if (wtm) {
                 *mgscore += rook_open_file_mg;
                 *egscore += rook_open_file_eg;
-                /*if (rook_file_moves & friendly_rooks)
-                {
+                /*if (rook_file_moves & friendly_rooks) {
                     *mgscore += rook_open_file_supported_mg;
                     *egscore += rook_open_file_supported_eg;
                 }*/
-            }
-            else
-            {
+            } else {
                 *mgscore -= rook_open_file_mg;
                 *egscore -= rook_open_file_eg;
-                /*if (rook_file_moves & friendly_rooks)
-                {
+                /*if (rook_file_moves & friendly_rooks) {
                     *mgscore -= rook_open_file_supported_mg;
                     *egscore -= rook_open_file_supported_eg;
                 }*/

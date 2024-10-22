@@ -25,12 +25,10 @@ extern pthread_mutex_t search_lock;
 int block_on_search_thread(bool stop)
 {
     pthread_mutex_lock(&search_lock);
-    if (search_thread_running)
-    {
+    if (search_thread_running) {
         if (stop) stop_search = true;
         int retval = pthread_join(search_thread, NULL);
-        if (0 != retval)
-        {
+        if (0 != retval) {
             return P4_ERROR_THREAD_JOIN_FAILURE;
         }
         search_thread_running = false;

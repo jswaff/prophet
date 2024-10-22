@@ -9,8 +9,7 @@ uint32_t popcnt(uint64_t val)
 {
     uint32_t n = 0;
 
-    while (val) 
-    {
+    while (val) {
         ++n;
         val &= val-1;
     }

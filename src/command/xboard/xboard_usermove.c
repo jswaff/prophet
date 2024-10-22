@@ -28,8 +28,7 @@ extern bool xboard_force_mode;
 int xboard_usermove(const char* input)
 {
     /* verify the command */
-    if (0 != strncmp("usermove", input, 8))
-    {
+    if (0 != strncmp("usermove", input, 8)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
@@ -37,35 +36,30 @@ int xboard_usermove(const char* input)
      * the shortest possible valid command would hold a two character
      * move, e.g. "usermove e4"
      */
-    if (strlen(input) < 11)
-    {
+    if (strlen(input) < 11) {
         return P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE;   
     }
 
     /* read the move */
     char str_mv[10];
-    if (1 != sscanf(input + 9, "%s", str_mv))
-    {
+    if (1 != sscanf(input + 9, "%s", str_mv)) {
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE;
     }
 
     /* parse the move */
     move_t mv = str_to_move(str_mv, &gpos);
-    if (NO_MOVE == mv)
-    {
+    if (NO_MOVE == mv) {
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE;
     }
 
     /* apply move */
-    if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME)
-    {
+    if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME) {
         return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
     }
     apply_move(&gpos, mv, gundos + gpos.move_counter);
 
 
-    if (!endgame_check() && !xboard_force_mode)
-    {
+    if (!endgame_check() && !xboard_force_mode) {
         return think_and_make_move();
     }
 

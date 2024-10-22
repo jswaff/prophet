@@ -21,13 +21,11 @@ extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 int xboard_remove(const char* input)
 {
     /* verify the command */
-    if (0 != strcmp("remove", input))
-    {
+    if (0 != strcmp("remove", input)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
-    if (gpos.move_counter < 2)
-    {
+    if (gpos.move_counter < 2) {
         return P4_ERROR_GUNDO_INDEX_LB_VIOLATION;
     }
 

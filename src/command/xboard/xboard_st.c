@@ -22,21 +22,18 @@ extern bool fixed_time_per_move;
 int xboard_st(const char* input)
 {
     /* verify the command */
-    if (0 != strncmp("st", input, 2))
-    {
+    if (0 != strncmp("st", input, 2)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
-    if (strlen(input) < 4)
-    {
+    if (strlen(input) < 4) {
         return P4_ERROR_CMD_XBOARD_ST_MISSING_DEPTH;
     }
 
     /* attempt to read the TIME parameter */
     uint32_t t;
-    if (1 != sscanf(input + 3, "%d", &t))
-    {
+    if (1 != sscanf(input + 3, "%d", &t)) {
         return P4_ERROR_CMD_XBOARD_ST_MISSING_DEPTH;
     }
 

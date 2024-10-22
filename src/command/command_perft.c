@@ -24,16 +24,14 @@ extern position_t gpos;
 int command_perft(const char* input)
 {
     /* verify the command */
-    if (0 != strncmp("perft", input, 5))
-    {
+    if (0 != strncmp("perft", input, 5)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int depth;
 
     /* advance the base command pointer past the "perft " substring */
-    if (1 != sscanf(input + 6, "%d", &depth))
-    {
+    if (1 != sscanf(input + 6, "%d", &depth)) {
         return P4_ERROR_CMD_PERFT_DEPTH;
     }
 

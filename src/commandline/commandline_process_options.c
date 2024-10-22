@@ -37,10 +37,8 @@ int commandline_process_options(int argc, char* argv[])
 
     int long_index = 0;
     int opt = 0;
-    while ((opt = getopt_long(argc, argv, "lr:d:h:p:e:", long_options, &long_index)) != -1)
-    {
-        switch (opt)
-        {
+    while ((opt = getopt_long(argc, argv, "lr:d:h:p:e:", long_options, &long_index)) != -1) {
+        switch (opt) {
             case 'l':
                 logging_enabled = true;
                 out(stdout, "logging enabled\n");

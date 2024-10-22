@@ -99,34 +99,28 @@ int commandline_load_properties(const char* props_file)
     char* line_buffer = NULL;
     char* val_buffer = NULL;
     size_t len = 0;
-    ssize_t read;
+    int read;
 
     fp = fopen(props_file, "r");
-    if (fp == NULL)
-    {
+    if (fp == NULL) {
         return P4_ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE;
     }
 
     int nprops = sizeof(eval_weight_table) / sizeof(struct eval_weight_table_entry);
 
-    while ((read = getline(&line, &len, fp)) != -1)
-    {
-        if (strchr(line, '='))
-        {
+    while ((read = getline(&line, &len, fp)) != -1) {
+        if (strchr(line, '=')) {
             char* key = strtok_r(line, "=", &line_buffer);
             char* val = strtok_r(NULL, "=", &line_buffer);
 
             /* map the key to a variable and set the value */
-            for (int i=0; i<nprops; i++)
-            {
+            for (int i=0; i<nprops; i++) {
                 struct eval_weight_table_entry te = eval_weight_table[i];
-                if (!strncmp(key, te.property_name, strlen(key)))
-                {
+                if (!strncmp(key, te.property_name, strlen(key))) {
                     int32_t* valptr = te.val_ptr;
                     char* v = strtok_r(val, ",", &val_buffer);
                     int i = 0;
-                    while (v)
-                    {
+                    while (v) {
                         *(valptr+i) = atoi(v);
                         v = strtok_r(NULL, ",", &val_buffer);
                         ++i;
@@ -140,8 +134,7 @@ int commandline_load_properties(const char* props_file)
 
     fclose(fp);
 
-    if (line)
-    {
+    if (line) {
         free(line);
     }
 

@@ -34,98 +34,57 @@ material_type_t eval_material_type(const position_t* pos, int* draw_flag)
     if (num_white_total > 2 || num_black_total > 2) return OTHER;
 
     material_type_t retval = OTHER;
-    if (num_white_total == 0)
-    {
-        if (num_black_total == 0)
-        {
+    if (num_white_total == 0) {
+        if (num_black_total == 0) {
              retval = KK;
-        }
-        else if (num_black_total == 1)
-        {
-            if (num_black_knights == 1)
-            {
+        } else if (num_black_total == 1) {
+            if (num_black_knights == 1) {
                 retval = KKN;
-            }
-            else if (num_black_bishops == 1)
-            {
+            } else if (num_black_bishops == 1) {
                 retval = KKB;
             }
-        }
-        else if (num_black_total == 2)
-        {
-            if (num_black_knights == 2)
-            {
+        } else if (num_black_total == 2) {
+            if (num_black_knights == 2) {
                 retval = KKNN;
             }
         }
-    }
-    else if (num_white_total == 1)
-    {
-        if (num_white_pawns == 1)
-        {
-            if (num_black_total == 1)
-            {
-                if (num_black_knights == 1)
-                {
+    } else if (num_white_total == 1) {
+        if (num_white_pawns == 1) {
+            if (num_black_total == 1) {
+                if (num_black_knights == 1) {
                     retval = KPKN;
-                }
-                else if (num_black_bishops == 1)
-                {
+                } else if (num_black_bishops == 1) {
                     retval = KPKB;
                 }
             }
-        }
-        else if (num_white_knights == 1)
-        {
-            if (num_black_total == 0)
-            {
+        } else if (num_white_knights == 1) {
+            if (num_black_total == 0) {
                 retval = KNK;
-            }
-            else if (num_black_total == 1)
-            {
-                if (num_black_pawns == 1)
-                {
+            } else if (num_black_total == 1) {
+                if (num_black_pawns == 1) {
                     retval = KNKP;
-                }
-                else if (num_black_knights == 1)
-                {
+                } else if (num_black_knights == 1) {
                     retval = KNKN;
-                }
-                else if (num_black_bishops == 1)
-                {
+                } else if (num_black_bishops == 1) {
                     retval = KNKB;
                 }
             }
-        }
-        else if (num_white_bishops == 1)
-        {
-            if (num_black_total == 0)
-            {
+        } else if (num_white_bishops == 1) {
+            if (num_black_total == 0) {
                 retval = KBK;
-            }
-            else if (num_black_total == 1)
-            {
-                if (num_black_pawns == 1)
-                {
+            } else if (num_black_total == 1) {
+                if (num_black_pawns == 1) {
                     retval = KBKP;
-                }
-                else if (num_black_knights == 1)
-                {
+                } else if (num_black_knights == 1) {
                     retval = KBKN;
-                }
-                else if (num_black_bishops == 1)
-                {
+                } else if (num_black_bishops == 1) {
                     retval = KBKB;
                 }
             }
         }
-    }
-    else if (num_white_total == 2)
-    {
-        if (num_white_knights == 2)
-        {
-            if (num_black_total == 0)
-            {
+    } else if (num_white_total == 2) {
+        if (num_white_knights == 2) {
+            if (num_black_total == 0) {
                 retval = KNNK;
             }
         }
