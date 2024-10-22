@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.17)
 project(prophetlib VERSION 4.4 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 
+# Provide option to control test executable build
+option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
+
 # Provide option to users on which library version to build
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
@@ -129,7 +132,12 @@ target_sources(${PROJECT_NAME}
 )
 
 # Compiler options
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wextra -fno-common -fPIC -O3 -DNDEBUG)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC")
+#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -00 -g")
+#set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
+message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")
+message("CMAKE_C_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")
+message("CMAKE_C_FLAGS_RELEASE is ${CMAKE_C_FLAGS_RELEASE}")
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE
@@ -184,6 +192,7 @@ set(public_headers
 set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
 set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
 set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${PROJECT_VERSION})
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 # add executable with a dependency on the library
 add_executable(prophet)
@@ -231,8 +240,6 @@ write_basic_package_version_file(
 #    DESTINATION cmake
 #)
 
-# Provide option to control test executable build
-option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 
 if(BUILD_TEST_EXECUTABLE)
     # build test executable
@@ -329,7 +336,6 @@ if(BUILD_TEST_EXECUTABLE)
     )
 
     # Compiler options
-    target_compile_options(${PROJECT_NAME} PRIVATE -g -O0)
     target_include_directories(prophet_test PUBLIC "include/")
     target_link_libraries(prophet_test PRIVATE ${PROJECT_NAME})
     target_link_libraries(prophet_test PRIVATE gtest_main)
