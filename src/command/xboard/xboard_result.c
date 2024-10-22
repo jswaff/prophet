@@ -17,50 +17,37 @@
 int xboard_result(const char* input)
 {
     /* verify the command */
-    if (0 != strncmp("result", input, 6))
-    {
+    if (0 != strncmp("result", input, 6)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int retval = block_on_search_thread(true);
-    if (0 != retval)
-    {
+    if (0 != retval) {
         return retval;
     }
 
     /* is the command long enough to contain an argument? 
      * the shortest possible valid command is "result *"
      */
-    if (strlen(input) < 8)
-    {
+    if (strlen(input) < 8) {
         return P4_ERROR_CMD_XBOARD_RESULT_MISSING_RESULT;   
     }
 
     /* read the result, 1-0, 0-1, 1/2-1/2, or * */
     char result[8];
-    if (1 != sscanf(input + 7, "%s", result))
-    {
+    if (1 != sscanf(input + 7, "%s", result)) {
         return P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT;
     }
 
-    if (!strcmp(result, "1-0")) 
-    {
+    if (!strcmp(result, "1-0")) {
         /* TODO */
-    }
-    else if (!strcmp(result, "0-1")) 
-    {
+    } else if (!strcmp(result, "0-1")) {
         /* TODO */
-    }
-    else if (!strcmp(result, "1/2-1/2")) 
-    {
+    } else if (!strcmp(result, "1/2-1/2")) {
         /* TODO */
-    }
-    else if (!strcmp(result, "*")) 
-    {
+    } else if (!strcmp(result, "*")) {
         /* TODO */
-    }
-    else 
-    {
+    } else {
         return P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT;   
     }
   

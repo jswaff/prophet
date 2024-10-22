@@ -66,7 +66,7 @@ The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4
 
 4.4:
 
-* Updated build system, switching from plain make to cmake
+* Maintenance release.  Updated build system, switching from plain make to cmake.  Formatted / cleaned up code.
 
 4.3:
 

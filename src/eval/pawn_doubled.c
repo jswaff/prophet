@@ -21,10 +21,9 @@ bool pawn_doubled(const position_t* pos, square_t pawn_sq)
     uint64_t file_mask = 
         sq_to_file_bitmap(pawn_sq) ^ square_to_bitmap(pawn_sq);
 
-    if (is_white_piece(pos->piece[pawn_sq]))
-    {
+    if (is_white_piece(pos->piece[pawn_sq])) {
         return file_mask & pos->white_pawns;
-    }
+    } 
     else /* black pawn */
     {
         return file_mask & pos->black_pawns;

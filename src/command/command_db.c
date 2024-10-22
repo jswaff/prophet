@@ -20,14 +20,12 @@ extern position_t gpos;
 int command_db(const char* input)
 {
     /* verify the command */
-    if (0 != strcmp("db", input))
-    {
+    if (0 != strcmp("db", input)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
     char* buf = pos_to_str(&gpos);
-    if (NULL == buf)
-    {
+    if (NULL == buf) {
         return P4_ERROR_CMD_DB_POS_TO_STR;
     }
 

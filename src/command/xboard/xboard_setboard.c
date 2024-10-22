@@ -17,8 +17,7 @@ extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 int xboard_setboard(const char* input)
 {
     /* verify the command */
-    if (0 != strncmp("setboard", input, 8))
-    {
+    if (0 != strncmp("setboard", input, 8)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
@@ -27,14 +26,12 @@ int xboard_setboard(const char* input)
      * (leaving off the half move clock and full move number), so min 23 characters
      * in addition to the command itself.
      */
-    if (strlen(input) < 32)
-    {
+    if (strlen(input) < 32) {
         return P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN;   
     }
 
     /* set the board */
-    if (!set_pos(&gpos, input + 9))
-    {
+    if (!set_pos(&gpos, input + 9)) {
         plog("tellusererror Illegal position\n");
         return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN;
     }

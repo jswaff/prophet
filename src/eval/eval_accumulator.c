@@ -18,8 +18,7 @@
 void eval_accumulator(const position_t* pos, uint64_t piece_map, int32_t* mgscore, int32_t* egscore, 
 	eval_func_t eval_func)
 {
-    while (piece_map)
-    {
+    while (piece_map) {
         square_t sq = (square_t)get_lsb(piece_map);
 
         eval_func(pos, sq, mgscore, egscore);

@@ -179,7 +179,7 @@ typedef struct
  * \brief Search the position using iterative deepening. 
  * 
  * \param opts          the options structure
- * \pram ctx            the context for this search iterator
+ * \param ctx           the context for this search iterator
  *
  * \return the principal variation
  */ 

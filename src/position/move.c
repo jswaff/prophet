@@ -189,12 +189,9 @@ bool is_castle(move_t mv)
 int32_t get_move_score(move_t mv)
 {
     int32_t score = ((mv >> 32) & 0x7FFFFFFF);
-    if ((mv >> 63) & 1) 
-    {
+    if ((mv >> 63) & 1) {
         return -score;
-    } 
-    else 
-    {
+    } else {
         return score;
     }
 }
@@ -214,12 +211,9 @@ void set_move_score(move_t* m, int32_t score)
     *m &= 0xFFFFFFFF;
 
     /* now set score */
-    if (score >= 0) 
-    {
+    if (score >= 0) {
         *m |= ((uint64_t)score)<<32;
-    } 
-    else 
-    {
+    } else {
         *m |= ((uint64_t)-score)<<32;
         *m |= ((uint64_t)1)<<63;
     }

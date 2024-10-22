@@ -17,45 +17,34 @@ void eval_pawn(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
 {
     assert(pos->piece[sq] == PAWN || pos->piece[sq] == -PAWN);
 
-    if (is_white_piece(pos->piece[sq]))
-    {
+    if (is_white_piece(pos->piece[sq])) {
         *mgscore += pawn_pst_mg[sq];
         *egscore += pawn_pst_eg[sq];
-        if (pawn_passed(pos, sq)) 
-        {
+        if (pawn_passed(pos, sq)) {
             int32_t r = get_rank(sq);
             *mgscore += passed_pawn_mg[r];
             *egscore += passed_pawn_eg[r];
-        }
-        if (pawn_doubled(pos, sq)) 
-        {
+        } if (pawn_doubled(pos, sq)) {
             *mgscore += doubled_pawn_mg;
             *egscore += doubled_pawn_eg;
-        }
-        if (pawn_isolated(pos, sq)) 
-        {
+        } if (pawn_isolated(pos, sq)) {
             *mgscore += isolated_pawn_mg;
             *egscore += isolated_pawn_eg;
         }
-    }
-    else
-    {
+    } else {
         int32_t flipsq = flip_rank[sq];
         *mgscore -= pawn_pst_mg[flipsq];
         *egscore -= pawn_pst_eg[flipsq];
-        if (pawn_passed(pos, sq)) 
-        {
+        if (pawn_passed(pos, sq)) {
             int32_t flipr = get_rank(flipsq);
             *mgscore -= passed_pawn_mg[flipr];
             *egscore -= passed_pawn_eg[flipr];
-        }
-        if (pawn_doubled(pos, sq)) 
-        {
+        } 
+        if (pawn_doubled(pos, sq)) {
             *mgscore -= doubled_pawn_mg;
             *egscore -= doubled_pawn_eg;
         }
-        if (pawn_isolated(pos, sq)) 
-        {
+        if (pawn_isolated(pos, sq)) {
             *mgscore -= isolated_pawn_mg;
             *egscore -= isolated_pawn_eg;
         }

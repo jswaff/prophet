@@ -34,14 +34,12 @@ extern uint32_t random_moves_counter;
 int xboard_new(const char* input)
 {
     /* verify the command */
-    if (0 != strcmp("new", input))
-    {
+    if (0 != strcmp("new", input)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int retval = block_on_search_thread(true);
-    if (0 != retval)
-    {
+    if (0 != retval) {
         return retval;
     }
 

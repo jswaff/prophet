@@ -25,13 +25,10 @@ void eval_queen(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* e
     uint32_t mobility_eg = queen_mobility_eg[mobility];
 
 
-    if (is_white_piece(pos->piece[sq]))
-    {
+    if (is_white_piece(pos->piece[sq])) {
         *mgscore += queen_pst_mg[sq] + mobility_mg;
         *egscore += queen_pst_eg[sq] + mobility_eg;
-    }
-    else
-    {
+    } else {
         int32_t flipsq = flip_rank[sq];
         *mgscore -= queen_pst_mg[flipsq] + mobility_mg;
         *egscore -= queen_pst_eg[flipsq] + mobility_eg;

@@ -17,8 +17,7 @@ static FILE* logfile = 0;
  */
 void init_logging()
 {
-    if (logging_enabled && !logfile)
-    {
+    if (logging_enabled && !logfile) {
         logfile = fopen("prophet.log", "w");
     }
 }
@@ -30,8 +29,7 @@ void init_logging()
  */
 void close_logfile() 
 {
-    if (logfile)
-    {
+    if (logfile) {
         fclose(logfile);
     }
 }
@@ -69,8 +67,7 @@ void plog(const char* format, ...)
     vfprintf(stdout, format, stdout_args);
     va_end(stdout_args);
 
-    if (logging_enabled)
-    {
+    if (logging_enabled) {
         va_list log_args;
         va_start(log_args, format);
         vfprintf(logfile, format, log_args);

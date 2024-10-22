@@ -80,19 +80,17 @@ int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
 
     /* set the command */
     cmd->cmd = strdup(input);
-    if (NULL == cmd->cmd)
-    {
+    if (NULL == cmd->cmd) {
         return P4_ERROR_CMD_PARSE_CMD_COPY;
     }    
 
     /* set the function */
     int nfuncs = sizeof(function_table) / sizeof(struct function_table_entry);
 
-    for (int i=0; i<nfuncs; i++)
-    {
+    for (int i=0; i<nfuncs; i++) {
         struct function_table_entry fte = function_table[i];
         if (strlen(input) >= strlen(fte.name) &&
-            !strncmp(fte.name, input, strlen(fte.name)))
+            !strncmp(fte.name, input, strlen(fte.name))) 
         {
             cmd->cmd_func = fte.cmd_func;
             goto done;
@@ -100,8 +98,7 @@ int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
     }
 
     /* if string is move only per xboard protocol 1*/
-    if (strlen(input)>=4 && strlen(input)<=5)
-    {
+    if (strlen(input)>=4 && strlen(input)<=5) {
         cmd->cmd_func = xboard_move;
         goto done;
     }
@@ -115,8 +112,7 @@ done:
 
     /* special case - if the command was mapped to the exit handler, set the
      * exit_status flag. */
-    if (cmd->cmd_func == xboard_quit)
-    {
+    if (cmd->cmd_func == xboard_quit) {
         *exit_status = true;
     }
 

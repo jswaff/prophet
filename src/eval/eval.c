@@ -150,8 +150,7 @@ int32_t eval(const position_t* pos, bool material_only)
         eval_pawn_material(pos, true) -        /* white pawn material */
         eval_pawn_material(pos, false);        /* black pawn material */
 
-    if (material_only)
-    {
+    if (material_only) {
         return pos->player == WHITE ? mat_score : -mat_score;
     }
 
@@ -161,14 +160,12 @@ int32_t eval(const position_t* pos, bool material_only)
      */
     int immediate_draw = 0;
     material_type_t mt = eval_material_type(pos, &immediate_draw);
-    if (immediate_draw)
-    {
+    if (immediate_draw) {
         return 0;
     }
 
     int draw_factor = 1;
-    if (KPKN==mt || KPKB==mt || KNKP==mt || KBKP==mt)
-    {
+    if (KPKN==mt || KPKB==mt || KNKP==mt || KBKP==mt) {
         draw_factor = 8;
     }
 
@@ -177,17 +174,13 @@ int32_t eval(const position_t* pos, bool material_only)
 
     /* fold in pawn positional features. try the pawn hash first. */
     uint64_t pawn_hash_val = probe_hash(&phtbl, pos->pawn_key);
-    if (pawn_hash_val != 0)
-    {
+    if (pawn_hash_val != 0) {
         mg_score += get_pawn_hash_entry_mg_score(pawn_hash_val);
         eg_score += get_pawn_hash_entry_eg_score(pawn_hash_val);
         assert(verify_pawn_scores(pos, mg_score - mat_score, eg_score - mat_score));
-    }
-    else
-    {
+    } else {
         uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
-        while (all_pawns)
-        {
+        while (all_pawns) {
             square_t sq = (square_t)get_lsb(all_pawns);
             eval_pawn(pos, sq, &mg_score, &eg_score);
             all_pawns ^= square_to_bitmap(sq);
@@ -199,8 +192,7 @@ int32_t eval(const position_t* pos, bool material_only)
 
     /* fold in knight positional features */
     uint64_t all_knights = pos->white_knights | pos->black_knights;
-    while (all_knights)
-    {
+    while (all_knights) {
         square_t sq = (square_t)get_lsb(all_knights);
         eval_knight(pos, sq, &mg_score, &eg_score);
         all_knights ^= square_to_bitmap(sq);
@@ -208,8 +200,7 @@ int32_t eval(const position_t* pos, bool material_only)
 
     /* fold in bishop positional features */
     uint64_t all_bishops = pos->white_bishops | pos->black_bishops;
-    while (all_bishops)
-    {
+    while (all_bishops) {
         square_t sq = (square_t)get_lsb(all_bishops);
         eval_bishop(pos, sq, &mg_score, &eg_score);
         all_bishops ^= square_to_bitmap(sq);
@@ -217,8 +208,7 @@ int32_t eval(const position_t* pos, bool material_only)
 
     /* fold in rook positional features */
     uint64_t all_rooks = pos->white_rooks | pos->black_rooks;
-    while (all_rooks)
-    {
+    while (all_rooks) {
         square_t sq = (square_t)get_lsb(all_rooks);
         eval_rook(pos, sq, &mg_score, &eg_score);
         all_rooks ^= square_to_bitmap(sq);
@@ -226,8 +216,7 @@ int32_t eval(const position_t* pos, bool material_only)
 
     /* fold in queen positional features */
     uint64_t all_queens = pos->white_queens | pos->black_queens;
-    while (all_queens)
-    {
+    while (all_queens) {
         square_t sq = (square_t)get_lsb(all_queens);
         eval_queen(pos, sq, &mg_score, &eg_score);
         all_queens ^= square_to_bitmap(sq);
@@ -255,8 +244,7 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
     int32_t my_mg_score = 0;
     int32_t my_eg_score = 0;
     uint64_t all_pawns = pos->white_pawns | pos->black_pawns;
-    while (all_pawns)
-    {
+    while (all_pawns) {
         square_t sq = (square_t)get_lsb(all_pawns);
         eval_pawn(pos, sq, &my_mg_score, &my_eg_score);
         all_pawns ^= square_to_bitmap(sq);

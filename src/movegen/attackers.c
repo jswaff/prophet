@@ -43,17 +43,14 @@ uint64_t attackers(const position_t* pos, square_t sq, color_t player)
         pos, sq, (player==WHITE ? pos->white_queens : pos->black_queens));
 
     /* fold in pawn attackers */
-    if (player==WHITE)
-    {
+    if (player==WHITE) {
         /* attacked by white pawn from SW? */
         attackers_map |= (square_to_bitmap(sq) << 7)  & ~file_to_bitmap(FILE_H) & 
             pos->white_pawns;
         /* attacked by white pawn from SE? */
         attackers_map |= (square_to_bitmap(sq) << 9)  & ~file_to_bitmap(FILE_A) & 
             pos->white_pawns;
-    }
-    else
-    {
+    } else {
         /* attacked by black pawn from NE? */
         attackers_map |= (square_to_bitmap(sq) >> 7)  & ~file_to_bitmap(FILE_A) & 
             pos->black_pawns;

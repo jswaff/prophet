@@ -26,30 +26,24 @@ bool good_move(const position_t* pos, move_t mv)
     piece_t mover = get_piece(mv);
     piece_t captured_piece = get_captured_piece(mv);
 
-    if (mv == NO_MOVE) 
-    {
+    if (mv == NO_MOVE) {
         return false;
     }
 
-
     /* are the squares valid? */
-    if (from_sq < A8 || from_sq > H1 || to_sq < A8 || to_sq > H1) 
-    {
+    if (from_sq < A8 || from_sq > H1 || to_sq < A8 || to_sq > H1) {
         return false;
     }
 
     /* is the piece the correct color for the player on move? */
     int32_t piece_on_board = pos->piece[from_sq];
-    if (pos->player==WHITE)
-    {
+    if (pos->player==WHITE) {
         if (!is_white_piece(piece_on_board) 
             || (int32_t)mover != piece_on_board)
         {
             goto exit;
         }
-    }
-    else 
-    {
+    } else {
         if (!is_black_piece(piece_on_board) 
             || (int32_t)mover != -piece_on_board)
         {
@@ -57,9 +51,7 @@ bool good_move(const position_t* pos, move_t mv)
         }
     }
 
-
-    if (mover==PAWN)
-    {
+    if (mover==PAWN) {
         retval = good_pawn_move(pos, from_sq, to_sq, captured_piece, 
             is_epcapture(mv));
         goto exit;
@@ -67,97 +59,68 @@ bool good_move(const position_t* pos, move_t mv)
 
 
     /* validate captured piece is right color */
-    if (captured_piece != NO_PIECE)
-    {
-        if (pos->player==WHITE)
-        {
-            if (is_not_black_piece(pos->piece[to_sq]))
-            {
+    if (captured_piece != NO_PIECE) {
+        if (pos->player==WHITE) {
+            if (is_not_black_piece(pos->piece[to_sq])) {
+                goto exit;
+            }
+        } else {
+            if (is_not_white_piece(pos->piece[to_sq])) {
                 goto exit;
             }
         }
-        else
-        {
-            if (is_not_white_piece(pos->piece[to_sq]))
-            {
-                goto exit;
-            }
-        }
-    }
-    else
-    {
-        if (pos->piece[to_sq] != NO_PIECE)
-        {
+    } else {
+        if (pos->piece[to_sq] != NO_PIECE) {
             goto exit;
         }
     }
-
 
     /* validate the piece is moving as it should */
-    if (mover==KNIGHT)
-    {
-        if (get_knight_moves(from_sq, square_to_bitmap(to_sq)))
-        {
+    if (mover==KNIGHT) {
+        if (get_knight_moves(from_sq, square_to_bitmap(to_sq))) {
             retval = true;
             goto exit;
         }
-    }
-    else if (mover==BISHOP)
-    {
-        if (get_bishop_moves(pos, from_sq, square_to_bitmap(to_sq)))
-        {
+    } else if (mover==BISHOP) {
+        if (get_bishop_moves(pos, from_sq, square_to_bitmap(to_sq))) {
             retval = true;
             goto exit;
         }
-    }
-    else if (mover==ROOK)
-    {
-        if (get_rook_moves(pos, from_sq, square_to_bitmap(to_sq)))
-        {
+    } else if (mover==ROOK) {
+        if (get_rook_moves(pos, from_sq, square_to_bitmap(to_sq))) {
             retval = true;
             goto exit;
         }
-    }
-    else if (mover==QUEEN)
-    {
-        if (get_queen_moves(pos, from_sq, square_to_bitmap(to_sq)))
-        {
+    } else if (mover==QUEEN) {
+        if (get_queen_moves(pos, from_sq, square_to_bitmap(to_sq))) {
             retval = true;
             goto exit;
         }
-    }
-    else if (mover==KING)
-    {
-        if (get_king_moves(from_sq, square_to_bitmap(to_sq)))
-        {
+    } else if (mover==KING) {
+        if (get_king_moves(from_sq, square_to_bitmap(to_sq))) {
             retval = true;
             goto exit;
-        }
-        if (is_castle(mv))
-        {
+        } if (is_castle(mv)) {
             if (to_sq==G1 && can_castle_wk(pos) 
                 && pos->piece[F1]==NO_PIECE && pos->piece[G1]==NO_PIECE
                 && !attacked(pos,E1,BLACK) && !attacked(pos,F1,BLACK))
             {
                 retval = true;
                 goto exit;
-            }
-            else if (to_sq==C1 && can_castle_wq(pos)
+            } else if (to_sq==C1 && can_castle_wq(pos)
                 && pos->piece[D1]==NO_PIECE && pos->piece[C1]==NO_PIECE 
                 && pos->piece[B1]==NO_PIECE
                 && !attacked(pos,E1,BLACK) && !attacked(pos,D1,BLACK))
             {
                 retval = true;
                 goto exit;
-            }
-            else if (to_sq==G8 && can_castle_bk(pos)
+            } else if (to_sq==G8 && can_castle_bk(pos)
                 && pos->piece[F8]==NO_PIECE && pos->piece[G8]==NO_PIECE
                 && !attacked(pos,E8,WHITE) && !attacked(pos,F8,WHITE))
             {
                 retval = true;
                 goto exit;
-            }
-            else if (to_sq==C8 && can_castle_bq(pos)
+            } else if (to_sq==C8 && can_castle_bq(pos)
                 && pos->piece[D8]==NO_PIECE && pos->piece[C8]==NO_PIECE 
                 && pos->piece[B8]==NO_PIECE
                 && !attacked(pos,E8,WHITE) && !attacked(pos,D8,WHITE))
@@ -167,7 +130,6 @@ bool good_move(const position_t* pos, move_t mv)
             }
         }
     }
-
 
 exit:
 
@@ -179,71 +141,47 @@ exit:
 static bool good_pawn_move(const position_t* pos, square_t from_sq, 
     square_t to_sq, int32_t captured_piece, bool is_ep)
 {
-    if (captured_piece==NO_PIECE)
-    {
-        if (pos->piece[to_sq] != NO_PIECE)
-        {
+    if (captured_piece==NO_PIECE) {
+        if (pos->piece[to_sq] != NO_PIECE) {
             return false;
         }
-        if (pos->player==WHITE)
-        {
+        if (pos->player==WHITE) {
             square_t nsq = north(from_sq);
             square_t nnsq = north(nsq);
-            if (to_sq==nsq || (to_sq==nnsq && pos->piece[nsq]==NO_PIECE))
-            {
+            if (to_sq==nsq || (to_sq==nnsq && pos->piece[nsq]==NO_PIECE)) {
                 return true;
             }
-        }
-        else
-        {
+        } else {
             square_t ssq = south(from_sq);
             square_t sssq = south(ssq);
-            if (to_sq==ssq || (to_sq==sssq && pos->piece[ssq]==NO_PIECE))
-            {
+            if (to_sq==ssq || (to_sq==sssq && pos->piece[ssq]==NO_PIECE)) {
                 return true;
             }
         }
-    }
-    else 
-    {
-        if (pos->player==WHITE)
-        {
-            if (northeast(from_sq) != to_sq && northwest(from_sq) != to_sq)
-            {
+    } else {
+        if (pos->player==WHITE) {
+            if (northeast(from_sq) != to_sq && northwest(from_sq) != to_sq) {
                 return false;
             }
-            if (is_ep)
-            {
-                if (to_sq==pos->ep_sq && pos->piece[south(to_sq)]==-PAWN)
-                {
+            if (is_ep) {
+                if (to_sq==pos->ep_sq && pos->piece[south(to_sq)]==-PAWN) {
+                    return true;
+                }
+            } else {
+                if (pos->piece[to_sq]==-captured_piece) {
                     return true;
                 }
             }
-            else
-            {
-                if (pos->piece[to_sq]==-captured_piece)
-                {
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            if (southeast(from_sq) != to_sq && southwest(from_sq) != to_sq)
-            {
+        } else {
+            if (southeast(from_sq) != to_sq && southwest(from_sq) != to_sq) {
                 return false;
             }
-            if (is_ep)
-            {
-                if (to_sq==pos->ep_sq && pos->piece[north(to_sq)]==PAWN)
-                {
+            if (is_ep) {
+                if (to_sq==pos->ep_sq && pos->piece[north(to_sq)]==PAWN) {
                     return true;
                 }
-            }
-            else
-            {
-                if (pos->piece[to_sq]==captured_piece)
-                {
+            } else {
+                if (pos->piece[to_sq]==captured_piece) {
                     return true;
                 }
             }

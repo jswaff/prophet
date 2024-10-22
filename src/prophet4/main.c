@@ -21,14 +21,12 @@ int main(int argc, char* argv[])
     setbuf(stdout, NULL);
 
     retval = commandline_process_options(argc, argv);
-    if (0 != retval)
-    {
+    if (0 != retval) {
         goto done;
     }
 
     retval = init();
-    if (0 != retval)
-    {
+    if (0 != retval) {
         goto done;
     }
 
@@ -38,8 +36,7 @@ int main(int argc, char* argv[])
     retval = command_loop();
 
 done:
-    if (0 != retval)
-    {
+    if (0 != retval) {
         plog("exiting with value: %d\n", retval);
     }
 

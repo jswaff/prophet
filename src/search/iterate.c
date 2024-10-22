@@ -40,7 +40,6 @@ static bool best_at_top(move_t* start, move_t* end);
 move_line_t iterate(const iterator_options_t* opts, 
     const iterator_context_t* ctx)
 {
-
     move_line_t pv; pv.n = 0;
 
     /* generate and count the number of moves to choose from */
@@ -54,8 +53,7 @@ move_line_t iterate(const iterator_options_t* opts,
     pv.n = 1;
 
     /* if just one legal move, don't bother searching */
-    if (opts->early_exit_ok && num_caps + num_noncaps == 1)
-    {
+    if (opts->early_exit_ok && num_caps + num_noncaps == 1) {
         return pv;
     }
 
@@ -70,22 +68,18 @@ move_line_t iterate(const iterator_options_t* opts,
     /* set up options */
     search_options_t search_opts;
     memset(&search_opts, 0, sizeof(search_options_t));
-    if (opts->post_mode)
-    {
+    if (opts->post_mode) {
         search_opts.pv_callback = print_pv;
     }
     search_opts.start_time = milli_timer();
-    if (opts->max_time_ms)
-    {
+    if (opts->max_time_ms) {
         search_opts.stop_time = search_opts.start_time + opts->max_time_ms;
         search_opts.nodes_between_time_checks = 100000UL;
         /* if we're getting low on time, check more often */
-        if (opts->max_time_ms < 10000)
-        {
+        if (opts->max_time_ms < 10000) {
             search_opts.nodes_between_time_checks /= 10;
         }
-        if (opts->max_time_ms < 1000)
-        {
+        if (opts->max_time_ms < 1000) {
             search_opts.nodes_between_time_checks /= 10;   
         }
     }
@@ -98,8 +92,7 @@ move_line_t iterate(const iterator_options_t* opts,
         /* clear the hash, if that option is set.  this is mainly used for
          * debugging.
          */
-        if (opts->clear_hash_each_search)
-        {
+        if (opts->clear_hash_each_search) {
             clear_hash_table(&htbl);
         }
 
@@ -115,40 +108,32 @@ move_line_t iterate(const iterator_options_t* opts,
         /* the search may or may not have a PV.  If it does, we can use it 
          * since the last iteraton's PV was tried first
          */
-        if (search_pv.n > 0)
-        {
+        if (search_pv.n > 0) {
             memcpy(&pv, &search_pv, sizeof(move_line_t));
         }
 
-        if (stop_search)
-        {
+        if (stop_search) {
             break;
         }
 
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
-        if (opts->post_mode)
-        {
+        if (opts->post_mode) {
             print_pv(&pv, depth, score, elapsed, stats.nodes);
         }
 
-
         /* if the search discovered a checkmate, stop. */
-        if (abs(score) > (CHECKMATE - 500))
-        {
+        if (abs(score) > (CHECKMATE - 500)) {
             stop_iterator = true;
         }
 
-
         /* if the search has reached the max user defined  depth, stop */
-        if (opts->max_depth > 0 && depth >= opts->max_depth)
-        {
+        if (opts->max_depth > 0 && depth >= opts->max_depth) {
             stop_iterator = true;
         }
 
         /* if we've hit the max system defined depth, stop */
-        if (depth >= MAX_ITERATIONS)
-        {
+        if (depth >= MAX_ITERATIONS) {
             stop_iterator = true;
         }
 
@@ -167,8 +152,7 @@ move_line_t iterate(const iterator_options_t* opts,
     assert(pv.n > 0);
 
     /* print the search summary */
-    if (opts->post_mode)
-    {
+    if (opts->post_mode) {
         print_search_summary(depth, search_opts.start_time, &stats);
     }
 

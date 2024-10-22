@@ -23,8 +23,7 @@ int parse_and_execute(const char* input, bool* exit_status)
 
     user_command_t* user_cmd = (user_command_t*)malloc(sizeof(user_command_t));
 
-    if (NULL == user_cmd)
-    {
+    if (NULL == user_cmd) {
         return P4_ERROR_CMD_USER_CMD_BUFFER;
     }
 
@@ -32,15 +31,13 @@ int parse_and_execute(const char* input, bool* exit_status)
     memset(user_cmd, 0, sizeof(user_command_t));
 
     retval = parse_command(user_cmd, input, exit_status);
-    if (0 != retval)
-    {
+    if (0 != retval) {
         goto cleanup_user_command;
     }
 
     /* execute the command */
     int cmd_retval = user_cmd->cmd_func(input);
-    if (0 != cmd_retval)
-    {
+    if (0 != cmd_retval) {
         /* Note - this error message is part of the xboard protocol.  If 
          * another protocol is added in the future, push this into a protocol
          * specific error handler. */

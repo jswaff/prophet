@@ -27,10 +27,8 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
     uint64_t tbl_index = key & tbl->mask;
     hash_entry_t *he = tbl->tbl + tbl_index;
 
-    for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++)
-    {
-        if (he->key[i] == key)
-        {
+    for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++) {
+        if (he->key[i] == key) {
             tbl->hits++;
             return he->val[i];
         }

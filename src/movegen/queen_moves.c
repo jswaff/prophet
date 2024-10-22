@@ -24,8 +24,7 @@ move_t* gen_queen_moves(
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_queens : p->black_queens;
 
-    while (pmap) 
-    {
+    while (pmap) {
         square_t sq = (square_t)get_msb(pmap);
         m = gen_queen_moves_from_sq(m, p, sq, caps, noncaps);
         pmap ^= square_to_bitmap(sq);
@@ -44,8 +43,7 @@ move_t* gen_queen_moves_from_sq(
     uint64_t queen_moves = get_queen_moves(
         p, from, get_target_squares(p, caps, noncaps));
 
-    while (queen_moves) 
-    {
+    while (queen_moves) {
         square_t sq = (square_t)get_msb(queen_moves);
         m = add_move(m, p, QUEEN, from, sq);
         queen_moves ^= square_to_bitmap(sq);

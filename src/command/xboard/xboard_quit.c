@@ -16,8 +16,7 @@
 int xboard_quit(const char* input)
 {
     /* verify the command */
-    if (0 != strcmp("exit", input) && 0 != strcmp("quit", input))
-    {
+    if (0 != strcmp("exit", input) && 0 != strcmp("quit", input)) {
         return P4_ERROR_CMD_INCORRECT_COMMAND;
     }
 

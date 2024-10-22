@@ -18,13 +18,11 @@ int32_t mvvlva(move_t mv)
 {
     int32_t score = 0;
 
-    if (get_promopiece(mv) != NO_PIECE)
-    {
+    if (get_promopiece(mv) != NO_PIECE) {
         score = mvvlva_promo(mv);
     }
 
-    if (is_capture(mv))
-    {
+    if (is_capture(mv)) {
         score += mvvlva_capture(mv);
     }
 

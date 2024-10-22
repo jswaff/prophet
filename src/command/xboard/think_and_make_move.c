@@ -61,19 +61,15 @@ int think_and_make_move()
     assert(!endgame_check());
 
     int retval;
-    if (random_moves_counter > 0)
-    {
+    if (random_moves_counter > 0) {
         plog("# selecting random move.  random_moves_counter: %d\n", random_moves_counter);
         retval = select_random_move();
         random_moves_counter--;
-    }
-    else
-    {
+    } else {
         pthread_mutex_lock(&search_lock); 
         stop_search = false;
         retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
-        if (0 != retval)
-        {
+        if (0 != retval) {
             return P4_ERROR_THREAD_CREATION_FAILURE;
         }
         search_thread_running = true;
@@ -107,11 +103,9 @@ static void* iterate_wrapper(void* UNUSED(arg))
     free(ctx);
     free(opts);
 
-    if (!xboard_force_mode)
-    {
+    if (!xboard_force_mode) {
         int retval = make_move_otb(pv.mv[0]);
-        if (0 != retval)
-        {
+        if (0 != retval) {
             pthread_exit(&retval);
         }
     }
@@ -144,12 +138,9 @@ static int select_random_move()
     /* fetch the move from the stack.  since the list isn't contiguous, (it
      * contains some NO_MOVE entries), so we need to iterate. */
     int i = 0;
-    for (const move_t* mp = moves; mp < endp; mp++) 
-    {
-        if (*mp != NO_MOVE)
-        {
-            if (i == mv_ind)
-            {
+    for (const move_t* mp = moves; mp < endp; mp++) {
+        if (*mp != NO_MOVE) {
+            if (i == mv_ind) {
                 return make_move_otb(*mp);
             }
             i++;
@@ -171,8 +162,7 @@ static int select_random_move()
  */
 static int make_move_otb(move_t mv)
 {
-    if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME)
-    {
+    if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME) {
         return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
     }
 

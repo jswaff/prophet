@@ -82,8 +82,7 @@ void init_bitmap_file_rank()
     memset(bb_ranks, 0, sizeof(uint64_t) * 8);
 
 
-    for (int i=0; i<64; i++)
-    {
+    for (int i=0; i<64; i++) {
         bb_files[get_file(i)] |= square_to_bitmap(i);
         bb_ranks[get_rank(i)] |= square_to_bitmap(i);
     }

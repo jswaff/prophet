@@ -25,8 +25,7 @@
 move_t str_to_move(const char* str_mv, const position_t* pos)
 {
     /* sanity check the size of the string */
-    if (strlen(str_mv) < 4 || strlen(str_mv) > 5)
-    {
+    if (strlen(str_mv) < 4 || strlen(str_mv) > 5) {
         return NO_MOVE;
     }
 
@@ -36,8 +35,7 @@ move_t str_to_move(const char* str_mv, const position_t* pos)
     str_sq1[1] = str_mv[1];
     str_sq1[2] = 0;
     square_t sq1 = str_to_sq(str_sq1);
-    if (NO_SQUARE == sq1)
-    {
+    if (NO_SQUARE == sq1) {
         return NO_MOVE;
     }
 
@@ -47,15 +45,13 @@ move_t str_to_move(const char* str_mv, const position_t* pos)
     str_sq2[1] = str_mv[3];
     str_sq2[2] = 0;
     square_t sq2 = str_to_sq(str_sq2);
-    if (NO_SQUARE == sq2)
-    {
+    if (NO_SQUARE == sq2) {
         return NO_MOVE;
     }
 
     /* set the promotion piece, if there is one. */
     piece_t promo_pc = NO_PIECE;
-    if (strlen(str_mv) == 5)
-    {
+    if (strlen(str_mv) == 5) {
         if (str_mv[4]=='q' || str_mv[4]=='Q')
             promo_pc = QUEEN;
         else if (str_mv[4]=='r' || str_mv[4]=='R')
@@ -75,8 +71,7 @@ move_t str_to_move(const char* str_mv, const position_t* pos)
     /* look for a move in the legal move list that matches the source square,
      * destination square, and if applicable the promotion piece. */
 
-    for (move_t* mp = moves; mp<endp; mp++)
-    {
+    for (move_t* mp = moves; mp<endp; mp++) {
         if (get_from_sq(*mp) == sq1 && get_to_sq(*mp) == sq2
           && get_promopiece(*mp) == promo_pc)
         {
@@ -101,33 +96,24 @@ move_t str_to_move(const char* str_mv, const position_t* pos)
  */
 square_t str_to_sq(const char* str_sq)
 {
-    if (strlen(str_sq) != 2) 
-    {
+    if (strlen(str_sq) != 2) {
         return NO_SQUARE;
     }
     int sq;
 
     /* the first character should be a-h or A-H */
-    if (str_sq[0] >= 'a' && str_sq[0] <= 'h') 
-    {
+    if (str_sq[0] >= 'a' && str_sq[0] <= 'h') {
         sq = str_sq[0] - 'a';
-    } 
-    else if (str_sq[0] >= 'A' && str_sq[0] <= 'H') 
-    {
+    } else if (str_sq[0] >= 'A' && str_sq[0] <= 'H') {
         sq = str_sq[0] - 'A';
-    } 
-    else 
-    {
+    } else {
         return NO_SQUARE;
     }
 
     /* the second character should be a digit 1-8 */
-    if (str_sq[1] >= '1' && str_sq[1] <= '8') 
-    {
+    if (str_sq[1] >= '1' && str_sq[1] <= '8') {
         sq += 8*(8-(str_sq[1]-'0'));
-    } 
-    else 
-    {
+    } else {
         return NO_SQUARE;
     }
 
@@ -148,8 +134,7 @@ square_t str_to_sq(const char* str_sq)
  */
 char* move_to_str(move_t mv)
 {
-    if (NO_MOVE == mv)
-    {
+    if (NO_MOVE == mv) {
         return NULL;
     }
 
@@ -166,8 +151,7 @@ char* move_to_str(move_t mv)
     buf[2] = 'a' + get_file(to);
     buf[3] = '0' + (8 - get_rank(to));
 
-    switch(promo)
-    {
+    switch(promo) {
         case QUEEN:
             buf[4] = 'q'; buf[5] = 0; break;
         case ROOK:
@@ -199,8 +183,7 @@ char* move_to_str(move_t mv)
 char* move_line_to_str(const move_line_t* mv_line)
 {
     /* an empty line is a valid line. */
-    if (mv_line->n == 0)
-    {
+    if (mv_line->n == 0) {
         char* buf = (char*)malloc(sizeof(char));
         *buf = 0;
         return buf;
@@ -210,8 +193,7 @@ char* move_line_to_str(const move_line_t* mv_line)
        get all of the individual move strings and add them up */
     char* mv_bufs[mv_line->n];
     size_t total_len = 0;
-    for (int i=0; i < mv_line->n; i++) 
-    {
+    for (int i=0; i < mv_line->n; i++) {
         mv_bufs[i] = move_to_str(mv_line->mv[i]);
         total_len += strlen(mv_bufs[i]);
     }
@@ -224,14 +206,12 @@ char* move_line_to_str(const move_line_t* mv_line)
 
     /* copy the moves to the line buffer */
     size_t offset = 0;
-    for (int i=0; i< mv_line->n; i++) 
-    {
+    for (int i=0; i< mv_line->n; i++) {
         memcpy(buf + offset, mv_bufs[i], strlen(mv_bufs[i]));
         offset += strlen(mv_bufs[i]);
         
         /* add a trailing space after all but the last move */
-        if (i < mv_line->n - 1)
-        {
+        if (i < mv_line->n - 1) {
             buf[offset++] = ' ';
         }
 
@@ -289,14 +269,11 @@ char* pos_to_str(const position_t* pos)
     char* buf = (char*)malloc(255 * sizeof(char));
 
     strcpy(buf, "");
-    for (int r=0; r<8; r++) 
-    { 
+    for (int r=0; r<8; r++) { 
         /* each rank */
-        for (int f=0; f<8; f++) 
-        { 
+        for (int f=0; f<8; f++) { 
             /* each file */
-            switch(pos->piece[get_square((rank_t)r, (file_t)f)]) 
-            {
+            switch(pos->piece[get_square((rank_t)r, (file_t)f)]) {
                 case NO_PIECE: strcat(buf, "- "); break;
                 case PAWN: strcat(buf, "P "); break;
                 case -PAWN: strcat(buf, "p "); break;
@@ -314,27 +291,19 @@ char* pos_to_str(const position_t* pos)
         }
 
         /* print the player to move on the 6th rank */
-        if (r == RANK_6) 
-        {
-            if (pos->player == WHITE) 
-            {
+        if (r == RANK_6) {
+            if (pos->player == WHITE) {
                 strcat(buf, "   white to move");
-            } 
-            else 
-            {
+            } else {
                 strcat(buf, "   black to move");
             }
         }
 
         /* print the en passant square */
-        else if (r == RANK_5) 
-        {
-            if (pos->ep_sq == NO_SQUARE) 
-            {
+        else if (r == RANK_5) {
+            if (pos->ep_sq == NO_SQUARE) {
                 strcat(buf, "   no ep");
-            } 
-            else 
-            {
+            } else {
                 strcat(buf, "   ep sq: ");
                 char* ep_buf = sq_to_str(pos->ep_sq);
                 strcat(buf, ep_buf);
@@ -343,10 +312,8 @@ char* pos_to_str(const position_t* pos)
         }
 
         /* print castling rights */
-        else if (r == RANK_4) 
-        {
-            if (pos->castling_rights) 
-            {
+        else if (r == RANK_4) {
+            if (pos->castling_rights) {
                 strcat(buf, "   castling rights: ");
                 if (can_castle_wk(pos))
                     strcat(buf, "K");
@@ -356,9 +323,7 @@ char* pos_to_str(const position_t* pos)
                     strcat(buf, "k");
                 if (can_castle_bq(pos))
                     strcat(buf, "q");
-            } 
-            else 
-            {
+            } else {
                 strcat(buf, "   no castling rights");
             }
         }
@@ -386,10 +351,8 @@ char* bitmap_to_str(uint64_t val)
     char* buf = (char*)malloc(73 * sizeof(char));
 
     strcpy(buf, "");
-    for (int r=0; r<8; r++) 
-    { 
-        for (int f=0; f<8; f++) 
-        {
+    for (int r=0; r<8; r++) { 
+        for (int f=0; f<8; f++) {
             strcat(buf, (val & square_to_bitmap(r*8+f)) ? "1" : "0");
         }
         strcat(buf, "\n");

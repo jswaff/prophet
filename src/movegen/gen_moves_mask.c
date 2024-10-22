@@ -23,12 +23,10 @@ uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func)
 
     square_t to = dir_func(sq);
 
-    while (to != NO_SQUARE) 
-    {
+    while (to != NO_SQUARE) {
         uint64_t bb_to = square_to_bitmap(to);
         mask |= bb_to;
-        if (bb_to & occupied) 
-        {
+        if (bb_to & occupied) {
             break;
         }
         to = dir_func(to);
