@@ -1,4 +1,4 @@
-#include <prophet/util/prng.h>
+#include "../util/prng.h"
 
 #include <assert.h>
 

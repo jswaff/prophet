@@ -184,7 +184,6 @@ set(public_headers
     include/prophet/position/position.h
     include/prophet/position/square.h
     include/prophet/util/p4time.h
-    include/prophet/util/prng.h
     include/prophet/util/string_utils.h
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")

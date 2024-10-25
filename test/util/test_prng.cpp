@@ -1,4 +1,4 @@
-#include <prophet/util/prng.h>
+#include "../../src/util/prng.h"
 
 #include <gtest/gtest.h>
 

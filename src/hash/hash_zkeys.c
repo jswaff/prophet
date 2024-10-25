@@ -1,5 +1,5 @@
 #include <prophet/hash.h>
-#include <prophet/util/prng.h>
+#include "../util/prng.h"
 
 
 /**
