@@ -1,7 +1,7 @@
 #include <prophet/const.h>
 #include <prophet/error_codes.h>
 #include <prophet/movegen.h>
-#include <prophet/util/string_utils.h>
+#include "../../util/string_utils.h"
 
 #include <stdio.h>
 #include <string.h>

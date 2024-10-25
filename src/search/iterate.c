@@ -4,7 +4,7 @@
 #include <prophet/parameters.h>
 #include "../util/output.h"
 #include <prophet/util/p4time.h>
-#include <prophet/util/string_utils.h>
+#include "../util/string_utils.h"
 
 #include "search_internal.h"
 

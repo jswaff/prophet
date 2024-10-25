@@ -4,7 +4,7 @@
 #include <prophet/parameters.h>
 #include <prophet/search.h>
 #include "../../util/output.h"
-#include <prophet/util/string_utils.h>
+#include "../../util/string_utils.h"
 
 #include <assert.h>
 #include <errno.h>

@@ -1,7 +1,8 @@
+#include "string_utils.h"
+
 #include <prophet/const.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
-#include <prophet/util/string_utils.h>
 
 #include <stdlib.h>
 #include <string.h>

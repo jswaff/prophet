@@ -1,6 +1,6 @@
 #include <prophet/const.h>
 #include <prophet/position/position.h>
-#include <prophet/util/string_utils.h>
+#include "../../src/util/string_utils.h"
 
 #include <gtest/gtest.h>
 
