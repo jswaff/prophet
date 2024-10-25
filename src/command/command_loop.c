@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "command_internal.h"
+#include "command.h"
 
 #define MAX_INPUT_SZ 256
 

@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../../src/command/command_internal.h"
+#include "../../src/command/command.h"
 
 extern position_t gpos;
 

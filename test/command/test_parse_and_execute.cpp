@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../../src/command/command_internal.h"
+#include "../../src/command/command.h"
 
 extern bool xboard_force_mode;
 

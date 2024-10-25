@@ -2,10 +2,11 @@
 
 #include "../util/output.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "command_internal.h"
+#include "command.h"
 
 /**
  * \brief Parse the user input into a command and execute the command.

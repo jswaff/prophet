@@ -4,7 +4,7 @@
 
 #include <string.h>
 
-#include "command_internal.h"
+#include "command.h"
 #include "xboard/xboard_internal.h"
 
 /* structure mapping a command to a function */
