@@ -1,5 +1,4 @@
-#ifndef _COMMAND_H_
-#define _COMMAND_H_
+#pragma once
 
 #include <stdbool.h>
 
@@ -112,5 +111,3 @@ int command_perft(const char* input);
 #ifdef     __cplusplus
 }
 #endif   
-
-#endif /* ! defined _COMMAND_H_ */

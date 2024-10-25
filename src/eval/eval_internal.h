@@ -1,5 +1,4 @@
-#ifndef _EVAL_INTERNAL_H_
-#define _EVAL_INTERNAL_H_
+#pragma once
 
 #include <prophet/eval.h>
 #include "../bitmap/bitmap.h"
@@ -245,5 +244,3 @@ void eval_accumulator(const position_t* pos, uint64_t piece_map,
 #ifdef     __cplusplus
 }
 #endif    //__cplusplus
-
-#endif /* ! defined _EVAL_INTERNAL_H_ */

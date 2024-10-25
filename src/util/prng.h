@@ -1,5 +1,4 @@
-#ifndef _PRNG_H_
-#define _PRNG_H_
+#pragma once
 
 #include <stdint.h>
 
@@ -29,5 +28,3 @@ uint64_t random64();
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _PRNG_H_ */

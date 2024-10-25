@@ -1,5 +1,4 @@
-#ifndef _SEARCH_H_
-#define _SEARCH_H_
+#pragma once
 
 #include <prophet/position/position.h>
 #include <stdint.h>
@@ -253,5 +252,3 @@ int32_t see(const position_t* pos, move_t mv);
 #ifdef     __cplusplus
 }
 #endif    //__cplusplus
-
-#endif /* ! defined _SEARCH_H_ */

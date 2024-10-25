@@ -1,5 +1,4 @@
-#ifndef _CONST_H_
-#define _CONST_H_
+#pragma once
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -30,5 +29,3 @@ extern "C" {
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _CONST_H_ */

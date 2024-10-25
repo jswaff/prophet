@@ -1,5 +1,4 @@
-#ifndef _XBOARD_INTERNAL_H_
-#define _XBOARD_INTERNAL_H_
+#pragma once
 
 #include <prophet/position/position.h>
 
@@ -288,5 +287,3 @@ bool endgame_check();
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _COMMAND_INTERNAL_H_ */

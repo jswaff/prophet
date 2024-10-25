@@ -1,5 +1,4 @@
-#ifndef _EVAL_H_
-#define _EVAL_H_
+#pragma once
 
 #include <prophet/position/position.h>
 
@@ -122,5 +121,3 @@ int32_t eval_pawn_material(const position_t* pos, bool for_white);
 #ifdef     __cplusplus
 }
 #endif    //__cplusplus
-
-#endif /* ! defined _EVAL_H_ */

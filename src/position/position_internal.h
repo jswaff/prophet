@@ -1,5 +1,4 @@
-#ifndef _POS_INTERNAL_H_
-#define _POS_INTERNAL_H_
+#pragma once
 
 #include <prophet/position/position.h>
 
@@ -86,5 +85,3 @@ bool verify_pos(const position_t* pos);
 #ifdef     __cplusplus
 }
 #endif 
-
-#endif /* ! defined _POS_INTERNAL_H_ */

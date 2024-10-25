@@ -1,5 +1,4 @@
-#ifndef _P4TIME_H_
-#define _P4TIME_H_
+#pragma once
 
 #include <stdint.h>
 
@@ -21,5 +20,3 @@ uint64_t milli_timer();
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _P4TIME_H_ */
