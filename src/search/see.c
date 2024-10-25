@@ -1,9 +1,9 @@
-#include <prophet/bitmap.h>
 #include <prophet/eval.h>
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
 
 #include "search_internal.h"
+#include "../bitmap/bitmap.h"
 
 #include <assert.h>
 

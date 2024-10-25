@@ -1,7 +1,5 @@
-#include <prophet/bitmap.h>
-
 #include "eval_internal.h"
-
+#include "../bitmap/bitmap.h"
 
 /**
  * \brief Evaluate king safety for one side of the board.

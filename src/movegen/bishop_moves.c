@@ -1,9 +1,9 @@
-#include <prophet/bitmap.h>
 #include <prophet/util/prng.h>
 
 #include <assert.h>
 
 #include "movegen_internal.h"
+#include "../bitmap/bitmap.h"
 
 static uint64_t bishop_moves[64][512]; /* 512 = 2^9.  9=max bits for mask */
 

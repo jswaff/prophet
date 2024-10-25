@@ -1,8 +1,7 @@
-#include <prophet/bitmap.h>
-
 #include <gtest/gtest.h>
 
 #include "../../src/movegen/movegen_internal.h"
+#include "../../src/bitmap/bitmap.h"
 
 
 TEST(movegen_test, attackers_knight_rook)

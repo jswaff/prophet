@@ -1,9 +1,9 @@
-#include <prophet/bitmap.h>
 #include <prophet/parameters.h>
 
 #include <assert.h>
 
 #include "movegen_internal.h"
+#include "../bitmap/bitmap.h"
 
 /**
  * \brief Given position \p pos, get a bitmap of all pieces of color \p player

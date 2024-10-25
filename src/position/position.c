@@ -1,4 +1,3 @@
-#include <prophet/bitmap.h>
 #include <prophet/hash.h>
 #include <prophet/util/output.h>
 #include <prophet/util/string_utils.h>
@@ -7,6 +6,7 @@
 #include <string.h>
 
 #include "position_internal.h"
+#include "../bitmap/bitmap.h"
 
 /**
  * \brief Reset a chess position to the initial position.

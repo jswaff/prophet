@@ -170,7 +170,6 @@ else()
     )
 endif()
 set(public_headers
-    include/prophet/bitmap.h
     include/prophet/command.h
     include/prophet/commandline.h
     include/prophet/const.h

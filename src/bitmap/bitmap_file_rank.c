@@ -1,9 +1,10 @@
-#include <prophet/bitmap.h>
 #include <prophet/position/square.h>
 #include <prophet/parameters.h>
 
 #include <assert.h>
 #include <string.h>
+
+#include "bitmap.h"
 
 static uint64_t bb_files[8];
 static uint64_t bb_ranks[8];

@@ -1,8 +1,8 @@
-#include <prophet/bitmap.h>
 #include <prophet/parameters.h>
 #include <prophet/movegen.h>
 
 #include "eval_internal.h"
+#include "../bitmap/bitmap.h"
 
 #include  <assert.h>
 

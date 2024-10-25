@@ -1,7 +1,6 @@
-#include <prophet/bitmap.h>
-
 #include <gtest/gtest.h>
 
+#include "../../src/bitmap/bitmap.h"
 
 TEST(bitmap_test, popcnt)
 {

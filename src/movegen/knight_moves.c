@@ -1,8 +1,7 @@
-#include <prophet/bitmap.h>
-
 #include <assert.h>
 
 #include "movegen_internal.h"
+#include "../bitmap/bitmap.h"
 
 static uint64_t knight_moves[64];
 

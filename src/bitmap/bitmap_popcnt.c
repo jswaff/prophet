@@ -1,4 +1,4 @@
-#include <prophet/bitmap.h>
+#include "bitmap.h"
 
 /**
 * \brief Count the number of bits set in a 64 bit value.

@@ -1,6 +1,5 @@
-#include <prophet/bitmap.h>
-
 #include "eval_internal.h"
+#include "../bitmap/bitmap.h"
 
 #include  <assert.h>
 

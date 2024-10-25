@@ -1,6 +1,6 @@
-#include <prophet/bitmap.h>
-
 #include <assert.h>
+
+#include "bitmap.h"
 
 /**
  * \brief Isolate a single bit in a 64 bit value.

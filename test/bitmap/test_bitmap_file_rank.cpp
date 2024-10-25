@@ -1,7 +1,8 @@
-#include <prophet/bitmap.h>
 #include <prophet/position/square.h>
 
 #include <gtest/gtest.h>
+
+#include "../../src/bitmap/bitmap.h"
 
 
 TEST(bitmap_test, sq_to_file_bitmap)

@@ -1,8 +1,8 @@
 #ifndef _EVAL_INTERNAL_H_
 #define _EVAL_INTERNAL_H_
 
-#include <prophet/bitmap.h>
 #include <prophet/eval.h>
+#include "../bitmap/bitmap.h"
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
