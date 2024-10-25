@@ -1,6 +1,7 @@
 #include "commandline.h"
-#include <prophet/eval.h>
-#include <prophet/error_codes.h>
+
+#include "prophet/eval.h"
+#include "prophet/error_codes.h"
 
 #include <stdio.h>
 #include <stdlib.h>

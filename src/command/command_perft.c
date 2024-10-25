@@ -1,10 +1,14 @@
-#include <prophet/error_codes.h>
-#include <prophet/movegen.h>
-#include <prophet/position/position.h>
+#include "command.h"
+
+#include "prophet/error_codes.h"
+#include "prophet/movegen.h"
+#include "prophet/position/position.h"
+#include "prophet/util/p4time.h"
+
 #include "../util/output.h"
-#include <prophet/util/p4time.h>
 
 #include <inttypes.h>
+#include <stdint.h>
 #include <string.h>
 
 extern position_t gpos;

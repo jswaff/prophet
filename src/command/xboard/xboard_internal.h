@@ -2,6 +2,8 @@
 
 #include <prophet/position/position.h>
 
+#include <stdbool.h>
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {

@@ -1,9 +1,12 @@
-#include <prophet/error_codes.h>
-#include <prophet/eval.h>
-#include <prophet/position/position.h>
+#include "command.h"
+
+#include "prophet/error_codes.h"
+#include "prophet/eval.h"
+#include "prophet/position/position.h"
+
 #include "../util/output.h"
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <string.h>
 
 extern position_t gpos;

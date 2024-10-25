@@ -1,11 +1,11 @@
-#include <prophet/error_codes.h>
+#include "xboard_internal.h"
+
+#include "prophet/error_codes.h"
 
 #include <stdbool.h>
 #include <string.h>
 
 bool xboard_force_mode;
-
-#include "xboard_internal.h"
 
 
 /**

@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "bitmap.h": "c"
+        "bitmap.h": "c",
+        "string.h": "c",
+        "inttypes.h": "c"
     }
 }

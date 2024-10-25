@@ -1,11 +1,12 @@
-#include <prophet/const.h>
-#include <prophet/error_codes.h>
-#include <prophet/hash.h>
-#include <prophet/position/position.h>
-
-#include <string.h>
-
 #include "xboard_internal.h"
+
+#include "prophet/const.h"
+#include "prophet/error_codes.h"
+#include "prophet/hash.h"
+#include "prophet/position/position.h"
+
+#include <stdbool.h>
+#include <string.h>
 
 /* externs */
 extern position_t gpos;

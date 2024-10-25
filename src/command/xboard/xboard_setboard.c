@@ -1,5 +1,7 @@
-#include <prophet/error_codes.h>
-#include <prophet/position/position.h>
+#include "xboard_internal.h"
+
+#include "prophet/error_codes.h"
+#include "prophet/position/position.h"
 
 #include "../../util/output.h"
 

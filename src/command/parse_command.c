@@ -1,11 +1,13 @@
-#include <prophet/error_codes.h>
+#include "command.h"
+
+#include "prophet/error_codes.h"
 
 #include "../util/output.h"
+#include "xboard/xboard_internal.h"
 
+#include <stdbool.h>
 #include <string.h>
 
-#include "command.h"
-#include "xboard/xboard_internal.h"
 
 /* structure mapping a command to a function */
 struct function_table_entry

@@ -1,10 +1,10 @@
-#include <prophet/error_codes.h>
+#include "xboard_internal.h"
+
+#include "prophet/error_codes.h"
 
 #include "../../util/output.h"
 
 #include <string.h>
-
-#include "xboard_internal.h"
 
 
 /**
