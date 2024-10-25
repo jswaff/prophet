@@ -2,7 +2,7 @@
 #include <prophet/hash.h>
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
-#include <prophet/util/output.h>
+#include "../util/output.h"
 #include <prophet/util/p4time.h>
 #include <prophet/util/string_utils.h>
 

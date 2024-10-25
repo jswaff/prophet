@@ -1,7 +1,7 @@
 #include <prophet/error_codes.h>
 #include <prophet/eval.h>
 #include <prophet/position/position.h>
-#include <prophet/util/output.h>
+#include "../util/output.h"
 
 #include <inttypes.h>
 #include <string.h>

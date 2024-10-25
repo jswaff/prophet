@@ -1,4 +1,5 @@
-#include <prophet/util/output.h>
+#include "../util/output.h"
+
 
 #include <assert.h>
 

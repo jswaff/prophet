@@ -3,7 +3,7 @@
 #include <prophet/movegen.h>
 #include <prophet/parameters.h>
 #include <prophet/search.h>
-#include <prophet/util/output.h>
+#include "../../util/output.h"
 #include <prophet/util/string_utils.h>
 
 #include <assert.h>

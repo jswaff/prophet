@@ -1,5 +1,6 @@
 #include <prophet/error_codes.h>
-#include <prophet/util/output.h>
+
+#include "../../util/output.h"
 
 #include <stdbool.h>
 #include <stdint.h>

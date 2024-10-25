@@ -183,7 +183,6 @@ set(public_headers
     include/prophet/position/piece.h
     include/prophet/position/position.h
     include/prophet/position/square.h
-    include/prophet/util/output.h
     include/prophet/util/p4time.h
     include/prophet/util/prng.h
     include/prophet/util/string_utils.h

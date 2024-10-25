@@ -1,7 +1,8 @@
 #include <prophet/const.h>
 #include <prophet/movegen.h>
 #include <prophet/position/position.h>
-#include <prophet/util/output.h>
+
+#include "../../util/output.h"
 
 #include <stdbool.h>
 

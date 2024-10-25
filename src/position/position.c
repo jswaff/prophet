@@ -1,5 +1,6 @@
 #include <prophet/hash.h>
-#include <prophet/util/output.h>
+#include "../util/output.h"
+
 #include <prophet/util/string_utils.h>
 
 #include <stdlib.h>

@@ -1,6 +1,6 @@
 #include <prophet/error_codes.h>
 #include <prophet/hash.h>
-#include <prophet/util/output.h>
+#include "../../util/output.h"
 
 #include <inttypes.h>
 #include <stdio.h>
