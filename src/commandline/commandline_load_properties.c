@@ -1,4 +1,4 @@
-#include <prophet/commandline.h>
+#include "commandline.h"
 #include <prophet/eval.h>
 #include <prophet/error_codes.h>
 

@@ -1,5 +1,5 @@
-#include <prophet/command.h>
-#include <prophet/commandline.h>
+#include "../command/command.h"
+#include "../commandline/commandline.h"
 #include "../util/output.h"
 
 

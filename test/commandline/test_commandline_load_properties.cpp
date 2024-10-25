@@ -1,6 +1,6 @@
 #include <prophet/error_codes.h>
 #include <prophet/position/position.h>
-#include <prophet/commandline.h>
+#include "../../src/commandline/commandline.h"
 #include <prophet/eval.h>
 #include <prophet/hash.h>
 

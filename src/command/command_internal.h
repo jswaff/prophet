@@ -1,7 +1,7 @@
 #ifndef _COMMAND_INTERNAL_H_
 #define _COMMAND_INTERNAL_H_
 
-#include <prophet/command.h>
+#include "command.h"
 
 #include <stdbool.h>
 

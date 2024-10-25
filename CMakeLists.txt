@@ -170,8 +170,6 @@ else()
     )
 endif()
 set(public_headers
-    include/prophet/command.h
-    include/prophet/commandline.h
     include/prophet/const.h
     include/prophet/error_codes.h
     include/prophet/eval.h
