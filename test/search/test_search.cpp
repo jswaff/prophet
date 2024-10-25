@@ -3,7 +3,7 @@
 #include <prophet/hash.h>
 #include <prophet/parameters.h>
 #include <prophet/search.h>
-#include <prophet/util/p4time.h>
+#include "../../src/util/time.h"
 #include "../../src/util/string_utils.h"
 
 #include <gtest/gtest.h>

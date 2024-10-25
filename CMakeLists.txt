@@ -126,9 +126,9 @@ target_sources(${PROJECT_NAME}
         src/search/stop_search_on_time.c
         src/search/zugzwang.c
         src/util/output.c
-        src/util/p4time.c
         src/util/prng.c
         src/util/string_utils.c
+        src/util/time.c
 )
 
 # Compiler options
@@ -181,7 +181,6 @@ set(public_headers
     include/prophet/position/piece.h
     include/prophet/position/position.h
     include/prophet/position/square.h
-    include/prophet/util/p4time.h
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
 set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")

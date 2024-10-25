@@ -1,7 +1,10 @@
-#include <prophet/parameters.h>
-#include <prophet/position/position.h>
+#include "prophet/search.h"
+
+#include "prophet/position/move.h"
+#include "prophet/position/position.h"
 
 #include <assert.h>
+#include <stdint.h>
 
 static int32_t mvvlva_capture(move_t mv);
 static int32_t mvvlva_promo(move_t mv);
