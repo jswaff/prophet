@@ -1,6 +1,8 @@
 #pragma once
 
-#include <prophet/position/square.h>
+#include "prophet/position/square.h"
+
+#include <stdint.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

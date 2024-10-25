@@ -1,5 +1,7 @@
 #include "bitmap.h"
 
+#include <stdint.h>
+
 /**
 * \brief Count the number of bits set in a 64 bit value.
 *

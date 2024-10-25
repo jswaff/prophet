@@ -1,8 +1,8 @@
 #pragma once
 
 #include <prophet/position/position.h>
-#include <stdint.h>
 
+#include <stdint.h>
 
 // make this header C++ friendly.
 #ifdef     __cplusplus
