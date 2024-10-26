@@ -1,10 +1,13 @@
-#include <prophet/parameters.h>
-#include <prophet/movegen.h>
-
 #include "eval_internal.h"
+
+#include "prophet/movegen.h"
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
+
 #include "../bitmap/bitmap.h"
 
-#include  <assert.h>
+#include <assert.h>
+#include <stdint.h>
 
 /**
  * \brief Evaluate a single queen.

@@ -1,6 +1,12 @@
+#include "prophet/eval.h"
+
+#include "prophet/position/position.h"
+
 #include "eval_internal.h"
 
-#include  <assert.h>
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Evaluate the position's non-pawn material.

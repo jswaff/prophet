@@ -1,8 +1,11 @@
-#include <prophet/parameters.h>
-
 #include "eval_internal.h"
 
-#include  <assert.h>
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
+#include <assert.h>
+#include <stdint.h>
+
 
 /**
  * \brief Evaluate a single knight.

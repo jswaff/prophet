@@ -1,12 +1,15 @@
-#include <prophet/eval.h>
-#include <prophet/movegen.h>
-#include <prophet/position/position.h>
+#include "prophet/search.h"
+
+#include "prophet/movegen.h"
+#include "prophet/position/move.h"
+#include "prophet/position/position.h"
 
 #include "search_internal.h"
 #include "../bitmap/bitmap.h"
+#include "../eval/eval_internal.h"
 
 #include <assert.h>
-
+#include <stdint.h>
 
 /* forward decls */
 static int32_t score_capture(const position_t* pos, move_t mv);

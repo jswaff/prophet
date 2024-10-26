@@ -1,8 +1,10 @@
-#include <prophet/error_codes.h>
-#include <prophet/position/position.h>
 #include "../../src/commandline/commandline.h"
-#include <prophet/eval.h>
-#include <prophet/hash.h>
+
+#include "prophet/error_codes.h"
+#include "prophet/hash.h"
+#include "prophet/position/position.h"
+
+#include "../../src/eval/eval_internal.h"
 
 #include <gtest/gtest.h>
 

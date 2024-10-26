@@ -2,6 +2,8 @@
     "files.associations": {
         "bitmap.h": "c",
         "string.h": "c",
-        "inttypes.h": "c"
+        "inttypes.h": "c",
+        "assert.h": "c",
+        "eval_internal.h": "c"
     }
 }

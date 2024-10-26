@@ -1,9 +1,14 @@
-#include <prophet/position/piece.h>
-
-#include  <assert.h>
-
 #include "eval_internal.h"
+
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
+
 #include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
+
 
 /**
  * \brief Determine if a pawn is doubled.

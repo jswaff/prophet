@@ -1,9 +1,15 @@
-#include <prophet/movegen.h>
-
 #include "eval_internal.h"
+
+#include "prophet/movegen.h"
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
 #include "../bitmap/bitmap.h"
 
-#include  <assert.h>
+#include <assert.h>
+#include <stdint.h>
+
 
 /**
  * \brief Evaluate a connected major on the 7th rank.

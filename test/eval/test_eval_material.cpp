@@ -1,7 +1,12 @@
-#include <gtest/gtest.h>
+#include "prophet/eval.h"
+
+#include "prophet/position/position.h"
 
 #include "../../src/eval/eval_internal.h"
 
+#include <gtest/gtest.h>
+
+#include <stdbool.h>
 
 TEST(eval_test, eval_nonpawn_material)
 {

@@ -1,7 +1,8 @@
 #include "commandline.h"
 
-#include "prophet/eval.h"
 #include "prophet/error_codes.h"
+
+#include "../eval/eval_internal.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,8 +1,11 @@
 #include "eval_internal.h"
+
+#include "prophet/position/position.h"
+
 #include "../bitmap/bitmap.h"
 
-#include  <assert.h>
-
+#include <assert.h>
+#include <stdint.h>
 
 /**
  * \brief Accumulate the score for a set of pieces.

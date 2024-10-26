@@ -1,9 +1,15 @@
-#include <prophet/position/piece.h>
-
-#include  <assert.h>
-
 #include "eval_internal.h"
+
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
 #include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
+
 
 static uint64_t bb_isolated[64];
 

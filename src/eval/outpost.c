@@ -1,9 +1,13 @@
-#include <prophet/position/piece.h>
-
-#include  <assert.h>
-
 #include "eval_internal.h"
+
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
 #include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
 
 static uint64_t bb_outpost[64][2];
 

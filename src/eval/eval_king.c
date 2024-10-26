@@ -1,6 +1,11 @@
 #include "eval_internal.h"
 
-#include  <assert.h>
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
+
+#include <assert.h>
+#include <stdint.h>
+
 
 /**
  * \brief Evaluate a single king.
