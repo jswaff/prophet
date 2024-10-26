@@ -1,7 +1,14 @@
-#include <assert.h>
-
 #include "movegen_internal.h"
+
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
 #include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 static uint64_t knight_moves[64];
 

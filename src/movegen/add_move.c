@@ -1,5 +1,8 @@
-#include <prophet/const.h>
-#include <prophet/position/position.h>
+#include "movegen_internal.h"
+
+#include "prophet/position/move.h"
+#include "prophet/position/piece.h"
+#include "prophet/position/position.h"
 
 #include <assert.h>
 

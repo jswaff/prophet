@@ -1,6 +1,9 @@
 #pragma once
 
-#include <prophet/movegen.h>
+#include "prophet/movegen.h"
+
+#include <stdbool.h>
+#include <stdint.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

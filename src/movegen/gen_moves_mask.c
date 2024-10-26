@@ -1,8 +1,10 @@
-#include <prophet/const.h>
+#include "movegen_internal.h"
+
+#include "prophet/const.h"
+#include "prophet/position/square.h"
 
 #include <assert.h>
-
-#include "movegen_internal.h"
+#include <stdint.h>
 
 /**
  * \brief Generate a moves mask in one direction based on the set of occupied 

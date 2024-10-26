@@ -1,7 +1,12 @@
-#include <assert.h>
-#include <string.h>
+#include "prophet/movegen.h"
+
+#include "prophet/position/position.h"
 
 #include "movegen_internal.h"
+
+#include <assert.h>
+#include <memory.h>
+#include <stdbool.h>
 
 /**
  * \brief Generate a list of pseudo-legal moves.

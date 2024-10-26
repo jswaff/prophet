@@ -1,12 +1,14 @@
-#include <prophet/error_codes.h>
-#include <prophet/hash.h>
-#include "../util/output.h"
+#include "prophet/hash.h"
 
+#include "prophet/error_codes.h"
+
+#include "../util/output.h"
 
 #include <assert.h>
 #include <inttypes.h>
+#include <memory.h>
+#include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
 
 /* default hash table and pawn hash table sizes */
 uint64_t hash_size = 134217728 * 4;      /* 512 mb */

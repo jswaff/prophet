@@ -1,8 +1,7 @@
-#include <prophet/hash.h>
-#include <prophet/parameters.h>
+#include "prophet/hash.h"
 
 #include <assert.h>
-
+#include <stdint.h>
 
 /**
  * \brief Build a hash value.
