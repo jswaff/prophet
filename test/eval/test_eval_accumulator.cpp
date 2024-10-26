@@ -1,8 +1,9 @@
-#include <prophet/parameters.h>
+#include "../../src/eval/eval_internal.h"
+
+#include "../../src/parameters.h"
 
 #include <gtest/gtest.h>
 
-#include "../../src/eval/eval_internal.h"
 
 // forward decls
 static void dummy_eval_func(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);

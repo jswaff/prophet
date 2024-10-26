@@ -1,7 +1,6 @@
 #include "bitmap.h"
 
 #include "prophet/position/square.h"
-#include "prophet/parameters.h"
 
 #include <assert.h>
 #include <stdint.h>

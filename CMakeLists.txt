@@ -175,7 +175,6 @@ set(public_headers
     include/prophet/eval.h
     include/prophet/hash.h
     include/prophet/movegen.h
-    include/prophet/parameters.h
     include/prophet/search.h
     include/prophet/position/move.h
     include/prophet/position/piece.h

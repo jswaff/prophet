@@ -1,6 +1,6 @@
 #include "command.h"
 
-#include "prophet/parameters.h"
+#include "../parameters.h"
 
 /**
  * \brief Execute the no op command - does nothing!

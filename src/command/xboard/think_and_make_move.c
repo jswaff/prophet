@@ -3,9 +3,9 @@
 #include "prophet/const.h"
 #include "prophet/error_codes.h"
 #include "prophet/movegen.h"
-#include "prophet/parameters.h"
 #include "prophet/search.h"
 
+#include "../../parameters.h"
 #include "../../util/output.h"
 #include "../../util/string_utils.h"
 
