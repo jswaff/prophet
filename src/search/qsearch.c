@@ -2,7 +2,6 @@
 
 #include "prophet/eval.h"
 #include "prophet/movegen.h"
-#include "prophet/parameters.h"
 
 #include "search_internal.h"
 #include "../util/time.h"

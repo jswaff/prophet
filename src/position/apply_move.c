@@ -1,9 +1,13 @@
-#include <prophet/hash.h>
+#include "prophet/position/position.h"
+
+#include "prophet/hash.h"
+#include "prophet/position/move.h"
+#include "prophet/position/square.h"
+
+#include "position_internal.h"
 
 #include <assert.h>
 #include <stdlib.h>
-
-#include "position_internal.h"
 
 static piece_t remove_captured_piece(position_t* p, move_t m);
 static void add_piece_to_destination(position_t* p, move_t m);

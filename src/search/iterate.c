@@ -9,10 +9,11 @@
 #include "../util/string_utils.h"
 #include "../util/time.h"
 
+#include <assert.h>
+#include <memory.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
 
 uint32_t volatile max_depth = 0;
 uint32_t volatile max_time_ms = 0;

@@ -1,8 +1,12 @@
-#include <prophet/hash.h>
+#include "position_internal.h"
+
+#include "prophet/hash.h"
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
 
 #include <assert.h>
+#include <stdint.h>
 
-#include "position_internal.h"
 
 /**
  * \brief Add a piece to a chess position

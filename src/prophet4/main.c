@@ -2,6 +2,7 @@
 #include "../commandline/commandline.h"
 #include "../util/output.h"
 
+#include <stdio.h>
 
 extern int init();
 extern int cleanup();

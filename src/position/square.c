@@ -1,7 +1,9 @@
-#include <prophet/position/square.h>
+#include "prophet/position/square.h"
 
 #include <assert.h>
 #include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 static dir_t direction_tbl[64][64];

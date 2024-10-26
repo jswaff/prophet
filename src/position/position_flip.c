@@ -1,6 +1,10 @@
+#include "prophet/position/position.h"
+
 #include "position_internal.h"
 
-#include <string.h>
+#include <assert.h>
+#include <memory.h>
+#include <stdint.h>
 
 /**
  * \brief Flip a position vertically.
