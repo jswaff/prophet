@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
+
 #include <iostream>
-#include <stdbool.h>
 
 using namespace std;
 

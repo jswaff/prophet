@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "../../src/bitmap/bitmap.h"
+
+#include <gtest/gtest.h>
 
 TEST(bitmap_test, get_lsb)
 {

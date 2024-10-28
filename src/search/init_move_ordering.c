@@ -1,7 +1,7 @@
 #include "search_internal.h"
 
 #include <assert.h>
-#include <memory.h>
+#include <string.h>
 
 
 /**

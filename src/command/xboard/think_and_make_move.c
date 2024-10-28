@@ -11,10 +11,10 @@
 
 #include <assert.h>
 #include <pthread.h>
-#include <memory.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 
 /* externs */

@@ -1,9 +1,10 @@
-#include <prophet/error_codes.h>
+#include "../../../src/command/xboard/xboard_internal.h"
+
+#include "prophet/error_codes.h"
 
 #include <gtest/gtest.h>
-#include <string.h>
 
-#include "../../../src/command/xboard/xboard_internal.h"
+#include <stdint.h>
 
 extern uint32_t max_depth;
 

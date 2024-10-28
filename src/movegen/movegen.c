@@ -5,8 +5,8 @@
 #include "movegen_internal.h"
 
 #include <assert.h>
-#include <memory.h>
 #include <stdbool.h>
+#include <string.h>
 
 /**
  * \brief Generate a list of pseudo-legal moves.

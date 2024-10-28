@@ -1,8 +1,6 @@
-#include <prophet/error_codes.h>
+#include "../../src/command/command.h"
 
 #include <gtest/gtest.h>
-
-#include "../../src/command/command.h"
 
 TEST(command_test, command_no_op)
 {

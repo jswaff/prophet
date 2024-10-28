@@ -3,8 +3,8 @@
 #include "position_internal.h"
 
 #include <assert.h>
-#include <memory.h>
 #include <stdint.h>
+#include <string.h>
 
 /**
  * \brief Flip a position vertically.

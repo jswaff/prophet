@@ -1,10 +1,12 @@
-#include <prophet/error_codes.h>
-
-#include <gtest/gtest.h>
-#include <string.h>
-
 #include "../../../src/command/xboard/xboard_internal.h"
 
+#include "prophet/error_codes.h"
+#include "prophet/position/position.h"
+
+#include <gtest/gtest.h>
+
+#include <stdint.h>
+#include <string.h>
 
 extern position_t gpos;
 extern bool xboard_force_mode;

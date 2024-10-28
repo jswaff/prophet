@@ -3,8 +3,8 @@
 #include "prophet/position/square.h"
 
 #include <assert.h>
-#include <memory.h>
 #include <stdint.h>
+#include <string.h>
 
 static uint64_t bb_rays[64][8];
 

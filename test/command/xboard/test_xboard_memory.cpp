@@ -1,10 +1,11 @@
-#include <prophet/error_codes.h>
-#include <prophet/hash.h>
+#include "../../../src/command/xboard/xboard_internal.h"
+
+#include "prophet/error_codes.h"
+#include "prophet/hash.h"
 
 #include <gtest/gtest.h>
-#include <string.h>
 
-#include "../../../src/command/xboard/xboard_internal.h"
+#include <stdint.h>
 
 extern hash_table_t htbl;
 extern hash_table_t phtbl;

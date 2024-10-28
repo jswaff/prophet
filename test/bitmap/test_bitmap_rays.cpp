@@ -1,8 +1,8 @@
-#include <prophet/position/square.h>
+#include "../src/bitmap/bitmap.h"
+
+#include "prophet/position/square.h"
 
 #include <gtest/gtest.h>
-
-#include "../src/bitmap/bitmap.h"
 
 TEST(bitmap_test, rays)
 {

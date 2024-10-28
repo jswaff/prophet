@@ -9,9 +9,9 @@
 #include "../util/time.h"
 
 #include <assert.h>
-#include <memory.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 
 move_line_t last_pv;
