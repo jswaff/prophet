@@ -6,8 +6,6 @@
 
 #include <gtest/gtest.h>
 
-#include <stdbool.h>
-
 TEST(eval_test, eval_nonpawn_material)
 {
     position_t pos;

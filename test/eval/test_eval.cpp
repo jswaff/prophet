@@ -6,9 +6,8 @@
 
 #include <gtest/gtest.h>
 
-#include <stdbool.h>
 #include <stdint.h>
-#include <memory.h>
+#include <string.h>
 
 // forward decls
 static void testcase_symmetry(const char* fen);

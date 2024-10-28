@@ -1,6 +1,8 @@
-#include <gtest/gtest.h>
-
 #include "../../src/eval/eval_internal.h"
+
+#include "prophet/position/position.h"
+
+#include <gtest/gtest.h>
 
 // forward decls
 static void test_with_symmetry(const char* fen, material_type_t material_type, 

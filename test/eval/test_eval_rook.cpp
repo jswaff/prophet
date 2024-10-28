@@ -1,6 +1,10 @@
+#include "../../src/eval/eval_internal.h"
+
+#include "prophet/position/position.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/eval/eval_internal.h"
+#include <stdint.h>
 
 TEST(eval_test, eval_rook)
 {

@@ -1,6 +1,8 @@
-#include <gtest/gtest.h>
-
 #include "../../src/eval/eval_internal.h"
+
+#include "prophet/position/position.h"
+
+#include <gtest/gtest.h>
 
 TEST(eval_test, pawn_doubled)
 {
