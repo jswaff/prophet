@@ -1,6 +1,11 @@
+#include "../../src/movegen/movegen_internal.h"
+
+#include "prophet/movegen.h"
+#include "prophet/position/move.h"
+#include "prophet/position/position.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/movegen/movegen_internal.h"
 
 TEST(movegen_test, knight_moves_initial_pos)
 {

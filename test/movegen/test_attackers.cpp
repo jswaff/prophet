@@ -1,8 +1,14 @@
-#include <gtest/gtest.h>
-
 #include "../../src/movegen/movegen_internal.h"
+
+#include "prophet/movegen.h"
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
 #include "../../src/bitmap/bitmap.h"
 
+#include <gtest/gtest.h>
+
+#include <stdint.h>
 
 TEST(movegen_test, attackers_knight_rook)
 {

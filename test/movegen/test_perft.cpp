@@ -1,6 +1,10 @@
-#include <prophet/movegen.h>
+#include "prophet/movegen.h"
+
+#include "prophet/position/position.h"
 
 #include <gtest/gtest.h>
+
+#include <stdint.h>
 
 static uint64_t test_case(const char *fen, int depth);
 

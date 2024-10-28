@@ -1,6 +1,11 @@
+#include "../../src/movegen/movegen_internal.h"
+
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/movegen/movegen_internal.h"
+#include <stdint.h>
 
 TEST(movegen_test, attacked_by_bishop)
 {
@@ -9,15 +14,12 @@ TEST(movegen_test, attacked_by_bishop)
 
     uint64_t white_map=0, black_map=0;
 
-    for (int32_t sq=A8; sq<=H1; sq++) 
-    {
-        if (attacked_by_bishop(&pos, (square_t)sq, WHITE)) 
-        {
+    for (int32_t sq=A8; sq<=H1; sq++) {
+        if (attacked_by_bishop(&pos, (square_t)sq, WHITE)) {
             white_map |= square_to_bitmap(sq);
         }
 
-        if (attacked_by_bishop(&pos, (square_t)sq, BLACK)) 
-        {
+        if (attacked_by_bishop(&pos, (square_t)sq, BLACK)) {
             black_map |= square_to_bitmap(sq);
         }
     }
@@ -38,15 +40,12 @@ TEST(movegen_test, attacked_by_king)
 
     uint64_t white_map=0, black_map=0;
 
-    for (int32_t sq=A8; sq<=H1; sq++) 
-    {
-        if (attacked_by_king(&pos, (square_t)sq, WHITE)) 
-        {
+    for (int32_t sq=A8; sq<=H1; sq++) {
+        if (attacked_by_king(&pos, (square_t)sq, WHITE)) {
             white_map |= square_to_bitmap(sq);
         }
 
-        if (attacked_by_king(&pos, (square_t)sq, BLACK)) 
-        {
+        if (attacked_by_king(&pos, (square_t)sq, BLACK)) {
             black_map |= square_to_bitmap(sq);
         }
     }
@@ -66,15 +65,12 @@ TEST(movegen_test, attacked_by_knight)
 
     uint64_t white_map=0, black_map=0;
 
-    for (int32_t sq=A8; sq<=H1; sq++) 
-    {
-        if (attacked_by_knight(&pos, (square_t)sq, WHITE)) 
-        {
+    for (int32_t sq=A8; sq<=H1; sq++) {
+        if (attacked_by_knight(&pos, (square_t)sq, WHITE)) {
             white_map |= square_to_bitmap(sq);
         }
 
-        if (attacked_by_knight(&pos, (square_t)sq, BLACK)) 
-        {
+        if (attacked_by_knight(&pos, (square_t)sq, BLACK)) {
             black_map |= square_to_bitmap(sq);
         }
     }
@@ -91,8 +87,7 @@ TEST(movegen_test, attacked_by_pawn)
     position_t pos;
     set_pos(&pos,"3k4/8/8/3p4/3P3P/8/8/3K4 w - - 0 1");
 
-    for (int32_t sq=A8; sq<=H1; sq++) 
-    {
+    for (int32_t sq=A8; sq<=H1; sq++) {
         EXPECT_EQ(
             attacked_by_pawn(&pos, (square_t)sq, WHITE), 
             (sq==C5 || sq==E5 || sq==G5));
@@ -110,15 +105,12 @@ TEST(movegen_test, attacked_by_queen)
 
     uint64_t white_map=0, black_map=0;
 
-    for (int32_t sq=A8; sq<=H1; sq++) 
-    {
-        if (attacked_by_queen(&pos, (square_t)sq, WHITE)) 
-        {
+    for (int32_t sq=A8; sq<=H1; sq++) {
+        if (attacked_by_queen(&pos, (square_t)sq, WHITE)) {
             white_map |= square_to_bitmap(sq);
         }
 
-        if (attacked_by_queen(&pos, (square_t)sq, BLACK)) 
-        {
+        if (attacked_by_queen(&pos, (square_t)sq, BLACK)) {
             black_map |= square_to_bitmap(sq);
         }
     }
@@ -142,15 +134,12 @@ TEST(movegen_test, attacked_by_rook)
 
     uint64_t white_map=0, black_map=0;
 
-    for (int32_t sq=A8; sq<=H1; sq++) 
-    {
-        if (attacked_by_rook(&pos, (square_t)sq, WHITE)) 
-        {
+    for (int32_t sq=A8; sq<=H1; sq++) {
+        if (attacked_by_rook(&pos, (square_t)sq, WHITE)) {
             white_map |= square_to_bitmap(sq);
         }
 
-        if (attacked_by_rook(&pos, (square_t)sq, BLACK)) 
-        {
+        if (attacked_by_rook(&pos, (square_t)sq, BLACK)) {
             black_map |= square_to_bitmap(sq);
         }
     }
