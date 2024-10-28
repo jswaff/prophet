@@ -1,6 +1,8 @@
-#include <prophet/hash.h>
+#include "prophet/hash.h"
 
 #include <gtest/gtest.h>
+
+#include <stdint.h>
 
 TEST(hash_test, store_and_probe)
 {
@@ -132,8 +134,7 @@ TEST(hash_test, replacement_strategy2)
     int32_t score = 100;
     uint32_t age = 3;
     move_t m = to_move(PAWN, E2, E3);
-    for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++)
-    {
+    for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++) {
         uint64_t v = build_hash_val(UPPER_BOUND, depth-i, score, m, age);
         store_hash_entry(&hash_table, k + (i*16), v);
     }

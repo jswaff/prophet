@@ -1,7 +1,9 @@
-#include <prophet/hash.h>
+#include "prophet/hash.h"
 
 #include <gtest/gtest.h>
 
+#include <stdlib.h>
+#include <string.h>
 
 TEST(hash_test, clear_table)
 {

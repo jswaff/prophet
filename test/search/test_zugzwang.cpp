@@ -1,6 +1,8 @@
-#include <gtest/gtest.h>
-
 #include "../../src/search/search_internal.h"
+
+#include "prophet/position/position.h"
+
+#include <gtest/gtest.h>
 
 TEST(search_test, zugzwang)
 {

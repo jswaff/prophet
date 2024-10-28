@@ -1,9 +1,15 @@
-#include <prophet/const.h>
-#include <prophet/movegen.h>
+#include "prophet/search.h"
+
+#include "../../src/search/search_internal.h"
+
+#include "prophet/const.h"
+#include "prophet/movegen.h"
+#include "prophet/position/move.h"
+#include "prophet/position/position.h"
 
 #include <gtest/gtest.h>
 
-#include "../../src/search/search_internal.h"
+#include <stdint.h>
 
 TEST(next_test, pv_move) 
 {
@@ -16,12 +22,10 @@ TEST(next_test, pv_move)
     move_t pv_move = NO_MOVE;
     int i = 0;
     for (move_t* mp = moves; mp<endp; mp++) {
-        if (*mp == 0) 
-        {
+        if (*mp == 0) {
             continue;
         }
-        if (++i == 5) 
-        {
+        if (++i == 5) {
             pv_move = *mp;
             break;
         }
@@ -103,8 +107,7 @@ TEST(next_test, pv_and_hash_same_move)
     ASSERT_EQ(pv_move, clear_score(*m));
 
     // there are 19 more moves.  none should be the hash move.
-    for (int i=1; i<20; i++)
-    {
+    for (int i=1; i<20; i++) {
         ASSERT_TRUE(next(&pos, &m, &mo_dto));
         ASSERT_NE(hash_move, clear_score(*m));
     }
@@ -173,8 +176,7 @@ TEST(next_test, killers)
     ASSERT_EQ(g2g4, clear_score(*m));
 
     // we should get 18 more moves 
-    for (uint32_t i = 0; i < 18; i++)
-    {
+    for (uint32_t i = 0; i < 18; i++) {
         ASSERT_TRUE(next(&pos, &m, &mo_dto));
         ASSERT_TRUE(move_list_contains(*m, moves, endp));
     }
@@ -196,16 +198,12 @@ TEST(next_test, moves_not_repeated)
     move_t pv_move = NO_MOVE;
     move_t hash_move = NO_MOVE;
     for (move_t* mp = moves; mp<endp; mp++) {
-        if (*mp == 0) 
-        {
+        if (*mp == 0) {
             continue;
         }
-        if (pv_move == NO_MOVE) 
-        {
+        if (pv_move == NO_MOVE) {
             pv_move = *mp;
-        }
-        else if (hash_move == NO_MOVE)
-        {
+        } else if (hash_move == NO_MOVE) {
             hash_move = *mp;
         }
     }
@@ -221,10 +219,8 @@ TEST(next_test, moves_not_repeated)
 
     uint32_t num_selected = 0U;
     move_t* mp;
-    while (next(&pos, &mp, &mo_dto))
-    {
-        if (is_legal_move(*mp, &pos))
-        {
+    while (next(&pos, &mp, &mo_dto)) {
+        if (is_legal_move(*mp, &pos)) {
             num_selected++;
         }
     }
@@ -244,14 +240,12 @@ TEST(next_test, noncaps_generated_only_when_requested)
         NO_MOVE, NO_MOVE, true, true);
 
     // we should get 20 moves 
-    for (uint32_t i = 0; i < 20; i++)
-    {
+    for (uint32_t i = 0; i < 20; i++) {
         ASSERT_TRUE(next(&pos, &m, &mo_dto));
     }
 
     // no more moves
     ASSERT_FALSE(next(&pos, &m, &mo_dto));
-
 
     // now without noncaps - no moves
     initialize_move_ordering(&mo_dto, moves, NO_MOVE, NO_MOVE, 

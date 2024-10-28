@@ -1,7 +1,9 @@
+#include "prophet/search.h"
+
 #include <prophet/const.h>
 #include <prophet/eval.h>
 #include <prophet/hash.h>
-#include <prophet/search.h>
+
 #include "../../src/parameters.h"
 #include "../../src/util/time.h"
 #include "../../src/util/string_utils.h"
