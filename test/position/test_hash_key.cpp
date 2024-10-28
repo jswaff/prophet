@@ -1,6 +1,11 @@
+#include "../../src/position/position_internal.h"
+
+#include "prophet/position/move.h"
+#include "prophet/position/position.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/position/position_internal.h"
+#include <stdint.h>
 
 TEST(pos_test, build_hash_key)
 {

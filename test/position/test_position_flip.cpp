@@ -1,6 +1,10 @@
-#include <gtest/gtest.h>
+#include "prophet/position/position.h"
 
 #include "../../src/position/position_internal.h"
+
+#include <gtest/gtest.h>
+
+#include <string.h>
 
 TEST(pos_test, pos_flipped)
 {

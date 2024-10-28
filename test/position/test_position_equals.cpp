@@ -1,6 +1,9 @@
+#include "../../src/position/position_internal.h"
+
+#include "prophet/position/position.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/position/position_internal.h"
 
 TEST(pos_test, pos_equals)
 {

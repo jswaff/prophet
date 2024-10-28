@@ -4,6 +4,8 @@
         "string.h": "c",
         "inttypes.h": "c",
         "assert.h": "c",
-        "eval_internal.h": "c"
+        "eval_internal.h": "c",
+        "position_internal.h": "c",
+        "position.h": "c"
     }
 }

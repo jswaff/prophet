@@ -1,6 +1,12 @@
+#include "prophet/position/position.h"
+
+#include "prophet/position/move.h"
+
+#include "../src/position/position_internal.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/position/position_internal.h"
+#include <string.h>
 
 TEST(pos_test, undo_double_pawn_push)
 {

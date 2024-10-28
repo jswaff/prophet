@@ -1,6 +1,9 @@
-#include <gtest/gtest.h>
-
 #include "../../src/position/position_internal.h"
+
+#include "prophet/position/position.h"
+#include "prophet/position/square.h"
+
+#include <gtest/gtest.h>
 
 TEST(pos_test, add_piece)
 {

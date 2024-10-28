@@ -1,8 +1,12 @@
-#include <prophet/position/square.h>
+#include "prophet/position/square.h"
+
+#include "prophet/position/position.h"
+
+#include "../src/bitmap/bitmap.h"
 
 #include <gtest/gtest.h>
 
-#include "../../src/bitmap/bitmap.h"
+#include <stdint.h>
 
 TEST(bitmap_test, squares_to_bitmap)
 {
