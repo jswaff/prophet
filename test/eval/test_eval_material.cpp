@@ -1,8 +1,6 @@
-#include "prophet/eval.h"
+#include "../../src/eval/eval_internal.h"
 
 #include "prophet/position.h"
-
-#include "../../src/eval/eval_internal.h"
 
 #include <gtest/gtest.h>
 

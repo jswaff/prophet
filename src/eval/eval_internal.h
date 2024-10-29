@@ -307,6 +307,27 @@ void eval_accumulator(const position_t* pos, uint64_t piece_map,
   int32_t* mgscore, int32_t* egscore, eval_func_t eval_func);
 
 
+/**
+ * \brief Evaluate the position's non-pawn material.
+ *
+ * \param pos           a pointer to a chess position
+ * \param for_white     whether the returned value should be for white
+ *
+ * \return the score.
+ */
+int32_t eval_nonpawn_material(const position_t* pos, bool for_white);
+
+
+/**
+ * \brief Evaluate the position's pawn material.
+ *
+ * \param pos           a pointer to a chess position
+ * \param for_white     whether the returned value should be for white
+ *
+ * \return the score.
+ */
+int32_t eval_pawn_material(const position_t* pos, bool for_white);
+
 
 // make this header C++ friendly.
 #ifdef     __cplusplus
