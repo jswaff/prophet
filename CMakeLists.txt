@@ -190,7 +190,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 add_executable(prophet)
 target_sources(prophet
     PRIVATE
-        src/prophet4/main.c
+        src/main.c
 )
 target_include_directories(prophet PUBLIC "include/")
 target_link_libraries(prophet PRIVATE prophetlib)
