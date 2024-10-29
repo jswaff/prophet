@@ -1,6 +1,8 @@
-#include <prophet/command.h>
-#include <prophet/commandline.h>
-#include <prophet/util/output.h>
+#include "command/command.h"
+#include "commandline/commandline.h"
+#include "util/output.h"
+
+#include <stdio.h>
 
 extern int init();
 extern int cleanup();

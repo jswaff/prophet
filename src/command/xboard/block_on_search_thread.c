@@ -1,9 +1,9 @@
-#include <prophet/error_codes.h>
+#include "xboard_internal.h"
+
+#include "prophet/error_codes.h"
 
 #include <assert.h>
 #include <pthread.h>
-
-#include "xboard_internal.h"
 
 /* externs */
 extern volatile bool stop_search;

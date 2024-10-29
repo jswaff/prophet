@@ -1,6 +1,10 @@
-#include <gtest/gtest.h>
-
 #include "../../src/movegen/movegen_internal.h"
+
+#include "prophet/move.h"
+#include "prophet/movegen.h"
+#include "prophet/position.h"
+
+#include <gtest/gtest.h>
 
 
 TEST(movegen_test, pawn_moves_initial_position)

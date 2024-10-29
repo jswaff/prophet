@@ -1,7 +1,6 @@
-#ifndef _HASH_H_
-#define _HASH_H_
+#pragma once
 
-#include <prophet/position/move.h>
+#include <prophet/move.h>
 
 #include <stdint.h>
 
@@ -233,4 +232,3 @@ int32_t get_pawn_hash_entry_eg_score(uint64_t val);
 }
 #endif    
 
-#endif /* ! defined _HASH_H_ */

@@ -1,5 +1,4 @@
-#ifndef _PIECE_H_
-#define _PIECE_H_
+#pragma once
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -41,5 +40,3 @@ static inline bool is_not_black_piece(int32_t piece)
 #ifdef     __cplusplus
 }
 #endif 
-
-#endif /* ! defined _PIECE_H_ */

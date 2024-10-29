@@ -1,10 +1,15 @@
-#include <prophet/bitmap.h>
-#include <prophet/hash.h>
-#include <prophet/position/position.h>
+#include "position_internal.h"
+
+#include "prophet/hash.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
+
+#include "../bitmap/bitmap.h"
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
+
 
 /**
  * \brief Create a 64 bit hash signature of a chess position

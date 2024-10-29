@@ -1,4 +1,7 @@
-#include <prophet/movegen.h>
+#include "prophet/movegen.h"
+
+#include "prophet/move.h"
+#include "prophet/position.h"
 
 #include <gtest/gtest.h>
 

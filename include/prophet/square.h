@@ -1,5 +1,4 @@
-#ifndef _SQUARE_H_
-#define _SQUARE_H_
+#pragma once
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -289,5 +288,3 @@ bool is_diagonal(square_t sq1, square_t sq2);
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _SQUARE_H_ */

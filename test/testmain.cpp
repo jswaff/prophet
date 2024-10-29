@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
+
 #include <iostream>
-#include <stdbool.h>
 
 using namespace std;
 
@@ -19,28 +19,21 @@ GTEST_API_ int main(int argc, char* argv[])
     logging_enabled = false;
     bool perft = false;
 
-    for (int i=1; i<argc; i++) 
-    {
-        if (!strcmp("perft", argv[i])) 
-        {
+    for (int i=1; i<argc; i++) {
+        if (!strcmp("perft", argv[i])) {
             perft = true;
         }
     }
 
-    if (perft) 
-    {
+    if (perft) {
         ::testing::GTEST_FLAG(filter) = "perft_test*";
-    } 
-    else 
-    {
+    } else {
         ::testing::GTEST_FLAG(filter) = "-perft_test*";
-
     }
 
     // initialize program data
     int retval = init();
-    if (0 != retval)
-    {
+    if (0 != retval) {
         goto cleanup_and_exit;
     }
 

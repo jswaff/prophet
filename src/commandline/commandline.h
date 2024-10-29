@@ -1,6 +1,4 @@
-#ifndef _COMMANDLINE_H_
-#define _COMMANDLINE_H_
-
+#pragma once
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -36,5 +34,3 @@ int commandline_process_options(int argc, char* argv[]);
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _COMMANDLINE_H_ */

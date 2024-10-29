@@ -1,9 +1,13 @@
-#include <prophet/bitmap.h>
-#include <prophet/position/piece.h>
-
-#include  <assert.h>
-
 #include "eval_internal.h"
+
+#include "prophet/piece.h"
+#include "prophet/position.h"
+
+#include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 
 /**

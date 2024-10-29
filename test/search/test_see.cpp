@@ -1,10 +1,14 @@
-#include <prophet/const.h>
-#include <prophet/movegen.h>
-
-#include <gtest/gtest.h>
+#include "prophet/search.h"
 
 #include "../../src/search/search_internal.h"
 
+#include "prophet/move.h"
+#include "prophet/movegen.h"
+#include "prophet/position.h"
+
+#include <gtest/gtest.h>
+
+#include <stdint.h>
 
 TEST(see_test, queen_takes_undefended_pawn)
 {

@@ -1,10 +1,14 @@
-#include <prophet/bitmap.h>
-#include <prophet/movegen.h>
-#include <prophet/parameters.h>
-
 #include "eval_internal.h"
 
-#include  <assert.h>
+#include "prophet/movegen.h"
+#include "prophet/piece.h"
+#include "prophet/position.h"
+
+#include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 /* forward decls */
 static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
@@ -54,7 +58,7 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
  * \param egscore       a pointer to the endgame score accumulator
  *
  */ 
-void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
+static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
 {
     uint64_t friendly_pawns, enemy_pawns /*, friendly_rooks */;
     bool wtm = is_white_piece(pos->piece[sq]);

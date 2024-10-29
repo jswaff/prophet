@@ -1,9 +1,13 @@
-#include <prophet/bitmap.h>
-#include <prophet/position/piece.h>
-
-#include  <assert.h>
-
 #include "eval_internal.h"
+
+#include "prophet/piece.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
+
+#include "../bitmap/bitmap.h"
+
+#include <stdbool.h>
+#include <stdint.h>
 
 static uint64_t bb_pawn_attacked[64][2];
 

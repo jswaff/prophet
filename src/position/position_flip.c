@@ -1,5 +1,9 @@
+#include "prophet/position.h"
+
 #include "position_internal.h"
 
+#include <assert.h>
+#include <stdint.h>
 #include <string.h>
 
 /**

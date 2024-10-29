@@ -1,8 +1,14 @@
-#include <prophet/bitmap.h>
+#include "movegen_internal.h"
+
+#include "prophet/piece.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
+
+#include "../bitmap/bitmap.h"
 
 #include <assert.h>
-
-#include "movegen_internal.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 static move_t* add_pawn_move(
     move_t* m, square_t from, square_t to, piece_t captured_piece, 

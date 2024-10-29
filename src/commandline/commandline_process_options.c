@@ -1,6 +1,8 @@
-#include <prophet/commandline.h>
-#include <prophet/error_codes.h>
-#include <prophet/util/output.h>
+#include "commandline.h"
+
+#include "prophet/error_codes.h"
+
+#include "../util/output.h"
 
 #include <getopt.h>
 #include <stdbool.h>

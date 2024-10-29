@@ -126,9 +126,9 @@ target_sources(${PROJECT_NAME}
         src/search/stop_search_on_time.c
         src/search/zugzwang.c
         src/util/output.c
-        src/util/p4time.c
         src/util/prng.c
         src/util/string_utils.c
+        src/util/time.c
 )
 
 # Compiler options
@@ -170,24 +170,16 @@ else()
     )
 endif()
 set(public_headers
-    include/prophet/bitmap.h
-    include/prophet/command.h
-    include/prophet/commandline.h
     include/prophet/const.h
     include/prophet/error_codes.h
     include/prophet/eval.h
     include/prophet/hash.h
+    include/prophet/move.h
     include/prophet/movegen.h
-    include/prophet/parameters.h
+    include/prophet/piece.h
+    include/prophet/position.h
     include/prophet/search.h
-    include/prophet/position/move.h
-    include/prophet/position/piece.h
-    include/prophet/position/position.h
-    include/prophet/position/square.h
-    include/prophet/util/output.h
-    include/prophet/util/p4time.h
-    include/prophet/util/prng.h
-    include/prophet/util/string_utils.h
+    include/prophet/square.h
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
 set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
@@ -198,7 +190,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 add_executable(prophet)
 target_sources(prophet
     PRIVATE
-        src/prophet4/main.c
+        src/main.c
 )
 target_include_directories(prophet PUBLIC "include/")
 target_link_libraries(prophet PRIVATE prophetlib)

@@ -1,5 +1,4 @@
-#ifndef _ERROR_H_
-#define _ERROR_H_
+#pragma once
 
 #include <stdio.h>
 
@@ -55,5 +54,3 @@ void out(FILE* stream, const char* format, ...);
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _ERROR_H_ */

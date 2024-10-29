@@ -1,6 +1,10 @@
-#include <gtest/gtest.h>
+#include "prophet/position.h"
 
 #include "../../src/eval/eval_internal.h"
+
+#include <gtest/gtest.h>
+
+#include <stdint.h>
 
 TEST(eval_test, eval_knight)
 {

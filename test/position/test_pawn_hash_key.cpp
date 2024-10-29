@@ -1,7 +1,10 @@
-#include <gtest/gtest.h>
-
 #include "../../src/position/position_internal.h"
 
+#include "prophet/position.h"
+
+#include <gtest/gtest.h>
+
+#include <stdint.h>
 
 TEST(pos_test, build_pawn_key)
 {

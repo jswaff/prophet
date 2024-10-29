@@ -1,8 +1,11 @@
-#include <prophet/hash.h>
+#include "position_internal.h"
+
+#include "prophet/hash.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
 
 #include <assert.h>
-
-#include "position_internal.h"
+#include <stdint.h>
 
 /**
  * \brief Remove a piece from a chess position

@@ -1,9 +1,14 @@
-#include <prophet/bitmap.h>
-#include <prophet/util/prng.h>
+#include "movegen_internal.h"
+
+#include "prophet/position.h"
+#include "prophet/square.h"
+
+#include "../bitmap/bitmap.h"
+#include "../util/prng.h"
 
 #include <assert.h>
-
-#include "movegen_internal.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 /* TODO: this is wasteful.  use a one dimensional array and precompute the 
  * offset for each square. */

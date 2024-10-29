@@ -1,8 +1,12 @@
-#include <prophet/error_codes.h>
+#include "../../../src/command/xboard/xboard_internal.h"
+
+#include "prophet/error_codes.h"
+#include "prophet/position.h"
 
 #include <gtest/gtest.h>
 
-#include "../../../src/command/xboard/xboard_internal.h"
+#include <stdint.h>
+#include <string.h>
 
 extern position_t gpos;
 extern int32_t max_depth;

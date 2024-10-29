@@ -1,7 +1,10 @@
-#include <prophet/position/position.h>
+#include "prophet/position.h"
+
+#include "prophet/move.h"
 
 #include <gtest/gtest.h>
 
+#include <string.h>
 
 TEST(pos_test, draw_rep)
 {

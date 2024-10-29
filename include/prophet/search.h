@@ -1,9 +1,8 @@
-#ifndef _SEARCH_H_
-#define _SEARCH_H_
+#pragma once
 
-#include <prophet/position/position.h>
+#include <prophet/position.h>
+
 #include <stdint.h>
-
 
 // make this header C++ friendly.
 #ifdef     __cplusplus
@@ -188,7 +187,7 @@ move_line_t iterate(const iterator_options_t* opts,
 
 
 /**
- * \brief Search the position to until is is "quiet".
+ * \brief Search the position to until it is "quiet".
  *
  * Quiescence search - attempt to obtain a score by searching until the 
  * position is quiet.
@@ -253,5 +252,3 @@ int32_t see(const position_t* pos, move_t mv);
 #ifdef     __cplusplus
 }
 #endif    //__cplusplus
-
-#endif /* ! defined _SEARCH_H_ */

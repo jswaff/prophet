@@ -1,5 +1,8 @@
 #include "eval_internal.h"
 
+#include "prophet/position.h"
+
+#include <stdint.h>
 
 /* forward decls */
 static int32_t eval_phase(const position_t* pos);

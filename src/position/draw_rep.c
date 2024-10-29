@@ -1,8 +1,12 @@
-#include <prophet/const.h>
+#include "prophet/position.h"
 
-#include <assert.h>
+#include "prophet/const.h"
 
 #include "position_internal.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Determine if a position is drawn by repetition.

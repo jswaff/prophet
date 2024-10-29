@@ -1,8 +1,10 @@
-#include <assert.h>
-
-#include <prophet/const.h>
-
 #include "movegen_internal.h"
+
+#include "prophet/position.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Get the set of target squares

@@ -1,7 +1,7 @@
-#include <prophet/hash.h>
+#include "prophet/hash.h"
 
 #include <assert.h>
-
+#include <stdint.h>
 
 /**
  * Probe the hash table

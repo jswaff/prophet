@@ -1,6 +1,12 @@
+#include "../../src/position/position_internal.h"
+
+#include "prophet/position.h"
+#include "prophet/square.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/position/position_internal.h"
+#include <stdint.h>
+#include <string.h>
 
 TEST(pos_test, reset_pos)
 {

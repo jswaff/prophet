@@ -1,7 +1,8 @@
-#ifndef _BITMAP_H_
-#define _BITMAP_H_
+#pragma once
 
-#include <prophet/position/square.h>
+#include "prophet/square.h"
+
+#include <stdint.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -130,5 +131,3 @@ uint64_t sq_to_rank_bitmap(int32_t sq);
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _BITMAP_H_ */

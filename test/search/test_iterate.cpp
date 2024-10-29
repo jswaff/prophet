@@ -1,7 +1,12 @@
-#include <prophet/movegen.h>
-#include <prophet/search.h>
+#include "prophet/search.h"
+
+#include "prophet/move.h"
+#include "prophet/movegen.h"
+#include "prophet/position.h"
 
 #include <gtest/gtest.h>
+
+#include <string.h>
 
 extern bool stop_search;
 
@@ -36,8 +41,7 @@ TEST(search_test, iterate_from_initial_pos)
 
     ASSERT_GE(pv.n, 3);
 
-    for (int i=0; i<pv.n; i++) 
-    {
+    for (int i=0; i<pv.n; i++) {
         undo_t u;
         ASSERT_TRUE(is_legal_move(pv.mv[i], &pos));
         apply_move(&pos, pv.mv[i], &u);

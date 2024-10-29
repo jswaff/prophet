@@ -1,7 +1,9 @@
-#ifndef _MOVEGEN_INTERNAL_H_
-#define _MOVEGEN_INTERNAL_H_
+#pragma once
 
-#include <prophet/movegen.h>
+#include "prophet/movegen.h"
+
+#include <stdbool.h>
+#include <stdint.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -258,5 +260,3 @@ uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func);
 #ifdef     __cplusplus
 }
 #endif   
-
-#endif /* ! defined _MOVEGEN_INTERNAL_H_ */

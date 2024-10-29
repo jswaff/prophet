@@ -1,8 +1,13 @@
-#include <prophet/bitmap.h>
+#include "prophet/movegen.h"
 
-#include <assert.h>
+#include "prophet/position.h"
 
 #include "movegen_internal.h"
+#include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
+
 
 /**
  * \brief Given position \p pos, is square \p sq attacked by \p player?

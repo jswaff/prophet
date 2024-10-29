@@ -1,7 +1,8 @@
-#ifndef _XBOARD_INTERNAL_H_
-#define _XBOARD_INTERNAL_H_
+#pragma once
 
-#include <prophet/position/position.h>
+#include <prophet/position.h>
+
+#include <stdbool.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -288,5 +289,3 @@ bool endgame_check();
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _COMMAND_INTERNAL_H_ */

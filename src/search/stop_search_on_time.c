@@ -1,7 +1,8 @@
-#include <prophet/util/p4time.h>
-
 #include "search_internal.h"
 
+#include "../util/time.h"
+
+#include <stdbool.h>
 
 /**
  * \brief Determine if the search should be stopped on time.

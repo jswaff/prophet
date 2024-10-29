@@ -1,7 +1,6 @@
-#ifndef _POS_H_
-#define _POS_H_
+#pragma once
 
-#include <prophet/position/move.h>
+#include <prophet/move.h>
 
 #include <assert.h>
 #include <stdbool.h>
@@ -240,5 +239,3 @@ position_t position_flip(const position_t* pos);
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _POS_H_ */

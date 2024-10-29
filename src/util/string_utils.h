@@ -1,7 +1,6 @@
-#ifndef _STRING_UTILS_H_
-#define _STRING_UTILS_H_
+#pragma once
 
-#include <prophet/position/position.h>
+#include <prophet/position.h>
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -121,5 +120,3 @@ char* bitmap_to_str(uint64_t val);
 #ifdef     __cplusplus
 }
 #endif    //__cplusplus
-
-#endif /* ! defined _SQUARE_H_ */

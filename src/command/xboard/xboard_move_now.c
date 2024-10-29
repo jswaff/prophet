@@ -1,8 +1,9 @@
-#include <prophet/error_codes.h>
+#include "xboard_internal.h"
+
+#include "prophet/error_codes.h"
 
 #include <string.h>
 
-#include "xboard_internal.h"
 
 /**
  * \brief Execute the xboard move now command

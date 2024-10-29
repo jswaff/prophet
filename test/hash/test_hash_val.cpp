@@ -1,6 +1,11 @@
-#include <prophet/hash.h>
+#include "prophet/hash.h"
+
+#include "prophet/const.h"
+#include "prophet/move.h"
 
 #include <gtest/gtest.h>
+
+#include <stdint.h>
 
 TEST(hash_test, hash_val_upper_bound)
 {

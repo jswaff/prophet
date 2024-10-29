@@ -1,5 +1,6 @@
-#include <prophet/hash.h>
-#include <prophet/util/output.h>
+#include "prophet/hash.h"
+
+#include "util/output.h"
 
 bool cleanup_done = false;
 

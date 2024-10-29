@@ -1,18 +1,21 @@
-#include <prophet/const.h>
-#include <prophet/error_codes.h>
-#include <prophet/movegen.h>
-#include <prophet/parameters.h>
-#include <prophet/search.h>
-#include <prophet/util/output.h>
-#include <prophet/util/string_utils.h>
+#include "xboard_internal.h"
+
+#include "prophet/const.h"
+#include "prophet/error_codes.h"
+#include "prophet/movegen.h"
+#include "prophet/search.h"
+
+#include "../../parameters.h"
+#include "../../util/output.h"
+#include "../../util/string_utils.h"
 
 #include <assert.h>
-#include <errno.h>
 #include <pthread.h>
+#include <stdbool.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
-#include "xboard_internal.h"
 
 /* externs */
 extern bool fixed_time_per_move;

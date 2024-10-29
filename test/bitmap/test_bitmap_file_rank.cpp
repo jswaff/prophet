@@ -1,5 +1,6 @@
-#include <prophet/bitmap.h>
-#include <prophet/position/square.h>
+#include "../../src/bitmap/bitmap.h"
+
+#include "prophet/square.h"
 
 #include <gtest/gtest.h>
 

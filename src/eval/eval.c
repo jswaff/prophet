@@ -1,5 +1,14 @@
-#include <prophet/hash.h>
+#include "prophet/eval.h"
+
+#include "prophet/hash.h"
+#include "prophet/position.h"
+
 #include "eval_internal.h"
+#include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 extern hash_table_t phtbl;
 

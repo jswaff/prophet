@@ -1,9 +1,8 @@
-#ifndef _MOVE_H_
-#define _MOVE_H_
+#pragma once
 
 #include <prophet/const.h>
-#include <prophet/position/piece.h>
-#include <prophet/position/square.h>
+#include <prophet/piece.h>
+#include <prophet/square.h>
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -195,5 +194,3 @@ move_t clear_score(move_t mv);
 #ifdef     __cplusplus
 }
 #endif  
-
-#endif /* ! defined _MOVE_H_ */

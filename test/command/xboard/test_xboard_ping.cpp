@@ -1,8 +1,11 @@
-#include <prophet/error_codes.h>
+#include "../../../src/command/xboard/xboard_internal.h"
+
+#include "prophet/error_codes.h"
 
 #include <gtest/gtest.h>
 
-#include "../../../src/command/xboard/xboard_internal.h"
+#include <string.h>
+
 
 TEST(xboard_test, xboard_ping_incorrect_cmd)
 {

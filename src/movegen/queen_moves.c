@@ -1,8 +1,12 @@
-#include <prophet/bitmap.h>
+#include "movegen_internal.h"
+
+#include "prophet/position.h"
+
+#include "../bitmap/bitmap.h"
 
 #include <assert.h>
-
-#include "movegen_internal.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Generate pseudo-legal queen moves

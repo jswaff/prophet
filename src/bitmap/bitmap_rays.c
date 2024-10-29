@@ -1,7 +1,9 @@
-#include <prophet/bitmap.h>
-#include <prophet/position/square.h>
+#include "bitmap.h"
+
+#include "prophet/square.h"
 
 #include <assert.h>
+#include <stdint.h>
 #include <string.h>
 
 static uint64_t bb_rays[64][8];

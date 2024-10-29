@@ -1,5 +1,4 @@
-#ifndef _SEARCH_INTERNAL_H_
-#define _SEARCH_INTERNAL_H_
+#pragma once
 
 #include <prophet/search.h>
 
@@ -105,5 +104,3 @@ bool zugzwang(const position_t* pos);
 #ifdef     __cplusplus
 }
 #endif    //__cplusplus
-
-#endif /* ! defined _SEARCH_INTERNAL_H_ */

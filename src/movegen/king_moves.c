@@ -1,8 +1,15 @@
-#include <assert.h>
-
-#include <prophet/bitmap.h>
-
 #include "movegen_internal.h"
+
+#include "prophet/movegen.h"
+#include "prophet/piece.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
+
+#include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 static uint64_t king_moves[64];
 

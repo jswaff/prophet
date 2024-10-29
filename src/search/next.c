@@ -1,12 +1,11 @@
-#include <prophet/eval.h>
-#include <prophet/movegen.h>
-#include <prophet/parameters.h>
-#include <prophet/position/position.h>
-
 #include "search_internal.h"
 
-#include <assert.h>
+#include "prophet/movegen.h"
+#include "prophet/position.h"
 
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 static move_t* index_best_capture(move_t* start, move_t* end);
 static void swap_moves(move_t* mv1, move_t* mv2);

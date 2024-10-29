@@ -1,10 +1,11 @@
-#include <prophet/error_codes.h>
-#include <prophet/util/output.h>
+#include "xboard_internal.h"
+
+#include "prophet/error_codes.h"
+
+#include "../../util/output.h"
 
 #include <stdbool.h>
 #include <string.h>
-
-#include "xboard_internal.h"
 
 /**
  * \brief Execute the xboard ping command 

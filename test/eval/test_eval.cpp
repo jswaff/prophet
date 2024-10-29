@@ -1,8 +1,13 @@
-#include <prophet/parameters.h>
+#include "prophet/eval.h"
+
+#include "prophet/position.h"
+
+#include "../../src/eval/eval_internal.h"
 
 #include <gtest/gtest.h>
 
-#include "../../src/eval/eval_internal.h"
+#include <stdint.h>
+#include <string.h>
 
 // forward decls
 static void testcase_symmetry(const char* fen);

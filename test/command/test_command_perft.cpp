@@ -1,9 +1,9 @@
-#include <prophet/error_codes.h>
-#include <prophet/movegen.h>
+#include "../../src/command/command.h"
+
+#include "prophet/error_codes.h"
+#include "prophet/position.h"
 
 #include <gtest/gtest.h>
-
-#include "../../src/command/command_internal.h"
 
 extern position_t gpos;
 

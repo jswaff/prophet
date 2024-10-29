@@ -1,7 +1,8 @@
-#include <prophet/bitmap.h>
+#include "../../src/bitmap/bitmap.h"
 
 #include <gtest/gtest.h>
 
+#include <stdint.h>
 
 TEST(bitmap_test, isolate_bit)
 {

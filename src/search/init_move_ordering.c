@@ -1,6 +1,8 @@
 #include "search_internal.h"
 
+#include <assert.h>
 #include <string.h>
+
 
 /**
  * \brief Initialize move ordering

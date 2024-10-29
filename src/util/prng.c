@@ -1,3 +1,5 @@
+#include "prng.h"
+
 #include <stdint.h>
 
 /**

@@ -1,7 +1,11 @@
-#include <prophet/const.h>
-#include <prophet/movegen.h>
+#include "prophet/movegen.h"
+
+#include "prophet/const.h"
+#include "prophet/position.h"
 
 #include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Count all possible moves to a fixed depth.

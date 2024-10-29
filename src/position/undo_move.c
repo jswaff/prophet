@@ -1,7 +1,13 @@
+#include "prophet/position.h"
+
+#include "prophet/move.h"
+#include "prophet/square.h"
+
+#include "position_internal.h"
+
 #include <assert.h>
 #include <stdlib.h>
 
-#include "position_internal.h"
 
 /**
  * \brief Undo (reverse) a move.

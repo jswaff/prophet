@@ -1,8 +1,9 @@
-#include <prophet/error_codes.h>
+#include "../../src/command/command.h"
+
+#include "prophet/error_codes.h"
 
 #include <gtest/gtest.h>
 
-#include "../../src/command/command_internal.h"
 
 extern bool xboard_force_mode;
 

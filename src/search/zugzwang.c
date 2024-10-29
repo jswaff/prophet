@@ -1,4 +1,8 @@
-#include <prophet/position/position.h>
+#include "search_internal.h"
+
+#include "prophet/position.h"
+
+#include <stdbool.h>
 
 /**
  * \brief - Determine if a position is zugzwang

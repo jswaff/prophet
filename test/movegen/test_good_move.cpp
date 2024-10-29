@@ -1,6 +1,9 @@
-#include <gtest/gtest.h>
+#include "prophet/movegen.h"
 
-#include "../../src/movegen/movegen_internal.h"
+#include "prophet/move.h"
+#include "prophet/position.h"
+
+#include <gtest/gtest.h>
 
 
 static void assert_all_moves_good(const position_t* pos);
@@ -34,11 +37,9 @@ TEST(movegen_test, good_move)
     // some knight tests
     set_pos(&pos, "k7/8/4p3/6n1/4P3/8/8/K7 b - -");
     assert_all_moves_good(&pos);
-    for (int i=0;i<64;i++) 
-    {
+    for (int i=0;i<64;i++) {
         move_t test_move = to_move(KNIGHT, G5, (square_t)i);
-        if (pos.piece[i] != NO_PIECE) 
-        {
+        if (pos.piece[i] != NO_PIECE) {
             set_capture(&test_move, (piece_t)pos.piece[i]);
         }
         EXPECT_TRUE(good_move(&pos, test_move) == 
@@ -70,8 +71,7 @@ static void assert_all_moves_good(const position_t* pos)
 {
     move_t moves[200];
     move_t* endp = gen_legal_moves(moves, pos, true, true);
-    for (move_t* mp=moves; mp<endp; mp++)
-    {
+    for (move_t* mp=moves; mp<endp; mp++) {
         EXPECT_TRUE(good_move(pos, *mp)==(*mp != NO_MOVE));
     }
 }

@@ -1,7 +1,6 @@
-#ifndef _MOVEGEN_H_
-#define _MOVEGEN_H_
+#pragma once
 
-#include <prophet/position/position.h>
+#include <prophet/position.h>
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -268,4 +267,3 @@ uint64_t perft(position_t* pos, uint32_t depth);
 }
 #endif    //__cplusplus
 
-#endif /* ! defined _MOVEGEN_H_ */

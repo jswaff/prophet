@@ -1,10 +1,12 @@
-#include <prophet/bitmap.h>
-#include <prophet/movegen.h>
-#include <prophet/parameters.h>
-
 #include "eval_internal.h"
 
-#include  <assert.h>
+#include "prophet/movegen.h"
+#include "prophet/position.h"
+
+#include "../bitmap/bitmap.h"
+
+#include <assert.h>
+#include <stdint.h>
 
 /**
  * \brief Evaluate a single bishop.

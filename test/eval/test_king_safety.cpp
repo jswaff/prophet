@@ -1,6 +1,9 @@
+#include "../../src/eval/eval_internal.h"
+
+#include "prophet/position.h"
+
 #include <gtest/gtest.h>
 
-#include "../../src/eval/eval_internal.h"
 
 TEST(eval_test, king_safety_middle_files)
 {

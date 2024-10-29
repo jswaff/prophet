@@ -1,4 +1,4 @@
-#include <prophet/position/piece.h>
+#include "prophet/piece.h"
 
 #include <gtest/gtest.h>
 

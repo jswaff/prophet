@@ -1,7 +1,11 @@
-#include <prophet/bitmap.h>
-
 #include "eval_internal.h"
 
+#include "prophet/position.h"
+
+#include "../bitmap/bitmap.h"
+
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Evaluate king safety for one side of the board.

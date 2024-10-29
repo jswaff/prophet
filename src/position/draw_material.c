@@ -1,5 +1,11 @@
-#include <prophet/bitmap.h>
-#include <prophet/position/position.h>
+#include "prophet/position.h"
+
+#include "prophet/square.h"
+
+#include "../bitmap/bitmap.h"
+
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Determine if a position is drawn by lack of mating material.

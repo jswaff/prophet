@@ -1,6 +1,8 @@
-#include <prophet/position/move.h>
+#include "prophet/move.h"
 
 #include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 /**
  * \brief Create a non-capturing move

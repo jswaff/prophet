@@ -1,5 +1,14 @@
-#include <prophet/movegen.h>
-#include <prophet/parameters.h>
+#include "prophet/movegen.h"
+
+#include "prophet/move.h"
+#include "prophet/movegen.h"
+#include "prophet/piece.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 
 static bool good_pawn_move(const position_t* pos, square_t from_sq, 

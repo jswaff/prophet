@@ -1,13 +1,17 @@
-#include <prophet/const.h>
-#include <prophet/hash.h>
-#include <prophet/movegen.h>
-#include <prophet/parameters.h>
-#include <prophet/util/output.h>
-#include <prophet/util/p4time.h>
-#include <prophet/util/string_utils.h>
+#include "prophet/search.h"
+
+#include "prophet/const.h"
+#include "prophet/hash.h"
+#include "prophet/movegen.h"
 
 #include "search_internal.h"
+#include "../util/output.h"
+#include "../util/string_utils.h"
+#include "../util/time.h"
 
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 

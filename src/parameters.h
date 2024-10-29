@@ -1,5 +1,4 @@
-#ifndef _PARAMETERS_H_
-#define _PARAMETERS_H_
+#pragma once
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
@@ -16,5 +15,3 @@ extern "C" {
 #ifdef     __cplusplus
 }
 #endif    
-
-#endif /* ! defined _PARAMETERS_H_ */

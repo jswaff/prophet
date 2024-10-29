@@ -1,10 +1,11 @@
-#include <prophet/error_codes.h>
+#include "command.h"
+
+#include "prophet/error_codes.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "command_internal.h"
 
 #define MAX_INPUT_SZ 256
 

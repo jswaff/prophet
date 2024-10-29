@@ -1,8 +1,13 @@
-#include <prophet/util/output.h>
+#include "position_internal.h"
+
+#include "prophet/position.h"
+#include "prophet/square.h"
+
+#include "../util/output.h"
 
 #include <assert.h>
-
-#include "position_internal.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 static bool verify_pos_kings(const position_t* pos);
 static bool verify_pos_ep(const position_t* pos);

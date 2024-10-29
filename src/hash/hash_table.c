@@ -1,9 +1,12 @@
-#include <prophet/error_codes.h>
-#include <prophet/hash.h>
-#include <prophet/util/output.h>
+#include "prophet/hash.h"
+
+#include "prophet/error_codes.h"
+
+#include "../util/output.h"
 
 #include <assert.h>
 #include <inttypes.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 

@@ -1,5 +1,8 @@
 #include "eval_internal.h"
 
+#include "prophet/position.h"
+
+
 /**
  * \brief Evaluate the position's "material type".
  *
