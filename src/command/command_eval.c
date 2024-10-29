@@ -2,7 +2,7 @@
 
 #include "prophet/error_codes.h"
 #include "prophet/eval.h"
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include "../util/output.h"
 

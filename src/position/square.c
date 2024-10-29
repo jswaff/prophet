@@ -1,4 +1,4 @@
-#include "prophet/position/square.h"
+#include "prophet/square.h"
 
 #include <assert.h>
 #include <stdarg.h>

@@ -1,4 +1,4 @@
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include "position_internal.h"
 

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <prophet/const.h>
-#include <prophet/position/piece.h>
-#include <prophet/position/square.h>
+#include <prophet/piece.h>
+#include <prophet/square.h>
 
 #include <stdbool.h>
 #include <stdint.h>

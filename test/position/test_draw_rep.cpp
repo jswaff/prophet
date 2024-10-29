@@ -1,6 +1,6 @@
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
-#include "prophet/position/move.h"
+#include "prophet/move.h"
 
 #include <gtest/gtest.h>
 

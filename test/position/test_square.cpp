@@ -1,6 +1,6 @@
-#include "prophet/position/square.h"
+#include "prophet/square.h"
 
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include "../src/bitmap/bitmap.h"
 

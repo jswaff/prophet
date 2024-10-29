@@ -1,4 +1,4 @@
-#include "prophet/position/move.h"
+#include "prophet/move.h"
 
 #include <gtest/gtest.h>
 

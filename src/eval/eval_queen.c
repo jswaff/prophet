@@ -1,8 +1,8 @@
 #include "eval_internal.h"
 
 #include "prophet/movegen.h"
-#include "prophet/position/piece.h"
-#include "prophet/position/position.h"
+#include "prophet/piece.h"
+#include "prophet/position.h"
 
 #include "../bitmap/bitmap.h"
 

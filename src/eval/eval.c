@@ -1,7 +1,7 @@
 #include "prophet/eval.h"
 
 #include "prophet/hash.h"
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include "eval_internal.h"
 #include "../bitmap/bitmap.h"

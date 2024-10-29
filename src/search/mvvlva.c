@@ -1,6 +1,6 @@
 #include "prophet/search.h"
 
-#include "prophet/position/move.h"
+#include "prophet/move.h"
 
 #include <assert.h>
 #include <stdint.h>

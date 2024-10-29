@@ -1,7 +1,7 @@
 #include "position_internal.h"
 
-#include "prophet/position/position.h"
-#include "prophet/position/square.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
 
 #include "../util/output.h"
 

@@ -174,12 +174,12 @@ set(public_headers
     include/prophet/error_codes.h
     include/prophet/eval.h
     include/prophet/hash.h
+    include/prophet/move.h
     include/prophet/movegen.h
+    include/prophet/piece.h
+    include/prophet/position.h
     include/prophet/search.h
-    include/prophet/position/move.h
-    include/prophet/position/piece.h
-    include/prophet/position/position.h
-    include/prophet/position/square.h
+    include/prophet/square.h
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
 set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")

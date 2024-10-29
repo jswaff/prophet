@@ -1,7 +1,7 @@
 #include "search_internal.h"
 
 #include "prophet/movegen.h"
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include <assert.h>
 #include <stdbool.h>

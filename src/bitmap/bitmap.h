@@ -1,6 +1,6 @@
 #pragma once
 
-#include "prophet/position/square.h"
+#include "prophet/square.h"
 
 #include <stdint.h>
 

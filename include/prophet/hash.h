@@ -1,6 +1,6 @@
 #pragma once
 
-#include <prophet/position/move.h>
+#include <prophet/move.h>
 
 #include <stdint.h>
 

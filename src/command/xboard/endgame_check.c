@@ -2,7 +2,7 @@
 
 #include "prophet/const.h"
 #include "prophet/movegen.h"
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include "../../util/output.h"
 

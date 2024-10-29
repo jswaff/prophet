@@ -1,6 +1,6 @@
 #include "prophet/movegen.h"
 
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include "movegen_internal.h"
 #include "../bitmap/bitmap.h"

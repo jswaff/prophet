@@ -1,7 +1,7 @@
 #include "prophet/hash.h"
 
 #include "prophet/const.h"
-#include "prophet/position/move.h"
+#include "prophet/move.h"
 
 #include <gtest/gtest.h>
 

@@ -1,7 +1,7 @@
 #include "command.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include "../util/output.h"
 #include "../util/string_utils.h"

@@ -1,9 +1,9 @@
 #include "movegen_internal.h"
 
 #include "prophet/movegen.h"
-#include "prophet/position/piece.h"
-#include "prophet/position/position.h"
-#include "prophet/position/square.h"
+#include "prophet/piece.h"
+#include "prophet/position.h"
+#include "prophet/square.h"
 
 #include "../bitmap/bitmap.h"
 

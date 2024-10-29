@@ -1,8 +1,8 @@
 #include "../../src/util/string_utils.h"
 
 #include "prophet/const.h"
-#include "prophet/position/move.h"
-#include "prophet/position/position.h"
+#include "prophet/move.h"
+#include "prophet/position.h"
 
 #include <gtest/gtest.h>
 

@@ -1,7 +1,7 @@
 #include "movegen_internal.h"
 
 #include "prophet/const.h"
-#include "prophet/position/square.h"
+#include "prophet/square.h"
 
 #include <assert.h>
 #include <stdint.h>

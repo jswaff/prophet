@@ -1,5 +1,5 @@
 #include "prophet/hash.h"
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include <stdlib.h>
 #include <time.h>

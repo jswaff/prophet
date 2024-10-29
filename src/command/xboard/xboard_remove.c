@@ -2,7 +2,7 @@
 
 #include "prophet/const.h"
 #include "prophet/error_codes.h"
-#include "prophet/position/position.h"
+#include "prophet/position.h"
 
 #include <string.h>
 
