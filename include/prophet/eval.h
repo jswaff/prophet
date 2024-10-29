@@ -11,7 +11,6 @@ extern "C" {
 #endif    //__cplusplus
 
 
-
 /**
  * \brief Evaluate a chess position for the side to move.
  *
