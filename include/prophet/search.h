@@ -187,7 +187,7 @@ move_line_t iterate(const iterator_options_t* opts,
 
 
 /**
- * \brief Search the position to until is is "quiet".
+ * \brief Search the position to until it is "quiet".
  *
  * Quiescence search - attempt to obtain a score by searching until the 
  * position is quiet.
