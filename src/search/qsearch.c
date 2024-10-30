@@ -44,7 +44,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
     stats->qnodes++;
 
-    int32_t stand_pat = eval(pos, false);
+    int32_t stand_pat = eval(pos, false, true);
     if (stand_pat > alpha) {
         if (stand_pat >= beta) {
             return stand_pat;

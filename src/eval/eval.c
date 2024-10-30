@@ -147,10 +147,11 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
  *
  * \param pos             a pointer to a chess position
  * \param material_only   if the evaluation should consider material only
+ * \param use_pawn_hash   if the pawn hash table should be used
  *
  * \return the score.
  */
-int32_t eval(const position_t* pos, bool material_only)
+int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash)
 {
     /* establish a baseline score using material, from white's perspective. */
     int32_t mat_score =
@@ -182,7 +183,7 @@ int32_t eval(const position_t* pos, bool material_only)
     int32_t eg_score = mat_score;
 
     /* fold in pawn positional features. try the pawn hash first. */
-    uint64_t pawn_hash_val = probe_hash(&phtbl, pos->pawn_key);
+    uint64_t pawn_hash_val = use_pawn_hash ? probe_hash(&phtbl, pos->pawn_key) : 0;
     if (pawn_hash_val != 0) {
         mg_score += get_pawn_hash_entry_mg_score(pawn_hash_val);
         eg_score += get_pawn_hash_entry_eg_score(pawn_hash_val);

@@ -191,7 +191,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
             alpha > (-CHECKMATE+500) && beta < (CHECKMATE-500) && 
             get_promopiece(*mp)==NO_PIECE && *mp != killer1[ply] && *mp != killer2[ply])
         {
-            int32_t mat = eval(pos, true);
+            int32_t mat = eval(pos, true, false);
             int32_t mat_gain = see_eval_piece(get_captured_piece(*mp));
             const int32_t futil_margin = depth==1 ? (see_pawn_val * 2) : see_rook_val;
             if (mat + mat_gain + futil_margin <= alpha) {

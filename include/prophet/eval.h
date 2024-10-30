@@ -23,11 +23,11 @@ extern "C" {
  *
  * \param pos             a pointer to a chess position
  * \param material_only   if the evaluation should consider material only
+ * \param use_pawn_hash   if the pawn hash table should be used
  *
  * \return the score.
  */
-int32_t eval(const position_t* pos, bool material_only);
-
+int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash);
 
 
 // make this header C++ friendly.
