@@ -7,9 +7,10 @@
 #include <assert.h>
 
 /**
- * \brief Add a non-capturing move to a move list
+ * \brief Add a move to a move list
  *
- * Creates a non-capturing move and adds it to a move list.
+ * Creates a move and adds it to a move list.  This method should not be used
+ * for pawn promotions, en-passant captures, or for castling moves.
  *
  * \param m             a pointer to a move to set
  * \param p             a pointer to a chess position
