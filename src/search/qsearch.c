@@ -1,9 +1,9 @@
 #include "prophet/search.h"
 
 #include "prophet/eval.h"
-#include "prophet/movegen.h"
 
 #include "search_internal.h"
+#include "../movegen/movegen_internal.h"
 #include "../util/time.h"
 
 #include <assert.h>

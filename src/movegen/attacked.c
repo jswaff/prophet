@@ -1,8 +1,7 @@
-#include "prophet/movegen.h"
+#include "movegen_internal.h"
 
 #include "prophet/position.h"
 
-#include "movegen_internal.h"
 #include "../bitmap/bitmap.h"
 
 #include <assert.h>

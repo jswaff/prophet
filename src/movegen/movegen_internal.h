@@ -12,6 +12,36 @@ extern "C" {
 
 typedef square_t (*dir_func_t)(square_t);
 
+
+/**
+ * \brief Add a non-capturing move to a move list.
+ *
+ * Creates a non-capturing move and adds it to a move list.
+ *
+ * \param m             a pointer to a move to set
+ * \param p             a pointer to a chess position
+ * \param piece         the moving piece
+ * \param from          the square the piece is moving from
+ * \param to            the square the piece is moving to
+ *
+ * \return the next move pointer
+ */
+move_t* add_move(
+    move_t* m, const position_t* p, piece_t piece, square_t from, square_t to);
+
+
+/**
+ * \brief Given position \p pos, is square \p sq attacked by \p player?
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
+ *
+ * \return boolean indicating if there is an attack
+ */
+bool attacked(const position_t *pos, square_t sq, color_t player);
+
+
 /**
  * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
  * bishops?
@@ -87,6 +117,19 @@ bool attacked_by_queen(const position_t* p, square_t sq, color_t player);
  * \return boolean indicating if there is an attack
  */
 bool attacked_by_rook(const position_t* p, square_t sq, color_t player);
+
+
+/**
+ * \brief Given position \p pos, get a bitmap of all pieces of color \p player
+ * that are attacking square \p sq.
+ *
+ * \param pos           a pointer to a chess position
+ * \param sq            the square in question
+ * \param player        the attacking player
+ *
+ * \return bitmap of all attacking squares
+ */
+uint64_t attackers(const position_t* pos, square_t sq, color_t player);
 
 
 /**
@@ -208,20 +251,62 @@ move_t* gen_rook_moves_from_sq(
 
 
 /**
- * \brief Add a non-capturing move to a move list.
+ * \brief Get bishop moves.
  *
- * Creates a non-capturing move and adds it to a move list.
- *
- * \param m             a pointer to a move to set
  * \param p             a pointer to a chess position
- * \param piece         the moving piece
- * \param from          the square the piece is moving from
- * \param to            the square the piece is moving to
+ * \param from          The square the bishop is moving from
+ * \param targets       target squares
  *
- * \return the next move pointer
+ * \return the subset of target squares the bishop can move to
  */
-move_t* add_move(
-    move_t* m, const position_t* p, piece_t piece, square_t from, square_t to);
+uint64_t get_bishop_moves(
+    const position_t* p, square_t from, uint64_t targets);
+
+
+/**
+ * \brief Get king moves.
+ *
+ * \param from          the square the king is moving from
+ * \param targets       target squares
+ *
+ * \return the subset of target squares the king can move to
+ */
+uint64_t get_king_moves(square_t from, uint64_t targets);
+
+
+/**
+ * \brief Get knight moves.
+ *
+ * \param from          the square the knight is moving from
+ * \param targets       target squares
+ *
+ * \return the subset of target squares the knight can move to
+ */
+uint64_t get_knight_moves(square_t from, uint64_t targets);
+
+
+/**
+ * \brief Get queen moves.
+ *
+ * \param p             a pointer to a chess position
+ * \param from          the square the queen is moving from
+ * \param targets       target squares
+ *
+ * \return the subset of target squares the queen can move to
+ */
+uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets);
+
+
+/**
+ * \brief Get rook moves.
+ *
+ * \param p             a pointer to a chess position
+ * \param from          the square the rook is moving from
+ * \param targets       target squares
+ *
+ * \return the subset of target squares the rook can move to
+ */
+uint64_t get_rook_moves(const position_t* p, square_t from, uint64_t targets);
 
 
 /**
@@ -254,6 +339,131 @@ uint64_t get_target_squares(const position_t* p, bool caps, bool noncaps);
  * \return the set of squares that can be moved to
  */
 uint64_t gen_moves_mask(square_t sq, uint64_t occupied, dir_func_t dir_func);
+
+
+/**
+ * \brief Determine if a move is "good" (pseudo-legal) in a given position.
+ *
+ * \param pos           a pointer to a chess position 
+ * \param mv            the move to test
+ * 
+ * \return true if the move is good, otherwise false
+ */
+bool good_move(const position_t *pos, move_t mv);
+
+
+/**
+ * \brief Given position \p pos, is \p player in check?
+ *
+ * \param pos           a pointer to a chess position
+ * \param player        a player (white or black)
+ *
+ * \return true if the player is in check, otherwise false
+ */
+bool in_check(const position_t *pos, color_t player);
+
+
+/**
+ * \brief Has the current player been checkmated?
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if the player has been checkmated, otherwise false
+ */
+bool is_checkmate(const position_t *pos);
+
+
+/**
+ * \brief Has the current player been stalemated?
+ *
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if the player has been stalemated, otherwise false
+ */
+bool is_stalemate(const position_t *pos);
+
+
+/**
+ * \brief Test move legality.
+ *
+ * Test that a move is legal in a given position.
+ *
+ * \param mv            the move to test
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if legal, otherwise false
+ */
+bool is_legal_move(move_t mv, const position_t *pos);
+
+
+/**
+ * \brief Test if a move is a member of a list.
+ *
+ * Determine if a chess move is contained within a list of moves. The score 
+ * portion of the move is ignored.
+ *
+ * \param mv            the move to look for
+ * \param start         a pointer to the start of a move list
+ * \param end           a pointer one past the end of a move list
+ *
+ * \return true if the move is contained in the list, otherwise false
+ */
+bool move_list_contains(move_t mv, const move_t* start, const move_t* end);
+
+
+/**
+ * \brief Count the number of legal moves possible in a position.
+ *
+ * \param pos           a pointer to a chess position
+ * \param caps          whether to include captures in the count
+ * \param noncaps       whether to include noncaptures in the count
+ *
+ * \return the number of legal moves
+ */
+uint32_t num_legal_moves(const position_t *pos, bool caps, bool noncaps);
+
+
+/**
+ * \brief Count the number of capture and non-capture moves in a list.
+ *
+ * The memory range is iterated, beginning with \p startp and ending with 
+ * \p endp - 1. Some slots may contain an invalid move (NO_MOVE).  These 
+ * "moves" are not counted.
+ *
+ * \param startp        the starting address of a list of moves (inclusive)
+ * \param endp          the ending address of a list of moves (exclusive)
+ * \param caps          a pointer to an integer to receive the number of 
+ *                      captures
+ * \param noncaps       a pointer to an integer to receive the number of 
+ *                      noncaptures
+ */
+void num_moves_in_list(
+    const move_t* startp, const move_t* endp, int* caps, int* noncaps);
+
+
+/**
+ * \brief Count all possible moves to a fixed depth.
+ *
+ * The term 'perft' was first introduced by Bob Hyatt of Cray Blitz and Crafty 
+ * fame. It's basically a functional test that walks the move generation tree 
+ * in depth first fashion, and returning a node (vertex) count when complete.  
+ * Tested from a wide range of positions, this gives a very high level of 
+ * confidence that the move generation and apply functions are working 
+ * correctly.
+ *
+ * Another use of 'perft', (and perhaps Hyatt's intention given the name) is 
+ * to measure the performance of the move gen/apply systems.  By recording the 
+ * time it takes to complete a perft run and the node count it returns, we have
+ * a metric -- nodes per second.
+ *
+ * Reference: http://chessprogramming.wikispaces.com/Perft
+ *
+ * \param pos           a pointer to a chess position
+ * \param depth         the depth of the tree from this position
+ *
+ * \return the number of moves generated
+ */
+uint64_t perft(position_t *pos, uint32_t depth);
 
 
 /* make this header C++ friendly. */
