@@ -3,6 +3,7 @@
 #include "prophet/position.h"
 
 #include "../../src/eval/eval_internal.h"
+#include "../../src/position/position_internal.h"
 
 #include <gtest/gtest.h>
 

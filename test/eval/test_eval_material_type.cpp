@@ -2,6 +2,8 @@
 
 #include "prophet/position.h"
 
+#include "../../src/position/position_internal.h"
+
 #include <gtest/gtest.h>
 
 // forward decls

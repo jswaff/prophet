@@ -1,6 +1,7 @@
-#include "prophet/position.h"
+#include "../../src/position/position_internal.h"
 
 #include "prophet/move.h"
+#include "prophet/position.h"
 
 #include <gtest/gtest.h>
 
@@ -16,8 +17,7 @@ TEST(pos_test, draw_50)
     // counter to 25 x 4 = 100.  Only on the last move should the draw be
     // claimed.
     undo_t u;
-    for (int i=0; i<25; i++)
-    {
+    for (int i=0; i<25; i++) {
         apply_move(&pos, to_move(KNIGHT, G1, F3), &u);
         EXPECT_FALSE(is_draw50(&pos));
 

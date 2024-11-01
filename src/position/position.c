@@ -8,6 +8,7 @@
 #include "../util/output.h"
 #include "../util/string_utils.h"
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
