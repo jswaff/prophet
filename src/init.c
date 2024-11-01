@@ -1,4 +1,3 @@
-#include "prophet/hash.h"
 #include "prophet/position.h"
 
 #include <stdlib.h>
@@ -22,6 +21,8 @@ extern void init_outpost();
 extern void init_pawn_attacked();
 extern void init_pawn_isolated();
 extern void init_pawn_passed();
+
+extern int init_hash_tables();
 
 extern position_t gpos;
 
