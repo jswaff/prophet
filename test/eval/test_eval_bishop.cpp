@@ -2,6 +2,8 @@
 
 #include "prophet/position.h"
 
+#include "../../src/position/square_internal.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>

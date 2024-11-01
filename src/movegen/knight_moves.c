@@ -5,6 +5,7 @@
 #include "prophet/square.h"
 
 #include "../bitmap/bitmap.h"
+#include "../position/square_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>

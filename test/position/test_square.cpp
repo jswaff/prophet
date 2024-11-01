@@ -1,5 +1,6 @@
-#include "prophet/square.h"
+#include "../../src/position/square_internal.h"
 
+#include "prophet/square.h"
 #include "prophet/position.h"
 
 #include "../src/bitmap/bitmap.h"

@@ -4,6 +4,7 @@
 #include "prophet/square.h"
 
 #include "../../src/bitmap/bitmap.h"
+#include "../../src/position/square_internal.h"
 
 #include <gtest/gtest.h>
 

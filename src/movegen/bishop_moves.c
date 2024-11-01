@@ -4,6 +4,7 @@
 #include "prophet/square.h"
 
 #include "../bitmap/bitmap.h"
+#include "../position/square_internal.h"
 #include "../util/prng.h"
 
 #include <assert.h>

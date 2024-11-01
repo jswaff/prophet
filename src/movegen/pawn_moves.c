@@ -5,6 +5,7 @@
 #include "prophet/square.h"
 
 #include "../bitmap/bitmap.h"
+#include "../position/square_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>
@@ -180,6 +181,7 @@ static move_t* add_pawn_move(
 
     return m;
 }
+
 
 /**
  * \brief Add a pawn promotion to a move list.

@@ -7,6 +7,7 @@
 #include "prophet/square.h"
 
 #include "../position/position_internal.h"
+#include "../position/square_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>
