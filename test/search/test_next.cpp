@@ -1,11 +1,12 @@
 #include "prophet/search.h"
 
-#include "../../src/search/search_internal.h"
-
 #include "prophet/const.h"
 #include "prophet/move.h"
 #include "prophet/movegen.h"
 #include "prophet/position.h"
+
+#include "../../src/movegen/movegen_internal.h"
+#include "../../src/search/search_internal.h"
 
 #include <gtest/gtest.h>
 

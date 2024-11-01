@@ -5,6 +5,7 @@
 #include "prophet/movegen.h"
 #include "prophet/search.h"
 
+#include "../../movegen/movegen_internal.h"
 #include "../../parameters.h"
 #include "../../util/output.h"
 #include "../../util/string_utils.h"

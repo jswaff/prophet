@@ -1,9 +1,9 @@
 #include "xboard_internal.h"
 
 #include "prophet/const.h"
-#include "prophet/movegen.h"
 #include "prophet/position.h"
 
+#include "../../movegen/movegen_internal.h"
 #include "../../util/output.h"
 
 #include <stdbool.h>
