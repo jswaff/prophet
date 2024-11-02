@@ -328,7 +328,11 @@ if(BUILD_TEST_EXECUTABLE)
     )
 
     # Compiler options
-    target_include_directories(prophet_test PUBLIC "include/")
+    target_include_directories(prophet_test 
+        PRIVATE 
+            ${CMAKE_CURRENT_SOURCE_DIR}/src
+            ${CMAKE_CURRENT_SOURCE_DIR}/test
+    )
     target_link_libraries(prophet_test PRIVATE ${PROJECT_NAME})
     target_link_libraries(prophet_test PRIVATE gtest_main)
     set_property(TARGET prophet_test PROPERTY CXX_STANDARD 17)
