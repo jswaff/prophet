@@ -1,4 +1,4 @@
-#include "../../src/movegen/movegen_internal.h"
+#include "movegen/movegen_internal.h"
 
 #include "prophet/move.h"
 #include "prophet/position.h"

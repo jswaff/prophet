@@ -3,7 +3,7 @@
 #include "prophet/move.h"
 #include "prophet/position.h"
 
-#include "../../src/movegen/movegen_internal.h"
+#include "movegen/movegen_internal.h"
 
 #include <gtest/gtest.h>
 

@@ -1,10 +1,10 @@
-#include "../../src/commandline/commandline.h"
+#include "commandline/commandline.h"
 
 #include "prophet/error_codes.h"
 #include "prophet/hash.h"
 #include "prophet/position.h"
 
-#include "../../src/eval/eval_internal.h"
+#include "eval/eval_internal.h"
 
 #include <gtest/gtest.h>
 

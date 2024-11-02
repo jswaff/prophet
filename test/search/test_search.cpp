@@ -4,9 +4,9 @@
 #include <prophet/eval.h>
 #include <prophet/hash.h>
 
-#include "../../src/parameters.h"
-#include "../../src/util/time.h"
-#include "../../src/util/string_utils.h"
+#include "parameters.h"
+#include "util/time.h"
+#include "util/string_utils.h"
 
 #include <gtest/gtest.h>
 

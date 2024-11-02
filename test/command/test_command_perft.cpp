@@ -1,4 +1,4 @@
-#include "../../src/command/command.h"
+#include "command/command.h"
 
 #include "prophet/error_codes.h"
 #include "prophet/position.h"

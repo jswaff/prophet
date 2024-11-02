@@ -1,4 +1,4 @@
-#include "../../src/util/string_utils.h"
+#include "util/string_utils.h"
 
 #include "prophet/const.h"
 #include "prophet/move.h"

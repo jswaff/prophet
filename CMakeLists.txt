@@ -20,6 +20,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # build library
+# TODO - many of these not necessary for the library
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE

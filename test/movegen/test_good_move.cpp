@@ -1,10 +1,10 @@
-#include "../../src/movegen/movegen_internal.h"
+#include "movegen/movegen_internal.h"
 
 #include "prophet/move.h"
 #include "prophet/movegen.h"
 #include "prophet/position.h"
 
-#include "../../src/position/position_internal.h"
+#include "position/position_internal.h"
 
 #include <gtest/gtest.h>
 

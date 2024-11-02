@@ -1,4 +1,4 @@
-#include "../../src/search/search_internal.h"
+#include "search/search_internal.h"
 
 #include "prophet/position.h"
 

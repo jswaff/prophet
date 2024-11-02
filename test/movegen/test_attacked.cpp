@@ -1,9 +1,9 @@
-#include "../../src/movegen/movegen_internal.h"
+#include "movegen/movegen_internal.h"
 
 #include "prophet/position.h"
 #include "prophet/square.h"
 
-#include "../../src/position/square_internal.h"
+#include "position/square_internal.h"
 
 #include <gtest/gtest.h>
 
