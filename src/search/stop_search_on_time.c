@@ -1,6 +1,6 @@
 #include "search_internal.h"
 
-#include "../util/time.h"
+#include "util/time.h"
 
 #include <stdbool.h>
 

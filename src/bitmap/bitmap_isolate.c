@@ -1,6 +1,7 @@
 #include "bitmap.h"
 
 #include <assert.h>
+#include <stdint.h>
 
 /**
  * \brief Isolate a single bit in a 64 bit value.

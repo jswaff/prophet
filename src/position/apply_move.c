@@ -5,6 +5,7 @@
 #include "prophet/square.h"
 
 #include "position_internal.h"
+#include "square_internal.h"
 
 #include <assert.h>
 #include <stdlib.h>

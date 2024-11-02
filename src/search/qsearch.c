@@ -1,10 +1,12 @@
 #include "prophet/search.h"
 
 #include "prophet/eval.h"
-#include "prophet/movegen.h"
+#include "prophet/position.h"
 
 #include "search_internal.h"
-#include "../util/time.h"
+#include "movegen/movegen_internal.h"
+#include "position/position_internal.h"
+#include "util/time.h"
 
 #include <assert.h>
 #include <stdbool.h>
@@ -44,7 +46,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
     stats->qnodes++;
 
-    int32_t stand_pat = eval(pos, false);
+    int32_t stand_pat = eval(pos, false, true);
     if (stand_pat > alpha) {
         if (stand_pat >= beta) {
             return stand_pat;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <prophet/search.h>
+#include "prophet/search.h"
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

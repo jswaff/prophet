@@ -11,7 +11,6 @@ extern "C" {
 #endif    //__cplusplus
 
 
-
 /**
  * \brief Evaluate a chess position for the side to move.
  *
@@ -24,33 +23,11 @@ extern "C" {
  *
  * \param pos             a pointer to a chess position
  * \param material_only   if the evaluation should consider material only
+ * \param use_pawn_hash   if the pawn hash table should be used
  *
  * \return the score.
  */
-int32_t eval(const position_t* pos, bool material_only);
-
-
-/**
- * \brief Evaluate the position's non-pawn material.
- *
- * \param pos           a pointer to a chess position
- * \param for_white     whether the returned value should be for white
- *
- * \return the score.
- */
-int32_t eval_nonpawn_material(const position_t* pos, bool for_white);
-
-
-/**
- * \brief Evaluate the position's pawn material.
- *
- * \param pos           a pointer to a chess position
- * \param for_white     whether the returned value should be for white
- *
- * \return the score.
- */
-int32_t eval_pawn_material(const position_t* pos, bool for_white);
-
+int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash);
 
 
 // make this header C++ friendly.

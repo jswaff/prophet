@@ -1,6 +1,6 @@
 #include "commandline.h"
 
-#include "../util/output.h"
+#include "util/output.h"
 
 
 /**

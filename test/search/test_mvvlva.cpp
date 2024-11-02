@@ -5,7 +5,8 @@
 #include "prophet/movegen.h"
 #include "prophet/position.h"
 
-#include "../../src/search/search_internal.h"
+#include "movegen/movegen_internal.h"
+#include "search/search_internal.h"
 
 #include <gtest/gtest.h>
 

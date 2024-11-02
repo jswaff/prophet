@@ -1,8 +1,6 @@
-#include "prophet/eval.h"
+#include "eval_internal.h"
 
 #include "prophet/position.h"
-
-#include "eval_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>

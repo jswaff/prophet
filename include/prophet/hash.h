@@ -13,8 +13,7 @@ enum hash_entry_type_t { LOWER_BOUND, UPPER_BOUND, EXACT_SCORE, MOVE_ONLY };
 typedef enum hash_entry_type_t hash_entry_type_t;
 
 
-typedef struct 
-{
+typedef struct {
     uint64_t pieces[7][2][64];
     uint64_t ptm[2];
     uint64_t casting_rights[16];
@@ -22,35 +21,20 @@ typedef struct
 } zobrist_keys;
 
 #define NUM_HASH_SLOTS_PER_BUCKET 4
-typedef struct 
-{
+
+typedef struct {
     uint64_t key[NUM_HASH_SLOTS_PER_BUCKET];
     uint64_t val[NUM_HASH_SLOTS_PER_BUCKET];
 } hash_entry_t;
 
 
-typedef struct
-{
-    /* a pointer to the first element in the table */
+typedef struct {
     hash_entry_t *tbl;
-
-    /* the capacity, in number of elements */
     uint64_t capacity;
-
-    /* mask to be applied to hash key to determine bucket */
     uint64_t mask;
-
-    /* the number of times the table has been probed */
     uint64_t probes;
-
-    /* the number of probes that an entry was found with a full key match */
     uint64_t hits;
-
-    /* the number of probes that an entry was found that didn't pass the full 
-     * key match 
-     */
     uint64_t collisions;
-
 } hash_table_t;
 
 
@@ -68,22 +52,6 @@ void clear_hash_table(hash_table_t *tbl);
  *
  */
 void clear_hash_tables();
-
-
-/**
- * \brief Initialize all hash tables
- *
- * Allocates memory for hash tables and sets the capacity.
- *
- * \return - 0 on success, or non-zero on failure
-*/
-int init_hash_tables();
-
-
-/**
- * \brief Free the memory allocated to each hash table
- */
-void free_hash_tables();
 
 
 /**

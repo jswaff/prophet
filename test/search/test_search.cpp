@@ -4,9 +4,9 @@
 #include <prophet/eval.h>
 #include <prophet/hash.h>
 
-#include "../../src/parameters.h"
-#include "../../src/util/time.h"
-#include "../../src/util/string_utils.h"
+#include "parameters.h"
+#include "util/time.h"
+#include "util/string_utils.h"
 
 #include <gtest/gtest.h>
 
@@ -28,8 +28,9 @@ TEST(search_test, depth0_no_bounds)
     memset(&last_pv, 0, sizeof(move_line_t));
     stop_search = false;
 
-    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 0, -CHECKMATE, CHECKMATE, moves, undos, 
-        &stats, &opts));
+    ASSERT_EQ(
+        eval(&pos, false, false), 
+        search(&pos, &pv, 0, -CHECKMATE, CHECKMATE, moves, undos, &stats, &opts));
     ASSERT_EQ(0, pv.n);
     ASSERT_EQ(0U, stats.nodes);
     ASSERT_EQ(1U, stats.qnodes);
@@ -171,8 +172,9 @@ TEST(search_test, search_stops_on_time)
     opts.start_time = milli_timer();
     opts.stop_time = opts.start_time + 500;
     opts.nodes_between_time_checks = 1000UL;
-    ASSERT_EQ(eval(&pos, false), search(&pos, &pv, 30, -CHECKMATE, CHECKMATE, moves, undos, 
-        &stats, &opts));
+    ASSERT_EQ(
+        eval(&pos, false, false), 
+        search(&pos, &pv, 30, -CHECKMATE, CHECKMATE, moves, undos, &stats, &opts));
     uint64_t stop_time = milli_timer();
 
     // the search should have stopped within 100 ms (which is very "generous")

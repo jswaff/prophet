@@ -1,4 +1,4 @@
-#include "../../src/command/command.h"
+#include "command/command.h"
 
 #include <gtest/gtest.h>
 

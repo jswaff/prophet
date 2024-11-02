@@ -1,4 +1,4 @@
-#include "../../../src/command/xboard/xboard_internal.h"
+#include "command/xboard/xboard_internal.h"
 
 #include "prophet/error_codes.h"
 

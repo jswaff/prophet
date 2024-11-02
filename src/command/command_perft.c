@@ -1,11 +1,11 @@
 #include "command.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/movegen.h"
 #include "prophet/position.h"
 
-#include "../util/output.h"
-#include "../util/time.h"
+#include "movegen/movegen_internal.h"
+#include "util/output.h"
+#include "util/time.h"
 
 #include <inttypes.h>
 #include <stdint.h>

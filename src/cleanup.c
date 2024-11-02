@@ -4,6 +4,9 @@
 
 bool cleanup_done = false;
 
+extern void free_hash_tables();
+
+
 /**
  * \brief Cleanup and exit
  *

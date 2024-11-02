@@ -2,6 +2,7 @@
 
 #include <prophet/position.h>
 
+#include <stdbool.h>
 #include <stdint.h>
 
 // make this header C++ friendly.
@@ -13,63 +14,22 @@ extern "C" {
 /**
  * \brief Options structure for the search iterator.
  */
-typedef struct 
-{
-    /**
-     * \brief Is an early exit OK or should the search use all available time
-     * or exhaust the maximum depth?
-     */
+typedef struct {
     bool early_exit_ok;
-
-    /**
-     * \brief Maximum search depth
-     */
     uint32_t max_depth;
-
-
-    /**
-     * \brief Maximum search time in milliseconds
-     */
     uint32_t max_time_ms;
-
-
-    /**
-     * \brief If in post mode the iterator will print the best line to stdout
-     * after each iteration, and a summary at the end.
-     */
     bool post_mode;
-
-
-    /**
-     * \brief Clear hash before each search.  This is a debugging tool.
-     */
     bool clear_hash_each_search;
-
-
 } iterator_options_t;
 
 
 /**
  * \brief Context structure for the search iterator.
  */
-typedef struct 
-{
-    /**
-     * \brief Pointer to a chess position to search
-     */
+typedef struct {
     position_t* pos;
-
-    /**
-     * \brief Pre-allocated stack for move generation in the search.
-     */
     move_t* move_stack;
-
-
-    /**
-     * \brief Pre-allocated stack for undo information.
-     */
     undo_t* undo_stack;
-
 } iterator_context_t;
 
 
@@ -82,95 +42,27 @@ typedef void (*pv_func_t)(move_line_t*, int32_t, int32_t, uint64_t, uint64_t);
 /**
  * \brief Structure for tracking various stats during the search.
  */
-typedef struct 
-{
-
-    /**
-     * \brief The total number of nodes encountered in the search.
-     */
+typedef struct {
     uint64_t nodes;
-
-    /**
-     * \brief The total number of qnodes encountered in the search.
-     */
     uint64_t qnodes;
-
-    /**
-     * \brief The total number of exits due to a fail high (score exceeding 
-     * beta) during the search.
-     */
     uint64_t fail_highs;
-
-    /**
-     * \brief The total number of times the search failed to raise alpha.
-     */
     uint64_t fail_lows;
-
-    /**
-     * \brief The total number of search exits due to a draw condition.
-     */
     uint64_t draws;
-
-    /**
-     * \brief The number of fail highs from a hash hit
-     */
     uint64_t hash_fail_highs;
-
-    /**
-     * \brief The number of fail lows from a hash hit
-     */
     uint64_t hash_fail_lows;
-
-    /**
-     * \brief The number of exact scores from a hash hit
-     */
     uint64_t hash_exact_scores;
-
 } stats_t;
 
 
 /**
  * \brief Structure for search optional data.
  */
-typedef struct 
-{
-    /*
-     * \brief A callback function to execute when the PV is updated at the root
-     * of the search.
-     */
+typedef struct {
     pv_func_t pv_callback;
-    
-
-    /*
-     * \brief The time the search was started - should be milliseconds since
-     * epoch.  This is used to calculate elapsed time when the callback is
-     * executed.
-     */
     uint64_t start_time;
-
-
-    /*
-     * \brief The time the search should stop, if non-zero.  Should be 
-     * millseconds since epoch.
-     */
     uint64_t stop_time;
-
-
-    /*
-     * \brief The number of nodes to wait between time checks.  This, along 
-     * with node_count_last_time_check are used to avoid calling the expensive
-     * time check routine at every node.
-     */
     uint64_t nodes_between_time_checks;
-
-
-    /*
-     * \brief The node count at the last time check.  
-     */
     uint64_t node_count_last_time_check;
-
-
-
 } search_options_t;
 
 
@@ -182,8 +74,7 @@ typedef struct
  *
  * \return the principal variation
  */ 
-move_line_t iterate(const iterator_options_t* opts, 
-    const iterator_context_t* ctx);
+move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx);
 
 
 /**

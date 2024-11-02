@@ -1,9 +1,11 @@
 #include "eval_internal.h"
 
-#include "prophet/movegen.h"
 #include "prophet/position.h"
+#include "prophet/square.h"
 
-#include "../bitmap/bitmap.h"
+#include "bitmap/bitmap.h"
+#include "movegen/movegen_internal.h"
+#include "position/square_internal.h"
 
 #include <assert.h>
 #include <stdint.h>

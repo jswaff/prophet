@@ -5,7 +5,6 @@
 #include <stdarg.h>
 #include <pthread.h>
 
-
 bool logging_enabled = false;
 
 static pthread_mutex_t error_mutex;

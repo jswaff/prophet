@@ -3,7 +3,7 @@
 #include "prophet/error_codes.h"
 #include "prophet/hash.h"
 
-#include "../../util/output.h"
+#include "util/output.h"
 
 #include <stdint.h>
 #include <stdio.h>

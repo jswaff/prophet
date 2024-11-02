@@ -1,4 +1,4 @@
-#include "../../src/util/prng.h"
+#include "util/prng.h"
 
 #include <gtest/gtest.h>
 
