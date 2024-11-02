@@ -12,8 +12,7 @@
 extern "C" {
 #endif   
 
-enum color_t { BLACK=0, WHITE=1 };
-typedef enum color_t color_t;
+typedef enum { BLACK=0, WHITE=1 } color_t;
 
 typedef struct {
     int32_t piece[64];
