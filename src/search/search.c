@@ -6,9 +6,9 @@
 #include "prophet/position.h"
 
 #include "search_internal.h"
-#include "../movegen/movegen_internal.h"
-#include "../position/position_internal.h"
-#include "../util/time.h"
+#include "movegen/movegen_internal.h"
+#include "position/position_internal.h"
+#include "util/time.h"
 
 #include <assert.h>
 #include <stdbool.h>

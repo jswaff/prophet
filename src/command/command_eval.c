@@ -4,7 +4,7 @@
 #include "prophet/eval.h"
 #include "prophet/position.h"
 
-#include "../util/output.h"
+#include "util/output.h"
 
 #include <stdint.h>
 #include <string.h>

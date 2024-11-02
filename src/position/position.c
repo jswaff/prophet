@@ -4,9 +4,9 @@
 
 #include "position_internal.h"
 
-#include "../bitmap/bitmap.h"
-#include "../util/output.h"
-#include "../util/string_utils.h"
+#include "bitmap/bitmap.h"
+#include "util/output.h"
+#include "util/string_utils.h"
 
 #include <assert.h>
 #include <stdlib.h>

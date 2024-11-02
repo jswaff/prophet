@@ -2,7 +2,7 @@
 
 #include "prophet/error_codes.h"
 
-#include "../eval/eval_internal.h"
+#include "eval/eval_internal.h"
 
 #include <stdio.h>
 #include <stdlib.h>

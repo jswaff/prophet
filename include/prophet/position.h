@@ -1,8 +1,8 @@
 #pragma once
 
-#include "piece.h"
-#include "move.h"
-#include "square.h"
+#include <prophet/move.h>
+#include <prophet/piece.h>
+#include <prophet/square.h>
 
 #include <stdbool.h>
 #include <stdint.h>

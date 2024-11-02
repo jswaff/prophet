@@ -3,9 +3,9 @@
 #include "prophet/const.h"
 #include "prophet/position.h"
 
-#include "../../movegen/movegen_internal.h"
-#include "../../position/position_internal.h"
-#include "../../util/output.h"
+#include "movegen/movegen_internal.h"
+#include "position/position_internal.h"
+#include "util/output.h"
 
 #include <stdbool.h>
 

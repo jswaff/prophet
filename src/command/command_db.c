@@ -3,8 +3,8 @@
 #include "prophet/error_codes.h"
 #include "prophet/position.h"
 
-#include "../util/output.h"
-#include "../util/string_utils.h"
+#include "util/output.h"
+#include "util/string_utils.h"
 
 #include <stdlib.h>
 #include <string.h>

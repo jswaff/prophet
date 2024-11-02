@@ -6,8 +6,8 @@
 #include "prophet/position.h"
 #include "prophet/square.h"
 
-#include "../position/position_internal.h"
-#include "../position/square_internal.h"
+#include "position/position_internal.h"
+#include "position/square_internal.h"
 
 #include <stdlib.h>
 #include <string.h>

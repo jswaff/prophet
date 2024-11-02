@@ -2,7 +2,7 @@
 
 #include "prophet/error_codes.h"
 
-#include "../util/output.h"
+#include "util/output.h"
 #include "xboard/xboard_internal.h"
 
 #include <stdbool.h>

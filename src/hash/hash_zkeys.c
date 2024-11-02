@@ -1,6 +1,6 @@
 #include "prophet/hash.h"
 
-#include "../util/prng.h"
+#include "util/prng.h"
 
 
 /**

@@ -4,7 +4,7 @@
 #include "prophet/movegen.h"
 #include "prophet/position.h"
 
-#include "../position/position_internal.h"
+#include "position/position_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>

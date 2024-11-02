@@ -2,7 +2,7 @@
 
 #include "prophet/square.h"
 
-#include "../bitmap/bitmap.h"
+#include "bitmap/bitmap.h"
 
 #include <stdbool.h>
 #include <stdint.h>
