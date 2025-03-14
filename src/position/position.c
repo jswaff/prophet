@@ -187,6 +187,7 @@ bool set_pos(position_t* pos, const char* fen)
 
     pos->hash_key = build_hash_key(pos);
     pos->pawn_key = build_pawn_key(pos);
+    /* TODO: build accmulators */
 
     /* it appears we've set everything up, but is the position valid? */
     if (verify_pos(pos)) {

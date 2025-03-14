@@ -67,6 +67,8 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     remove_castling_availability(pos, m);
     remove_piece(pos, get_from_sq(m));
 
+    /* TODO: update accumulators */
+
     assert(verify_pos(pos));
 }
 

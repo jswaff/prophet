@@ -65,6 +65,8 @@ position_t position_flip(const position_t* pos)
     flipped.hash_key = build_hash_key(&flipped);
     flipped.pawn_key = build_pawn_key(&flipped);
 
+    /* TODO: rebuild accmulators */
+
     /* verify everything is consistent */
     assert(verify_pos(&flipped));
 

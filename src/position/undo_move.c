@@ -84,4 +84,6 @@ void undo_move(position_t* p, const undo_t* u)
     }
 
     p->hash_key = u->hash_key;
+
+    /* TODO: accumulators */
 }

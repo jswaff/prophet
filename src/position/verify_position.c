@@ -70,6 +70,8 @@ bool verify_pos(const position_t* pos)
         retval = false;
     }
 
+    /* TODO: verify accumulators */
+
     return retval;
 }
 

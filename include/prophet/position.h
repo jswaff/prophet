@@ -14,6 +14,11 @@ extern "C" {
 
 typedef enum { BLACK=0, WHITE=1 } color_t;
 
+#define NN_SIZE_L1 1536
+#define NN_SIZE_L2    1
+
+typedef int16_t nnue_accumulator_t[2][NN_SIZE_L1];
+
 typedef struct {
     int32_t piece[64];
     uint32_t piece_counts[2][7];
@@ -38,6 +43,7 @@ typedef struct {
     uint64_t black_pieces;
     uint64_t hash_key;
     uint64_t pawn_key;
+    nnue_accumulator_t nnue_accumulator;
 } position_t;
 
 
