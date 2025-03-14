@@ -1,0 +1,17 @@
+#include "commandline/commandline.h"
+
+#include "nn/nn_internal.h"
+
+#include <gtest/gtest.h>
+
+extern neural_network_t neural_network;
+
+TEST(commandline_test, commandline_load_network)
+{
+    ASSERT_EQ(0, commandline_load_network("../test/resources/nn.txt"));
+
+    EXPECT_EQ(-2, neural_network.W0[0]);
+    EXPECT_EQ(2, neural_network.W0[NN_SIZE_L1]);
+    EXPECT_EQ(120, neural_network.W1[NN_SIZE_L1 * 2 * NN_SIZE_L2 - 1]);
+    EXPECT_EQ(2, neural_network.B1[0]);
+}

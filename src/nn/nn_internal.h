@@ -23,8 +23,6 @@ typedef struct {
 } neural_network_t;
 
 
-int load_neural_network(neural_network_t* nn, const char* weights_file);
-
 
 // make this header C++ friendly.
 #ifdef     __cplusplus

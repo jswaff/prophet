@@ -1,12 +1,15 @@
-#include "nn_internal.h"
+#include "commandline.h"
 
 #include "prophet/error_codes.h"
+
+#include "nn/nn_internal.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
+extern neural_network_t neural_network;
 
-int load_neural_network(neural_network_t* nn, const char* weights_file)
+int commandline_load_network(const char* weights_file)
 {
     FILE* wf;
     wf = fopen(weights_file, "r");
@@ -24,7 +27,7 @@ int load_neural_network(neural_network_t* nn, const char* weights_file)
                 fclose(wf);
                 return P4_ERROR_CMDLINE_NN_FILE_PARSE_FAILURE;
             }
-            nn->W0[col * NN_SIZE_L1 + row] = (int8_t)val; /* transposition */
+            neural_network.W0[col * NN_SIZE_L1 + row] = (int8_t)val; /* transposition */
         }
     }
 
@@ -34,7 +37,7 @@ int load_neural_network(neural_network_t* nn, const char* weights_file)
             fclose(wf);
             return P4_ERROR_CMDLINE_NN_FILE_PARSE_FAILURE;
         }
-        nn->B0[i] = (int8_t)val;
+        neural_network.B0[i] = (int8_t)val;
     }
 
     /* load W1 */
@@ -43,7 +46,7 @@ int load_neural_network(neural_network_t* nn, const char* weights_file)
             fclose(wf);
             return P4_ERROR_CMDLINE_NN_FILE_PARSE_FAILURE;
         }
-        nn->W1[i] = (int8_t)val;
+        neural_network.W1[i] = (int8_t)val;
     }
 
     /* load B1 */
@@ -52,7 +55,7 @@ int load_neural_network(neural_network_t* nn, const char* weights_file)
             fclose(wf);
             return P4_ERROR_CMDLINE_NN_FILE_PARSE_FAILURE;
         }
-        nn->B1[i] = (int8_t)val;
+        neural_network.B1[i] = (int8_t)val;
     }
     
 
