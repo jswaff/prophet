@@ -104,6 +104,7 @@ target_sources(${PROJECT_NAME}
         src/movegen/perft.c
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
+        src/nn/load_network.c
         src/position/add_piece.c
         src/position/apply_move.c
         src/position/draw_material.c
@@ -303,6 +304,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/movegen/test_perft.cpp
             test/movegen/test_queen_moves.cpp
             test/movegen/test_rook_moves.cpp
+            test/nn/test_load_neural_network.cpp
             test/position/test_add_piece.cpp
             test/position/test_apply_move.cpp
             test/position/test_draw50.cpp

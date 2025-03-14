@@ -28,7 +28,7 @@ GTEST_API_ int main(int argc, char* argv[])
     if (perft) {
         ::testing::GTEST_FLAG(filter) = "perft_test*";
     } else {
-        ::testing::GTEST_FLAG(filter) = "-perft_test*";
+        //::testing::GTEST_FLAG(filter) = "-perft_test*";
     }
 
     // initialize program data
