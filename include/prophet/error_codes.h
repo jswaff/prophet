@@ -197,6 +197,19 @@ extern "C" {
 #define P4_ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE      0x500
 
 
+/**
+ * \brief This error is thrown when the neural network weights file could not be 
+ * opened.
+ */
+#define P4_ERROR_CMDLINE_NN_FILE_OPEN_FAILURE              0x501
+
+
+/**
+ * \brief This error is thrown when the neural network weights file could not be parsed. 
+ */
+#define P4_ERROR_CMDLINE_NN_FILE_PARSE_FAILURE             0x502
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
