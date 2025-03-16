@@ -23,6 +23,9 @@ typedef struct {
 } neural_network_t;
 
 
+void populate_accumulators(position_t* pos, const neural_network_t *nn);
+
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }

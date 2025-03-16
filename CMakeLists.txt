@@ -106,6 +106,7 @@ target_sources(${PROJECT_NAME}
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
         src/nn/neural_network.c
+        src/nn/nnue_accumulators.c
         src/position/add_piece.c
         src/position/apply_move.c
         src/position/draw_material.c
