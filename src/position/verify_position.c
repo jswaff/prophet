@@ -3,12 +3,17 @@
 #include "prophet/position.h"
 #include "prophet/square.h"
 
+#include "nn/nn_internal.h"
 #include "square_internal.h"
 #include "util/output.h"
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
+
+
+extern neural_network_t neural_network;
 
 static bool verify_pos_kings(const position_t* pos);
 static bool verify_pos_ep(const position_t* pos);
@@ -16,6 +21,7 @@ static bool verify_piece_counts(const position_t* pos);
 static bool verify_bitmaps(const position_t* pos);
 static bool verify_castling_rights(const position_t* pos);
 static bool verify_hash_keys(const position_t* pos);
+static bool verify_nnue_accumulators(const position_t* pos);
 
 /**
  * \brief Verify the internal consistency of a position.
@@ -70,7 +76,9 @@ bool verify_pos(const position_t* pos)
         retval = false;
     }
 
-    /* TODO: verify accumulators */
+    if (!verify_nnue_accumulators(pos)) {
+        retval = false;
+    }
 
     return retval;
 }
@@ -437,3 +445,22 @@ static bool verify_hash_keys(const position_t* pos)
 
     return retval;
 }
+
+static bool verify_nnue_accumulators(const position_t* pos)
+{
+    bool retval = true;
+
+    /* recompute pos accumulators */
+    position_t copy_pos;
+    memcpy(&copy_pos, pos, sizeof(position_t));
+    populate_accumulators(&copy_pos, &neural_network);
+
+    /* test for equality */
+    if (!accumulators_equal(&(pos->nnue_accumulator), &(copy_pos.nnue_accumulator))) {
+        error("invalid NNUE accumulators\n");
+        retval = false;
+    }
+
+    return retval;
+}
+

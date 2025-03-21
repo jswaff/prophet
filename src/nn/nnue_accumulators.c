@@ -4,8 +4,8 @@
 
 #include "bitmap/bitmap.h"
 #include "position/square_internal.h"
-
 #include "parameters.h"
+
 
 static void add_pieces_to_accumulators(uint64_t piece_map, int piece_type, int piece_color, const neural_network_t* nn, 
     nnue_accumulator_t* acc);
@@ -35,6 +35,9 @@ void populate_accumulators(position_t* pos, const neural_network_t* nn) {
     add_piece_to_accumulators(pos->black_king, KING, BLACK, nn, &pos->nnue_accumulator);
 }
 
+bool accumulators_equal(const nnue_accumulator_t* UNUSED(acc1), const nnue_accumulator_t* UNUSED(acc2)) {
+    return false;
+}
 
 static void add_pieces_to_accumulators(uint64_t piece_map, int piece_type, int piece_color, const neural_network_t* nn, 
     nnue_accumulator_t* acc) 

@@ -2,6 +2,7 @@
 
 #include "prophet/position.h"
 
+#include <stdbool.h>
 #include <stdint.h>
 
 /* make this header C++ friendly. */
@@ -25,6 +26,7 @@ typedef struct {
 
 void populate_accumulators(position_t* pos, const neural_network_t *nn);
 
+bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2);
 
 // make this header C++ friendly.
 #ifdef     __cplusplus
