@@ -35,8 +35,13 @@ void populate_accumulators(position_t* pos, const neural_network_t* nn) {
     add_piece_to_accumulators(pos->black_king, KING, BLACK, nn, &pos->nnue_accumulator);
 }
 
-bool accumulators_equal(const nnue_accumulator_t* UNUSED(acc1), const nnue_accumulator_t* UNUSED(acc2)) {
-    return false;
+bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2) {
+    for (int i=0;i<2;i++) {
+        for (int j=0;j<NN_SIZE_L1;j++) {
+            if ((*acc1)[i][j] != (*acc2)[i][j]) return false;
+        }
+    }
+    return true;
 }
 
 static void add_pieces_to_accumulators(uint64_t piece_map, int piece_type, int piece_color, const neural_network_t* nn, 
