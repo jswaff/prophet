@@ -3,11 +3,13 @@
 #include "prophet/move.h"
 #include "prophet/square.h"
 
+#include "nn/nn_internal.h"
 #include "position_internal.h"
 
 #include <assert.h>
 #include <stdlib.h>
 
+extern neural_network_t neural_network;
 
 /**
  * \brief Undo (reverse) a move.
@@ -85,5 +87,6 @@ void undo_move(position_t* p, const undo_t* u)
 
     p->hash_key = u->hash_key;
 
-    /* TODO: accumulators */
+    /* update accumulators */
+    populate_accumulators(p, &neural_network);
 }

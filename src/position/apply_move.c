@@ -4,6 +4,7 @@
 #include "prophet/move.h"
 #include "prophet/square.h"
 
+#include "nn/nn_internal.h"
 #include "position_internal.h"
 #include "square_internal.h"
 
@@ -14,6 +15,8 @@ static piece_t remove_captured_piece(position_t* p, move_t m);
 static void add_piece_to_destination(position_t* p, move_t m);
 static void remove_castling_availability(position_t* p, move_t mv);
 static void remove_rook_castling_availability(position_t* p, square_t sq);
+
+extern neural_network_t neural_network;
 
 /**
  * \brief Apply a chess move to a chess position.
@@ -67,7 +70,8 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     remove_castling_availability(pos, m);
     remove_piece(pos, get_from_sq(m));
 
-    /* TODO: update accumulators */
+    /* update accumulators */
+    populate_accumulators(pos, &neural_network);
 
     assert(verify_pos(pos));
 }
