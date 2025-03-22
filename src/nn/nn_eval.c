@@ -2,10 +2,12 @@
 
 #include "prophet/position.h"
 
+#include <math.h>
 #include <stdint.h>
 
 static int clamp(int val, int min, int max);
 static void compute_layer(const int8_t* I, const int8_t* W, const int8_t* B, int8_t* O, int I_len, int O_len);
+static int my_round(float val);
 
 int nn_eval(const position_t* pos, const neural_network_t* nn) {
 
@@ -22,7 +24,7 @@ int nn_eval(const position_t* pos, const neural_network_t* nn) {
 
     /* translate to predicted score */
     float y = ((float)L2[0]) / (SCALE * SCALE);
-    int pred = (int)(y * 100); /* centi-pawns */
+    int pred = my_round(y * 100); /* centi-pawns */
 
     return pos->player==WHITE ? pred : -pred;
 }
@@ -43,4 +45,8 @@ static void compute_layer(const int8_t* I, const int8_t* W, const int8_t* B, int
 
         O[o] = sum;
     }
+}
+
+static int my_round(float val) {
+    return (int)(val + 0.5);
 }
