@@ -180,6 +180,7 @@ set(public_headers
     include/prophet/hash.h
     include/prophet/move.h
     include/prophet/movegen.h
+    include/prophet/nn.h
     include/prophet/piece.h
     include/prophet/position.h
     include/prophet/search.h

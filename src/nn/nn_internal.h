@@ -1,5 +1,6 @@
 #pragma once
 
+#include "prophet/nn.h"
 #include "prophet/position.h"
 
 #include <stdbool.h>
@@ -13,16 +14,6 @@ extern "C" {
 
 static const unsigned int SCALE = 64;
 static const unsigned int THRESHOLD = 127;
-
-typedef struct {
-
-    int8_t W0[768 * NN_SIZE_L1];
-    int8_t B0[NN_SIZE_L1];
-    int8_t W1[NN_SIZE_L1 * 2 * NN_SIZE_L2];
-    int8_t B1[NN_SIZE_L2];
-
-} neural_network_t;
-
 
 void populate_accumulators(position_t* pos, const neural_network_t *nn);
 
