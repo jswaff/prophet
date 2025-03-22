@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 /**
  * \brief Undo (reverse) a move.
@@ -88,5 +89,5 @@ void undo_move(position_t* p, const undo_t* u)
     p->hash_key = u->hash_key;
 
     /* update accumulators */
-    populate_accumulators(p, &neural_network);
+    if (use_neural_network) populate_accumulators(p, &neural_network);
 }

@@ -14,6 +14,7 @@
 #include <string.h>
 
 extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 /**
  * \brief Reset a chess position to the initial position.
@@ -191,7 +192,7 @@ bool set_pos(position_t* pos, const char* fen)
     pos->pawn_key = build_pawn_key(pos);
 
     /* build accmulators */
-    populate_accumulators(pos, &neural_network);
+    if (use_neural_network) populate_accumulators(pos, &neural_network);
 
     /* it appears we've set everything up, but is the position valid? */
     if (verify_pos(pos)) {

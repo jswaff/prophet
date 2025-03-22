@@ -14,6 +14,7 @@
 
 
 extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 static bool verify_pos_kings(const position_t* pos);
 static bool verify_pos_ep(const position_t* pos);
@@ -76,7 +77,7 @@ bool verify_pos(const position_t* pos)
         retval = false;
     }
 
-    if (!verify_nnue_accumulators(pos)) {
+    if (use_neural_network && !verify_nnue_accumulators(pos)) {
         retval = false;
     }
 

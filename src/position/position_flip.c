@@ -11,6 +11,7 @@
 #include <string.h>
 
 extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 /**
  * \brief Flip a position vertically.
@@ -69,7 +70,7 @@ position_t position_flip(const position_t* pos)
     flipped.pawn_key = build_pawn_key(&flipped);
 
     /* rebuild accmulators */
-    populate_accumulators(&flipped, &neural_network);
+    if (use_neural_network) populate_accumulators(&flipped, &neural_network);
 
     /* verify everything is consistent */
     assert(verify_pos(&flipped));

@@ -17,6 +17,7 @@ static void remove_castling_availability(position_t* p, move_t mv);
 static void remove_rook_castling_availability(position_t* p, square_t sq);
 
 extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 /**
  * \brief Apply a chess move to a chess position.
@@ -71,7 +72,7 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     remove_piece(pos, get_from_sq(m));
 
     /* update accumulators */
-    populate_accumulators(pos, &neural_network);
+    if (use_neural_network) populate_accumulators(pos, &neural_network);
 
     assert(verify_pos(pos));
 }
