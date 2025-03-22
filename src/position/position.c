@@ -191,7 +191,7 @@ bool set_pos(position_t* pos, const char* fen)
     pos->hash_key = build_hash_key(pos);
     pos->pawn_key = build_pawn_key(pos);
 
-    /* build accmulators */
+    /* build accumulators */
     if (use_neural_network) populate_accumulators(pos, &neural_network);
 
     /* it appears we've set everything up, but is the position valid? */
