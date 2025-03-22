@@ -2,7 +2,6 @@
 
 #include "prophet/position.h"
 
-#include "parameters.h"
 #include <stdint.h>
 
 static int clamp(int val, int min, int max);

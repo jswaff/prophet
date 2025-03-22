@@ -5,6 +5,7 @@
 
 #include "search_internal.h"
 #include "movegen/movegen_internal.h"
+#include "nn/nn_internal.h"
 #include "position/position_internal.h"
 #include "util/time.h"
 
@@ -14,6 +15,9 @@
 
 extern bool volatile stop_search;
 extern bool volatile skip_time_checks;
+
+extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 
 /**
@@ -46,7 +50,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
 
     stats->qnodes++;
 
-    int32_t stand_pat = eval(pos, false, true);
+    int32_t stand_pat = use_neural_network ? nn_eval(pos, &neural_network) : eval(pos, false, true);
     if (stand_pat > alpha) {
         if (stand_pat >= beta) {
             return stand_pat;
