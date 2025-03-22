@@ -4,10 +4,12 @@
 
 #include "nn/nn_internal.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 int commandline_load_network(const char* weights_file)
 {
@@ -59,7 +61,11 @@ int commandline_load_network(const char* weights_file)
     }
     
 
+    /* success */
+
     fclose(wf);
+
+    use_neural_network = true;
 
     return 0;
 }
