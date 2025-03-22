@@ -4,7 +4,6 @@
 
 #include "bitmap/bitmap.h"
 #include "position/square_internal.h"
-#include "parameters.h"
 
 
 static void add_pieces_to_accumulators(uint64_t piece_map, int piece_type, int piece_color, const neural_network_t* nn, 

@@ -105,6 +105,7 @@ target_sources(${PROJECT_NAME}
         src/movegen/perft.c
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
+        src/nn/nn_eval.c
         src/nn/neural_network.c
         src/nn/nnue_accumulators.c
         src/position/add_piece.c
