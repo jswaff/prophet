@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 static int clamp(int val, int min, int max);
-static void compute_layer(const int8_t* I, const int8_t* W, const int8_t* B, int8_t* O, int I_len, int O_len);
+static void compute_layer(const int8_t* I, const int8_t* W, const int8_t* B, int32_t* O, int I_len, int O_len);
 static int my_round(float val);
 
 int nn_eval(const position_t* pos, const neural_network_t* nn) {
@@ -19,11 +19,11 @@ int nn_eval(const position_t* pos, const neural_network_t* nn) {
     }
 
     /* calculate layer 2 */
-    int8_t L2[NN_SIZE_L2];
-    compute_layer(L1, nn->W1, nn->B1, L2, NN_SIZE_L1 * 2, NN_SIZE_L2); 
+    int32_t L2[NN_SIZE_L2];
+    compute_layer(L1, nn->W1, nn->B1, L2, NN_SIZE_L1 * 2, NN_SIZE_L2);
 
     /* translate to predicted score */
-    float y = ((float)L2[0]) / (SCALE * SCALE);
+    double y = ((double)L2[0]) / (SCALE * SCALE);
     int pred = my_round(y * 100); /* centi-pawns */
 
     return pos->player==WHITE ? pred : -pred;
@@ -35,10 +35,10 @@ static int clamp(int val, int min, int max) {
     return val;
 }
 
-static void compute_layer(const int8_t* I, const int8_t* W, const int8_t* B, int8_t* O, int I_len, int O_len) {
+static void compute_layer(const int8_t* I, const int8_t* W, const int8_t* B, int32_t* O, int I_len, int O_len) {
 
     for (int o=0;o<O_len;o++) {
-        int8_t sum = B[o];
+        int32_t sum = B[o];
         for (int i=0;i<I_len;i++) {
             sum += W[o * I_len + i]  * I[i];
         }
