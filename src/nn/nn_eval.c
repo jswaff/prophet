@@ -23,7 +23,7 @@ int nn_eval(const position_t* pos, const neural_network_t* nn) {
     compute_layer(L1, nn->W1, nn->B1, L2, NN_SIZE_L1 * 2, NN_SIZE_L2);
 
     /* translate to predicted score */
-    double y = ((double)L2[0]) / (SCALE * SCALE);
+    float y = ((float)L2[0]) / (SCALE * SCALE);
     int pred = my_round(y * 100); /* centi-pawns */
 
     return pos->player==WHITE ? pred : -pred;
@@ -48,5 +48,6 @@ static void compute_layer(const int8_t* I, const int8_t* W, const int8_t* B, int
 }
 
 static int my_round(float val) {
-    return (int)(val + 0.5);
+    if (val > 0) return (int)(val + 0.5);
+    else return (int)(val - 0.5);
 }
