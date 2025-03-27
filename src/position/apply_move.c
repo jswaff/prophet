@@ -72,7 +72,18 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     remove_piece(pos, get_from_sq(m));
 
     /* update accumulators */
-    if (use_neural_network) populate_accumulators(pos, &neural_network);
+    if (use_neural_network) {
+        if (get_piece(m) != KING && !is_epcapture(m) && get_promopiece(m)==NO_PIECE) {
+            /* incremental update */
+            if (u->captured != NO_PIECE) {
+                nn_remove_piece(u->captured, pos->player, get_to_sq(m), &neural_network, &pos->nnue_accumulator);
+            }
+            nn_move_piece(get_piece(m), opposite_player(pos->player), get_from_sq(m), get_to_sq(m),
+                &neural_network, &pos->nnue_accumulator);
+        } else {
+            populate_accumulators(pos, &neural_network);
+        }
+    }
 
     assert(verify_pos(pos));
 }

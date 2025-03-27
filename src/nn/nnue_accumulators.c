@@ -5,10 +5,8 @@
 #include "bitmap/bitmap.h"
 #include "position/square_internal.h"
 
-
-static void add_pieces_to_accumulators(uint64_t piece_map, int piece_type, int piece_color, const neural_network_t* nn, 
+static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t* nn,
     nnue_accumulator_t* acc);
-static void add_piece_to_accumulators(int sq, int piece_type, int piece_color, const neural_network_t* nn, nnue_accumulator_t* acc);
 static int get_nnue_piece_type(int piece_type);
 
 void populate_accumulators(position_t* pos, const neural_network_t* nn) {
@@ -20,44 +18,45 @@ void populate_accumulators(position_t* pos, const neural_network_t* nn) {
     }
 
     /* add pieces */
-    add_pieces_to_accumulators(pos->white_rooks, ROOK, WHITE, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->black_rooks, ROOK, BLACK, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->white_knights, KNIGHT, WHITE, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->black_knights, KNIGHT, BLACK, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->white_bishops, BISHOP, WHITE, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->black_bishops, BISHOP, BLACK, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->white_queens, QUEEN, WHITE, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->black_queens, QUEEN, BLACK, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->white_pawns, PAWN, WHITE, nn, &pos->nnue_accumulator);
-    add_pieces_to_accumulators(pos->black_pawns, PAWN, BLACK, nn, &pos->nnue_accumulator);
-    add_piece_to_accumulators(pos->white_king, KING, WHITE, nn, &pos->nnue_accumulator);
-    add_piece_to_accumulators(pos->black_king, KING, BLACK, nn, &pos->nnue_accumulator);
+    nn_add_pieces(ROOK, WHITE, pos->white_rooks, nn, &pos->nnue_accumulator);
+    nn_add_pieces(ROOK, BLACK, pos->black_rooks, nn, &pos->nnue_accumulator);
+    nn_add_pieces(KNIGHT, WHITE, pos->white_knights, nn, &pos->nnue_accumulator);
+    nn_add_pieces(KNIGHT, BLACK, pos->black_knights, nn, &pos->nnue_accumulator);
+    nn_add_pieces(BISHOP, WHITE, pos->white_bishops, nn, &pos->nnue_accumulator);
+    nn_add_pieces(BISHOP, BLACK, pos->black_bishops, nn, &pos->nnue_accumulator);
+    nn_add_pieces(QUEEN, WHITE, pos->white_queens, nn, &pos->nnue_accumulator);
+    nn_add_pieces(QUEEN, BLACK, pos->black_queens, nn, &pos->nnue_accumulator);
+    nn_add_pieces(PAWN, WHITE, pos->white_pawns, nn, &pos->nnue_accumulator);
+    nn_add_pieces(PAWN, BLACK, pos->black_pawns, nn, &pos->nnue_accumulator);
+    nn_add_piece(KING, WHITE, pos->white_king, nn, &pos->nnue_accumulator);
+    nn_add_piece(KING, BLACK, pos->black_king, nn, &pos->nnue_accumulator);
 }
 
-bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2) {
-    for (int i=0;i<2;i++) {
-        for (int j=0;j<NN_SIZE_L1;j++) {
-            if ((*acc1)[i][j] != (*acc2)[i][j]) return false;
-        }
-    }
-    return true;
-}
-
-static void add_pieces_to_accumulators(uint64_t piece_map, int piece_type, int piece_color, const neural_network_t* nn, 
-    nnue_accumulator_t* acc) 
+void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t to, const neural_network_t* nn,
+        nnue_accumulator_t* acc)
 {
+    int nnue_piece_type = get_nnue_piece_type(piece);
+    int nnue_piece_color = !piece_color;
 
-    while (piece_map) {
-        square_t sq = (square_t)get_lsb(piece_map);
-        add_piece_to_accumulators(sq, piece_type, piece_color, nn, acc);    
-        piece_map ^= square_to_bitmap(sq);
+    int index_w = nnue_piece_type * 2 + nnue_piece_color;
+    int from_feature_w = (64 * index_w) + from;
+    int to_feature_w = (64 * index_w) + to;
+
+    int index_b = nnue_piece_type * 2 + (1 - nnue_piece_color);
+    int from_feature_b = (64 * index_b) + (from ^ 56);
+    int to_feature_b = (64 * index_b) + (to ^ 56);
+
+    for (int i=0;i<NN_SIZE_L1;i++) {
+        (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * from_feature_w + i];
+        (*acc)[0][i] += nn->W0[NN_SIZE_L1 * to_feature_w + i];
+        (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * from_feature_b + i];
+        (*acc)[1][i] += nn->W0[NN_SIZE_L1 * to_feature_b + i];
     }
-
 }
 
-static void add_piece_to_accumulators(int sq, int piece_type, int piece_color, const neural_network_t* nn, nnue_accumulator_t* acc) {
+void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t* nn, nnue_accumulator_t* acc) {
 
-    int nnue_piece_type = get_nnue_piece_type(piece_type);
+    int nnue_piece_type = get_nnue_piece_type(piece);
     int nnue_piece_color = !piece_color;
 
     int index_w = nnue_piece_type * 2 + nnue_piece_color;
@@ -72,13 +71,50 @@ static void add_piece_to_accumulators(int sq, int piece_type, int piece_color, c
     }
 }
 
+void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t* nn, nnue_accumulator_t* acc)
+{
+    int nnue_piece_type = get_nnue_piece_type(piece);
+    int nnue_piece_color = !piece_color;
+
+    int index_w = nnue_piece_type * 2 + nnue_piece_color;
+    int feature_w = (64 * index_w) + sq;
+
+    int index_b = nnue_piece_type * 2 + (1 - nnue_piece_color);
+    int feature_b = (64 * index_b) + (sq ^ 56);
+
+    for (int i=0;i<NN_SIZE_L1;i++) {
+        (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * feature_w + i];
+        (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * feature_b + i];
+    }
+}
+
+/* utility function for testing / debugging */
+bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2) {
+    for (int i=0;i<2;i++) {
+        for (int j=0;j<NN_SIZE_L1;j++) {
+            if ((*acc1)[i][j] != (*acc2)[i][j]) return false;
+        }
+    }
+    return true;
+}
+
+static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t* nn,
+    nnue_accumulator_t* acc) 
+{
+    while (piece_map) {
+        square_t sq = (square_t)get_lsb(piece_map);
+        nn_add_piece(piece_type, piece_color, sq, nn, acc);
+        piece_map ^= square_to_bitmap(sq);
+    }
+}
+
 static int get_nnue_piece_type(int piece_type) {
     switch (piece_type) {
-        case ROOK: return 0;
-        case KNIGHT: return 1;
-        case BISHOP: return 2;
-        case QUEEN: return 3;
-        case KING: return 4;
+        case ROOK: case -ROOK: return 0;
+        case KNIGHT: case -KNIGHT: return 1;
+        case BISHOP: case -BISHOP: return 2;
+        case QUEEN: case -QUEEN: return 3;
+        case KING: case -KING: return 4;
         default: return 5; // pawn
     }
 
