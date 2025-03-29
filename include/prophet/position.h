@@ -1,6 +1,7 @@
 #pragma once
 
 #include <prophet/move.h>
+#include <prophet/nn.h>
 #include <prophet/piece.h>
 #include <prophet/square.h>
 
@@ -38,6 +39,7 @@ typedef struct {
     uint64_t black_pieces;
     uint64_t hash_key;
     uint64_t pawn_key;
+    nnue_accumulator_t nnue_accumulator;
 } position_t;
 
 

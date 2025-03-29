@@ -62,6 +62,7 @@ target_sources(${PROJECT_NAME}
         src/command/xboard/xboard_time.c
         src/command/xboard/xboard_undo.c
         src/command/xboard/xboard_usermove.c
+        src/commandline/commandline_load_network.c
         src/commandline/commandline_load_properties.c
         src/commandline/commandline_print_usage.c
         src/commandline/commandline_process_options.c
@@ -104,6 +105,9 @@ target_sources(${PROJECT_NAME}
         src/movegen/perft.c
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
+        src/nn/nn_eval.c
+        src/nn/neural_network.c
+        src/nn/nnue_accumulators.c
         src/position/add_piece.c
         src/position/apply_move.c
         src/position/draw_material.c
@@ -177,6 +181,7 @@ set(public_headers
     include/prophet/hash.h
     include/prophet/move.h
     include/prophet/movegen.h
+    include/prophet/nn.h
     include/prophet/piece.h
     include/prophet/position.h
     include/prophet/search.h
@@ -267,6 +272,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/command/xboard/test_xboard_time.cpp
             test/command/xboard/test_xboard_undo.cpp
             test/command/xboard/test_xboard_usermove.cpp
+            test/commandline/test_commandline_load_network.cpp
             test/commandline/test_commandline_load_properties.cpp
             test/eval/test_eval_accumulator.cpp
             test/eval/test_eval_bishop.cpp

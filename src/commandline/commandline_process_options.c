@@ -35,11 +35,12 @@ int commandline_process_options(int argc, char* argv[])
         {"set hash size in mb", required_argument, 0, 'h'},
         {"set pawn hash size in mb", required_argument, 0, 'p'},
         {"eval properties", required_argument, 0, 'e'},
+        {"neural network", required_argument, 0, 'n'}
     };
 
     int long_index = 0;
     int opt = 0;
-    while ((opt = getopt_long(argc, argv, "lr:d:h:p:e:", long_options, &long_index)) != -1) {
+    while ((opt = getopt_long(argc, argv, "lr:d:h:p:e:n:", long_options, &long_index)) != -1) {
         switch (opt) {
             case 'l':
                 logging_enabled = true;
@@ -64,6 +65,9 @@ int commandline_process_options(int argc, char* argv[])
             case 'e':
                 out(stdout, "loading eval properties from %s\n", optarg);
                 return commandline_load_properties(optarg);
+            case 'n':
+                out(stdout, "loading neural network from %s\n", optarg);
+                return commandline_load_network(optarg);
             default:
                 commandline_print_usage();
                 return P4_ERROR_INVALID_COMMAND_LINE_OPTION;

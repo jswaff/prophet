@@ -62,7 +62,7 @@ TEST(next_test, no_pv_then_hash_move)
 }
 
 
-TEST(next_text, pv_then_hash)
+TEST(next_test, pv_then_hash)
 {
     position_t pos;
     set_pos(&pos, "6k1/p4p1p/1p3np1/2q5/4p3/4P1N1/PP3PPP/3Q2K1 w - - ");
@@ -118,7 +118,7 @@ TEST(next_test, pv_and_hash_same_move)
 }
 
 
-TEST(next_text, pv_then_hash_then_captures)
+TEST(next_test, pv_then_hash_then_captures)
 {
     position_t pos;
     set_pos(&pos, "6R1/kp6/8/1KpP4/8/8/8/6B1 w - c6");
