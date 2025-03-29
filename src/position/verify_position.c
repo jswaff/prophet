@@ -12,7 +12,6 @@
 #include <stdint.h>
 #include <string.h>
 
-
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
