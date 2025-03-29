@@ -90,7 +90,7 @@ void undo_move(position_t* p, const undo_t* u)
 
     /* update accumulators */
     if (use_neural_network) {
-        if (piece != KING && !is_epcapture(mv) && get_promopiece(mv)==NO_PIECE) {
+        if (!is_castle(mv) && !is_epcapture(mv) && get_promopiece(mv)==NO_PIECE) {
             /* incremental update */
             nn_move_piece(piece, p->player, to_sq, from_sq, &neural_network, &p->nnue_accumulator);
             if (u->captured != NO_PIECE) {

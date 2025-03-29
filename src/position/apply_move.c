@@ -73,7 +73,7 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
 
     /* update accumulators */
     if (use_neural_network) {
-        if (get_piece(m) != KING && !is_epcapture(m) && get_promopiece(m)==NO_PIECE) {
+        if (!is_castle(m) && !is_epcapture(m) && get_promopiece(m)==NO_PIECE) {
             /* incremental update */
             if (u->captured != NO_PIECE) {
                 nn_remove_piece(u->captured, pos->player, get_to_sq(m), &neural_network, &pos->nnue_accumulator);
