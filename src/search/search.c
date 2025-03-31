@@ -10,8 +10,6 @@
 #include "position/position_internal.h"
 #include "util/time.h"
 
-#include "parameters.h"
-
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -353,11 +351,11 @@ static void add_killer(move_t killer_move, int ply)
     }
 }
 
-static bool is_draw(const position_t* pos, const undo_t* UNUSED(undo_stack))
+static bool is_draw(const position_t* pos, const undo_t* undo_stack)
 {
     return pos->fifty_counter >= 100 
         || is_lack_of_mating_material(pos)
-        /* || is_draw_rep(pos, undo_stack, 1) */;  /* FIXME */
+        || is_draw_rep(pos, undo_stack, 1);
 }
 
 static square_t apply_null_move(position_t* pos) 
