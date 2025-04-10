@@ -13,8 +13,8 @@ extern "C" {
 typedef int16_t nnue_accumulator_t[2][NN_SIZE_L1];
 
 typedef struct {
-    int8_t W0[768 * NN_SIZE_L1];
-    int8_t B0[NN_SIZE_L1];
+    int16_t W0[768 * NN_SIZE_L1];
+    int16_t B0[NN_SIZE_L1];
     int8_t W1[NN_SIZE_L1 * 2 * NN_SIZE_L2];
     int8_t B1[NN_SIZE_L2];
 } neural_network_t;

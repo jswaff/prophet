@@ -7,7 +7,7 @@ option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 # Provide option to users on which library version to build
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
-option(WITH_AVX "Build with AVX intrinsics" OFF)
+option(WITH_AVX "Build with AVX intrinsics" ON)
 if(WITH_AVX)
     add_definitions(-DUSE_AVX)
 endif()

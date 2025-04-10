@@ -2,9 +2,7 @@
 
 #include "prophet/position.h"
 
-#include "immintrin.h"
-
-#include <assert.h>
+#include <immintrin.h>
 #include <math.h>
 #include <stdint.h>
 
