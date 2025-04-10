@@ -7,6 +7,11 @@ option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 # Provide option to users on which library version to build
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
+option(WITH_AVX "Build with AVX intrinsics" OFF)
+if(WITH_AVX)
+    add_definitions(-DUSE_AVX)
+endif()
+
 # Google Test libs
 enable_testing()
 include(FetchContent)
