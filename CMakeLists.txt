@@ -7,6 +7,11 @@ option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 # Provide option to users on which library version to build
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
+option(WITH_AVX "Build with AVX intrinsics" ON)
+if(WITH_AVX)
+    add_definitions(-DUSE_AVX)
+endif()
+
 # Google Test libs
 enable_testing()
 include(FetchContent)
@@ -137,7 +142,7 @@ target_sources(${PROJECT_NAME}
 )
 
 # Compiler options
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC -march=native")
 #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -00 -g")
 #set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
 message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")

@@ -5,6 +5,9 @@
 #include "bitmap/bitmap.h"
 #include "position/square_internal.h"
 
+#include <immintrin.h>
+#include <stdbool.h>
+
 static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t* nn,
     nnue_accumulator_t* acc);
 static int get_nnue_piece_type(int piece_type);
@@ -64,12 +67,35 @@ void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t t
     int from_feature_b = (64 * index_b) + (from ^ 56);
     int to_feature_b = (64 * index_b) + (to ^ 56);
 
+#ifdef USE_AVX
+    __m256i acc0, wei;
+    /* white POV */
+    for (int i=0;i<NN_SIZE_L1;i+=16) {
+        acc0 = _mm256_loadu_si256((__m256i*) &((*acc)[0][i]));
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * from_feature_w + i]);
+        acc0 = _mm256_sub_epi16(acc0, wei);
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * to_feature_w + i]);
+        acc0 = _mm256_add_epi16(acc0, wei);
+        _mm256_storeu_si256((__m256i*) &((*acc)[0][i]), acc0);
+    }
+    /* black POV */
+    for (int i=0;i<NN_SIZE_L1;i+=16) {
+        acc0 = _mm256_loadu_si256((__m256i*) &((*acc)[1][i]));
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * from_feature_b + i]);
+        acc0 = _mm256_sub_epi16(acc0, wei);
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * to_feature_b + i]);
+        acc0 = _mm256_add_epi16(acc0, wei);
+        _mm256_storeu_si256((__m256i*) &((*acc)[1][i]), acc0);
+    }
+#else /* without AVX intrinsics */
     for (int i=0;i<NN_SIZE_L1;i++) {
         (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * from_feature_w + i];
         (*acc)[0][i] += nn->W0[NN_SIZE_L1 * to_feature_w + i];
         (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * from_feature_b + i];
         (*acc)[1][i] += nn->W0[NN_SIZE_L1 * to_feature_b + i];
     }
+#endif /* USE_AVX */
+
 }
 
 /**
@@ -92,10 +118,29 @@ void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_
     int index_b = nnue_piece_type * 2 + (1 - nnue_piece_color);
     int feature_b = (64 * index_b) + (sq ^ 56);
 
+#ifdef USE_AVX
+    __m256i acc0, wei;
+    /* white POV */
+    for (int i=0;i<NN_SIZE_L1;i+=16) {
+        acc0 = _mm256_loadu_si256((__m256i*) &((*acc)[0][i]));
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * feature_w + i]);
+        acc0 = _mm256_add_epi16(acc0, wei);
+        _mm256_storeu_si256((__m256i*) &((*acc)[0][i]), acc0);
+    }
+    /* black POV */
+    for (int i=0;i<NN_SIZE_L1;i+=16) {
+        acc0 = _mm256_loadu_si256((__m256i*) &((*acc)[1][i]));
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * feature_b + i]);
+        acc0 = _mm256_add_epi16(acc0, wei);
+        _mm256_storeu_si256((__m256i*) &((*acc)[1][i]), acc0);
+    }
+#else /* without AVX intrinsics */
     for (int i=0;i<NN_SIZE_L1;i++) {
         (*acc)[0][i] += nn->W0[NN_SIZE_L1 * feature_w + i];
         (*acc)[1][i] += nn->W0[NN_SIZE_L1 * feature_b + i];
     }
+#endif /* USE_AVX */
+
 }
 
 /**
@@ -118,10 +163,29 @@ void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neur
     int index_b = nnue_piece_type * 2 + (1 - nnue_piece_color);
     int feature_b = (64 * index_b) + (sq ^ 56);
 
+#ifdef USE_AVX
+    __m256i acc0, wei;
+    /* white POV */
+    for (int i=0;i<NN_SIZE_L1;i+=16) {
+        acc0 = _mm256_loadu_si256((__m256i*) &((*acc)[0][i]));
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * feature_w + i]);
+        acc0 = _mm256_sub_epi16(acc0, wei);
+        _mm256_storeu_si256((__m256i*) &((*acc)[0][i]), acc0);
+    }
+    /* black POV */
+    for (int i=0;i<NN_SIZE_L1;i+=16) {
+        acc0 = _mm256_loadu_si256((__m256i*) &((*acc)[1][i]));
+        wei = _mm256_loadu_si256((__m256i*) &nn->W0[NN_SIZE_L1 * feature_b + i]);
+        acc0 = _mm256_sub_epi16(acc0, wei);
+        _mm256_storeu_si256((__m256i*) &((*acc)[1][i]), acc0);
+    }
+#else /* without AVX intrinsics */
     for (int i=0;i<NN_SIZE_L1;i++) {
         (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * feature_w + i];
         (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * feature_b + i];
     }
+#endif /* USE_AVX */
+
 }
 
 /**
