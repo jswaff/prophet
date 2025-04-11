@@ -2,12 +2,17 @@
 
 #include "prophet/position.h"
 
+#include <assert.h>
 #include <immintrin.h>
 #include <math.h>
 #include <stdint.h>
+#include <string.h>
 
 static int clamp(int val, int min, int max);
 static int my_round(float val);
+#if !defined(USE_AVX) || defined(DEBUG_AVX)
+static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2);
+#endif
 
 /**
  * \brief Evaluate a chess position for the side to move using a neural network.
@@ -49,14 +54,14 @@ int nn_eval(const position_t* pos, const neural_network_t* nn) {
         sum128 = _mm_add_epi32(sum128, _mm_shuffle_epi32(sum128, _MM_PERM_CDAB));
         L2[i] = _mm_cvtsi128_si32(sum128) + nn->B1[i];
     }
+
+#ifdef DEBUG_AVX
+    int32_t L2_debug[NN_SIZE_L2];
+    compute_layer2_slow(nn, L1, L2_debug);
+    assert(!memcmp(L2, L2_debug, sizeof(int32_t) * NN_SIZE_L2));
+#endif /* DEBUG_AVX */
 #else /* without AVX intrinsics */
-    for (int i=0;i<NN_SIZE_L2;i++) {
-        int32_t sum = nn->B1[i];
-        for (int j=0;j<NN_SIZE_L1*2;j++) {
-            sum += nn->W1[i * (NN_SIZE_L1 * 2) + j]  * L1[j];
-        }
-        L2[i] = sum;
-    }
+    compute_layer2_slow(nn, L1, L2);
 #endif /* USE_AVX */
 
     /* translate to predicted score */
@@ -76,3 +81,15 @@ static int my_round(float val) {
     if (val > 0) return (int)(val + 0.5);
     else return (int)(val - 0.5);
 }
+
+#if !defined(USE_AVX) || defined(DEBUG_AVX)
+static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2) {
+    for (int i=0;i<NN_SIZE_L2;i++) {
+        int32_t sum = nn->B1[i];
+        for (int j=0;j<NN_SIZE_L1*2;j++) {
+            sum += nn->W1[i * (NN_SIZE_L1 * 2) + j]  * L1[j];
+        }
+        L2[i] = sum;
+    }
+}
+#endif
