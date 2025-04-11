@@ -11,6 +11,10 @@ option(WITH_AVX "Build with AVX intrinsics" ON)
 if(WITH_AVX)
     add_definitions(-DUSE_AVX)
 endif()
+option(DEBUG_AVX "Debug AVX intrinsics" OFF)
+if (DEBUG_AVX)
+    add_definitions(-DDEBUG_AVX)
+endif()
 
 # Google Test libs
 enable_testing()

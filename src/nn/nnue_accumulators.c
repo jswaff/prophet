@@ -5,11 +5,23 @@
 #include "bitmap/bitmap.h"
 #include "position/square_internal.h"
 
+#include <assert.h>
 #include <immintrin.h>
 #include <stdbool.h>
+#include <string.h>
 
+/* forward decls */
 static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t* nn,
-    nnue_accumulator_t* acc);
+                          nnue_accumulator_t* acc);
+#if !defined(USE_AVX) || defined(DEBUG_AVX)
+static void nn_move_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+                                      int from_feature_w, int to_feature_w,
+                                      int from_feature_b, int to_feature_b);
+static void nn_add_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+                                     int feature_w, int feature_b);
+static void nn_remove_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+                                        int feature_w, int feature_b);
+#endif
 static int get_nnue_piece_type(int piece_type);
 
 /**
@@ -68,6 +80,10 @@ void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t t
     int to_feature_b = (64 * index_b) + (to ^ 56);
 
 #ifdef USE_AVX
+#ifdef DEBUG_AVX
+    nnue_accumulator_t my_acc;
+    memcpy(&my_acc, acc, sizeof(nnue_accumulator_t));
+#endif
     __m256i acc0, wei;
     /* white POV */
     for (int i=0;i<NN_SIZE_L1;i+=16) {
@@ -87,13 +103,13 @@ void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t t
         acc0 = _mm256_add_epi16(acc0, wei);
         _mm256_storeu_si256((__m256i*) &((*acc)[1][i]), acc0);
     }
+
+#ifdef DEBUG_AVX
+    nn_move_piece_helper_slow(nn, &my_acc, from_feature_w, to_feature_w, from_feature_b, to_feature_b);
+    assert(accumulators_equal(&my_acc, acc));
+#endif /* DEBUG_AVX */
 #else /* without AVX intrinsics */
-    for (int i=0;i<NN_SIZE_L1;i++) {
-        (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * from_feature_w + i];
-        (*acc)[0][i] += nn->W0[NN_SIZE_L1 * to_feature_w + i];
-        (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * from_feature_b + i];
-        (*acc)[1][i] += nn->W0[NN_SIZE_L1 * to_feature_b + i];
-    }
+    nn_move_piece_helper_slow(nn, acc, from_feature_w, to_feature_w, from_feature_b, to_feature_b);
 #endif /* USE_AVX */
 
 }
@@ -119,6 +135,10 @@ void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_
     int feature_b = (64 * index_b) + (sq ^ 56);
 
 #ifdef USE_AVX
+#ifdef DEBUG_AVX
+    nnue_accumulator_t my_acc;
+    memcpy(&my_acc, acc, sizeof(nnue_accumulator_t));
+#endif
     __m256i acc0, wei;
     /* white POV */
     for (int i=0;i<NN_SIZE_L1;i+=16) {
@@ -134,11 +154,12 @@ void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_
         acc0 = _mm256_add_epi16(acc0, wei);
         _mm256_storeu_si256((__m256i*) &((*acc)[1][i]), acc0);
     }
+#ifdef DEBUG_AVX
+    nn_add_piece_helper_slow(nn, &my_acc, feature_w, feature_b);
+    assert(accumulators_equal(&my_acc, acc));
+#endif /* DEBUG_AVX */
 #else /* without AVX intrinsics */
-    for (int i=0;i<NN_SIZE_L1;i++) {
-        (*acc)[0][i] += nn->W0[NN_SIZE_L1 * feature_w + i];
-        (*acc)[1][i] += nn->W0[NN_SIZE_L1 * feature_b + i];
-    }
+    nn_add_piece_helper_slow(nn, acc, feature_w, feature_b);
 #endif /* USE_AVX */
 
 }
@@ -164,6 +185,10 @@ void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neur
     int feature_b = (64 * index_b) + (sq ^ 56);
 
 #ifdef USE_AVX
+#ifdef DEBUG_AVX
+    nnue_accumulator_t my_acc;
+    memcpy(&my_acc, acc, sizeof(nnue_accumulator_t));
+#endif
     __m256i acc0, wei;
     /* white POV */
     for (int i=0;i<NN_SIZE_L1;i+=16) {
@@ -179,13 +204,13 @@ void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neur
         acc0 = _mm256_sub_epi16(acc0, wei);
         _mm256_storeu_si256((__m256i*) &((*acc)[1][i]), acc0);
     }
+#ifdef DEBUG_AVX
+    nn_remove_piece_helper_slow(nn, &my_acc, feature_w, feature_b);
+    assert(accumulators_equal(&my_acc, acc));
+#endif /* DEBUG_AVX */
 #else /* without AVX intrinsics */
-    for (int i=0;i<NN_SIZE_L1;i++) {
-        (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * feature_w + i];
-        (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * feature_b + i];
-    }
+    nn_remove_piece_helper_slow(nn, acc, feature_w, feature_b);
 #endif /* USE_AVX */
-
 }
 
 /**
@@ -214,6 +239,39 @@ static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, c
         piece_map ^= square_to_bitmap(sq);
     }
 }
+
+#if !defined(USE_AVX) || defined(DEBUG_AVX)
+static void nn_move_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+                                      int from_feature_w, int to_feature_w,
+                                      int from_feature_b, int to_feature_b)
+{
+    for (int i=0;i<NN_SIZE_L1;i++) {
+        (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * from_feature_w + i];
+        (*acc)[0][i] += nn->W0[NN_SIZE_L1 * to_feature_w + i];
+        (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * from_feature_b + i];
+        (*acc)[1][i] += nn->W0[NN_SIZE_L1 * to_feature_b + i];
+    }
+}
+
+static void nn_add_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+                                     int feature_w, int feature_b)
+{
+    for (int i=0;i<NN_SIZE_L1;i++) {
+        (*acc)[0][i] += nn->W0[NN_SIZE_L1 * feature_w + i];
+        (*acc)[1][i] += nn->W0[NN_SIZE_L1 * feature_b + i];
+    }
+}
+
+static void nn_remove_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+                                        int feature_w, int feature_b)
+{
+    for (int i=0;i<NN_SIZE_L1;i++) {
+        (*acc)[0][i] -= nn->W0[NN_SIZE_L1 * feature_w + i];
+        (*acc)[1][i] -= nn->W0[NN_SIZE_L1 * feature_b + i];
+    }
+}
+#endif
+
 
 static int get_nnue_piece_type(int piece_type) {
     switch (piece_type) {
