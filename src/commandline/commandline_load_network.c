@@ -29,7 +29,7 @@ int commandline_load_network(const char* weights_file)
                 fclose(wf);
                 return P4_ERROR_CMDLINE_NN_FILE_PARSE_FAILURE;
             }
-            neural_network.W0[col * NN_SIZE_L1 + row] = (int8_t)val; /* transposition */
+            neural_network.W0[col * NN_SIZE_L1 + row] = (int16_t)val; /* transposition */
         }
     }
 
@@ -39,7 +39,7 @@ int commandline_load_network(const char* weights_file)
             fclose(wf);
             return P4_ERROR_CMDLINE_NN_FILE_PARSE_FAILURE;
         }
-        neural_network.B0[i] = (int8_t)val;
+        neural_network.B0[i] = (int16_t)val;
     }
 
     /* load W1 */
