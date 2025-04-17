@@ -243,21 +243,17 @@ static bool best_at_top(move_t* start, move_t* end)
     move_t* bestp = 0;
     int32_t bestscore = 0;
 
-    for (move_t* mp=start; mp<end; mp++)
-    {
-        if (*mp != 0)
-        {
+    for (move_t* mp=start; mp<end; mp++) {
+        if (*mp != 0) {
             int32_t score = get_move_score(*mp);
-            if (bestp==0 || score > bestscore)
-            {
+            if (bestp==0 || score > bestscore) {
                 bestp = mp;
                 bestscore = score;
             }
         }
     }
 
-    if (bestp)
-    {
+    if (bestp) {
         move_t tmp_mv = *start;
         *start = *bestp;
         *bestp = tmp_mv;
