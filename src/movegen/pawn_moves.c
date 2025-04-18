@@ -11,12 +11,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-static move_t* add_pawn_move(
-    move_t* m, square_t from, square_t to, piece_t captured_piece, 
-    bool epcapture);
-static move_t* add_promotion(
-    move_t* m, square_t from, square_t to, piece_t promopiece, 
-    piece_t captured_piece);
+static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t captured_piece, bool epcapture);
+static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t promopiece, piece_t captured_piece);
 
 /**
  * \brief Generate pseudo-legal pawn moves
@@ -50,8 +46,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
-                m = add_pawn_move(
-                    m, southeast(sq), sq, captured, sq==p->ep_sq);
+                m = add_pawn_move(m, southeast(sq), sq, captured, sq==p->ep_sq);
                 pmap ^= square_to_bitmap(sq);
             }
 
@@ -60,14 +55,12 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
-                m = add_pawn_move(
-                    m, southwest(sq), sq, captured, sq==p->ep_sq);
+                m = add_pawn_move(m, southwest(sq), sq, captured, sq==p->ep_sq);
                 pmap ^= square_to_bitmap(sq);
             }
 
             /* push promotions */
-            pmap = ((p->white_pawns & rank_to_bitmap(RANK_7)) >> 8) & 
-                ~all_pieces;
+            pmap = ((p->white_pawns & rank_to_bitmap(RANK_7)) >> 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, south(sq), sq, NO_PIECE, false);
@@ -77,14 +70,12 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 
         /* pawn pushes less promotions */
         if (noncaps) {
-            pmap = ((p->white_pawns & ~rank_to_bitmap(RANK_7)) >> 8) & 
-                ~all_pieces;
+            pmap = ((p->white_pawns & ~rank_to_bitmap(RANK_7)) >> 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, south(sq), sq, NO_PIECE, false);
                 if (get_rank(sq)==RANK_3 && p->piece[north(sq)]==NO_PIECE) {
-                    m = add_pawn_move(
-                        m, south(sq), north(sq), NO_PIECE, false);
+                    m = add_pawn_move(m, south(sq), north(sq), NO_PIECE, false);
                 }
                 pmap ^= square_to_bitmap(sq);
             }
@@ -99,8 +90,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
-                m = add_pawn_move(
-                    m, northeast(sq), sq, captured, sq==p->ep_sq);
+                m = add_pawn_move(m, northeast(sq), sq, captured, sq==p->ep_sq);
                 pmap ^= square_to_bitmap(sq);
             }
 
@@ -109,14 +99,12 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
-                m = add_pawn_move(
-                    m, northwest(sq), sq, captured, sq==p->ep_sq);
+                m = add_pawn_move(m, northwest(sq), sq, captured, sq==p->ep_sq);
                 pmap ^= square_to_bitmap(sq);
             }
 
             /* push promotions */
-            pmap = ((p->black_pawns & rank_to_bitmap(RANK_2)) << 8) & 
-                ~all_pieces;
+            pmap = ((p->black_pawns & rank_to_bitmap(RANK_2)) << 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, north(sq), sq, NO_PIECE, false);
@@ -126,14 +114,12 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 
         /* pawn pushes less promotions */
         if (noncaps) {
-            pmap = ((p->black_pawns & ~rank_to_bitmap(RANK_2)) << 8) & 
-                ~all_pieces;
+            pmap = ((p->black_pawns & ~rank_to_bitmap(RANK_2)) << 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, north(sq), sq, NO_PIECE, false);
                 if (get_rank(sq)==RANK_6 && p->piece[south(sq)]==NO_PIECE) {
-                    m = add_pawn_move(
-                        m, north(sq), south(sq), NO_PIECE, false);
+                    m = add_pawn_move(m, north(sq), south(sq), NO_PIECE, false);
                 }
                 pmap ^= square_to_bitmap(sq);
             }
@@ -158,18 +144,11 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
  *
  * \return move pointer one greater than the last move added.
  */
-static move_t* add_pawn_move(
-    move_t* m, square_t from, square_t to, piece_t captured_piece, 
-    bool epcapture)
+static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t captured_piece, bool epcapture)
 {
     rank_t r = get_rank(to);
 
-    if (r==RANK_8 || r==RANK_1) {
-        m = add_promotion(m, from, to, QUEEN, captured_piece);
-        m = add_promotion(m, from, to, KNIGHT, captured_piece);
-        m = add_promotion(m, from, to, ROOK, captured_piece);
-        m = add_promotion(m, from, to, BISHOP, captured_piece);
-    } else {
+    if (r > RANK_8 && r < RANK_1) {
         *m = to_move(PAWN, from, to);
         if (epcapture) {
             set_epcapture(m);
@@ -177,6 +156,11 @@ static move_t* add_pawn_move(
             set_capture(m, captured_piece);
         }
         ++m;
+    } else {
+        m = add_promotion(m, from, to, QUEEN, captured_piece);
+        m = add_promotion(m, from, to, KNIGHT, captured_piece);
+        m = add_promotion(m, from, to, ROOK, captured_piece);
+        m = add_promotion(m, from, to, BISHOP, captured_piece);
     }
 
     return m;
@@ -197,9 +181,7 @@ static move_t* add_pawn_move(
  *
  * \return move pointer one greater than the last move added
  */
-static move_t* add_promotion(
-    move_t* m, square_t from, square_t to, piece_t promopiece, 
-    piece_t captured_piece)
+static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t promopiece, piece_t captured_piece)
 {
     *m = to_move(PAWN, from, to);
 
