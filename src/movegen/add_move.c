@@ -29,7 +29,8 @@ move_t* add_move(
             || (p->player==BLACK && is_not_black_piece(captured_piece)));
 
     *m = to_move(piece, from, to);
-    if (captured_piece != NO_PIECE) {
+    /* TODO: remove this conditional */
+    if (captured_piece) {
         set_capture(m, captured_piece);
     }
     ++m;
