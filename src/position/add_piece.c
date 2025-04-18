@@ -28,6 +28,7 @@ void add_piece(position_t *p, int32_t piece, square_t sq)
 
     if (piece > NO_PIECE) {
         p->white_pieces |= bb_sq;
+        /* TODO: try switch */
         if (piece == PAWN) {
             p->white_pawns |= bb_sq;
             p->pawn_key ^= zkeys.pieces[PAWN][WHITE][sq];

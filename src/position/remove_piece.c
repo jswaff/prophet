@@ -29,17 +29,23 @@ piece_t remove_piece(position_t* p,square_t sq)
     if (piece > NO_PIECE) {
         p->white_pieces ^= bb_sq;
 
-        if (piece==PAWN) {
-            p->white_pawns ^= bb_sq;
-            p->pawn_key ^= zkeys.pieces[PAWN][WHITE][sq];
-        } else if (piece==KNIGHT) {
-            p->white_knights ^= bb_sq;
-        } else if (piece==BISHOP) {
-            p->white_bishops ^= bb_sq;
-        } else if (piece==ROOK) {
-            p->white_rooks ^= bb_sq;
-        } else if (piece==QUEEN) {
-            p->white_queens ^= bb_sq;
+        switch(piece) {
+            case PAWN:
+                p->white_pawns ^= bb_sq;
+                p->pawn_key ^= zkeys.pieces[PAWN][WHITE][sq];
+                break;
+            case KNIGHT:
+                p->white_knights ^= bb_sq;
+                break;
+            case BISHOP:
+                p->white_bishops ^= bb_sq;
+                break;
+            case ROOK:
+                p->white_rooks ^= bb_sq;
+                break;
+            case QUEEN:
+                p->white_queens ^= bb_sq;            
+                break;
         }
 
         p->piece_counts[WHITE][piece]--;
@@ -48,17 +54,23 @@ piece_t remove_piece(position_t* p,square_t sq)
     } else {
         p->black_pieces ^= bb_sq;
 
-        if (piece==-PAWN) {
-            p->black_pawns ^= bb_sq;
-            p->pawn_key ^= zkeys.pieces[PAWN][BLACK][sq];
-        } else if (piece==-KNIGHT) {
-            p->black_knights ^= bb_sq;
-        } else if (piece==-BISHOP) {
-            p->black_bishops ^= bb_sq;
-        } else if (piece==-ROOK) {
-            p->black_rooks ^= bb_sq;
-        } else if (piece==-QUEEN) {
-            p->black_queens ^= bb_sq;
+        switch(piece) {
+            case -PAWN:
+                p->black_pawns ^= bb_sq;
+                p->pawn_key ^= zkeys.pieces[PAWN][BLACK][sq];
+                break;
+            case -KNIGHT:
+                p->black_knights ^= bb_sq;
+                break;
+            case -BISHOP:
+                p->black_bishops ^= bb_sq;
+                break;
+            case -ROOK:
+                p->black_rooks ^= bb_sq;
+                break;
+            case -QUEEN:
+                p->black_queens ^= bb_sq;
+                break;
         }
 
         p->piece_counts[BLACK][-piece]--;

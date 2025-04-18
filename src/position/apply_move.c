@@ -113,8 +113,7 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
 }
 
 /**
- * \brief Add the moving piece to the destination square and apply special 
- * rules.
+ * \brief Add the moving piece to the destination square and apply special rules.
  *
  * The moving piece is added to the destination square.
  *
@@ -140,6 +139,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
     switch (piece) {
         case PAWN:
             p->fifty_counter = 0;
+            /* TODO: create a north(from, num_ranks) */
             if (to_sq == north(north(from_sq))) {
                 p->ep_sq = north(from_sq);
                 p->hash_key ^= zkeys.ep[p->ep_sq];
@@ -163,6 +163,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
         case KING:
             p->white_king = to_sq;
             /* move rook if this is a castle */
+            /* TODO: faster approach to detecting castle */
             if (from_sq == E1) {
                 if (to_sq == G1) {
                     assert(is_castle(m));
@@ -210,6 +211,8 @@ static void remove_castling_availability(position_t* p, move_t mv)
     /* if a rook or king is moving, remove their castling availability. */
     square_t from_sq = get_from_sq(mv);
     int32_t piece = p->piece[from_sq];
+    /* TODO: try switch statement */
+    /* TODO: fast approach to detect if mv is KING or ROOK */
     if (piece == KING) {
         p->castling_rights &= CASTLE_BLACK;
     } else if (piece == -KING) {
@@ -224,6 +227,7 @@ static void remove_castling_availability(position_t* p, move_t mv)
 
 static void remove_rook_castling_availability(position_t* p, square_t sq)
 {
+    /* TODO: try switch */
     if (sq == A1) {
         p->castling_rights &= CASTLE_NOT_WQ;
     } else if (sq == H1) {

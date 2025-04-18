@@ -8,6 +8,7 @@
         "position_internal.h": "c",
         "position.h": "c",
         "random": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "stdint.h": "c"
     }
 }
