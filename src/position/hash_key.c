@@ -67,7 +67,7 @@ uint64_t build_pawn_key(const position_t* pos)
 
     uint64_t pmap = pos->white_pawns;
     while (pmap) {
-        square_t sq = (square_t)get_msb(pmap);
+        square_t sq = (square_t)get_lsb(pmap);
         pkey ^= zkeys.pieces[PAWN][WHITE][sq];
         pmap ^= square_to_bitmap(sq);
     }

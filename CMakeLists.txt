@@ -38,7 +38,7 @@ target_sources(${PROJECT_NAME}
         src/init.c
         src/bitmap/bitmap_file_rank.c
         src/bitmap/bitmap_isolate.c
-        src/bitmap/bitmap_lsb_msb.c
+        src/bitmap/bitmap_lsb.c
         src/bitmap/bitmap_popcnt.c
         src/bitmap/bitmap_rays.c
         src/command/command_db.c
@@ -256,7 +256,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/testmain.cpp
             test/bitmap/test_bitmap_file_rank.cpp
             test/bitmap/test_bitmap_isolate.cpp
-            test/bitmap/test_bitmap_lsb_msb.cpp
+            test/bitmap/test_bitmap_lsb.cpp
             test/bitmap/test_bitmap_popcnt.cpp
             test/bitmap/test_bitmap_rays.cpp
             test/command/test_command_db.cpp

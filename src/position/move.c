@@ -28,8 +28,7 @@ move_t to_move(piece_t piece, square_t from, square_t to)
  *
  * \return the move
  */
-move_t to_capture(
-    piece_t piece, square_t from, square_t to, piece_t captured_piece)
+move_t to_capture(piece_t piece, square_t from, square_t to, piece_t captured_piece)
 {
     move_t mv = from | (to << 6) | (piece << 12);
     set_capture(&mv, captured_piece);
@@ -44,7 +43,7 @@ move_t to_capture(
  */
 void set_promopiece(move_t *mv, piece_t promo)
 {
-    *mv &= ~(7 << 15);
+    *mv &= ~(7 << 15); /* TODO refactor this shift out */
     *mv |= promo << 15;
 }
 
@@ -81,7 +80,7 @@ void set_epcapture(move_t *mv)
  */
 void set_castle(move_t *mv)
 {
-    *mv |= 1 << 22;
+    *mv |= 1ULL << 22;
 }
 
 /**
@@ -153,8 +152,8 @@ piece_t get_promopiece(move_t mv)
  */
 bool is_capture(move_t mv)
 {
-    piece_t cp = (piece_t)((mv >> 18) & 7);
-    return cp != NO_PIECE;
+    static uint64_t capture_mask = (1ULL << 18) | (1ULL << 19) | (1ULL << 20);
+    return mv & capture_mask;
 }
 
 /**
@@ -166,7 +165,8 @@ bool is_capture(move_t mv)
  */
 bool is_epcapture(move_t mv)
 {
-    return (mv >> 21) & 1;
+    static uint64_t ep_capture_mask = 1ULL << 21;
+    return mv & ep_capture_mask;
 }
 
 /**
@@ -178,7 +178,8 @@ bool is_epcapture(move_t mv)
  */
 bool is_castle(move_t mv)
 {
-    return (mv >> 22) & 1;
+    static uint64_t castle_mask = 1ULL << 22;
+    return mv & castle_mask;
 }
 
 /**

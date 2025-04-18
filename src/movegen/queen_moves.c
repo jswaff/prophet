@@ -31,7 +31,7 @@ move_t* gen_queen_moves(
     uint64_t pmap = p->player==WHITE ? p->white_queens : p->black_queens;
 
     while (pmap) {
-        square_t sq = (square_t)get_msb(pmap);
+        square_t sq = (square_t)get_lsb(pmap);
         m = gen_queen_moves_from_sq(m, p, sq, caps, noncaps);
         pmap ^= square_to_bitmap(sq);
     }
@@ -39,18 +39,16 @@ move_t* gen_queen_moves(
     return m;
 }
 
-move_t* gen_queen_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+move_t* gen_queen_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t queen_moves = get_queen_moves(
-        p, from, get_target_squares(p, caps, noncaps));
+    uint64_t queen_moves = get_queen_moves(p, from, get_target_squares(p, caps, noncaps));
 
     while (queen_moves) {
-        square_t sq = (square_t)get_msb(queen_moves);
+        square_t sq = (square_t)get_lsb(queen_moves);
         m = add_move(m, p, QUEEN, from, sq);
         queen_moves ^= square_to_bitmap(sq);
     }
@@ -69,6 +67,5 @@ move_t* gen_queen_moves_from_sq(
  */
 uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets)
 {
-    return get_rook_moves(p, from, targets) | 
-           get_bishop_moves(p, from, targets);
+    return get_rook_moves(p, from, targets) | get_bishop_moves(p, from, targets);
 }

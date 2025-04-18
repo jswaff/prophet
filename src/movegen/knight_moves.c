@@ -34,7 +34,7 @@ move_t* gen_knight_moves(
     uint64_t pmap = p->player==WHITE ? p->white_knights : p->black_knights;
 
     while (pmap) {
-        square_t sq = (square_t)get_msb(pmap);
+        square_t sq = (square_t)get_lsb(pmap);
         m = gen_knight_moves_from_sq(m, p, sq, caps, noncaps);
         pmap ^= square_to_bitmap(sq);
     }
@@ -42,15 +42,13 @@ move_t* gen_knight_moves(
     return m;
 }
 
-move_t* gen_knight_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+move_t* gen_knight_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t mv_map = get_knight_moves(
-        from, get_target_squares(p, caps, noncaps));
+    uint64_t mv_map = get_knight_moves(from, get_target_squares(p, caps, noncaps));
 
     while (mv_map) {
         square_t sq = (square_t)get_lsb(mv_map);

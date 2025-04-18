@@ -6,6 +6,9 @@
         "assert.h": "c",
         "eval_internal.h": "c",
         "position_internal.h": "c",
-        "position.h": "c"
+        "position.h": "c",
+        "random": "c",
+        "algorithm": "c",
+        "stdint.h": "c"
     }
 }

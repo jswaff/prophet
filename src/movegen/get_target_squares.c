@@ -21,15 +21,9 @@
  */
 uint64_t get_target_squares(const position_t* p, bool caps, bool noncaps)
 {
-    uint64_t targets = 0;
+    uint64_t targets = caps ? (p->player == WHITE ? p->black_pieces : p->white_pieces) : 0;
 
-    if (caps) {
-        targets = p->player == WHITE ? p->black_pieces : p->white_pieces;
-    }
-
-    if (noncaps) {
-        targets |= ~(p->white_pieces | p->black_pieces);
-    }
+    targets |= noncaps ? ~(p->white_pieces | p->black_pieces) : 0;
 
     return targets;
 }

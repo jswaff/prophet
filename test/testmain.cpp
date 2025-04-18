@@ -17,19 +17,6 @@ GTEST_API_ int main(int argc, char* argv[])
     ::testing::InitGoogleTest(&argc, argv);
 
     logging_enabled = false;
-    bool perft = false;
-
-    for (int i=1; i<argc; i++) {
-        if (!strcmp("perft", argv[i])) {
-            perft = true;
-        }
-    }
-
-    if (perft) {
-        ::testing::GTEST_FLAG(filter) = "perft_test*";
-    } else {
-        ::testing::GTEST_FLAG(filter) = "-perft_test*";
-    }
 
     // initialize program data
     int retval = init();

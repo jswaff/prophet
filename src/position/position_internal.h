@@ -101,19 +101,25 @@ uint64_t build_pawn_key(const position_t* pos);
  */
 bool verify_pos(const position_t* pos);
 
-
+static inline bool can_castle_w(const position_t* pos)
+{
+    return pos->castling_rights & CASTLE_WHITE;
+}
 
 static inline bool can_castle_wk(const position_t* pos) 
 {
     return pos->castling_rights & CASTLE_WK;
 }
 
-
 static inline bool can_castle_wq(const position_t* pos) 
 {
     return pos->castling_rights & CASTLE_WQ;
 }
 
+static inline bool can_castle_b(const position_t* pos)
+{
+    return pos->castling_rights & CASTLE_BLACK;
+}
 
 static inline bool can_castle_bk(const position_t* pos) 
 {
