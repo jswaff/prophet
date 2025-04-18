@@ -11,8 +11,8 @@
 #include <string.h>
 
 /* default hash table and pawn hash table sizes */
-uint64_t hash_size = 134217728 * 4;      /* 512 mb */
-uint64_t pawn_hash_size = 134217728;     /* 128 mb */
+uint64_t hash_size = 1024 * 1024 * 64;         /* 64 mb */
+uint64_t pawn_hash_size = 1024 * 1024 * 8;     /*  8 mb */
 
 hash_table_t htbl;
 hash_table_t phtbl;
