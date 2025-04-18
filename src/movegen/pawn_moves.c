@@ -150,10 +150,12 @@ static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t capt
 
     if (r > RANK_8 && r < RANK_1) {
         *m = to_move(PAWN, from, to);
-        if (epcapture) {
-            set_epcapture(m);
-        } else if (captured_piece != NO_PIECE) {
-            set_capture(m, captured_piece);
+        if (captured_piece) {
+            if (!epcapture) {
+                set_capture(m, captured_piece);    
+            } else {
+                set_epcapture(m);    
+            }
         }
         ++m;
     } else {
