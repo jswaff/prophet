@@ -93,7 +93,9 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
     assert(is_capture(m));
     piece_t captured;
 
-    if (is_epcapture(m)) {
+    if (!is_epcapture(m)) {
+        captured = remove_piece(p, get_to_sq(m));
+    } else {
         /* remove pawn */
         if (p->player==WHITE) { 
             /* black WAS on move */
@@ -103,8 +105,6 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
             captured = remove_piece(p, south(p->ep_sq));
             assert((int)captured == -PAWN);
         }
-    } else {
-        captured = remove_piece(p, get_to_sq(m));
     }
 
     assert(captured != NO_PIECE);
