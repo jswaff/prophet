@@ -48,7 +48,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             /* attacks west */
             pmap = ((p->white_pawns & ~file_to_bitmap(FILE_A)) >> 9) & targets;
             while (pmap) {
-                square_t sq = (square_t)get_msb(pmap);
+                square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
                 m = add_pawn_move(
                     m, southeast(sq), sq, captured, sq==p->ep_sq);
@@ -58,7 +58,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             /* attacks east */
             pmap = ((p->white_pawns & ~file_to_bitmap(FILE_H)) >> 7) & targets;
             while (pmap) {
-                square_t sq = (square_t)get_msb(pmap);
+                square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
                 m = add_pawn_move(
                     m, southwest(sq), sq, captured, sq==p->ep_sq);
@@ -69,7 +69,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             pmap = ((p->white_pawns & rank_to_bitmap(RANK_7)) >> 8) & 
                 ~all_pieces;
             while (pmap) {
-                square_t sq = (square_t)get_msb(pmap);
+                square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, south(sq), sq, NO_PIECE, false);
                 pmap ^= square_to_bitmap(sq);
             }
@@ -80,7 +80,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             pmap = ((p->white_pawns & ~rank_to_bitmap(RANK_7)) >> 8) & 
                 ~all_pieces;
             while (pmap) {
-                square_t sq = (square_t)get_msb(pmap);
+                square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, south(sq), sq, NO_PIECE, false);
                 if (get_rank(sq)==RANK_3 && p->piece[north(sq)]==NO_PIECE) {
                     m = add_pawn_move(

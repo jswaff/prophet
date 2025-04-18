@@ -47,7 +47,7 @@ move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
     uint64_t pmap = p->player==WHITE ? p->white_rooks : p->black_rooks;
 
     while (pmap) {
-        square_t sq = (square_t)get_msb(pmap);
+        square_t sq = (square_t)get_lsb(pmap);
         m = gen_rook_moves_from_sq(m, p, sq, caps, noncaps);
         pmap ^= square_to_bitmap(sq);
     }
@@ -66,7 +66,7 @@ move_t* gen_rook_moves_from_sq(
         p, from, get_target_squares(p, caps, noncaps));
 
     while (rook_moves) {
-        square_t sq = (square_t)get_msb(rook_moves);
+        square_t sq = (square_t)get_lsb(rook_moves);
         m = add_move(m, p, ROOK, from, sq);
         rook_moves ^= square_to_bitmap(sq);
     }

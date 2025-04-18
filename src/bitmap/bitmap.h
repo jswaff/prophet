@@ -31,22 +31,6 @@ uint32_t popcnt(uint64_t val);
  */
 uint32_t get_lsb(uint64_t val);
 
-
-/**
- * \brief Get the most significant bit set in a 64 bit value.
- *
- * The index is 0 based, with the LSB having an index of 0 and the MSB an 
- * index of 63.
- *
- * It is an error to call this function with a value of 0.
- *
- * \param val           the 64 bit value
- *
- * \return the bit position of the most significant bit
- */
-uint32_t get_msb(uint64_t val);
-
-
 /**
  * \brief Isolate a single bit in a 64 bit value.
  *
@@ -66,7 +50,6 @@ uint32_t get_msb(uint64_t val);
  * \return a 64 bit value isolating a single bit
  */
 uint64_t isolate_bit(uint64_t val, uint32_t index);
-
 
 /**
  * \brief Create a bitmap representation of a file (8 squares).

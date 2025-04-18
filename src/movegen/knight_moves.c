@@ -34,7 +34,7 @@ move_t* gen_knight_moves(
     uint64_t pmap = p->player==WHITE ? p->white_knights : p->black_knights;
 
     while (pmap) {
-        square_t sq = (square_t)get_msb(pmap);
+        square_t sq = (square_t)get_lsb(pmap);
         m = gen_knight_moves_from_sq(m, p, sq, caps, noncaps);
         pmap ^= square_to_bitmap(sq);
     }
