@@ -20,8 +20,7 @@
  *
  * \return the next move pointer
  */
-move_t* add_move(
-    move_t* m, const position_t* p, piece_t piece, square_t from, square_t to)
+move_t* add_move(move_t* m, const position_t* p, piece_t piece, square_t from, square_t to)
 {
     piece_t captured_piece = (piece_t)p->piece[to];
 
