@@ -46,8 +46,7 @@ move_t* gen_king_moves_from_sq(
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t mv_map = get_king_moves(
-        from, get_target_squares(p, caps, noncaps));
+    uint64_t mv_map = get_king_moves(from, get_target_squares(p, caps, noncaps));
 
     while (mv_map) {
         square_t sq = (square_t)get_lsb(mv_map);
@@ -57,27 +56,23 @@ move_t* gen_king_moves_from_sq(
 
     /* castling moves */
     if (noncaps) {
+        /* TODO: try pushing attacked() call down */
         if (p->player==WHITE && from==E1 && !attacked(p, E1, BLACK)) {
-            if (can_castle_wq(p) && is_empty_sq(p, D1) && is_empty_sq(p, C1)
-                && is_empty_sq(p, B1) && !attacked(p, D1, BLACK))
+            if (can_castle_wq(p) && is_empty_sq(p, D1) && is_empty_sq(p, C1) && 
+                is_empty_sq(p, B1) && !attacked(p, D1, BLACK))
             {
                 m = add_castle(m, E1, C1);
             }
-            if (can_castle_wk(p) && is_empty_sq(p, F1) && is_empty_sq(p, G1)
-                && !attacked(p, F1, BLACK))
-            {
+            if (can_castle_wk(p) && is_empty_sq(p, F1) && is_empty_sq(p, G1) && !attacked(p, F1, BLACK)) {
                 m = add_castle(m, E1, G1);
             }
         } else if (p->player==BLACK && from==E8 && !attacked(p, E8, WHITE)) {
             if (can_castle_bq(p) && is_empty_sq(p, D8) && 
-                is_empty_sq(p, C8) && is_empty_sq(p, B8) && 
-                !attacked(p, D8, WHITE))
+                is_empty_sq(p, C8) && is_empty_sq(p, B8) && !attacked(p, D8, WHITE)) 
             {
                 m = add_castle(m, E8, C8);
             }
-            if (can_castle_bk(p) && is_empty_sq(p, F8) && is_empty_sq(p, G8)
-                && !attacked(p, F8, WHITE))
-            {
+            if (can_castle_bk(p) && is_empty_sq(p, F8) && is_empty_sq(p, G8) && !attacked(p, F8, WHITE)) {
                 m = add_castle(m, E8, G8);
             }
         }
