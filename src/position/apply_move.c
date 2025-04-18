@@ -211,14 +211,18 @@ static void remove_castling_availability(position_t* p, move_t mv)
     /* if a rook or king is moving, remove their castling availability. */
     square_t from_sq = get_from_sq(mv);
     int32_t piece = p->piece[from_sq];
-    /* TODO: try switch statement */
-    /* TODO: fast approach to detect if mv is KING or ROOK */
-    if (piece == KING) {
-        p->castling_rights &= CASTLE_BLACK;
-    } else if (piece == -KING) {
-        p->castling_rights &= CASTLE_WHITE;
-    } else if (piece == ROOK || piece == -ROOK) {
-        remove_rook_castling_availability(p, from_sq);
+
+    switch(piece) {
+        case KING:
+            p->castling_rights &= CASTLE_BLACK;
+            break;
+        case -KING:
+            p->castling_rights &= CASTLE_WHITE;
+            break;
+        case ROOK:
+        case -ROOK:
+            remove_rook_castling_availability(p, from_sq);
+            break;
     }
 
     /* add current castling rights to hash key */
@@ -227,14 +231,20 @@ static void remove_castling_availability(position_t* p, move_t mv)
 
 static void remove_rook_castling_availability(position_t* p, square_t sq)
 {
-    /* TODO: try switch */
-    if (sq == A1) {
-        p->castling_rights &= CASTLE_NOT_WQ;
-    } else if (sq == H1) {
-        p->castling_rights &= CASTLE_NOT_WK;
-    } else if (sq == A8) {
-        p->castling_rights &= CASTLE_NOT_BQ;
-    } else if (sq == H8) {
-        p->castling_rights &= CASTLE_NOT_BK;
+    switch (sq) {
+        case A1:
+            p->castling_rights &= CASTLE_NOT_WQ;
+            break;
+        case H1:
+            p->castling_rights &= CASTLE_NOT_WK;
+            break;
+        case A8:
+            p->castling_rights &= CASTLE_NOT_BQ;
+            break;
+        case H8:
+            p->castling_rights &= CASTLE_NOT_BK;
+            break;
+        default:
+            break;
     }
 }
