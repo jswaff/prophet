@@ -45,7 +45,6 @@ int command_perft(const char* input)
         uint64_t start_time = milli_timer();
         uint64_t nodes = perft(&gpos, i);
         uint64_t elapsed = milli_timer() - start_time;
-
         plog("depth %d - nodes: %" PRIu64 " - time: %" PRIu64 "ms - rate: %" PRIu64 " kn/s\n", 
             i, nodes, elapsed, nodes / (elapsed+1)); /* avoid div by 0 */
     }
