@@ -39,15 +39,13 @@ move_t* gen_queen_moves(
     return m;
 }
 
-move_t* gen_queen_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+move_t* gen_queen_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t queen_moves = get_queen_moves(
-        p, from, get_target_squares(p, caps, noncaps));
+    uint64_t queen_moves = get_queen_moves(p, from, get_target_squares(p, caps, noncaps));
 
     while (queen_moves) {
         square_t sq = (square_t)get_lsb(queen_moves);
@@ -69,6 +67,5 @@ move_t* gen_queen_moves_from_sq(
  */
 uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets)
 {
-    return get_rook_moves(p, from, targets) | 
-           get_bishop_moves(p, from, targets);
+    return get_rook_moves(p, from, targets) | get_bishop_moves(p, from, targets);
 }

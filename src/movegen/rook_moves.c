@@ -55,15 +55,13 @@ move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
     return m;
 }
 
-move_t* gen_rook_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+move_t* gen_rook_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t rook_moves = get_rook_moves(
-        p, from, get_target_squares(p, caps, noncaps));
+    uint64_t rook_moves = get_rook_moves(p, from, get_target_squares(p, caps, noncaps));
 
     while (rook_moves) {
         square_t sq = (square_t)get_lsb(rook_moves);
@@ -93,10 +91,8 @@ uint64_t get_rook_moves(
     assert(magic_numbers[from]);
     assert(magic_numbers_shift[from]);
 
-    uint64_t occupied = (p->black_pieces | p->white_pieces) & 
-        rook_masks[from];
-    int magic_ind = (occupied * magic_numbers[from]) >> 
-        magic_numbers_shift[from];
+    uint64_t occupied = (p->black_pieces | p->white_pieces) & rook_masks[from];
+    int magic_ind = (occupied * magic_numbers[from]) >> magic_numbers_shift[from];
 
     return rook_moves[from][magic_ind] & targets;
 }
@@ -238,8 +234,7 @@ static void init_moves_database()
         uint32_t num_variations = 1 << num_mask_bits;
 
         for (uint32_t i=0; i<num_variations; i++) {
-            int magic_ind = (occupiers[sq][i] * magic_numbers[sq]) >> 
-                magic_numbers_shift[sq];
+            int magic_ind = (occupiers[sq][i] * magic_numbers[sq]) >> magic_numbers_shift[sq];
             rook_moves[sq][magic_ind] =
                 gen_moves_mask((square_t)sq, occupiers[sq][i], &north)
               | gen_moves_mask((square_t)sq, occupiers[sq][i], &south)
