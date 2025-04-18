@@ -43,8 +43,7 @@ move_t to_move(piece_t piece, square_t from, square_t to);
  *
  * \return the move
  */
-move_t to_capture(
-    piece_t piece, square_t from, square_t to, piece_t captured_piece);
+move_t to_capture(piece_t piece, square_t from, square_t to, piece_t captured_piece);
 
 
 /**
