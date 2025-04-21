@@ -146,7 +146,7 @@ target_sources(${PROJECT_NAME}
 )
 
 # Compiler options
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC -march=native")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC -flto -march=native")
 #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -00 -g")
 #set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
 message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")
