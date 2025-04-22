@@ -30,7 +30,6 @@ move_t* gen_pseudo_legal_moves(move_t* m, const position_t* pos, bool caps, bool
 {
     assert(caps || noncaps);
 
-    /* TODO: one method for captures, and one for noncaps will save on some conditionals */
     m = gen_pawn_moves(m, pos, caps, noncaps);
     m = gen_knight_moves(m, pos, caps, noncaps);
     m = gen_bishop_moves(m, pos, caps, noncaps);
