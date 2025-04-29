@@ -7,6 +7,7 @@
 
 #include <assert.h>
 #include <immintrin.h>
+#include <math.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -22,7 +23,7 @@ static void nn_add_piece_helper_slow(const neural_network_t* nn, nnue_accumulato
 static void nn_remove_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
                                         int feature_w, int feature_b);
 #endif
-static int get_nnue_piece_type(int piece_type);
+static inline int get_nnue_piece_type(int piece_type);
 
 /**
  * \brief Fully populate the NNUE accumulators in a chess position.
@@ -272,15 +273,6 @@ static void nn_remove_piece_helper_slow(const neural_network_t* nn, nnue_accumul
 }
 #endif
 
-
-static int get_nnue_piece_type(int piece_type) {
-    switch (piece_type) {
-        case ROOK: case -ROOK: return 0;
-        case KNIGHT: case -KNIGHT: return 1;
-        case BISHOP: case -BISHOP: return 2;
-        case QUEEN: case -QUEEN: return 3;
-        case KING: case -KING: return 4;
-        default: return 5; // pawn
-    }
-
+static inline int get_nnue_piece_type(int piece_type) {
+    return abs(piece_type) - 1;
 }
