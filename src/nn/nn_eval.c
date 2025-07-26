@@ -65,10 +65,10 @@ int nn_eval(const position_t* pos, const neural_network_t* nn) {
 #endif /* USE_AVX */
 
     /* translate to predicted score */
-    float wscore = ((float)L2[0]) / (SCALE * SCALE);
-    float wr = ((float)L2[1]) / (SCALE * SCALE); /* win ratio */
+    float wscore = ((float)L2[0]) / (SCALE * SCALE) * 100; /* to centipawns */
+    float wr = ((float)L2[1]) / (SCALE * SCALE) * 1000; /* win ratio */
 
-    int y_hat = my_round((1.0 * wscore) + (0.0 * wr) * 100); /* merge and convert to centi-pawns */
+    int y_hat = my_round((0.5 * wscore)  + (0.5 * wr));
 
     return pos->player==WHITE ? y_hat : -y_hat;
 }
