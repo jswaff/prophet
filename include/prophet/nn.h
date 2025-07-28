@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define NN_SIZE_L1 1536
-#define NN_SIZE_L2    1
+#define NN_SIZE_L2    2
 
 typedef int16_t nnue_accumulator_t[2][NN_SIZE_L1];
 
