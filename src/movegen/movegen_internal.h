@@ -385,19 +385,6 @@ bool is_stalemate(const position_t *pos);
 
 
 /**
- * \brief Test move legality.
- *
- * Test that a move is legal in a given position.
- *
- * \param mv            the move to test
- * \param pos           a pointer to a chess position
- *
- * \return true if legal, otherwise false
- */
-bool is_legal_move(move_t mv, const position_t *pos);
-
-
-/**
  * \brief Test if a move is a member of a list.
  *
  * Determine if a chess move is contained within a list of moves. The score 
