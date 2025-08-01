@@ -1,6 +1,8 @@
-#include "nn_internal.h"
+#include "prophet/nn.h"
 
 #include "prophet/position.h"
+
+#include "nn_internal.h"
 
 #include <assert.h>
 #include <immintrin.h>

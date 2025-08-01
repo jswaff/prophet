@@ -24,6 +24,9 @@ extern "C" {
 #define DRAWSCORE                       0
 #define NO_MOVE                         0U
 
+/* neural network layer sizes */
+#define NN_SIZE_L1                   1536
+#define NN_SIZE_L2                      2
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

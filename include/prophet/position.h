@@ -1,7 +1,7 @@
 #pragma once
 
+#include <prophet/const.h>
 #include <prophet/move.h>
-#include <prophet/nn.h>
 #include <prophet/piece.h>
 #include <prophet/square.h>
 
@@ -14,6 +14,8 @@ extern "C" {
 #endif   
 
 typedef enum { BLACK=0, WHITE=1 } color_t;
+
+typedef int16_t nnue_accumulator_t[2][NN_SIZE_L1];
 
 typedef struct {
     int32_t piece[64];

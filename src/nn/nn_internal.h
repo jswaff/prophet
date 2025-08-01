@@ -74,18 +74,6 @@ void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neur
 bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2);
 
 
-/**
- * \brief Evaluate a chess position for the side to move using a neural network.
- *
- * Run a forward pass (inference) using the supplied neural network.
- * 
- * \param pos             a pointer to a chess position
- * \param nn              a pointer to a neural network model
- *
- * \return the score.
- */
-int nn_eval(const position_t* pos, const neural_network_t *nn);
-
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }

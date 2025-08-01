@@ -9,6 +9,7 @@
         "position.h": "c",
         "random": "c",
         "algorithm": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "stdbool.h": "c"
     }
 }
