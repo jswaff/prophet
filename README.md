@@ -22,7 +22,7 @@ You should see a confirmation that the network was loaded:
 loading neural network from nn-24-q.txt
 ```
 
-The supplied network weights were trained using a Python/Pytorch based trainer I wrote: [chess-trainer](https://github.com/jswaff/chess-trainer) with some influence from David Carteau's excellent [Cerebrum library](https://github.com/david-carteau/cerebrum).  The inference code within Prophet (particularly the intrinsics) were used almost verbatim.  Thank you David!
+The supplied network weights were trained using [chess-trainer](https://github.com/jswaff/chess-trainer).  chess-trainer is a Pytorch based trainer I wrote, with some influence from David Carteau's excellent [Cerebrum library](https://github.com/david-carteau/cerebrum).  The inference code within Prophet (particularly the intrinsics) were used almost verbatim.  Thank you David!
 
 
 ## Building from Source
