@@ -10,13 +10,18 @@ Although Prophet is a fully functional standalone chess engine, I tend to use it
 
 ## Using a Neural Network
 
-By default, Prophet still uses a hand crafted evaluation.  You can enable a neural network based evaluation using the '''n''' command line parameter.
+By default, Prophet still uses a hand crafted evaluation.  You can enable a neural network based evaluation using the 'n' command line parameter.
 
-'''prophet -n nn-24-q.txt '''
+```
+prophet -n nn-24-q.txt 
+```
 
 You should see a confirmation that the network was loaded:
 
-'''loading neural network from nn-24-q.txt'''
+```
+loading neural network from nn-24-q.txt
+```
+
 
 
 ## Installing
