@@ -8,6 +8,16 @@ Prophet is a chess playing program written in C.  Technically it's a chess engin
 
 Although Prophet is a fully functional standalone chess engine, I tend to use it more as a "plug in engine" within [chess4j](https://github.com/jswaff/chess4j) more than I do as a standalone engine.  This hybrid approach allows me to enjoy the benefits of programming non-critical-path functions in a higher level language while still getting the raw speed of native code. Consequently, I have made a decision to NOT build an opening book or pondering support directly into Prophet, as both are handled by chess4j.  (Of course I may change my mind in the future!)
 
+## Using a Neural Network
+
+By default, Prophet still uses a hand crafted evaluation.  You can enable a neural network based evaluation using the '''n''' command line parameter.
+
+'''prophet -n nn-24-q.txt '''
+
+You should see a confirmation that the network was loaded:
+
+'''loading neural network from nn-24-q.txt'''
+
 
 ## Installing
 
