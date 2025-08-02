@@ -13,7 +13,7 @@ Although Prophet is a fully functional chess engine, I tend to use it more as a 
 By default, Prophet still uses a hand crafted evaluation.  You can enable a neural network based evaluation using the 'n' command line parameter.
 
 ```
-prophet -n nn-24-q.txt 
+./prophet -n nn-24-q.txt 
 ```
 
 You should see a confirmation that the network was loaded:
