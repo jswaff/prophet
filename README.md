@@ -41,7 +41,7 @@ You may be able to compile Prophet on other POSIX compliant operating systems, b
 
 ## How Strong is it?
 
-The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.3 to be rated at 2480.  Prophet 5.0 should be around 100 ELO stronger according by my testing. 
+The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.3 to be rated at 2480.  Prophet 5.0 should be around 100 ELO stronger according to my testing. 
 
 ## Release Notes
 
