@@ -6,7 +6,7 @@ An XBoard compatible chess engine
 
 Prophet is a chess playing program written in C.  Technically it's a chess engine, meaning there is no graphical user interface.  To play a game with Prophet, you'll want to install Winboard (Windows) or XBoard (Linux/Mac).  See http://www.gnu.org/software/xboard for details.
 
-Although Prophet is a fully functional standalone chess engine, I tend to use it more as a "plug in engine" within [chess4j](https://github.com/jswaff/chess4j) more than I do as a standalone engine.  This hybrid approach allows me to enjoy the benefits of programming non-critical-path functions in a higher level language while still getting the raw speed of native code. Consequently, I have made a decision to NOT build an opening book or pondering support directly into Prophet, as both are handled by chess4j.  (Of course I may change my mind in the future!)
+Although Prophet is a fully functional standalone chess engine, I tend to use it more as a "plug in engine" within [chess4j](https://github.com/jswaff/chess4j){:target="_blank"} more than I do as a standalone engine.  This hybrid approach allows me to enjoy the benefits of programming non-critical-path functions in a higher level language while still getting the raw speed of native code. Consequently, I have made a decision to NOT build an opening book or pondering support directly into Prophet, as both are handled by chess4j.  (Of course I may change my mind in the future!)
 
 
 ## Installing
