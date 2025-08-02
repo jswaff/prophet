@@ -23,11 +23,9 @@ loading neural network from nn-24-q.txt
 ```
 
 
-## Installing
+## Building from Source
 
-To build Prophet, you'll need a C compiler.  I use gcc/g++ and 'cmake'.
-
-If you have the proper build tools, just do:
+Binaries are provided for Linux and Windows based systems, but if you want to build Prophet from source, you'll need a Linux based environment with gcc/g++ and cmake.  If you have the proper build tools, just do:
 
 ```
 mkdir build && cd build
@@ -37,6 +35,7 @@ make install
 
 If all went well, the 'prophet' and 'prophet_test' binaries will be in the build folder.
 
+You may be able to compile Prophet on other POSIX compliant operating systems, but I haven't tried it.  If you'd like to build a Windows binary, Cygwin does work, but compiling directly on Windows (e.g. with MSVC) is not supported.
 
 ## How Strong is it?
 
