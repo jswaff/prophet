@@ -35,7 +35,7 @@ make install
 
 If all went well, the 'prophet' and 'prophet_test' binaries will be in the build folder.
 
-You may be able to compile Prophet on other POSIX compliant operating systems, but I haven't tried it.  If you'd like to build a Windows binary, Cygwin does work, but compiling directly on Windows (e.g. with MSVC) is not supported.
+You may be able to compile Prophet on other POSIX compliant operating systems, but I haven't tried it.  If you'd like to build a Windows binary, Cygwin does work, but native Windows builds are not currently supported.  I plan to investigate this in the future.
 
 ## How Strong is it?
 
