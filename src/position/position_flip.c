@@ -2,12 +2,16 @@
 
 #include "prophet/square.h"
 
+#include "nn/nn_internal.h"
 #include "position_internal.h"
 #include "square_internal.h"
 
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>
+
+extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 /**
  * \brief Flip a position vertically.
@@ -64,6 +68,9 @@ position_t position_flip(const position_t* pos)
     /* rebuild the hash keys */
     flipped.hash_key = build_hash_key(&flipped);
     flipped.pawn_key = build_pawn_key(&flipped);
+
+    /* rebuild accmulators */
+    if (use_neural_network) populate_accumulators(&flipped, &neural_network);
 
     /* verify everything is consistent */
     assert(verify_pos(&flipped));

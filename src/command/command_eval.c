@@ -2,6 +2,7 @@
 
 #include "prophet/error_codes.h"
 #include "prophet/eval.h"
+#include "prophet/nn.h"
 #include "prophet/position.h"
 
 #include "util/output.h"
@@ -9,6 +10,8 @@
 #include <stdint.h>
 #include <string.h>
 
+extern neural_network_t neural_network;
+extern bool use_neural_network;
 extern position_t gpos;
 
 /**
@@ -30,6 +33,12 @@ int command_eval(const char* input)
     int32_t score = eval(&gpos, false, false);
 
     out(stdout, "eval score: %d\n", score);
+
+    if (use_neural_network) {
+        int32_t nn_score = nn_eval(&gpos, &neural_network);
+        out(stdout, "nn score: %d\n", nn_score);
+    }
+
 
     return 0;
 }

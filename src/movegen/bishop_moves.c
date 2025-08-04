@@ -46,7 +46,7 @@ move_t* gen_bishop_moves(
     uint64_t pmap = p->player==WHITE ? p->white_bishops : p->black_bishops;
 
     while (pmap) {
-        square_t sq = (square_t)get_msb(pmap);
+        square_t sq = (square_t)get_lsb(pmap);
         m = gen_bishop_moves_from_sq(m, p, sq, caps, noncaps);
         pmap ^= square_to_bitmap(sq);
     }
@@ -61,11 +61,10 @@ move_t* gen_bishop_moves_from_sq(
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t bishop_moves =  get_bishop_moves(
-        p, from, get_target_squares(p, caps, noncaps));
+    uint64_t bishop_moves =  get_bishop_moves(p, from, get_target_squares(p, caps, noncaps));
 
     while (bishop_moves) {
-        square_t sq = (square_t)get_msb(bishop_moves);
+        square_t sq = (square_t)get_lsb(bishop_moves);
         m = add_move(m, p, BISHOP, from, sq);
         bishop_moves ^= square_to_bitmap(sq);
     }
@@ -92,10 +91,8 @@ uint64_t get_bishop_moves(
     assert(magic_numbers[from]);
     assert(magic_numbers_shift[from]);
 
-    uint64_t occupied = (p->black_pieces | p->white_pieces) & 
-        bishop_masks[from];
-    int magic_ind = (occupied * magic_numbers[from]) >> 
-        magic_numbers_shift[from];
+    uint64_t occupied = (p->black_pieces | p->white_pieces) & bishop_masks[from];
+    int magic_ind = (occupied * magic_numbers[from]) >> magic_numbers_shift[from];
 
     return bishop_moves[from][magic_ind] & targets;
 }

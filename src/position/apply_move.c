@@ -4,6 +4,7 @@
 #include "prophet/move.h"
 #include "prophet/square.h"
 
+#include "nn/nn_internal.h"
 #include "position_internal.h"
 #include "square_internal.h"
 
@@ -14,6 +15,9 @@ static piece_t remove_captured_piece(position_t* p, move_t m);
 static void add_piece_to_destination(position_t* p, move_t m);
 static void remove_castling_availability(position_t* p, move_t mv);
 static void remove_rook_castling_availability(position_t* p, square_t sq);
+
+extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 /**
  * \brief Apply a chess move to a chess position.
@@ -67,6 +71,20 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     remove_castling_availability(pos, m);
     remove_piece(pos, get_from_sq(m));
 
+    /* update accumulators */
+    if (use_neural_network) {
+        if (!is_castle(m) && !is_epcapture(m) && get_promopiece(m)==NO_PIECE) {
+            /* incremental update */
+            if (u->captured != NO_PIECE) {
+                nn_remove_piece(u->captured, pos->player, get_to_sq(m), &neural_network, &pos->nnue_accumulator);
+            }
+            nn_move_piece(get_piece(m), opposite_player(pos->player), get_from_sq(m), get_to_sq(m),
+                &neural_network, &pos->nnue_accumulator);
+        } else {
+            populate_accumulators(pos, &neural_network);
+        }
+    }
+
     assert(verify_pos(pos));
 }
 
@@ -75,7 +93,9 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
     assert(is_capture(m));
     piece_t captured;
 
-    if (is_epcapture(m)) {
+    if (!is_epcapture(m)) {
+        captured = remove_piece(p, get_to_sq(m));
+    } else {
         /* remove pawn */
         if (p->player==WHITE) { 
             /* black WAS on move */
@@ -85,8 +105,6 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
             captured = remove_piece(p, south(p->ep_sq));
             assert((int)captured == -PAWN);
         }
-    } else {
-        captured = remove_piece(p, get_to_sq(m));
     }
 
     assert(captured != NO_PIECE);
@@ -95,8 +113,7 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
 }
 
 /**
- * \brief Add the moving piece to the destination square and apply special 
- * rules.
+ * \brief Add the moving piece to the destination square and apply special rules.
  *
  * The moving piece is added to the destination square.
  *
@@ -122,6 +139,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
     switch (piece) {
         case PAWN:
             p->fifty_counter = 0;
+            /* TODO: create a north(from, num_ranks) */
             if (to_sq == north(north(from_sq))) {
                 p->ep_sq = north(from_sq);
                 p->hash_key ^= zkeys.ep[p->ep_sq];
@@ -145,6 +163,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
         case KING:
             p->white_king = to_sq;
             /* move rook if this is a castle */
+            /* TODO: faster approach to detecting castle */
             if (from_sq == E1) {
                 if (to_sq == G1) {
                     assert(is_castle(m));
@@ -192,12 +211,18 @@ static void remove_castling_availability(position_t* p, move_t mv)
     /* if a rook or king is moving, remove their castling availability. */
     square_t from_sq = get_from_sq(mv);
     int32_t piece = p->piece[from_sq];
-    if (piece == KING) {
-        p->castling_rights &= CASTLE_BLACK;
-    } else if (piece == -KING) {
-        p->castling_rights &= CASTLE_WHITE;
-    } else if (piece == ROOK || piece == -ROOK) {
-        remove_rook_castling_availability(p, from_sq);
+
+    switch(piece) {
+        case KING:
+            p->castling_rights &= CASTLE_BLACK;
+            break;
+        case -KING:
+            p->castling_rights &= CASTLE_WHITE;
+            break;
+        case ROOK:
+        case -ROOK:
+            remove_rook_castling_availability(p, from_sq);
+            break;
     }
 
     /* add current castling rights to hash key */
@@ -206,13 +231,20 @@ static void remove_castling_availability(position_t* p, move_t mv)
 
 static void remove_rook_castling_availability(position_t* p, square_t sq)
 {
-    if (sq == A1) {
-        p->castling_rights &= CASTLE_NOT_WQ;
-    } else if (sq == H1) {
-        p->castling_rights &= CASTLE_NOT_WK;
-    } else if (sq == A8) {
-        p->castling_rights &= CASTLE_NOT_BQ;
-    } else if (sq == H8) {
-        p->castling_rights &= CASTLE_NOT_BK;
+    switch (sq) {
+        case A1:
+            p->castling_rights &= CASTLE_NOT_WQ;
+            break;
+        case H1:
+            p->castling_rights &= CASTLE_NOT_WK;
+            break;
+        case A8:
+            p->castling_rights &= CASTLE_NOT_BQ;
+            break;
+        case H8:
+            p->castling_rights &= CASTLE_NOT_BK;
+            break;
+        default:
+            break;
     }
 }

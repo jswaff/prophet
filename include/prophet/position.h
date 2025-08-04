@@ -1,5 +1,6 @@
 #pragma once
 
+#include <prophet/const.h>
 #include <prophet/move.h>
 #include <prophet/piece.h>
 #include <prophet/square.h>
@@ -12,8 +13,9 @@
 extern "C" {
 #endif   
 
-enum color_t { BLACK=0, WHITE=1 };
-typedef enum color_t color_t;
+typedef enum { BLACK=0, WHITE=1 } color_t;
+
+typedef int16_t nnue_accumulator_t[2][NN_SIZE_L1];
 
 typedef struct {
     int32_t piece[64];
@@ -39,6 +41,7 @@ typedef struct {
     uint64_t black_pieces;
     uint64_t hash_key;
     uint64_t pawn_key;
+    nnue_accumulator_t nnue_accumulator;
 } position_t;
 
 
@@ -132,6 +135,24 @@ void apply_move(position_t* pos, move_t m, undo_t* u);
  * \param u             a pointer to the undo information
  */
 void undo_move(position_t* pos, const undo_t* u);
+
+
+/**
+ * \brief Determine if a position is drawn by repetition.
+ *
+ * A position is drawn if it has occurred at least three times.
+ *
+ * \param pos           a pointer to a chess position
+ * \param u             a pointer to the start of an array of undo_t's
+ *                      It's expected that the array has at least enough 
+ *                      capacity for the position's move count.
+ * \param prev_reps     The number of previous repetitions required to 
+ *                      declare the current position as a draw.
+ *
+ * \return true if the position is drawn by repetition, otherwise false.
+ */
+bool is_draw_rep(const position_t* pos, const undo_t* u, int prev_reps);
+
 
 
 /* make this header C++ friendly. */

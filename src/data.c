@@ -9,7 +9,6 @@ position_t gpos;
 move_t killer1[MAX_PLY];
 move_t killer2[MAX_PLY];
 
-
 /* undo information for the game position*/
 undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 

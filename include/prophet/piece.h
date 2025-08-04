@@ -8,8 +8,7 @@
 extern "C" {
 #endif  
 
-enum piece_t { NO_PIECE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING };
-typedef enum piece_t piece_t;
+typedef enum { NO_PIECE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING } piece_t;
 
 
 static inline bool is_white_piece(int32_t piece) 

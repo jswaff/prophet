@@ -43,8 +43,7 @@ move_t to_move(piece_t piece, square_t from, square_t to);
  *
  * \return the move
  */
-move_t to_capture(
-    piece_t piece, square_t from, square_t to, piece_t captured_piece);
+move_t to_capture(piece_t piece, square_t from, square_t to, piece_t captured_piece);
 
 
 /**
@@ -188,6 +187,21 @@ void set_move_score(move_t* m, int32_t score);
  * \return a new move without a score
  */
 move_t clear_score(move_t mv);
+
+
+/**
+ * \brief Convert a move to a string.
+ *
+ * Returns a pointer to a null-terminated string.  The returned pointer must be
+ * passed to free to avoid a memory leak.
+ *
+ * If an error occurs, a null pointer is returned.
+ *
+ * \param mv            the move to convert
+ *
+ * \return a null terminated string
+ */
+char* move_to_str(move_t mv);
 
 
 /* make this header C++ friendly. */

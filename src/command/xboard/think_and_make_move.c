@@ -2,6 +2,7 @@
 
 #include "prophet/const.h"
 #include "prophet/error_codes.h"
+#include "prophet/move.h"
 #include "prophet/movegen.h"
 #include "prophet/search.h"
 

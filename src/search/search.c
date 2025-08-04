@@ -151,6 +151,8 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
 
         /* null move */
         if (!first && !incheck && null_move_ok && depth >= 3 && !zugzwang(pos)) {
+            uint32_t null50 = pos->fifty_counter;
+            pos->fifty_counter = 0; /* consider the null move irreversible */
             square_t ep_sq = apply_null_move(pos);
             int null_depth = depth - 4; /* R=3 */
             /* don't drop into q-search */
@@ -161,6 +163,7 @@ static int32_t search_helper(position_t* pos, move_line_t* parent_pv,
                 null_depth, -beta, -beta+1, false, false, move_stack, 
                 undo_stack, stats, opts);
             undo_null_move(pos, ep_sq);
+            pos->fifty_counter = null50;
 
             if (stop_search) {
                 return 0;

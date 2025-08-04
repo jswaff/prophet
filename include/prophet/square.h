@@ -7,7 +7,7 @@
 extern "C" {
 #endif  
 
-enum square_t 
+typedef enum  
 {
     A8,B8,C8,D8,E8,F8,G8,H8,
     A7,B7,C7,D7,E7,F7,G7,H7,
@@ -18,17 +18,13 @@ enum square_t
     A2,B2,C2,D2,E2,F2,G2,H2,
     A1,B1,C1,D1,E1,F1,G1,H1,
     NO_SQUARE
-};
-typedef enum square_t square_t;
+} square_t;
 
-enum rank_t { RANK_8,RANK_7,RANK_6,RANK_5,RANK_4,RANK_3,RANK_2,RANK_1 };
-typedef enum rank_t rank_t;
+typedef enum { RANK_8,RANK_7,RANK_6,RANK_5,RANK_4,RANK_3,RANK_2,RANK_1 } rank_t;
 
-enum file_t { FILE_A,FILE_B,FILE_C,FILE_D,FILE_E,FILE_F,FILE_G,FILE_H };
-typedef enum file_t file_t;
+typedef enum { FILE_A,FILE_B,FILE_C,FILE_D,FILE_E,FILE_F,FILE_G,FILE_H } file_t;
 
-enum dir_t { NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST,NODIR };
-typedef enum dir_t dir_t;
+typedef enum { NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST,NODIR } dir_t;
 
 
 /**

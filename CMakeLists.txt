@@ -7,6 +7,15 @@ option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 # Provide option to users on which library version to build
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
+option(WITH_AVX "Build with AVX intrinsics" ON)
+if(WITH_AVX)
+    add_definitions(-DUSE_AVX)
+endif()
+option(DEBUG_AVX "Debug AVX intrinsics" OFF)
+if (DEBUG_AVX)
+    add_definitions(-DDEBUG_AVX)
+endif()
+
 # Google Test libs
 enable_testing()
 include(FetchContent)
@@ -29,7 +38,7 @@ target_sources(${PROJECT_NAME}
         src/init.c
         src/bitmap/bitmap_file_rank.c
         src/bitmap/bitmap_isolate.c
-        src/bitmap/bitmap_lsb_msb.c
+        src/bitmap/bitmap_lsb.c
         src/bitmap/bitmap_popcnt.c
         src/bitmap/bitmap_rays.c
         src/command/command_db.c
@@ -62,6 +71,7 @@ target_sources(${PROJECT_NAME}
         src/command/xboard/xboard_time.c
         src/command/xboard/xboard_undo.c
         src/command/xboard/xboard_usermove.c
+        src/commandline/commandline_load_network.c
         src/commandline/commandline_load_properties.c
         src/commandline/commandline_print_usage.c
         src/commandline/commandline_process_options.c
@@ -104,6 +114,9 @@ target_sources(${PROJECT_NAME}
         src/movegen/perft.c
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
+        src/nn/nn_eval.c
+        src/nn/neural_network.c
+        src/nn/nnue_accumulators.c
         src/position/add_piece.c
         src/position/apply_move.c
         src/position/draw_material.c
@@ -133,7 +146,7 @@ target_sources(${PROJECT_NAME}
 )
 
 # Compiler options
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC -flto -march=native")
 #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -00 -g")
 #set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
 message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")
@@ -177,6 +190,7 @@ set(public_headers
     include/prophet/hash.h
     include/prophet/move.h
     include/prophet/movegen.h
+    include/prophet/nn.h
     include/prophet/piece.h
     include/prophet/position.h
     include/prophet/search.h
@@ -186,6 +200,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
 set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
 set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${PROJECT_VERSION})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 # add executable with a dependency on the library
 add_executable(prophet)
@@ -242,7 +257,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/testmain.cpp
             test/bitmap/test_bitmap_file_rank.cpp
             test/bitmap/test_bitmap_isolate.cpp
-            test/bitmap/test_bitmap_lsb_msb.cpp
+            test/bitmap/test_bitmap_lsb.cpp
             test/bitmap/test_bitmap_popcnt.cpp
             test/bitmap/test_bitmap_rays.cpp
             test/command/test_command_db.cpp
@@ -267,6 +282,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/command/xboard/test_xboard_time.cpp
             test/command/xboard/test_xboard_undo.cpp
             test/command/xboard/test_xboard_usermove.cpp
+            test/commandline/test_commandline_load_network.cpp
             test/commandline/test_commandline_load_properties.cpp
             test/eval/test_eval_accumulator.cpp
             test/eval/test_eval_bishop.cpp

@@ -5,6 +5,7 @@
 #include "position_internal.h"
 
 #include "bitmap/bitmap.h"
+#include "nn/nn_internal.h"
 #include "util/output.h"
 #include "util/string_utils.h"
 
@@ -12,6 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern neural_network_t neural_network;
+extern bool use_neural_network;
 
 /**
  * \brief Reset a chess position to the initial position.
@@ -187,6 +190,9 @@ bool set_pos(position_t* pos, const char* fen)
 
     pos->hash_key = build_hash_key(pos);
     pos->pawn_key = build_pawn_key(pos);
+
+    /* build accumulators */
+    if (use_neural_network) populate_accumulators(pos, &neural_network);
 
     /* it appears we've set everything up, but is the position valid? */
     if (verify_pos(pos)) {

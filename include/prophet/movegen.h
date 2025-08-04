@@ -28,8 +28,7 @@ extern "C" {
  *
  * \return a move pointer one greater than the last move produced
  */
-move_t* gen_pseudo_legal_moves(
-    move_t *m, const position_t *pos, bool caps, bool noncaps);
+move_t* gen_pseudo_legal_moves(move_t *m, const position_t *pos, bool caps, bool noncaps);
 
 
 /**
@@ -50,8 +49,20 @@ move_t* gen_pseudo_legal_moves(
  *
  * \return a move pointer one greater than the last move produced
  */
-move_t* gen_legal_moves(
-    move_t *m, const position_t *pos, bool caps, bool noncaps);
+move_t* gen_legal_moves(move_t *m, const position_t *pos, bool caps, bool noncaps);
+
+
+/**
+ * \brief Test move legality.
+ *
+ * Test that a move is legal in a given position.
+ *
+ * \param mv            the move to test
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if legal, otherwise false
+ */
+bool is_legal_move(move_t mv, const position_t *pos);
 
 
 // make this header C++ friendly.
