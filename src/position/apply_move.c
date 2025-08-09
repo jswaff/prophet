@@ -139,7 +139,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
     switch (piece) {
         case PAWN:
             p->fifty_counter = 0;
-            /* TODO: create a north(from, num_ranks) */
+            /* TODO: create a north2 */
             if (to_sq == north(north(from_sq))) {
                 p->ep_sq = north(from_sq);
                 p->hash_key ^= zkeys.ep[p->ep_sq];

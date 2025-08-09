@@ -41,6 +41,7 @@ uint64_t attackers(const position_t* pos, square_t sq, color_t player)
 
     /* fold in pawn attackers */
     /* TODO: precompute bitmaps shifted left/right 7 or 9 */
+    /* TODO: precompute NOT file bitmaps */
     if (player==WHITE) {
         /* attacked by white pawn from SW? */
         attackers_map |= (square_to_bitmap(sq) << 7)  & ~file_to_bitmap(FILE_H) & pos->white_pawns;
