@@ -105,6 +105,7 @@ bool attacked_by_pawn(const position_t* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
+    /* TODO: pawn_attack_w, pawn_attack_b */
     uint64_t sq_bmap = square_to_bitmap(sq);
     if (player==WHITE) {
         if (((p->white_pawns & not_file_to_bitmap(FILE_A)) >> 9) & sq_bmap) 
