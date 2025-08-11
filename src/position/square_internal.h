@@ -109,7 +109,7 @@ uint32_t distance(square_t sq1, square_t sq2);
  * \return the next square
  */
 square_t north(square_t sq);
-
+square_t north2(square_t sq);
 
 /**
  * \brief Get the next square to the south
@@ -122,6 +122,7 @@ square_t north(square_t sq);
  * \return the next square
  */
 square_t south(square_t sq);
+square_t south2(square_t sq);
 
 
 /**

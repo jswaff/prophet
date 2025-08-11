@@ -172,6 +172,13 @@ square_t north(square_t sq)
     return (square_t)(sq - 8);
 }
 
+square_t north2(square_t sq)
+{
+    assert((sq >= A8 && sq <= H1) || sq == NO_SQUARE);
+    if (sq == NO_SQUARE || get_rank(sq) <= RANK_7) return NO_SQUARE;
+    return (square_t)(sq - 16);
+}
+
 /**
  * \brief Get the next square to the south
  *
@@ -187,6 +194,13 @@ square_t south(square_t sq)
     assert((sq >= A8 && sq <= H1) || sq == NO_SQUARE);
     if (sq == NO_SQUARE || get_rank(sq) == RANK_1) return NO_SQUARE;
     return (square_t)(sq + 8);
+}
+
+square_t south2(square_t sq)
+{
+    assert((sq >= A8 && sq <= H1) || sq == NO_SQUARE);
+    if (sq == NO_SQUARE || get_rank(sq) >= RANK_2) return NO_SQUARE;
+    return (square_t)(sq + 16);
 }
 
 /**

@@ -131,6 +131,14 @@ TEST(square_test, north)
     EXPECT_EQ(north(B8), NO_SQUARE);
 }
 
+TEST(square_test, north2)
+{
+    EXPECT_EQ(north2(NO_SQUARE), NO_SQUARE);
+    EXPECT_EQ(north2(B4), B6);
+    EXPECT_EQ(north2(B7), NO_SQUARE);
+    EXPECT_EQ(north2(B8), NO_SQUARE);
+}
+
 TEST(square_test, east)
 {
     EXPECT_EQ(east(NO_SQUARE), NO_SQUARE);
@@ -143,6 +151,14 @@ TEST(square_test, south)
     EXPECT_EQ(south(NO_SQUARE), NO_SQUARE);
     EXPECT_EQ(south(B4), B3);
     EXPECT_EQ(south(B1), NO_SQUARE);
+}
+
+TEST(square_test, south2)
+{
+    EXPECT_EQ(south2(NO_SQUARE), NO_SQUARE);
+    EXPECT_EQ(south2(B4), B2);
+    EXPECT_EQ(south2(B2), NO_SQUARE);
+    EXPECT_EQ(south2(B1), NO_SQUARE);
 }
 
 TEST(square_test, west)
