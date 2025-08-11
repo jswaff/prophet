@@ -107,14 +107,14 @@ bool attacked_by_pawn(const position_t* p, square_t sq, color_t player)
 
     uint64_t sq_bmap = square_to_bitmap(sq);
     if (player==WHITE) {
-        if (((p->white_pawns & ~file_to_bitmap(FILE_A)) >> 9) & sq_bmap) 
+        if (((p->white_pawns & not_file_to_bitmap(FILE_A)) >> 9) & sq_bmap) 
             return true;
-        if (((p->white_pawns & ~file_to_bitmap(FILE_H)) >> 7) & sq_bmap) 
+        if (((p->white_pawns & not_file_to_bitmap(FILE_H)) >> 7) & sq_bmap) 
             return true;
     } else {
-        if (((p->black_pawns & ~file_to_bitmap(FILE_A)) << 7) & sq_bmap) 
+        if (((p->black_pawns & not_file_to_bitmap(FILE_A)) << 7) & sq_bmap) 
             return true;
-        if (((p->black_pawns & ~file_to_bitmap(FILE_H)) << 9) & sq_bmap) 
+        if (((p->black_pawns & not_file_to_bitmap(FILE_H)) << 9) & sq_bmap) 
             return true;
     }
 

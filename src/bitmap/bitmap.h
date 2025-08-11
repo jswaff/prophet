@@ -60,6 +60,7 @@ uint64_t isolate_bit(uint64_t val, uint32_t index);
  */
 uint64_t file_to_bitmap(file_t f);
 
+uint64_t not_file_to_bitmap(file_t f);
 
 /**
  * \brief Create a bitmap representation of a rank (8 squares).
@@ -69,6 +70,8 @@ uint64_t file_to_bitmap(file_t f);
  * \return a bitmap representation of the rank
  */
 uint64_t rank_to_bitmap(rank_t r);
+
+uint64_t not_rank_to_bitmap(rank_t r);
 
 /**
  * \brief Return a bitmap representing a ray.

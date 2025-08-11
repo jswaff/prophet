@@ -162,7 +162,6 @@ static void add_piece_to_destination(position_t* p, move_t m)
         case KING:
             p->white_king = to_sq;
             /* move rook if this is a castle */
-            /* TODO: faster approach to detecting castle */
             if (from_sq == E1) {
                 if (to_sq == G1) {
                     assert(is_castle(m));

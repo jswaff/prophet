@@ -40,17 +40,17 @@ uint64_t attackers(const position_t* pos, square_t sq, color_t player)
     attackers_map |= get_queen_moves(pos, sq, (player==WHITE ? pos->white_queens : pos->black_queens));
 
     /* fold in pawn attackers */
-    /* TODO: precompute bitmaps shifted left/right 7 or 9 */
+    /* TODO: precompute pawn attack bitmaps */
     if (player==WHITE) {
         /* attacked by white pawn from SW? */
-        attackers_map |= (square_to_bitmap(sq) << 7)  & ~file_to_bitmap(FILE_H) & pos->white_pawns;
+        attackers_map |= (square_to_bitmap(sq) << 7)  & not_file_to_bitmap(FILE_H) & pos->white_pawns;
         /* attacked by white pawn from SE? */
-        attackers_map |= (square_to_bitmap(sq) << 9)  & ~file_to_bitmap(FILE_A) & pos->white_pawns;
+        attackers_map |= (square_to_bitmap(sq) << 9)  & not_file_to_bitmap(FILE_A) & pos->white_pawns;
     } else {
         /* attacked by black pawn from NE? */
-        attackers_map |= (square_to_bitmap(sq) >> 7)  & ~file_to_bitmap(FILE_A) & pos->black_pawns;
+        attackers_map |= (square_to_bitmap(sq) >> 7)  & not_file_to_bitmap(FILE_A) & pos->black_pawns;
         /* attacked by black pawn from NW? */
-        attackers_map |= (square_to_bitmap(sq) >> 9)  & ~file_to_bitmap(FILE_H) & pos->black_pawns;
+        attackers_map |= (square_to_bitmap(sq) >> 9)  & not_file_to_bitmap(FILE_H) & pos->black_pawns;
     }
 
     return attackers_map;
