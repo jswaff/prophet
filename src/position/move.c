@@ -30,8 +30,8 @@ move_t to_move(piece_t piece, square_t from, square_t to)
  */
 move_t to_capture(piece_t piece, square_t from, square_t to, piece_t captured_piece)
 {
-    move_t mv = from | (to << 6) | (piece << 12);
-    set_capture(&mv, captured_piece);
+    int32_t cp = (int)captured_piece < NO_PIECE ? -captured_piece : captured_piece;
+    move_t mv = from | (to << 6) | (piece << 12) | (cp << 18);
     return mv;
 }
 
@@ -43,6 +43,7 @@ move_t to_capture(piece_t piece, square_t from, square_t to, piece_t captured_pi
  */
 void set_promopiece(move_t *mv, piece_t promo)
 {
+    assert(promo==QUEEN || promo==ROOK || promo==BISHOP || promo==KNIGHT);
     static uint64_t mask = ~(7 << 15);
     *mv &= mask;
     *mv |= promo << 15;
@@ -56,7 +57,8 @@ void set_promopiece(move_t *mv, piece_t promo)
  */
 void set_capture(move_t* mv, piece_t captured_piece)
 {
-    assert(captured_piece != NO_PIECE);
+    assert(captured_piece > NO_PIECE);
+
     int32_t cp = (int)captured_piece < 0 ? -captured_piece : captured_piece;
     assert(cp > 0 && cp < 8);
     static uint64_t mask = ~(7 << 18);
