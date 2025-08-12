@@ -104,7 +104,7 @@ bool good_move(const position_t* pos, move_t mv)
             goto exit;
         }
     } else if (mover==QUEEN) {
-        if (get_queen_moves(pos, from_sq, square_to_bitmap(to_sq))) {
+        if (get_queen_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
             retval = true;
             goto exit;
         }

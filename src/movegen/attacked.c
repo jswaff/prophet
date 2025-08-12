@@ -128,7 +128,7 @@ bool attacked_by_queen(const position_t* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    return get_queen_moves(p, sq, (player==WHITE ? p->white_queens : p->black_queens));
+    return get_queen_moves(p, sq) & (player==WHITE ? p->white_queens : p->black_queens);
 }
 
 /**
