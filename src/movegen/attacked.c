@@ -21,7 +21,6 @@
  */
 bool attacked(const position_t* pos, square_t sq, color_t player)
 {
-    /* TODO: order by likelihood (or expense?) */
     if (attacked_by_pawn(pos, sq, player)) return true;
     if (attacked_by_knight(pos, sq, player)) return true;
     if (attacked_by_king(pos, sq, player)) return true;
