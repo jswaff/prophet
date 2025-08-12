@@ -48,7 +48,7 @@ move_t* gen_knight_moves_from_sq(move_t* m, const position_t* p, square_t from, 
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t mv_map = get_knight_moves(from, get_target_squares(p, caps, noncaps));
+    uint64_t mv_map = get_knight_moves(from) & get_target_squares(p, caps, noncaps);
 
     while (mv_map) {
         square_t sq = (square_t)get_lsb(mv_map);
@@ -63,13 +63,12 @@ move_t* gen_knight_moves_from_sq(move_t* m, const position_t* p, square_t from, 
  * \brief Get knight moves.
  *
  * \param from          the square the knight is moving from
- * \param targets       target squares
  *
- * \return the subset of target squares the knight can move to
+ * \return the squares the knight can move to
  */
-uint64_t get_knight_moves(square_t from, uint64_t targets)
+uint64_t get_knight_moves(square_t from)
 {
-    return knight_moves[from] & targets;
+    return knight_moves[from];
 }
 
 void init_knight_movegen()

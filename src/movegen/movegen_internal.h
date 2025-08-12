@@ -268,22 +268,20 @@ uint64_t get_bishop_moves(
  * \brief Get king moves.
  *
  * \param from          the square the king is moving from
- * \param targets       target squares
  *
- * \return the subset of target squares the king can move to
+ * \return the squares the king can move to
  */
-uint64_t get_king_moves(square_t from, uint64_t targets);
+uint64_t get_king_moves(square_t from);
 
 
 /**
  * \brief Get knight moves.
  *
  * \param from          the square the knight is moving from
- * \param targets       target squares
  *
- * \return the subset of target squares the knight can move to
+ * \return the squares the knight can move to
  */
-uint64_t get_knight_moves(square_t from, uint64_t targets);
+uint64_t get_knight_moves(square_t from);
 
 
 /**

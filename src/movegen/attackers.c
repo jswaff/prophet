@@ -23,15 +23,15 @@ uint64_t attackers(const position_t* pos, square_t sq, color_t player)
     uint64_t attackers_map = 0;
 
     if (player==WHITE) {
-        attackers_map |= get_knight_moves(sq, pos->white_knights);
-        attackers_map |= get_king_moves(sq, square_to_bitmap(pos->white_king));
+        attackers_map |= get_knight_moves(sq) & pos->white_knights;
+        attackers_map |= get_king_moves(sq) & square_to_bitmap(pos->white_king);
         attackers_map |= get_bishop_moves(pos, sq, pos->white_bishops);
         attackers_map |= get_rook_moves(pos, sq, pos->white_rooks);
         attackers_map |= get_queen_moves(pos, sq, pos->white_queens);
         attackers_map |= get_pawn_attacks(sq, BLACK) & pos->white_pawns;
     } else {
-        attackers_map |= get_knight_moves(sq, pos->black_knights);
-        attackers_map |= get_king_moves(sq, square_to_bitmap(pos->black_king));
+        attackers_map |= get_knight_moves(sq) & pos->black_knights;
+        attackers_map |= get_king_moves(sq) & square_to_bitmap(pos->black_king);
         attackers_map |= get_bishop_moves(pos, sq, pos->black_bishops);
         attackers_map |= get_rook_moves(pos, sq, pos->black_rooks);
         attackers_map |= get_queen_moves(pos, sq, pos->black_queens);
