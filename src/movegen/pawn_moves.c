@@ -135,7 +135,8 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 /**
  * \brief Get pawn attacks.
  *
- * \param from          The square the pawn is moving from
+ * \param from          the square the pawn is on
+ * \param color         the color of the player attacking
  *
  * \return the squares the pawn attacks
  */

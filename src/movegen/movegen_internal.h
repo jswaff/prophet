@@ -289,7 +289,8 @@ uint64_t get_knight_moves(square_t from, uint64_t targets);
 /**
  * \brief Get pawn attacks.
  *
- * \param from          the square the pawn is moving from
+ * \param from          the square the pawn is on
+ * \param color         the color of the player attacking
  *
  * \return the squares the pawn attacks
  */
