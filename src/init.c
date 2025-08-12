@@ -14,6 +14,7 @@ extern void init_zkeys();
 
 extern void init_king_movegen();
 extern void init_knight_movegen();
+extern void init_pawn_movegen();
 extern void init_bishop_movegen();
 extern void init_rook_movegen();
 
@@ -48,6 +49,7 @@ int init()
         init_bishop_movegen();
         init_king_movegen();
         init_knight_movegen();
+        init_pawn_movegen();
         init_rook_movegen();
         init_pawn_isolated();
         init_bitmap_ray();

@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/* TODO: this should be deprecated after setting up in movegen */
 static uint64_t bb_pawn_attacked[64][2];
 
 

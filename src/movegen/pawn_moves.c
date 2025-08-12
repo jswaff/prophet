@@ -11,6 +11,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+static uint64_t pawn_attacks_w[64];
+static uint64_t pawn_attacks_b[64];
+
 static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t captured_piece, bool epcapture);
 static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t promopiece, piece_t captured_piece);
 
@@ -130,6 +133,21 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 }
 
 /**
+ * \brief Get pawn attacks.
+ *
+ * \param from          The square the pawn is moving from
+ *
+ * \return the squares the pawn attacks
+ */
+uint64_t get_pawn_attacks(square_t from, color_t player)
+{
+    assert(from >= A8 && from <= H1);
+
+    return player==WHITE ? pawn_attacks_w[from] : pawn_attacks_b[from];
+}
+
+
+/**
  * \brief Add a pawn move to a move list.
  *
  * If the move is a capture then the capture flag is set.  If it is a promotion 
@@ -194,4 +212,34 @@ static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t prom
     ++m;
 
     return m;
+}
+
+
+void init_pawn_movegen()
+{
+    for (int i=0; i<64; i++) {
+        square_t sq = (square_t)i;
+        pawn_attacks_w[i] = 0;
+        pawn_attacks_b[i] = 0;
+
+        file_t f = get_file(sq);
+        rank_t r = get_rank(sq);
+
+        if (f > FILE_A) {
+            if (r > RANK_8) {
+                pawn_attacks_w[i] = square_to_bitmap(northwest(sq));
+            }
+            if (r < RANK_1) {
+                pawn_attacks_b[i] = square_to_bitmap(southwest(sq));
+            }
+        }
+        if (f < FILE_H) {
+            if (r > RANK_8) {
+                pawn_attacks_w[i] |= square_to_bitmap(northeast(sq));
+            }
+            if (r < RANK_1) {
+                pawn_attacks_b[i] |= square_to_bitmap(southeast(sq));
+            }
+        }
+    }
 }

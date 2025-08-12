@@ -287,6 +287,16 @@ uint64_t get_knight_moves(square_t from, uint64_t targets);
 
 
 /**
+ * \brief Get pawn attacks.
+ *
+ * \param from          the square the pawn is moving from
+ *
+ * \return the squares the pawn attacks
+ */
+uint64_t get_pawn_attacks(square_t from, color_t player);
+
+
+/**
  * \brief Get queen moves.
  *
  * \param p             a pointer to a chess position
