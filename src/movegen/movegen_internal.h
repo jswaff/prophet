@@ -312,11 +312,10 @@ uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets);
  *
  * \param p             a pointer to a chess position
  * \param from          the square the rook is moving from
- * \param targets       target squares
  *
- * \return the subset of target squares the rook can move to
+ * \return the squares the rook can move to
  */
-uint64_t get_rook_moves(const position_t* p, square_t from, uint64_t targets);
+uint64_t get_rook_moves(const position_t* p, square_t from);
 
 
 /**

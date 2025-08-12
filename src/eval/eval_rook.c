@@ -30,7 +30,7 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK);
 
     uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
-    uint32_t mobility = popcnt(get_rook_moves(pos, sq, empty_squares));
+    uint32_t mobility = popcnt(get_rook_moves(pos, sq) & empty_squares);
     uint32_t mobility_mg = rook_mobility_mg[mobility];
     uint32_t mobility_eg = rook_mobility_eg[mobility];
 
@@ -76,7 +76,7 @@ static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgs
 
     uint64_t file_mask = sq_to_file_bitmap(sq);
     if (!(file_mask & friendly_pawns)) {
-        /*uint64_t rook_file_moves = get_rook_moves(pos, sq, sq_to_file_bitmap(sq));*/
+        /*uint64_t rook_file_moves = get_rook_moves(pos, sq) & sq_to_file_bitmap(sq);*/
         if (file_mask & enemy_pawns) {
             if (wtm) {
                 *mgscore += rook_half_open_file_mg;

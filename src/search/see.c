@@ -97,7 +97,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
             uint64_t xrays;
             if (xray_dir==NORTH || xray_dir==EAST || xray_dir==SOUTH || xray_dir==WEST)
             {
-                xrays = get_rook_moves(pos, current_sq, targets) &
+                xrays = get_rook_moves(pos, current_sq) & targets &
                     (pos->white_rooks | pos->white_queens | pos->black_rooks | pos->black_queens);
             } else {
                 xrays = get_bishop_moves(pos, current_sq, targets) &
