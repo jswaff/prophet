@@ -27,8 +27,7 @@ typedef square_t (*dir_func_t)(square_t);
  *
  * \return the next move pointer
  */
-move_t* add_move(
-    move_t* m, const position_t* p, piece_t piece, square_t from, square_t to);
+move_t* add_move(move_t* m, const position_t* p, piece_t piece, square_t from, square_t to);
 
 
 /**
@@ -147,10 +146,8 @@ uint64_t attackers(const position_t* pos, square_t sq, color_t player);
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_bishop_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps);
-move_t* gen_bishop_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
+move_t* gen_bishop_moves(move_t* m, const position_t* p, bool caps, bool noncaps);
+move_t* gen_bishop_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -167,10 +164,8 @@ move_t* gen_bishop_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_king_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps);
-move_t* gen_king_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
+move_t* gen_king_moves(move_t* m, const position_t* p, bool caps, bool noncaps);
+move_t* gen_king_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -187,10 +182,8 @@ move_t* gen_king_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_knight_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps);
-move_t* gen_knight_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
+move_t* gen_knight_moves(move_t* m, const position_t* p, bool caps, bool noncaps);
+move_t* gen_knight_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -207,8 +200,7 @@ move_t* gen_knight_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_pawn_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps);
+move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps);
 
 
 /**
@@ -225,10 +217,8 @@ move_t* gen_pawn_moves(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_queen_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps);
-move_t* gen_queen_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
+move_t* gen_queen_moves(move_t* m, const position_t* p, bool caps, bool noncaps);
+move_t* gen_queen_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -245,10 +235,8 @@ move_t* gen_queen_moves_from_sq(
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_rook_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps);
-move_t* gen_rook_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
+move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps);
+move_t* gen_rook_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps);
 
 
 /**
@@ -256,12 +244,10 @@ move_t* gen_rook_moves_from_sq(
  *
  * \param p             a pointer to a chess position
  * \param from          The square the bishop is moving from
- * \param targets       target squares
  *
- * \return the subset of target squares the bishop can move to
+ * \return the squares the bishop can move to
  */
-uint64_t get_bishop_moves(
-    const position_t* p, square_t from, uint64_t targets);
+uint64_t get_bishop_moves(const position_t* p, square_t from);
 
 
 /**
@@ -433,8 +419,7 @@ uint32_t num_legal_moves(const position_t *pos, bool caps, bool noncaps);
  * \param noncaps       a pointer to an integer to receive the number of 
  *                      noncaptures
  */
-void num_moves_in_list(
-    const move_t* startp, const move_t* endp, int* caps, int* noncaps);
+void num_moves_in_list(const move_t* startp, const move_t* endp, int* caps, int* noncaps);
 
 
 /**

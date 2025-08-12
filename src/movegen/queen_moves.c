@@ -67,5 +67,5 @@ move_t* gen_queen_moves_from_sq(move_t* m, const position_t* p, square_t from, b
  */
 uint64_t get_queen_moves(const position_t* p, square_t from, uint64_t targets)
 {
-    return (get_rook_moves(p, from) & targets) | get_bishop_moves(p, from, targets);
+    return (get_rook_moves(p, from) | get_bishop_moves(p, from)) & targets;
 }

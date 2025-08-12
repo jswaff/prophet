@@ -39,8 +39,7 @@ static void init_moves_database();
  *
  * \return move pointer one greater than the last move added
  */
-move_t* gen_bishop_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps)
+move_t* gen_bishop_moves(move_t* m, const position_t* p, bool caps, bool noncaps) 
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_bishops : p->black_bishops;
@@ -54,14 +53,13 @@ move_t* gen_bishop_moves(
     return m;
 }
 
-move_t* gen_bishop_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+move_t* gen_bishop_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps) 
 {
     assert(m);
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t bishop_moves =  get_bishop_moves(p, from, get_target_squares(p, caps, noncaps));
+    uint64_t bishop_moves =  get_bishop_moves(p, from) & get_target_squares(p, caps, noncaps);
 
     while (bishop_moves) {
         square_t sq = (square_t)get_lsb(bishop_moves);
@@ -77,12 +75,10 @@ move_t* gen_bishop_moves_from_sq(
  *
  * \param p             a pointer to a chess position
  * \param from          The square the bishop is moving from
- * \param targets       target squares
  *
- * \return the subset of target squares the bishop can move to
+ * \return the squares the bishop can move to
  */
-uint64_t get_bishop_moves(
-    const position_t* p, square_t from, uint64_t targets)
+uint64_t get_bishop_moves(const position_t* p, square_t from)
 {
     assert(p);
     assert(from >= A8 && from <= H1);
@@ -94,7 +90,7 @@ uint64_t get_bishop_moves(
     uint64_t occupied = (p->black_pieces | p->white_pieces) & bishop_masks[from];
     int magic_ind = (occupied * magic_numbers[from]) >> magic_numbers_shift[from];
 
-    return bishop_moves[from][magic_ind] & targets;
+    return bishop_moves[from][magic_ind];
 }
 
 static void init_bishop_masks()

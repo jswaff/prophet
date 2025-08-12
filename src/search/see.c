@@ -100,7 +100,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
                 xrays = get_rook_moves(pos, current_sq) & targets &
                     (pos->white_rooks | pos->white_queens | pos->black_rooks | pos->black_queens);
             } else {
-                xrays = get_bishop_moves(pos, current_sq, targets) &
+                xrays = get_bishop_moves(pos, current_sq) & targets &
                     (pos->white_bishops | pos->white_queens | pos->black_bishops | pos->black_queens);
             }
             if (xrays & pos->white_pieces) {

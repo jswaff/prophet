@@ -49,7 +49,7 @@ bool attacked_by_bishop(const position_t* p, square_t sq, color_t player)
     assert(sq >= A8 && sq <= H1);
     assert(player==WHITE || player==BLACK);
 
-    return get_bishop_moves(p, sq, (player==WHITE ? p->white_bishops : p->black_bishops));
+    return get_bishop_moves(p, sq) & (player==WHITE ? p->white_bishops : p->black_bishops);
 }
 
 /**
