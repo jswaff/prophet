@@ -27,11 +27,8 @@ move_t* add_move(move_t* m, const position_t* p, piece_t piece, square_t from, s
     assert( (p->player==WHITE && is_not_white_piece(captured_piece))
             || (p->player==BLACK && is_not_black_piece(captured_piece)));
 
-    *m = to_move(piece, from, to);
-    /* TODO: remove this conditional */
-    if (captured_piece) {
-        set_capture(m, captured_piece);
-    }
+    *m = to_capture(piece, from, to, captured_piece);
+
     ++m;
 
     return m;

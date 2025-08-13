@@ -46,7 +46,7 @@ move_t* gen_king_moves_from_sq(
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t mv_map = get_king_moves(from, get_target_squares(p, caps, noncaps));
+    uint64_t mv_map = get_king_moves(from) & get_target_squares(p, caps, noncaps);
 
     while (mv_map) {
         square_t sq = (square_t)get_lsb(mv_map);
@@ -94,13 +94,12 @@ move_t* gen_king_moves_from_sq(
  * \brief Get king moves.
  *
  * \param from          the square the king is moving from
- * \param targets       target squares
  *
- * \return the subset of target squares the king can move to
+ * \return the squares the king can move to
  */
-uint64_t get_king_moves(square_t from, uint64_t targets)
+uint64_t get_king_moves(square_t from)
 {
-    return king_moves[from] & targets;
+    return king_moves[from];
 }
 
 static move_t* add_castle(move_t* m, square_t from, square_t to)

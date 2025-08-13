@@ -25,7 +25,7 @@ void eval_queen(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* e
     assert(pos->piece[sq] == QUEEN || pos->piece[sq] == -QUEEN);
 
     uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
-    uint32_t mobility = popcnt(get_queen_moves(pos, sq, empty_squares));
+    uint32_t mobility = popcnt(get_queen_moves(pos, sq) & empty_squares);
     uint32_t mobility_mg = queen_mobility_mg[mobility];
     uint32_t mobility_eg = queen_mobility_eg[mobility];
 

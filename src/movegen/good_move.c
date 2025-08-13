@@ -89,27 +89,27 @@ bool good_move(const position_t* pos, move_t mv)
 
     /* validate the piece is moving as it should */
     if (mover==KNIGHT) {
-        if (get_knight_moves(from_sq, square_to_bitmap(to_sq))) {
+        if (get_knight_moves(from_sq) & square_to_bitmap(to_sq)) {
             retval = true;
             goto exit;
         }
     } else if (mover==BISHOP) {
-        if (get_bishop_moves(pos, from_sq, square_to_bitmap(to_sq))) {
+        if (get_bishop_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
             retval = true;
             goto exit;
         }
     } else if (mover==ROOK) {
-        if (get_rook_moves(pos, from_sq, square_to_bitmap(to_sq))) {
+        if (get_rook_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
             retval = true;
             goto exit;
         }
     } else if (mover==QUEEN) {
-        if (get_queen_moves(pos, from_sq, square_to_bitmap(to_sq))) {
+        if (get_queen_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
             retval = true;
             goto exit;
         }
     } else if (mover==KING) {
-        if (get_king_moves(from_sq, square_to_bitmap(to_sq))) {
+        if (get_king_moves(from_sq) & square_to_bitmap(to_sq)) {
             retval = true;
             goto exit;
         } if (is_castle(mv)) {

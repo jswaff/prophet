@@ -139,8 +139,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
     switch (piece) {
         case PAWN:
             p->fifty_counter = 0;
-            /* TODO: create a north(from, num_ranks) */
-            if (to_sq == north(north(from_sq))) {
+            if (to_sq == north2(from_sq)) {
                 p->ep_sq = north(from_sq);
                 p->hash_key ^= zkeys.ep[p->ep_sq];
             } else if (get_rank(to_sq) == RANK_8) {
@@ -151,7 +150,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
             break;
         case -PAWN:
             p->fifty_counter = 0;
-            if (to_sq == south(south(from_sq))) {
+            if (to_sq == south2(from_sq)) {
                 p->ep_sq = south(from_sq);
                 p->hash_key ^= zkeys.ep[p->ep_sq];
             } else if (get_rank(to_sq) == RANK_1) {
@@ -163,7 +162,6 @@ static void add_piece_to_destination(position_t* p, move_t m)
         case KING:
             p->white_king = to_sq;
             /* move rook if this is a castle */
-            /* TODO: faster approach to detecting castle */
             if (from_sq == E1) {
                 if (to_sq == G1) {
                     assert(is_castle(m));

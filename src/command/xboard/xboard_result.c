@@ -39,13 +39,13 @@ int xboard_result(const char* input)
     }
 
     if (!strcmp(result, "1-0")) {
-        /* TODO */
+        /* white wins */
     } else if (!strcmp(result, "0-1")) {
-        /* TODO */
+        /* black wins */
     } else if (!strcmp(result, "1/2-1/2")) {
-        /* TODO */
+        /* draw */
     } else if (!strcmp(result, "*")) {
-        /* TODO */
+        /* adjourned */
     } else {
         return P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT;   
     }

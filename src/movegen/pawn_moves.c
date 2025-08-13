@@ -11,6 +11,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+static uint64_t pawn_attacks_w[64];
+static uint64_t pawn_attacks_b[64];
+
 static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t captured_piece, bool epcapture);
 static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t promopiece, piece_t captured_piece);
 
@@ -42,7 +45,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             if (p->ep_sq != NO_SQUARE) targets |= square_to_bitmap(p->ep_sq);
 
             /* attacks west */
-            pmap = ((p->white_pawns & ~file_to_bitmap(FILE_A)) >> 9) & targets;
+            pmap = ((p->white_pawns & not_file_to_bitmap(FILE_A)) >> 9) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -51,7 +54,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             }
 
             /* attacks east */
-            pmap = ((p->white_pawns & ~file_to_bitmap(FILE_H)) >> 7) & targets;
+            pmap = ((p->white_pawns & not_file_to_bitmap(FILE_H)) >> 7) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -70,7 +73,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 
         /* pawn pushes less promotions */
         if (noncaps) {
-            pmap = ((p->white_pawns & ~rank_to_bitmap(RANK_7)) >> 8) & ~all_pieces;
+            pmap = ((p->white_pawns & not_rank_to_bitmap(RANK_7)) >> 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, south(sq), sq, NO_PIECE, false);
@@ -86,7 +89,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             if (p->ep_sq != NO_SQUARE) targets |= square_to_bitmap(p->ep_sq);
 
             /* attacks west */
-            pmap = ((p->black_pawns & ~file_to_bitmap(FILE_A)) << 7) & targets;
+            pmap = ((p->black_pawns & not_file_to_bitmap(FILE_A)) << 7) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -95,7 +98,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             }
 
             /* attacks west */
-            pmap = ((p->black_pawns & ~file_to_bitmap(FILE_H)) << 9) & targets;
+            pmap = ((p->black_pawns & not_file_to_bitmap(FILE_H)) << 9) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -114,7 +117,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 
         /* pawn pushes less promotions */
         if (noncaps) {
-            pmap = ((p->black_pawns & ~rank_to_bitmap(RANK_2)) << 8) & ~all_pieces;
+            pmap = ((p->black_pawns & not_rank_to_bitmap(RANK_2)) << 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, north(sq), sq, NO_PIECE, false);
@@ -128,6 +131,22 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 
     return m;
 }
+
+/**
+ * \brief Get pawn attacks.
+ *
+ * \param from          the square the pawn is on
+ * \param color         the color of the player attacking
+ *
+ * \return the squares the pawn attacks
+ */
+uint64_t get_pawn_attacks(square_t from, color_t player)
+{
+    assert(from >= A8 && from <= H1);
+
+    return player==WHITE ? pawn_attacks_w[from] : pawn_attacks_b[from];
+}
+
 
 /**
  * \brief Add a pawn move to a move list.
@@ -194,4 +213,34 @@ static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t prom
     ++m;
 
     return m;
+}
+
+
+void init_pawn_movegen()
+{
+    for (int i=0; i<64; i++) {
+        square_t sq = (square_t)i;
+        pawn_attacks_w[i] = 0;
+        pawn_attacks_b[i] = 0;
+
+        file_t f = get_file(sq);
+        rank_t r = get_rank(sq);
+
+        if (f > FILE_A) {
+            if (r > RANK_8) {
+                pawn_attacks_w[i] = square_to_bitmap(northwest(sq));
+            }
+            if (r < RANK_1) {
+                pawn_attacks_b[i] = square_to_bitmap(southwest(sq));
+            }
+        }
+        if (f < FILE_H) {
+            if (r > RANK_8) {
+                pawn_attacks_w[i] |= square_to_bitmap(northeast(sq));
+            }
+            if (r < RANK_1) {
+                pawn_attacks_b[i] |= square_to_bitmap(southeast(sq));
+            }
+        }
+    }
 }

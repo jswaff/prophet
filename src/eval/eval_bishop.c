@@ -24,7 +24,7 @@ void eval_bishop(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* 
     assert(pos->piece[sq] == BISHOP || pos->piece[sq] == -BISHOP);
 
     uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
-    uint32_t mobility = popcnt(get_bishop_moves(pos, sq, empty_squares));
+    uint32_t mobility = popcnt(get_bishop_moves(pos, sq) & empty_squares);
     uint32_t mobility_mg = bishop_mobility_mg[mobility];
     uint32_t mobility_eg = bishop_mobility_eg[mobility];
 
