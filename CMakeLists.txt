@@ -146,6 +146,9 @@ target_sources(${PROJECT_NAME}
 )
 
 # Compiler options
+#  gcc -march=znver3 -Q --help=target | grep -- '^  -mtune='
+#  x86-64 ==> march=x86-64,mtune=generic
+#  native ==> march=znver3,mtune=znver3  (alderlake on Cygwin)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC -flto -march=native")
 #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -00 -g")
 #set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
