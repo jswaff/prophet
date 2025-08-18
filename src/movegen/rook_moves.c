@@ -11,8 +11,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/* TODO: this is wasteful.  use a one dimensional array and precompute the 
- * offset for each square. */
 static uint64_t rook_moves[64][4096]; /* 4096 = 2^12.  12=max bits for mask */
 
 static uint64_t rook_masks[64]; /* reachable interior squares */

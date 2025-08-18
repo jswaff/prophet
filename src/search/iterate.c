@@ -237,7 +237,6 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time,
 }
 
 
-/* TODO: this is a duplicate of the function in next */
 static bool best_at_top(move_t* start, move_t* end)
 {
     move_t* bestp = 0;

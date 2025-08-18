@@ -59,7 +59,6 @@ bool is_lack_of_mating_material(const position_t* pos)
     /* are there opposing bishops on different color squares? - not a draw */
     if (num_white_bishops == 1 && num_black_bishops == 1)
     {
-        /* TODO: bitmaps of light and dark squares would be nice here. */
         uint32_t w_sq = get_lsb(pos->white_bishops);
         uint32_t b_sq = get_lsb(pos->black_bishops);
 

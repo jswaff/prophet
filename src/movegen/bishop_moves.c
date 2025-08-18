@@ -173,7 +173,6 @@ static void init_occupiers_and_blockers()
     }
 }
 
-/* TODO: this method identical to rooks */
 static void init_magic_numbers()
 {
     for (uint32_t sq=0; sq<64; sq++) {

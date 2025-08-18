@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     }
 
     /* welcome message, indicates initialization was successful */
-    plog("Hello!  This is the Prophet Chess Engine, version 5.0.\n\n");
+    plog("Hello!  This is the Prophet Chess Engine, version 5.1-dev.\n\n");
 
     retval = command_loop();
 
