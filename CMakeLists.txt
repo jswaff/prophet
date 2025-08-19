@@ -8,6 +8,7 @@ option(DEBUG_AVX "Debug AVX intrinsics" OFF)
 
 if(WITH_AVX)
     add_compile_definitions(USE_AVX)
+    add_compile_options(-mavx2 -mbmi2) # an assumption
 endif()
 if (DEBUG_AVX)
     add_compile_definitions(DEBUG_AVX)
@@ -142,15 +143,11 @@ target_sources(${PROJECT_NAME}
         src/util/time.c
 )
 
-# Compiler options
-#  gcc -march=znver3 -Q --help=target | grep -- '^  -mtune='
-#  x86-64 ==> march=x86-64,mtune=generic
-#  native ==> march=znver3,mtune=znver3  (alderlake on Cygwin)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fPIC -flto -march=native")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fPIC -flto")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
 message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")
