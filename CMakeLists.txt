@@ -1,31 +1,28 @@
 cmake_minimum_required(VERSION 3.17)
-project(prophetlib VERSION 4.4 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
+project(prophetlib VERSION 5.1 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 
-# Provide option to control test executable build
+# options
 option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
-
-# Provide option to users on which library version to build
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
-
 option(WITH_AVX "Build with AVX intrinsics" ON)
-if(WITH_AVX)
-    add_definitions(-DUSE_AVX)
-endif()
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
+
+if(WITH_AVX)
+    add_compile_definitions(USE_AVX)
+endif()
 if (DEBUG_AVX)
-    add_definitions(-DDEBUG_AVX)
+    add_compile_definitions(DEBUG_AVX)
 endif()
 
 # Google Test libs
 enable_testing()
 include(FetchContent)
 FetchContent_Declare(
- googletest
- URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
+    googletest 
+    URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
 )
 set(INSTALL_GTEST OFF)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # build library
@@ -149,9 +146,13 @@ target_sources(${PROJECT_NAME}
 #  gcc -march=znver3 -Q --help=target | grep -- '^  -mtune='
 #  x86-64 ==> march=x86-64,mtune=generic
 #  native ==> march=znver3,mtune=znver3  (alderlake on Cygwin)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC -flto -march=native")
-#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -00 -g")
-#set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fPIC -flto -march=native")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
 message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")
 message("CMAKE_C_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")
 message("CMAKE_C_FLAGS_RELEASE is ${CMAKE_C_FLAGS_RELEASE}")
@@ -238,18 +239,6 @@ write_basic_package_version_file(
     VERSION "${version}"
     COMPATIBILITY AnyNewerVersion
 )
-
-# create config file
-#configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-#    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-#    INSTALL_DESTINATION cmake
-#)
-# install config files
-#install(FILES
-#    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-#    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-#    DESTINATION cmake
-#)
 
 
 if(BUILD_TEST_EXECUTABLE)
