@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 project(prophetlib VERSION 5.1 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
+set(EXE_NAME prophet)
 
 # options
 option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
@@ -9,6 +10,7 @@ option(DEBUG_AVX "Debug AVX intrinsics" OFF)
 if(WITH_AVX)
     add_compile_definitions(USE_AVX)
     add_compile_options(-mavx2 -mbmi2) # an assumption
+    set(EXE_NAME ${EXE_NAME}-avx2)
 endif()
 if (DEBUG_AVX)
     add_compile_definitions(DEBUG_AVX)
@@ -185,13 +187,13 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 # add executable with a dependency on the library
-add_executable(prophet)
-target_sources(prophet
+add_executable(${EXE_NAME})
+target_sources(${EXE_NAME}
     PRIVATE
         src/main.c
 )
-target_include_directories(prophet PUBLIC "include/")
-target_link_libraries(prophet PRIVATE prophetlib)
+target_include_directories(${EXE_NAME} PUBLIC "include/")
+target_link_libraries(${EXE_NAME} PRIVATE ${PROJECT_NAME})
 
 # note that it is not CMAKE_INSTALL_PREFIX we are checking here
 if(DEFINED CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
