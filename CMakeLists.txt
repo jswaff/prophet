@@ -27,7 +27,6 @@ set(INSTALL_GTEST OFF)
 FetchContent_MakeAvailable(googletest)
 
 # build library
-# TODO - many of these not necessary for the library
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE
@@ -143,6 +142,20 @@ target_sources(${PROJECT_NAME}
         src/util/time.c
 )
 
+set(public_headers
+    include/prophet/const.h
+    include/prophet/error_codes.h
+    include/prophet/eval.h
+    include/prophet/hash.h
+    include/prophet/move.h
+    include/prophet/movegen.h
+    include/prophet/nn.h
+    include/prophet/piece.h
+    include/prophet/position.h
+    include/prophet/search.h
+    include/prophet/square.h
+)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
@@ -165,6 +178,21 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
+set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
+set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${PROJECT_VERSION})
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+# add executable with a dependency on the library
+add_executable(prophet)
+target_sources(prophet
+    PRIVATE
+        src/main.c
+)
+target_include_directories(prophet PUBLIC "include/")
+target_link_libraries(prophet PRIVATE prophetlib)
+
 # note that it is not CMAKE_INSTALL_PREFIX we are checking here
 if(DEFINED CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     message(
@@ -184,34 +212,6 @@ else()
         "Current value: ${CMAKE_INSTALL_PREFIX}"
     )
 endif()
-set(public_headers
-    include/prophet/const.h
-    include/prophet/error_codes.h
-    include/prophet/eval.h
-    include/prophet/hash.h
-    include/prophet/move.h
-    include/prophet/movegen.h
-    include/prophet/nn.h
-    include/prophet/piece.h
-    include/prophet/position.h
-    include/prophet/search.h
-    include/prophet/square.h
-)
-set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
-set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
-set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${PROJECT_VERSION})
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
-set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-
-# add executable with a dependency on the library
-add_executable(prophet)
-target_sources(prophet
-    PRIVATE
-        src/main.c
-)
-target_include_directories(prophet PUBLIC "include/")
-target_link_libraries(prophet PRIVATE prophetlib)
-
 
 # install
 include(GNUInstallDirs)
