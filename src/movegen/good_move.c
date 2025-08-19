@@ -50,22 +50,17 @@ bool good_move(const position_t* pos, move_t mv)
     /* is the piece the correct color for the player on move? */
     int32_t piece_on_board = pos->piece[from_sq];
     if (pos->player==WHITE) {
-        if (!is_white_piece(piece_on_board) 
-            || (int32_t)mover != piece_on_board)
-        {
+        if (!is_white_piece(piece_on_board) || (int32_t)mover != piece_on_board) {
             goto exit;
         }
     } else {
-        if (!is_black_piece(piece_on_board) 
-            || (int32_t)mover != -piece_on_board)
-        {
+        if (!is_black_piece(piece_on_board) || (int32_t)mover != -piece_on_board) {
             goto exit;
         }
     }
 
     if (mover==PAWN) {
-        retval = good_pawn_move(pos, from_sq, to_sq, captured_piece, 
-            is_epcapture(mv));
+        retval = good_pawn_move(pos, from_sq, to_sq, captured_piece, is_epcapture(mv));
         goto exit;
     }
 
@@ -169,7 +164,7 @@ static bool good_pawn_move(const position_t* pos, square_t from_sq,
                 return true;
             }
         }
-    } else {
+    } else { /* this is a capture */
         if (pos->player==WHITE) {
             if (northeast(from_sq) != to_sq && northwest(from_sq) != to_sq) {
                 return false;
