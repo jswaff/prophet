@@ -88,59 +88,58 @@ bool good_move(const position_t* pos, move_t mv)
     }
 
     /* validate the piece is moving as it should */
-    if (mover==KNIGHT) {
-        if (get_knight_moves(from_sq) & square_to_bitmap(to_sq)) {
-            retval = true;
-            goto exit;
-        }
-    } else if (mover==BISHOP) {
-        if (get_bishop_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
-            retval = true;
-            goto exit;
-        }
-    } else if (mover==ROOK) {
-        if (get_rook_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
-            retval = true;
-            goto exit;
-        }
-    } else if (mover==QUEEN) {
-        if (get_queen_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
-            retval = true;
-            goto exit;
-        }
-    } else if (mover==KING) {
-        if (get_king_moves(from_sq) & square_to_bitmap(to_sq)) {
-            retval = true;
-            goto exit;
-        } if (is_castle(mv)) {
-            if (to_sq==G1 && can_castle_wk(pos) 
-                && pos->piece[F1]==NO_PIECE && pos->piece[G1]==NO_PIECE
-                && !attacked(pos,E1,BLACK) && !attacked(pos,F1,BLACK))
-            {
+    switch (mover) {
+        case KNIGHT:
+            if (get_knight_moves(from_sq) & square_to_bitmap(to_sq)) {
                 retval = true;
-                goto exit;
-            } else if (to_sq==C1 && can_castle_wq(pos)
-                && pos->piece[D1]==NO_PIECE && pos->piece[C1]==NO_PIECE 
-                && pos->piece[B1]==NO_PIECE
-                && !attacked(pos,E1,BLACK) && !attacked(pos,D1,BLACK))
-            {
-                retval = true;
-                goto exit;
-            } else if (to_sq==G8 && can_castle_bk(pos)
-                && pos->piece[F8]==NO_PIECE && pos->piece[G8]==NO_PIECE
-                && !attacked(pos,E8,WHITE) && !attacked(pos,F8,WHITE))
-            {
-                retval = true;
-                goto exit;
-            } else if (to_sq==C8 && can_castle_bq(pos)
-                && pos->piece[D8]==NO_PIECE && pos->piece[C8]==NO_PIECE 
-                && pos->piece[B8]==NO_PIECE
-                && !attacked(pos,E8,WHITE) && !attacked(pos,D8,WHITE))
-            {
-                retval = true;
-                goto exit;
             }
-        }
+            break;
+        case BISHOP:
+            if (get_bishop_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
+                retval = true;
+            }
+            break;
+        case ROOK:
+            if (get_rook_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
+                retval = true;
+            }
+            break;
+        case QUEEN:
+            if (get_queen_moves(pos, from_sq) & square_to_bitmap(to_sq)) {
+                retval = true;
+            }
+            break;
+        case KING:
+            if (get_king_moves(from_sq) & square_to_bitmap(to_sq)) {
+                retval = true;
+            } else if (is_castle(mv)) {
+                if (to_sq==G1 && can_castle_wk(pos) 
+                    && pos->piece[F1]==NO_PIECE && pos->piece[G1]==NO_PIECE
+                    && !attacked(pos,E1,BLACK) && !attacked(pos,F1,BLACK))
+                {
+                    retval = true;
+                } else if (to_sq==C1 && can_castle_wq(pos)
+                    && pos->piece[D1]==NO_PIECE && pos->piece[C1]==NO_PIECE 
+                    && pos->piece[B1]==NO_PIECE
+                    && !attacked(pos,E1,BLACK) && !attacked(pos,D1,BLACK))
+                {
+                    retval = true;
+                } else if (to_sq==G8 && can_castle_bk(pos)
+                    && pos->piece[F8]==NO_PIECE && pos->piece[G8]==NO_PIECE
+                    && !attacked(pos,E8,WHITE) && !attacked(pos,F8,WHITE))
+                {
+                    retval = true;
+                } else if (to_sq==C8 && can_castle_bq(pos)
+                    && pos->piece[D8]==NO_PIECE && pos->piece[C8]==NO_PIECE 
+                    && pos->piece[B8]==NO_PIECE
+                    && !attacked(pos,E8,WHITE) && !attacked(pos,D8,WHITE))
+                {
+                    retval = true;
+                }
+            }
+            break;
+        default:
+            break;
     }
 
 exit:
