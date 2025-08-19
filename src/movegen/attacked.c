@@ -21,14 +21,23 @@
  */
 bool attacked(const position_t* pos, square_t sq, color_t player)
 {
-    if (attacked_by_pawn(pos, sq, player)) return true;
-    if (attacked_by_knight(pos, sq, player)) return true;
-    if (attacked_by_king(pos, sq, player)) return true;
-    if (attacked_by_rook(pos, sq, player)) return true;
-    if (attacked_by_bishop(pos, sq, player)) return true;
-    if (attacked_by_queen(pos, sq, player)) return true;
+    assert(pos);
+    assert(sq >= A8 && sq <= H1);
+    assert(player==WHITE || player==BLACK);
 
-    return false;
+    if (player==WHITE) {
+        return (get_pawn_attacks(sq, BLACK) & pos->white_pawns) || 
+            (get_knight_moves(sq) & pos->white_knights) ||
+            (get_king_moves(sq) & square_to_bitmap(pos->white_king)) ||
+            (get_rook_moves(pos, sq) & (pos->white_rooks | pos->white_queens)) ||
+            (get_bishop_moves(pos, sq) & (pos->white_bishops | pos->white_queens));
+    } else {
+        return (get_pawn_attacks(sq, WHITE) & pos->black_pawns) ||
+            (get_knight_moves(sq) & pos->black_knights) ||
+            (get_king_moves(sq) & square_to_bitmap(pos->black_king)) ||
+            (get_rook_moves(pos, sq) & (pos->black_rooks | pos->black_queens)) || 
+            (get_bishop_moves(pos, sq) & (pos->black_bishops | pos->black_queens));
+    }
 }
 
 
