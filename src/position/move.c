@@ -43,7 +43,7 @@ move_t to_capture(piece_t piece, square_t from, square_t to, piece_t captured_pi
  */
 void set_promopiece(move_t *mv, piece_t promo)
 {
-    assert(promo==QUEEN || promo==ROOK || promo==BISHOP || promo==KNIGHT);
+    assert(promo==NO_PIECE || promo==QUEEN || promo==ROOK || promo==BISHOP || promo==KNIGHT);
     static uint64_t mask = ~(7 << 15);
     *mv &= mask;
     *mv |= promo << 15;
