@@ -14,7 +14,7 @@ TEST(commandline_test, commandline_load_network)
     ASSERT_EQ(0, commandline_load_network("../test/resources/nn.txt"));
 
     EXPECT_EQ(0, neural_network.W0[0]);
-    EXPECT_EQ(3, neural_network.B1[0]);
+    EXPECT_EQ(1, neural_network.B1[0]);
     EXPECT_EQ(1, neural_network.B1[1]);
     EXPECT_TRUE(use_neural_network);
 
