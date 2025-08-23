@@ -45,6 +45,30 @@ void clear_hash_tables()
     clear_hash_table(&phtbl);
 }
 
+uint64_t get_main_hash_collisions() {
+    return htbl.collisions;
+}
+
+uint64_t get_main_hash_probes() {
+    return htbl.probes;
+}
+
+uint64_t get_main_hash_hits() {
+    return htbl.hits;
+}
+
+uint64_t get_pawn_hash_collisions() {
+    return phtbl.collisions;
+}
+
+uint64_t get_pawn_hash_probes() {
+    return phtbl.probes;
+}
+
+uint64_t get_pawn_hash_hits() {
+    return phtbl.hits;
+}
+
 
 /**
  * \brief Initialize all hash tables

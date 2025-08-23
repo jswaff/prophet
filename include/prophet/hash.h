@@ -52,6 +52,12 @@ void clear_hash_table(hash_table_t *tbl);
  */
 void clear_hash_tables();
 
+uint64_t get_main_hash_collisions();
+uint64_t get_main_hash_probes();
+uint64_t get_main_hash_hits();
+uint64_t get_pawn_hash_collisions();
+uint64_t get_pawn_hash_probes();
+uint64_t get_pawn_hash_hits();
 
 /**
  * \brief Resize a hash table.  
