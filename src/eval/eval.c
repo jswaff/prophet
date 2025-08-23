@@ -137,6 +137,7 @@ int32_t king_pst_eg[64] = {
 static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t eg_score);
 #endif
 
+
 /**
  * \brief Evaluate a chess position for the side to move.
  *
@@ -268,3 +269,9 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
     return mg_score==my_mg_score && eg_score==my_eg_score;
 }
 #endif
+
+int32_t eval_ffm(const char *fen, bool material_only) {
+    position_t pos;
+    set_pos(&pos, fen);
+    return eval(&pos, material_only, false);
+}

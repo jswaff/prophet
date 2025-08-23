@@ -30,6 +30,9 @@ extern "C" {
 int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash);
 
 
+/* TODO: This method is temporary, in support of the FFM conversion */
+int32_t eval_ffm(const char *fen, bool material_only);
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }
