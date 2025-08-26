@@ -86,7 +86,8 @@ int resize_pawn_hash_table(uint64_t max_size);
  *
  */
 void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val);
-
+void store_main_hash_table(const char *fen, uint64_t val);
+void store_pawn_hash_table(const char *fen, uint64_t val);
 
 /**
  * Probe the hash table

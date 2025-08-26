@@ -1,7 +1,12 @@
 #include "prophet/hash.h"
 
+#include "prophet/position.h"
+
 #include <assert.h>
 #include <stdint.h>
+
+extern hash_table_t htbl;
+extern hash_table_t phtbl;
 
 /**
  * \brief store a value in the hash table
@@ -69,4 +74,16 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
 
     he->key[selected_slot] = key;
     he->val[selected_slot] = val;
+}
+
+void store_main_hash_table(const char *fen, uint64_t val) {
+    position_t pos;
+    set_pos(&pos, fen);
+    store_hash_entry(&htbl, pos.hash_key, val);
+}
+
+void store_pawn_hash_table(const char *fen, uint64_t val) {
+    position_t pos;
+    set_pos(&pos, fen);
+    store_hash_entry(&phtbl, pos.pawn_key, val);
 }
