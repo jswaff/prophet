@@ -435,19 +435,6 @@ bool move_list_contains(move_t mv, const move_t* start, const move_t* end);
 
 
 /**
- * \brief Test move legality.
- *
- * Test that a move is legal in a given position.
- *
- * \param mv            the move to test
- * \param pos           a pointer to a chess position
- *
- * \return true if legal, otherwise false
- */
-bool is_legal_move(move_t mv, const position_t *pos);
-
-
-/**
  * \brief Count the number of legal moves possible in a position.
  *
  * \param pos           a pointer to a chess position
