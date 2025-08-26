@@ -26,7 +26,6 @@
  * \param noncaps       if non-capturing moves should be generated
  * \param caps          if capturing moves should be generated
  *
- * \return a move pointer one greater than the last move produced
  */
 void generate_moves_from_fen(move_t* m, int* n, const char* fen, bool caps, bool noncaps) {
     position_t pos;
