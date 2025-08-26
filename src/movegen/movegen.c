@@ -9,6 +9,16 @@
 #include <stdbool.h>
 #include <string.h>
 
+
+void generate_moves(move_t* m, int* n, const char* fen, bool caps, bool noncaps) {
+    position_t pos;
+    set_pos(&pos, fen);
+
+    move_t* mp = gen_pseudo_legal_moves(m, &pos, caps, noncaps);
+    *n = (mp - m);
+}
+
+
 /**
  * \brief Generate a list of pseudo-legal moves.
  *

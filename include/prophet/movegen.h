@@ -10,6 +10,8 @@
 extern "C" {
 #endif    //__cplusplus
 
+void generate_moves(move_t* m, int* n, const char* fen, bool caps, bool noncaps);
+
 
 /**
  * \brief Generate a list of pseudo-legal moves.
