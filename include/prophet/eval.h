@@ -1,7 +1,5 @@
 #pragma once
 
-#include <prophet/position.h>
-
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -21,17 +19,14 @@ extern "C" {
  *
  * This method will not detect end-of-game scenarios such as checkmate.
  *
- * \param pos             a pointer to a chess position
+ * \param fen             a chess position
  * \param material_only   if the evaluation should consider material only
  * \param use_pawn_hash   if the pawn hash table should be used
  *
  * \return the score.
  */
-int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash);
+int32_t eval_from_fen(const char *fen, bool material_only);
 
-
-/* TODO: This method is temporary, in support of the FFM conversion */
-int32_t eval_ffm(const char *fen, bool material_only);
 
 // make this header C++ friendly.
 #ifdef     __cplusplus

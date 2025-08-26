@@ -1,10 +1,10 @@
 #include "command.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/eval.h"
 #include "prophet/nn.h"
 #include "prophet/position.h"
 
+#include "eval/eval_internal.h"
 #include "util/output.h"
 
 #include <stdint.h>
