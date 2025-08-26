@@ -104,6 +104,8 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val);
  * \return - the stored value, or null if there is no value.
  */
 uint64_t probe_hash(hash_table_t *tbl, uint64_t key);
+uint64_t probe_main_hash_table(const char *fen);
+uint64_t probe_pawn_hash_table(const char *fen);
 
 
 /**

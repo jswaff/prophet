@@ -1,7 +1,12 @@
 #include "prophet/hash.h"
 
+#include "prophet/position.h"
+
 #include <assert.h>
 #include <stdint.h>
+
+extern hash_table_t htbl;
+extern hash_table_t phtbl;
 
 /**
  * Probe the hash table
@@ -37,4 +42,17 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
     /* miss */
 
     return 0;
+}
+
+uint64_t probe_main_hash_table(const char *fen) {
+    position_t pos;
+    set_pos(&pos, fen);
+    return probe_hash(&htbl, pos.hash_key);
+}
+
+
+uint64_t probe_pawn_hash_table(const char *fen) {
+    position_t pos;
+    set_pos(&pos, fen);
+    return probe_hash(&phtbl, pos.pawn_key);
 }
