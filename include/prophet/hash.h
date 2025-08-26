@@ -44,7 +44,8 @@ extern zobrist_keys zkeys;
  * \brief Clear a hash table
  */
 void clear_hash_table(hash_table_t *tbl);
-
+void clear_main_hash_table();
+void clear_pawn_hash_table();
 
 /**
  * \brief Clear all hash tables

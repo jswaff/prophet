@@ -34,6 +34,13 @@ void clear_hash_table(hash_table_t *tbl)
     tbl->collisions = 0;
 }
 
+void clear_main_hash_table() {
+    clear_hash_table(&htbl);
+}
+
+void clear_pawn_hash_table() {
+    clear_hash_table(&phtbl);
+}
 
 /**
  * \brief Clear all hash tables
