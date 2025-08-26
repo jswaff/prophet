@@ -1,7 +1,8 @@
 #include "command/xboard/xboard_internal.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/hash.h"
+
+#include "hash/hash_internal.h"
 
 #include <gtest/gtest.h>
 

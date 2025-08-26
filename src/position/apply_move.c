@@ -1,9 +1,9 @@
 #include "prophet/position.h"
 
-#include "prophet/hash.h"
 #include "prophet/move.h"
 #include "prophet/square.h"
 
+#include "hash/hash_internal.h"
 #include "nn/nn_internal.h"
 #include "position_internal.h"
 #include "square_internal.h"

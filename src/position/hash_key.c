@@ -1,10 +1,10 @@
 #include "position_internal.h"
 
-#include "prophet/hash.h"
 #include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "hash/hash_internal.h"
 #include "position/square_internal.h"
 
 #include <assert.h>

@@ -1,6 +1,7 @@
-#include "prophet/hash.h"
+#include "hash_internal.h"
 
 #include "prophet/error_codes.h"
+#include "prophet/hash.h"
 
 #include "util/output.h"
 
@@ -22,9 +23,9 @@ hash_table_t phtbl;
 static int init_hash_table(hash_table_t *tbl, uint64_t max_size);
 static void set_capacity(hash_table_t *tbl, uint64_t max_size);
 
+
 /**
  * \brief Clear a hash table
- *
  */
 void clear_hash_table(hash_table_t *tbl)
 {
@@ -34,17 +35,25 @@ void clear_hash_table(hash_table_t *tbl)
     tbl->collisions = 0;
 }
 
+
+/**
+ * \brief Clear the main hash table
+ */
 void clear_main_hash_table() {
     clear_hash_table(&htbl);
 }
 
+
+/**
+ * \brief Clear the pawn hash table
+ */
 void clear_pawn_hash_table() {
     clear_hash_table(&phtbl);
 }
 
+
 /**
  * \brief Clear all hash tables
- *
  */
 void clear_hash_tables()
 {
@@ -52,26 +61,50 @@ void clear_hash_tables()
     clear_hash_table(&phtbl);
 }
 
+
+/**
+ * \brief Get the number of collisions from the main hash table
+ */
 uint64_t get_main_hash_collisions() {
     return htbl.collisions;
 }
 
+
+/**
+ * \brief Get the number of probes from the main hash table
+ */
 uint64_t get_main_hash_probes() {
     return htbl.probes;
 }
 
+
+/**
+ * \brief Get the number of hits from the main hash table
+ */
 uint64_t get_main_hash_hits() {
     return htbl.hits;
 }
 
+
+/**
+ * \brief Get the number of collisions from the pawn hash table
+ */
 uint64_t get_pawn_hash_collisions() {
     return phtbl.collisions;
 }
 
+
+/**
+ * \brief Get the number of probes from the pawn hash table
+ */
 uint64_t get_pawn_hash_probes() {
     return phtbl.probes;
 }
 
+
+/**
+ * \brief Get the number of hits from the pawn hash table
+ */
 uint64_t get_pawn_hash_hits() {
     return phtbl.hits;
 }
@@ -132,11 +165,26 @@ int resize_hash_table(hash_table_t *tbl, uint64_t max_size)
     return 0;
 }
 
+
+/**
+ * \brief Resize the main hash table.  
+ *
+ * \param tbl           a pointer to hash table
+ *
+ * \return - 0 on success, or non-zero on failure
+ */
 int resize_main_hash_table(uint64_t max_size) {
     return resize_hash_table(&htbl, max_size);
 }
 
 
+/**
+ * \brief Resize the pawn hash table.  
+ *
+ * \param tbl           a pointer to hash table
+ *
+ * \return - 0 on success, or non-zero on failure
+ */
 int resize_pawn_hash_table(uint64_t max_size) {
     return resize_hash_table(&phtbl, max_size);
 }
@@ -165,6 +213,7 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
     return 0;
 }
 
+
 /**
  * \brief Set the capacity and mask for a hash table.
  *
@@ -177,7 +226,6 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
  * \param max_size      the maximum number of bytes to allocate 
  *
  */
-
 static void set_capacity(hash_table_t *tbl, uint64_t max_size)
 {
     assert(max_size > 0);
