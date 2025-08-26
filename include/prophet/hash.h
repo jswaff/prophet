@@ -68,7 +68,8 @@ uint64_t get_pawn_hash_hits();
  * \return - 0 on success, or non-zero on failure
  */
 int resize_hash_table(hash_table_t *tbl, uint64_t max_size);
-
+int resize_main_hash_table(uint64_t max_size);
+int resize_pawn_hash_table(uint64_t max_size);
 
 
 /**

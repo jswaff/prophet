@@ -125,6 +125,16 @@ int resize_hash_table(hash_table_t *tbl, uint64_t max_size)
     return 0;
 }
 
+int resize_main_hash_table(uint64_t max_size) {
+    return resize_hash_table(&htbl, max_size);
+}
+
+
+int resize_pawn_hash_table(uint64_t max_size) {
+    return resize_hash_table(&phtbl, max_size);
+}
+
+
 /**
  * \brief Initialize a hash table.  
  *
