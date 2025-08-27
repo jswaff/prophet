@@ -70,7 +70,6 @@ target_sources(${PROJECT_NAME}
         src/command/xboard/xboard_time.c
         src/command/xboard/xboard_undo.c
         src/command/xboard/xboard_usermove.c
-        src/commandline/commandline_load_network.c
         src/commandline/commandline_load_properties.c
         src/commandline/commandline_print_usage.c
         src/commandline/commandline_process_options.c
@@ -113,6 +112,7 @@ target_sources(${PROJECT_NAME}
         src/movegen/perft.c
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
+        src/nn/load_network.c
         src/nn/nn_eval.c
         src/nn/neural_network.c
         src/nn/nnue_accumulators.c
@@ -273,7 +273,6 @@ if(BUILD_TEST_EXECUTABLE)
             test/command/xboard/test_xboard_time.cpp
             test/command/xboard/test_xboard_undo.cpp
             test/command/xboard/test_xboard_usermove.cpp
-            test/commandline/test_commandline_load_network.cpp
             test/commandline/test_commandline_load_properties.cpp
             test/eval/test_eval_accumulator.cpp
             test/eval/test_eval_bishop.cpp
@@ -310,6 +309,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/movegen/test_perft.cpp
             test/movegen/test_queen_moves.cpp
             test/movegen/test_rook_moves.cpp
+            test/nn/test_load_network.cpp
             test/position/test_add_piece.cpp
             test/position/test_apply_move.cpp
             test/position/test_draw50.cpp

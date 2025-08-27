@@ -1,6 +1,7 @@
 #include "commandline.h"
 
 #include "prophet/error_codes.h"
+#include "prophet/nn.h"
 
 #include "util/output.h"
 
@@ -67,7 +68,7 @@ int commandline_process_options(int argc, char* argv[])
                 return commandline_load_properties(optarg);
             case 'n':
                 out(stdout, "loading neural network from %s\n", optarg);
-                return commandline_load_network(optarg);
+                return load_network(optarg);
             default:
                 commandline_print_usage();
                 return P4_ERROR_INVALID_COMMAND_LINE_OPTION;

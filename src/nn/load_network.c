@@ -1,4 +1,4 @@
-#include "commandline.h"
+#include "prophet/nn.h"
 
 #include "prophet/error_codes.h"
 
@@ -11,7 +11,7 @@
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-int commandline_load_network(const char* weights_file)
+int load_network(const char* weights_file)
 {
     FILE* wf;
     wf = fopen(weights_file, "r");

@@ -6,13 +6,6 @@ extern "C" {
 #endif  
 
 
-/**
- * \brief Load neural network weights file
- * 
- * \return 0 on successful execution, and non-zero on failure
- */
-int commandline_load_network(const char* weights_file);
-
 
 /**
  * \brief Load eval properties
