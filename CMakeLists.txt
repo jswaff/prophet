@@ -29,7 +29,7 @@ set(INSTALL_GTEST OFF)
 FetchContent_MakeAvailable(googletest)
 
 # build library
-add_library(${PROJECT_NAME} SHARED)
+add_library(${PROJECT_NAME})  # SHARED
 target_sources(${PROJECT_NAME}
     PRIVATE
         src/cleanup.c
@@ -149,6 +149,7 @@ set(public_headers
     include/prophet/error_codes.h
     include/prophet/eval.h
     include/prophet/hash.h
+    include/prophet/init.h
     include/prophet/move.h
     include/prophet/movegen.h
     include/prophet/nn.h

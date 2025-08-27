@@ -27,11 +27,6 @@ extern int init_hash_tables();
 extern position_t gpos;
 
 
-/**
- * \brief Initialize the program.
- *
- * \return 0 on successful execution, and non-zero on failure.
- */
 int init()
 {
     int retval = 0;
