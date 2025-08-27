@@ -136,7 +136,7 @@ target_sources(${PROJECT_NAME}
         src/search/qsearch.c
         src/search/search.c
         src/search/see.c
-        src/search/stop_search_on_time.c
+        src/search/stop.c
         src/search/zugzwang.c
         src/util/output.c
         src/util/prng.c

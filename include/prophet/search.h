@@ -140,6 +140,10 @@ int32_t see(const position_t* pos, move_t mv);
 
 int32_t see_from_fen(const char *fen, move_t mv);
 
+/**
+ * \brief Stop the search
+ */
+void halt_search();
 
 // make this header C++ friendly.
 #ifdef     __cplusplus

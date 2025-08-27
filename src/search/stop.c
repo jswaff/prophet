@@ -4,6 +4,12 @@
 
 #include <stdbool.h>
 
+extern bool volatile stop_search;
+
+void halt_search() {
+    stop_search = true;
+}
+
 /**
  * \brief Determine if the search should be stopped on time.
  *
