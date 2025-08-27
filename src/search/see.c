@@ -19,6 +19,13 @@ static int32_t score_capture(const position_t* pos, move_t mv);
 static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map);
 static int max(int, int);
 
+int32_t see_from_fen(const char *fen, move_t mv) {
+    position_t pos;
+    set_pos(&pos, fen);
+    return see(&pos, mv);
+}
+
+
 /**
  * \brief Evaluate a piece for move ordering purposes.
  *
