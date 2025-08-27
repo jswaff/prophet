@@ -11,7 +11,7 @@ extern bool use_neural_network;
 
 TEST(nn_test, nn_load_network)
 {
-    ASSERT_EQ(0, load_network("../test/resources/nn.txt"));
+    ASSERT_EQ(0, load_neural_network("../test/resources/nn.txt"));
 
     EXPECT_EQ(0, neural_network.W0[0]);
     EXPECT_EQ(1, neural_network.B1[0]);

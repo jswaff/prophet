@@ -11,7 +11,7 @@
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-int load_network(const char* weights_file)
+int load_neural_network(const char *weights_file)
 {
     FILE* wf;
     wf = fopen(weights_file, "r");

@@ -24,7 +24,7 @@ typedef struct {
  * 
  * \return 0 on successful execution, and non-zero on failure
  */
-int load_network(const char *weights_file);
+int load_neural_network(const char *weights_file);
 
 
 /**
