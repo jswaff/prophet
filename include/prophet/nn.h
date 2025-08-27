@@ -18,6 +18,19 @@ typedef struct {
     int8_t B1[NN_SIZE_L2];
 } neural_network_t;
 
+
+/**
+ * \brief Evaluate a chess position for the side to move using a neural network.
+ *
+ * Run a forward pass (inference) using the previously loaded neural network.
+ * 
+ * \param fen             a pointer to a chess position
+ *
+ * \return the score.
+ */
+int nn_eval_from_fen(const char *fen);
+
+
 /**
  * \brief Evaluate a chess position for the side to move using a neural network.
  *

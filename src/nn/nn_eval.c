@@ -16,6 +16,16 @@ static int my_round(float val);
 static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2);
 #endif
 
+extern neural_network_t neural_network;
+extern bool use_neural_network;
+
+int nn_eval_from_fen(const char *fen) {
+    if (!use_neural_network) return 0;
+    position_t pos;
+    set_pos(&pos, fen);
+    return nn_eval(&pos, &neural_network);
+}
+
 /**
  * \brief Evaluate a chess position for the side to move using a neural network.
  *
