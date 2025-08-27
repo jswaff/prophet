@@ -5,9 +5,14 @@
 #include <stdbool.h>
 
 extern bool volatile stop_search;
+extern bool volatile skip_time_checks;
 
 void set_search_stop_flag(bool stop) {
     stop_search = stop;
+}
+
+void set_skip_time_checks_flag(bool skip) {
+    skip_time_checks = skip;
 }
 
 /**

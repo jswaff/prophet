@@ -145,6 +145,12 @@ int32_t see_from_fen(const char *fen, move_t mv);
  */
 void set_search_stop_flag(bool stop);
 
+
+/**
+ * \brief Set the skip time checks flag
+ */
+void set_skip_time_checks_flag(bool skip);
+
 // make this header C++ friendly.
 #ifdef     __cplusplus
 }
