@@ -2,7 +2,7 @@
 
 #include "prophet/error_codes.h"
 
-#include "nn/nn_internal.h"
+#include "nn_internal.h"
 
 #include <stdbool.h>
 #include <stdio.h>
