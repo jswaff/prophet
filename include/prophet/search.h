@@ -141,9 +141,9 @@ int32_t see(const position_t* pos, move_t mv);
 int32_t see_from_fen(const char *fen, move_t mv);
 
 /**
- * \brief Stop the search
+ * \brief Set the search stop flag
  */
-void halt_search();
+void set_search_stop_flag(bool stop);
 
 // make this header C++ friendly.
 #ifdef     __cplusplus

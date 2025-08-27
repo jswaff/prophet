@@ -6,8 +6,8 @@
 
 extern bool volatile stop_search;
 
-void halt_search() {
-    stop_search = true;
+void set_search_stop_flag(bool stop) {
+    stop_search = stop;
 }
 
 /**
