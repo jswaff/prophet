@@ -21,11 +21,14 @@ uint32_t volatile max_time_ms = 0;
 uint32_t volatile hash_age = 0;
 
 
+extern position_t gpos;
+extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern move_line_t last_pv;
 extern hash_table_t htbl;
 extern hash_table_t phtbl;
 extern bool volatile stop_search;
 extern bool volatile skip_time_checks;
+extern move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
 static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
@@ -33,6 +36,45 @@ static void print_pv(move_line_t* pv, int32_t depth, int32_t score,
 static void print_search_summary(int32_t last_depth, uint64_t start_time, 
     const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
+
+
+/* Currently only being used for fixed depth testing */
+int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
+    int retval = 0;
+
+    position_t pos;
+    if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
+
+    /* set up the options */
+    iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
+    memset(opts, 0, sizeof(iterator_options_t));
+    opts->early_exit_ok = false;
+    opts->max_depth = depth;
+    opts->max_time_ms = 0; 
+    opts->post_mode = false;
+    opts->clear_hash_each_search = true;
+
+    iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
+    ctx->pos = &pos;
+    ctx->move_stack = moves;
+    ctx->undo_stack = gundos;
+
+    move_line_t pv_line = iterate(opts, ctx);
+
+    /* copy the PV into the return structure */
+    memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
+    *n = pv_line.n;
+
+//    int retval = make_move_otb(pv.mv[0]);
+
+
+    /* clean up */
+    free(ctx);
+    free(opts);
+
+    /* success */
+    return retval;
+}
 
 /**
  * \brief Search the position using iterative deepening. 
@@ -42,8 +84,7 @@ static bool best_at_top(move_t* start, move_t* end);
  *
  * \return the principal variation
  */ 
-move_line_t iterate(const iterator_options_t* opts, 
-    const iterator_context_t* ctx)
+move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx)
 {
     move_line_t pv; pv.n = 0;
 
