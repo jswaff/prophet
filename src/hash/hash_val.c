@@ -14,10 +14,8 @@
  *
  * \return - the encoded value
  */
-uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth, 
-    int32_t score, move_t mv, uint32_t hash_age)
+uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth, int32_t score, move_t mv, uint32_t hash_age)
 {
-
     /* convert mate scores */
     if (score >= CHECKMATE-500) {
         if (entry_type == UPPER_BOUND) {

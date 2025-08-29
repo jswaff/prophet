@@ -70,7 +70,7 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
             }
         }
     }
-
+selected_slot = 0; // FIXME
     assert(selected_slot != -1);
 
     he->key[selected_slot] = key;
@@ -89,7 +89,7 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
  * \param val           the value to store
  *
  */
-void store_main_hash_table(const char *fen, uint64_t val) {
+void store_main_hash_table(const char *fen, uint64_t val) { // TODO: instead pass the values in and build the entry
     position_t pos;
     set_pos(&pos, fen);
     store_hash_entry(&htbl, pos.hash_key, val);
@@ -107,7 +107,7 @@ void store_main_hash_table(const char *fen, uint64_t val) {
  * \param val           the value to store
  *
  */
-void store_pawn_hash_table(const char *fen, uint64_t val) {
+void store_pawn_hash_table(const char *fen, uint64_t val) { // TODO: pass in the scores and build the entry (or disable pawn hashing)
     position_t pos;
     set_pos(&pos, fen);
     store_hash_entry(&phtbl, pos.pawn_key, val);
