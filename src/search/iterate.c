@@ -65,9 +65,6 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
     memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
     *n = pv_line.n;
 
-//    int retval = make_move_otb(pv.mv[0]);
-
-
     /* clean up */
     free(ctx);
     free(opts);
@@ -103,14 +100,6 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         return pv;
     }
 
-    /* prepare to search */
-    memset(&last_pv, 0, sizeof(move_line_t));
-    uint32_t depth = 0;
-    int32_t score = 0;
-    stats_t stats;
-    memset(&stats, 0, sizeof(stats_t));
-    hash_age++;
-
     /* set up options */
     search_options_t search_opts;
     memset(&search_opts, 0, sizeof(search_options_t));
@@ -130,6 +119,15 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         }
     }
 
+    /* prepare to search */
+    memset(&last_pv, 0, sizeof(move_line_t));
+    uint32_t depth = 0;
+    int32_t score = 0;
+    stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
+    hash_age++;
+
+    ////////////////////////////////////////////////////////
     /* search using iterative deepening */
     bool stop_iterator = false;
     do {
@@ -196,6 +194,8 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     } while (!stop_iterator);
 
     assert(pv.n > 0);
+
+    ////////////////////////////////////////////////////////
 
     /* print the search summary */
     if (opts->post_mode) {
