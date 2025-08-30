@@ -46,11 +46,11 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth, pv_func_t p
     /* set up the options */
     iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
     memset(opts, 0, sizeof(iterator_options_t));
-    opts->early_exit_ok = false;
+    opts->early_exit_ok = false; /* TODO: if not fixed time per move */
     opts->max_depth = depth;
     opts->max_time_ms = 0;
-    opts->pv_callback = pv_callback;
     opts->post_mode = false;
+    opts->pv_callback = pv_callback;
     opts->clear_hash_each_search = true; // TODO: don't do this unless testing!
 
     /* TODO: replay move history.  verify move_counter and fifty_counter */
@@ -125,15 +125,12 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     memset(&stats, 0, sizeof(stats_t));
     hash_age++;
 
-    ////////////////////////////////////////////////////////
     /* search using iterative deepening */
     bool stop_iterator = false;
     do {
         ++depth;
 
-        /* clear the hash, if that option is set.  this is mainly used for
-         * debugging.
-         */
+        /* clear the hash, if that option is set.  this is mainly used for debugging. */
         if (opts->clear_hash_each_search) {
             clear_hash_table(&htbl);
         }
@@ -147,9 +144,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound, 
             ctx->move_stack, ctx->undo_stack, &stats, &search_opts);
 
-        /* the search may or may not have a PV.  If it does, we can use it 
-         * since the last iteraton's PV was tried first
-         */
+        /* If the search returned a PV, we can use it since the last iteration's PV was tried first */
         if (search_pv.n > 0) {
             memcpy(&pv, &search_pv, sizeof(move_line_t));
         }
@@ -190,11 +185,9 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
     assert(pv.n > 0);
 
-    ////////////////////////////////////////////////////////
-
     /* print the search summary */
+    /* TODO: return stats and print outside of this function */
     if (opts->post_mode) {
-        /* TODO: use callback */
         print_search_summary(depth, search_opts.start_time, &stats);
     }
 
@@ -204,7 +197,6 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
 static void print_search_summary(int32_t last_depth, uint64_t start_time, const stats_t* stats)
 {
-
     plog("\n");
     plog("# depth: %d\n", last_depth);
 
