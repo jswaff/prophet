@@ -163,6 +163,8 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
+        //opts->pv_callback(parent_pv, depth, score, elapsed, stats->nodes);
+
         if (opts->post_mode) {
             print_pv(&pv, depth, score, elapsed, stats.nodes);
         }
@@ -206,19 +208,16 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     return pv;
 }
 
-static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
-    uint64_t elapsed, uint64_t num_nodes)
+static void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
 {
     char* pv_buf = move_line_to_str(pv);
     uint64_t time_centis = elapsed / 10;
-    plog("%2d %5d %5llu %7llu %s\n", depth, score, time_centis,
-        num_nodes, pv_buf);
+    plog("%2d %5d %5llu %7llu %s\n", depth, score, time_centis, num_nodes, pv_buf);
     free(pv_buf);
 }
 
 
-static void print_search_summary(int32_t last_depth, uint64_t start_time, 
-    const stats_t* stats)
+static void print_search_summary(int32_t last_depth, uint64_t start_time, const stats_t* stats)
 {
 
     plog("\n");

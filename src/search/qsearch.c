@@ -36,8 +36,7 @@ extern bool use_neural_network;
  * 
  * \return the score
  */
-int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta, 
-    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
+int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack, stats_t* stats,
     search_options_t* opts)
 {
     assert(alpha < beta);
@@ -60,8 +59,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
     }
 
     move_order_dto mo_dto;
-    initialize_move_ordering(&mo_dto, move_stack, NO_MOVE, NO_MOVE, 
-        NO_MOVE, NO_MOVE, false, false);
+    initialize_move_ordering(&mo_dto, move_stack, NO_MOVE, NO_MOVE, NO_MOVE, NO_MOVE, false, false);
 
     move_t* mp;
     undo_t* uptr = undo_stack + pos->move_counter;
@@ -83,8 +81,7 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
             continue;
         }
 
-        int32_t score = -qsearch(
-            pos, -beta, -alpha, mo_dto.end, undo_stack, stats, opts);
+        int32_t score = -qsearch(pos, -beta, -alpha, mo_dto.end, undo_stack, stats, opts);
 
         undo_move(pos, uptr);
 
