@@ -78,7 +78,7 @@ typedef struct {
 move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx);
 
 
-int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth);
+int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth, pv_func_t pv_callback);
 
 /**
  * \brief Search the position to until it is "quiet".

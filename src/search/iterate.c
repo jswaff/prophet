@@ -2,6 +2,7 @@
 
 #include "prophet/const.h"
 #include "prophet/movegen.h"
+#include "prophet/search.h"
 
 #include "search_internal.h"
 #include "hash/hash_internal.h"
@@ -36,7 +37,7 @@ static bool best_at_top(move_t* start, move_t* end);
 
 
 /* Currently only being used for fixed depth testing */
-int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
+int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth, pv_func_t pv_callback) {
     int retval = 0;
 
     position_t pos;
@@ -48,9 +49,9 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
     opts->early_exit_ok = false;
     opts->max_depth = depth;
     opts->max_time_ms = 0;
-    opts->pv_callback = print_pv; /* TODO: pass this in */
-    opts->post_mode = true; // TODO
-    opts->clear_hash_each_search = true;
+    opts->pv_callback = pv_callback;
+    opts->post_mode = false;
+    opts->clear_hash_each_search = true; // TODO: don't do this unless testing!
 
     /* TODO: replay move history.  verify move_counter and fifty_counter */
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
