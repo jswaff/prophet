@@ -102,6 +102,16 @@ void out(FILE* stream, const char* format, ...)
     pthread_mutex_unlock(&output_mutex);
 }
 
+/* TODO: This is a temporary adaptor */
+void print_pv2(move_t* pv, int num_pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
+{
+    move_line_t move_line;
+    move_line.n = num_pv;
+    for (int i=0;i<num_pv && i<MAX_PLY;i++) { 
+        move_line.mv[i] = *(pv+i);
+    }
+    print_pv(&move_line, depth, score, elapsed, num_nodes);
+}
 
 void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
 {

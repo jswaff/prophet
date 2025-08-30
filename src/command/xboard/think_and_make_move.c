@@ -95,7 +95,7 @@ static void* iterate_wrapper(void* UNUSED(arg))
     opts->max_time_ms = max_time_ms;
     opts->post_mode = xboard_post_mode;
     if (opts->post_mode) {
-        opts->pv_callback = print_pv;
+        opts->pv_callback = print_pv2;
     }
     opts->clear_hash_each_search = false;
 

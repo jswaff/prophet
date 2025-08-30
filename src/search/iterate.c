@@ -161,7 +161,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
         if (opts->pv_callback) {
-            opts->pv_callback(&pv, depth, score, elapsed, stats.nodes);
+            opts->pv_callback(&(pv.mv[0]), pv.n, depth, score, elapsed, stats.nodes);
         }
 
         /* if the search discovered a checkmate, stop. */
