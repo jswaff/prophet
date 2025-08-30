@@ -31,10 +31,7 @@ extern bool volatile skip_time_checks;
 extern move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
-static void print_pv(move_line_t* pv, int32_t depth, int32_t score, 
-    uint64_t elapsed, uint64_t num_nodes);
-static void print_search_summary(int32_t last_depth, uint64_t start_time, 
-    const stats_t* stats);
+static void print_search_summary(int32_t last_depth, uint64_t start_time, const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
 
 
@@ -52,6 +49,7 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
     opts->max_depth = depth;
     opts->max_time_ms = 0; 
     opts->post_mode = false;
+    opts->pv_callback = print_pv; /* TODO: pass this in */
     opts->clear_hash_each_search = true;
 
     /* TODO: replay move history.  verify move_counter and fifty_counter */
@@ -104,9 +102,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     /* set up options */
     search_options_t search_opts;
     memset(&search_opts, 0, sizeof(search_options_t));
-    if (opts->post_mode) {
-        search_opts.pv_callback = print_pv;
-    }
+    search_opts.pv_callback = opts->pv_callback;
     search_opts.start_time = milli_timer();
     if (opts->max_time_ms) {
         search_opts.stop_time = search_opts.start_time + opts->max_time_ms;
@@ -163,10 +159,8 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
-        //opts->pv_callback(parent_pv, depth, score, elapsed, stats->nodes);
-
         if (opts->post_mode) {
-            print_pv(&pv, depth, score, elapsed, stats.nodes);
+            opts->pv_callback(&pv, depth, score, elapsed, stats.nodes);
         }
 
         /* if the search discovered a checkmate, stop. */
@@ -202,18 +196,11 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
     /* print the search summary */
     if (opts->post_mode) {
+        /* TODO: use callback */
         print_search_summary(depth, search_opts.start_time, &stats);
     }
 
     return pv;
-}
-
-static void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
-{
-    char* pv_buf = move_line_to_str(pv);
-    uint64_t time_centis = elapsed / 10;
-    plog("%2d %5d %5llu %7llu %s\n", depth, score, time_centis, num_nodes, pv_buf);
-    free(pv_buf);
 }
 
 

@@ -12,6 +12,12 @@ extern "C" {
 
 
 /**
+ * \brief Callback function when the PV is updated.
+ */
+typedef void (*pv_func_t)(move_line_t*, int32_t, int32_t, uint64_t, uint64_t);
+
+
+/**
  * \brief Options structure for the search iterator.
  */
 typedef struct {
@@ -19,6 +25,7 @@ typedef struct {
     uint32_t max_depth;
     uint32_t max_time_ms;
     bool post_mode;
+    pv_func_t pv_callback;
     bool clear_hash_each_search;
 } iterator_options_t;
 
@@ -31,12 +38,6 @@ typedef struct {
     move_t* move_stack;
     undo_t* undo_stack;
 } iterator_context_t;
-
-
-/**
- * \brief Callback function when the PV is updated.
- */
-typedef void (*pv_func_t)(move_line_t*, int32_t, int32_t, uint64_t, uint64_t);
 
 
 /**

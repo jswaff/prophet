@@ -1,5 +1,8 @@
 #pragma once
 
+#include "prophet/move.h"
+
+#include <stdint.h>
 #include <stdio.h>
 
 /* make this header C++ friendly. */
@@ -48,6 +51,9 @@ void plog(const char* format, ...);
  *                      list of arguments.
  */
 void out(FILE* stream, const char* format, ...);
+
+
+void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes);
 
 
 /* make this header C++ friendly. */
