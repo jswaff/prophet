@@ -49,6 +49,7 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
     opts->max_depth = depth;
     opts->max_time_ms = 0;
     opts->pv_callback = print_pv; /* TODO: pass this in */
+    opts->post_mode = true; // TODO
     opts->clear_hash_each_search = true;
 
     /* TODO: replay move history.  verify move_counter and fifty_counter */
