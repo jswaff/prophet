@@ -12,11 +12,7 @@ extern hash_table_t phtbl;
 /**
  * \brief store a value in the hash table
  *
- * Store the value in the hash table, using an "always replace" replacement
- * strategy.  The index in the table is computed by taking the supplied
- * key modulo the table capacity.
- *
- * \param tbl           a pointer to a hash table 
+ * \param tbl           a pointer to a hash table
  * \param key           a 64 bit key
  * \param val           the value to store
  *
@@ -49,14 +45,15 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
     }
 
     /* otherwise, if any entry is from a previous search, overwrite it. */
-    if (selected_slot == -1) {
+    /* FIXME: not compatible with chess4j */
+    /*if (selected_slot == -1) {
         for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++) {
             if (get_hash_entry_age(he->val[i]) < get_hash_entry_age(val)) {
                 selected_slot = i;
                 break;
             }
         }
-    }
+    }*/
 
     /* otherwise, select the entry with the lowest depth */
     if (selected_slot == -1) {
@@ -70,7 +67,7 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
             }
         }
     }
-selected_slot = 0; // FIXME
+
     assert(selected_slot != -1);
 
     he->key[selected_slot] = key;
@@ -81,15 +78,11 @@ selected_slot = 0; // FIXME
 /**
  * \brief store a value in the main hash table
  *
- * Store the value in the hash table, using an "always replace" replacement
- * strategy.  The index in the table is computed by taking the supplied
- * key modulo the table capacity.
- *
  * \param key           a 64 bit key
  * \param val           the value to store
  *
  */
-void store_main_hash_table(const char *fen, uint64_t val) { // TODO: instead pass the values in and build the entry
+void store_main_hash_table(const char *fen, uint64_t val) {
     position_t pos;
     set_pos(&pos, fen);
     store_hash_entry(&htbl, pos.hash_key, val);
@@ -107,7 +100,7 @@ void store_main_hash_table(const char *fen, uint64_t val) { // TODO: instead pas
  * \param val           the value to store
  *
  */
-void store_pawn_hash_table(const char *fen, uint64_t val) { // TODO: pass in the scores and build the entry (or disable pawn hashing)
+void store_pawn_hash_table(const char *fen, uint64_t val) {
     position_t pos;
     set_pos(&pos, fen);
     store_hash_entry(&phtbl, pos.pawn_key, val);

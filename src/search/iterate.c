@@ -54,6 +54,7 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
     opts->post_mode = false;
     opts->clear_hash_each_search = true;
 
+    /* TODO: replay move history.  verify move_counter and fifty_counter */
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
     ctx->pos = &pos;
     ctx->move_stack = moves;

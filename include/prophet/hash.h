@@ -87,10 +87,6 @@ int resize_pawn_hash_table(uint64_t max_size);
 /**
  * \brief store a value in the main hash table
  *
- * Store the value in the hash table, using an "always replace" replacement
- * strategy.  The index in the table is computed by taking the supplied
- * key modulo the table capacity.
- *
  * \param key           a 64 bit key
  * \param val           the value to store
  *
@@ -100,10 +96,6 @@ void store_main_hash_table(const char *fen, uint64_t val);
 
 /**
  * \brief store a value in the pawn hash table
- *
- * Store the value in the hash table, using an "always replace" replacement
- * strategy.  The index in the table is computed by taking the supplied
- * key modulo the table capacity.
  *
  * \param key           a 64 bit key
  * \param val           the value to store
