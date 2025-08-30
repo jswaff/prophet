@@ -47,8 +47,7 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth) {
     memset(opts, 0, sizeof(iterator_options_t));
     opts->early_exit_ok = false;
     opts->max_depth = depth;
-    opts->max_time_ms = 0; 
-    opts->post_mode = false;
+    opts->max_time_ms = 0;
     opts->pv_callback = print_pv; /* TODO: pass this in */
     opts->clear_hash_each_search = true;
 
@@ -159,7 +158,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
-        if (opts->post_mode) {
+        if (opts->pv_callback) {
             opts->pv_callback(&pv, depth, score, elapsed, stats.nodes);
         }
 
@@ -181,10 +180,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         /* if we've used more than half our time, don't start a new 
         *  iteration 
         */
-        if (opts->early_exit_ok && !skip_time_checks && 
-            (elapsed > opts->max_time_ms / 2))
-        {
-            //out(stdout, "# stopping iterative search because half time expired.\n");
+        if (opts->early_exit_ok && !skip_time_checks && (elapsed > opts->max_time_ms / 2)) {
             stop_iterator = true;
         }
 
