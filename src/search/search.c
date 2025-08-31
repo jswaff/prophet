@@ -3,6 +3,7 @@
 #include "prophet/const.h"
 #include "prophet/position.h"
 
+#include "parameters.h"
 #include "search_internal.h"
 #include "eval/eval_internal.h"
 #include "hash/hash_internal.h"
@@ -347,11 +348,11 @@ static void add_killer(move_t killer_move, int ply)
     }
 }
 
-static bool is_draw(const position_t* pos, const undo_t* undo_stack)
+static bool is_draw(const position_t* pos, const undo_t* UNUSED(undo_stack))
 {
     return pos->fifty_counter >= 100 
-        || is_lack_of_mating_material(pos)
-        || is_draw_rep(pos, undo_stack, 1);
+        || is_lack_of_mating_material(pos); // FIXME
+        //|| is_draw_rep(pos, undo_stack, 1);
 }
 
 static square_t apply_null_move(position_t* pos) 
