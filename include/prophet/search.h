@@ -72,13 +72,14 @@ typedef struct {
  * 
  * \param opts          the options structure
  * \param ctx           the context for this search iterator
+ * \param stats         a stats structure to record the search statistics
  *
  * \return the principal variation
  */ 
-move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx);
+move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx, stats_t *stats);
 
 
-int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth, pv_func_t pv_callback);
+int iterate_from_fen(const char *fen, move_t* pv, int* n, uint64_t* nodes, uint64_t* qnodes, int depth, pv_func_t pv_callback);
 
 /**
  * \brief Search the position to until it is "quiet".

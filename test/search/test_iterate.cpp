@@ -35,9 +35,12 @@ TEST(search_test, iterate_from_initial_pos)
     ctx.move_stack = moves;
     ctx.undo_stack = undos;
 
+    stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
+
     move_line_t pv;
     stop_search = false;
-    pv = iterate(&opts, &ctx);
+    pv = iterate(&opts, &ctx, &stats);
 
 
     ASSERT_GE(pv.n, 3);
@@ -74,9 +77,12 @@ TEST(search_test, iterate_from_mating_position)
     ctx.move_stack = moves;
     ctx.undo_stack = undos;
 
+    stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
+
     move_line_t pv;
     stop_search = false;
-    pv = iterate(&opts, &ctx);
+    pv = iterate(&opts, &ctx, &stats);
 
 
     ASSERT_EQ(pv.n, 1);
@@ -103,9 +109,12 @@ TEST(search_test, iterator_always_produces_move)
     ctx.move_stack = moves;
     ctx.undo_stack = undos;
 
+    stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
+
     move_line_t pv;
     stop_search = true;
-    pv = iterate(&opts, &ctx);
+    pv = iterate(&opts, &ctx, &stats);
 
     ASSERT_EQ(pv.n, 1);
     ASSERT_TRUE(is_legal_move(pv.mv[0], &pos));

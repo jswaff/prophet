@@ -105,7 +105,10 @@ static void* iterate_wrapper(void* UNUSED(arg))
     ctx->move_stack = moves;
     ctx->undo_stack = gundos;
 
-    move_line_t pv = iterate(opts, ctx);
+    stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
+
+    move_line_t pv = iterate(opts, ctx, &stats);
 
     free(ctx->pos);
     free(ctx);

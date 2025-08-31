@@ -37,7 +37,7 @@ static bool best_at_top(move_t* start, move_t* end);
 
 
 /* Currently only being used for fixed depth testing */
-int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth, pv_func_t pv_callback) {
+int iterate_from_fen(const char *fen, move_t* pv, int* n, uint64_t* nodes, uint64_t* qnodes, int depth, pv_func_t pv_callback) {
     int retval = 0;
 
     position_t pos;
@@ -59,11 +59,18 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth, pv_func_t p
     ctx->move_stack = moves;
     ctx->undo_stack = gundos;
 
-    move_line_t pv_line = iterate(opts, ctx);
+    stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
+
+    move_line_t pv_line = iterate(opts, ctx, &stats);
 
     /* copy the PV into the return structure */
     memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
     *n = pv_line.n;
+
+    /* record the search stats */
+    *nodes = stats.nodes;
+    *qnodes = stats.qnodes;
 
     /* clean up */
     free(ctx);
@@ -81,7 +88,7 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, int depth, pv_func_t p
  *
  * \return the principal variation
  */ 
-move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx)
+move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx, stats_t *stats)
 {
     move_line_t pv; pv.n = 0;
 
@@ -121,8 +128,6 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     memset(&last_pv, 0, sizeof(move_line_t));
     uint32_t depth = 0;
     int32_t score = 0;
-    stats_t stats;
-    memset(&stats, 0, sizeof(stats_t));
     hash_age++;
 
     /* search using iterative deepening */
@@ -142,7 +147,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
         /* start the search */
         score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound, 
-            ctx->move_stack, ctx->undo_stack, &stats, &search_opts);
+            ctx->move_stack, ctx->undo_stack, stats, &search_opts);
 
         /* If the search returned a PV, we can use it since the last iteration's PV was tried first */
         if (search_pv.n > 0) {
@@ -156,7 +161,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
         if (opts->pv_callback) {
-            opts->pv_callback(&(pv.mv[0]), pv.n, depth, score, elapsed, stats.nodes);
+            opts->pv_callback(&(pv.mv[0]), pv.n, depth, score, elapsed, stats->nodes);
         }
 
         /* if the search discovered a checkmate, stop. */
@@ -188,7 +193,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     /* print the search summary */
     /* TODO: return stats and print outside of this function */
     if (opts->post_mode) {
-        print_search_summary(depth, search_opts.start_time, &stats);
+        print_search_summary(depth, search_opts.start_time, stats);
     }
 
     return pv;
