@@ -29,7 +29,7 @@ set(INSTALL_GTEST OFF)
 FetchContent_MakeAvailable(googletest)
 
 # build library
-add_library(${PROJECT_NAME})  # SHARED
+add_library(${PROJECT_NAME} SHARED)
 target_sources(${PROJECT_NAME}
     PRIVATE
         src/cleanup.c
