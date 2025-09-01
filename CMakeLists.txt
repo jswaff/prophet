@@ -3,7 +3,7 @@ project(prophetlib VERSION 5.1 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 set(EXE_NAME prophet)
 
 # options
-option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
+option(BUILD_TEST_EXECUTABLE "Build test executable" OFF)
 option(WITH_AVX "Build with AVX intrinsics" ON)
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
 
