@@ -37,7 +37,7 @@ static bool best_at_top(move_t* start, move_t* end);
 
 
 /* Currently only being used for fixed depth testing */
-int iterate_from_fen(const char *fen, move_t* pv, int* n, uint64_t* nodes, uint64_t* qnodes, int depth, pv_func_t pv_callback) {
+int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, const char *fen, int depth, pv_func_t pv_callback) {
     int retval = 0;
 
     position_t pos;
@@ -59,18 +59,13 @@ int iterate_from_fen(const char *fen, move_t* pv, int* n, uint64_t* nodes, uint6
     ctx->move_stack = moves;
     ctx->undo_stack = gundos;
 
-    stats_t stats;
-    memset(&stats, 0, sizeof(stats_t));
+    memset(stats, 0, sizeof(stats_t));
 
-    move_line_t pv_line = iterate(opts, ctx, &stats);
+    move_line_t pv_line = iterate(opts, ctx, stats);
 
     /* copy the PV into the return structure */
     memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
-    *n = pv_line.n;
-
-    /* record the search stats */
-    *nodes = stats.nodes;
-    *qnodes = stats.qnodes;
+    *pv_length = pv_line.n;
 
     /* clean up */
     free(ctx);
