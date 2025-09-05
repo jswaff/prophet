@@ -49,9 +49,8 @@ int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, const char *fen
     opts->early_exit_ok = false; /* TODO: if not fixed time per move */
     opts->max_depth = depth;
     opts->max_time_ms = 0;
-    opts->post_mode = false;
     opts->pv_callback = pv_callback;
-    opts->clear_hash_each_search = false;
+    opts->print_summary = false;
 
     /* TODO: replay move history.  verify move_counter and fifty_counter */
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
@@ -130,11 +129,6 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     do {
         ++depth;
 
-        /* clear the hash, if that option is set.  this is mainly used for debugging. */
-        if (opts->clear_hash_each_search) {
-            clear_hash_table(&htbl);
-        }
-
         /* set up the search */
         int32_t alpha_bound = -CHECKMATE;
         int32_t beta_bound = CHECKMATE;
@@ -186,8 +180,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     assert(pv.n > 0);
 
     /* print the search summary */
-    /* TODO: return stats and print outside of this function */
-    if (opts->post_mode) {
+    if (opts->print_summary) {
         print_search_summary(depth, search_opts.start_time, stats);
     }
 
@@ -208,15 +201,13 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time, const 
 
     plog( 
         "# nodes: %lluk, interior: %lluk (%.2f%%), quiescence: %lluk (%.2f%%)\n",
-        total_nodes/1000, stats->nodes/1000, interior_pct, stats->qnodes/1000, 
-        qnode_pct);
+        total_nodes/1000, stats->nodes/1000, interior_pct, stats->qnodes/1000, qnode_pct);
 
     /* calculate the search time.  add 1 ms just to avoid div by 0 */
     uint64_t search_time_ms = milli_timer() - start_time + 1; 
     float search_time = search_time_ms / 1000.0;
     uint64_t nps = total_nodes / search_time_ms;
-    plog("# search time: %.2f seconds, rate: %llu kn/s\n",
-        search_time,nps);
+    plog("# search time: %.2f seconds, rate: %llu kn/s\n", search_time,nps);
 
     /* display hash stats */
     uint64_t hash_hits = htbl.hits;
@@ -224,11 +215,8 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time, const 
     uint64_t hash_collisions = htbl.collisions;
     float hash_hit_pct = hash_hits / (hash_probes/100.0);
     float hash_collision_pct = hash_collisions / (hash_probes/100.0);
-    plog("# hash probes: %lluk, hits: %lluk (%.2f%%), "
-        "collisions: %lluk (%.2f%%)\n",
-        hash_probes/1000,
-        hash_hits/1000, hash_hit_pct,
-        hash_collisions/1000, hash_collision_pct);
+    plog("# hash probes: %lluk, hits: %lluk (%.2f%%), collisions: %lluk (%.2f%%)\n",
+        hash_probes/1000, hash_hits/1000, hash_hit_pct, hash_collisions/1000, hash_collision_pct);
 
     /* display pawn hash stats */
     uint64_t pawn_hash_hits = phtbl.hits;
@@ -236,11 +224,9 @@ static void print_search_summary(int32_t last_depth, uint64_t start_time, const 
     uint64_t pawn_hash_collisions = phtbl.collisions;
     float pawn_hash_hit_pct = pawn_hash_hits / (pawn_hash_probes/100.0);
     float pawn_hash_collision_pct = pawn_hash_collisions / (pawn_hash_probes/100.0);
-    plog("# pawn hash probes: %lluk, hits: %lluk (%.2f%%), "
-        "collisions: %lluk (%.2f%%)\n",
-        pawn_hash_probes/1000,
-        pawn_hash_hits/1000, pawn_hash_hit_pct,
-        pawn_hash_collisions/1000, pawn_hash_collision_pct);
+    plog("# pawn hash probes: %lluk, hits: %lluk (%.2f%%), collisions: %lluk (%.2f%%)\n",
+        pawn_hash_probes/1000, pawn_hash_hits/1000, pawn_hash_hit_pct, pawn_hash_collisions/1000,
+        pawn_hash_collision_pct);
 
     /* fail high metrics */
     float hash_fail_high_pct = stats->hash_fail_highs / (hash_probes/100.0);

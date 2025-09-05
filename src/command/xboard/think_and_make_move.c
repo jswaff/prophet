@@ -93,11 +93,10 @@ static void* iterate_wrapper(void* UNUSED(arg))
     opts->early_exit_ok = !fixed_time_per_move;
     opts->max_depth = max_depth;
     opts->max_time_ms = max_time_ms;
-    opts->post_mode = xboard_post_mode;
-    if (opts->post_mode) {
+    if (xboard_post_mode) {
         opts->pv_callback = print_pv2;
     }
-    opts->clear_hash_each_search = false;
+    opts->print_summary = true;
 
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
     ctx->pos = (position_t*)malloc(sizeof(position_t));

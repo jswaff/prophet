@@ -24,9 +24,8 @@ typedef struct {
     bool early_exit_ok;
     uint32_t max_depth;
     uint32_t max_time_ms;
-    bool post_mode;
     pv_func_t pv_callback;
-    bool clear_hash_each_search;
+    bool print_summary;
 } iterator_options_t;
 
 
@@ -48,10 +47,10 @@ typedef struct {
     uint64_t qnodes;
     uint64_t fail_highs;
     uint64_t fail_lows;
-    uint64_t draws;
     uint64_t hash_fail_highs;
     uint64_t hash_fail_lows;
     uint64_t hash_exact_scores;
+    uint64_t draws;
 } stats_t;
 
 
