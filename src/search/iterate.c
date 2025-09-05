@@ -32,12 +32,13 @@ extern bool volatile skip_time_checks;
 extern move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
-static void print_search_summary(int32_t last_depth, uint64_t start_time, const stats_t* stats);
+static void print_search_summary(int32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
 
 
-/* Currently only being used for fixed depth testing */
-int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, const char *fen, int depth, pv_func_t pv_callback) {
+int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen, int depth,
+        pv_func_t pv_callback)
+{
     int retval = 0;
 
     position_t pos;
@@ -60,7 +61,7 @@ int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, const char *fen
 
     memset(stats, 0, sizeof(stats_t));
 
-    move_line_t pv_line = iterate(opts, ctx, stats);
+    move_line_t pv_line = iterate(score, opts, ctx, stats);
 
     /* copy the PV into the return structure */
     memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
@@ -77,14 +78,16 @@ int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, const char *fen
 /**
  * \brief Search the position using iterative deepening. 
  * 
+ * \param score         the score returned from searching
  * \param opts          the options structure
  * \pram ctx            the context for this search iterator
  *
  * \return the principal variation
  */ 
-move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ctx, stats_t *stats)
+move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterator_context_t* ctx, stats_t* stats)
 {
     move_line_t pv; pv.n = 0;
+    *score = 0;
 
     /* generate and count the number of moves to choose from */
     move_t* endp = gen_legal_moves(ctx->move_stack, ctx->pos, true, true);
@@ -121,7 +124,6 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
     /* prepare to search */
     memset(&last_pv, 0, sizeof(move_line_t));
     uint32_t depth = 0;
-    int32_t score = 0;
     hash_age++;
 
     /* search using iterative deepening */
@@ -135,7 +137,7 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         move_line_t search_pv; search_pv.n = 0;
 
         /* start the search */
-        score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound, 
+        *score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound,
             ctx->move_stack, ctx->undo_stack, stats, &search_opts);
 
         /* If the search returned a PV, we can use it since the last iteration's PV was tried first */
@@ -150,11 +152,11 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
         if (opts->pv_callback) {
-            opts->pv_callback(&(pv.mv[0]), pv.n, depth, score, elapsed, stats->nodes);
+            opts->pv_callback(&(pv.mv[0]), pv.n, depth, *score, elapsed, stats->nodes);
         }
 
         /* if the search discovered a checkmate, stop. */
-        if (abs(score) > (CHECKMATE - 500)) {
+        if (abs(*score) > (CHECKMATE - 500)) {
             stop_iterator = true;
         }
 
@@ -181,17 +183,17 @@ move_line_t iterate(const iterator_options_t* opts, const iterator_context_t* ct
 
     /* print the search summary */
     if (opts->print_summary) {
-        print_search_summary(depth, search_opts.start_time, stats);
+        print_search_summary(depth, *score, search_opts.start_time, stats);
     }
 
     return pv;
 }
 
 
-static void print_search_summary(int32_t last_depth, uint64_t start_time, const stats_t* stats)
+static void print_search_summary(int32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats)
 {
     plog("\n");
-    plog("# depth: %d\n", last_depth);
+    plog("# depth: %d, score: %d\n", last_depth, score);
 
     /* print node counts */
     uint64_t total_nodes = stats->nodes + stats->qnodes;
