@@ -2,6 +2,7 @@
 
 #include "prophet/const.h"
 #include "prophet/movegen.h"
+#include "prophet/position.h"
 #include "prophet/search.h"
 
 #include "search_internal.h"
@@ -36,13 +37,23 @@ static void print_search_summary(int32_t last_depth, int32_t score, uint64_t sta
 static bool best_at_top(move_t* start, move_t* end);
 
 
-int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen, int depth,
-        pv_func_t pv_callback)
+int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen,
+        const move_t* move_history, int len_move_history, int depth, pv_func_t pv_callback)
 {
     int retval = 0;
 
+    /* set up the position */
     position_t pos;
-    if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
+    if (len_move_history > 0) {
+        reset_pos(&pos);
+        for (int i=0;i<len_move_history;i++) {
+            move_t mv = *(move_history + i);
+            undo_t* uptr = gundos + i;
+            apply_move(&pos, mv, uptr);
+        }
+    } else {
+        if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
+    }
 
     /* set up the options */
     iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
@@ -53,7 +64,7 @@ int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score,
     opts->pv_callback = pv_callback;
     opts->print_summary = false;
 
-    /* TODO: replay move history.  verify move_counter and fifty_counter */
+
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
     ctx->pos = &pos;
     ctx->move_stack = moves;
