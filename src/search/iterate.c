@@ -33,57 +33,35 @@ extern bool volatile skip_time_checks;
 extern move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
+static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, position_t* pos, int depth,
+    pv_func_t pv_callback);
 static void print_search_summary(int32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
 
 
-int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen,
-        const move_t* move_history, int len_move_history, int depth, pv_func_t pv_callback)
+int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen, int depth,
+    pv_func_t pv_callback)
 {
-    int retval = 0;
-
     /* set up the position */
     position_t pos;
-    if (len_move_history > 0) {
-        reset_pos(&pos);
-        for (int i=0;i<len_move_history;i++) {
-            move_t mv = *(move_history + i);
-            undo_t* uptr = gundos + i;
-            apply_move(&pos, mv, uptr);
-        }
-    } else {
-        if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
+    if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
+
+    return iterate_from_position(stats, pv, pv_length, score, &pos, depth, pv_callback);
+}
+
+int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, int32_t* score,
+    const move_t* move_history, int len_move_history, int depth, pv_func_t pv_callback)
+{
+    /* set up the position */
+    position_t pos;
+    reset_pos(&pos);
+    for (int i=0;i<len_move_history;i++) {
+        move_t mv = *(move_history + i);
+        undo_t* uptr = gundos + i;
+        apply_move(&pos, mv, uptr);
     }
 
-    /* set up the options */
-    iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
-    memset(opts, 0, sizeof(iterator_options_t));
-    opts->early_exit_ok = false; /* TODO: if not fixed time per move */
-    opts->max_depth = depth;
-    opts->max_time_ms = 0;
-    opts->pv_callback = pv_callback;
-    opts->print_summary = false;
-
-
-    iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
-    ctx->pos = &pos;
-    ctx->move_stack = moves;
-    ctx->undo_stack = gundos;
-
-    memset(stats, 0, sizeof(stats_t));
-
-    move_line_t pv_line = iterate(score, opts, ctx, stats);
-
-    /* copy the PV into the return structure */
-    memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
-    *pv_length = pv_line.n;
-
-    /* clean up */
-    free(ctx);
-    free(opts);
-
-    /* success */
-    return retval;
+    return iterate_from_position(stats, pv, pv_length, score, &pos, depth, pv_callback);
 }
 
 /**
@@ -200,6 +178,41 @@ move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterat
     return pv;
 }
 
+static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, position_t* pos, int depth,
+    pv_func_t pv_callback)
+{
+    int retval = 0;
+
+    /* set up the options */
+    iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
+    memset(opts, 0, sizeof(iterator_options_t));
+    opts->early_exit_ok = false; /* TODO: if not fixed time per move */
+    opts->max_depth = depth;
+    opts->max_time_ms = 0;
+    opts->pv_callback = pv_callback;
+    opts->print_summary = false;
+
+
+    iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
+    ctx->pos = pos;
+    ctx->move_stack = moves;
+    ctx->undo_stack = gundos;
+
+    memset(stats, 0, sizeof(stats_t));
+
+    move_line_t pv_line = iterate(score, opts, ctx, stats);
+
+    /* copy the PV into the return structure */
+    memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
+    *pv_length = pv_line.n;
+
+    /* clean up */
+    free(ctx);
+    free(opts);
+
+    /* success */
+    return retval;
+}
 
 static void print_search_summary(int32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats)
 {

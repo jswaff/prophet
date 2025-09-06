@@ -79,6 +79,9 @@ typedef struct {
 move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterator_context_t* ctx, stats_t *stats);
 
 int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen,
+    int depth, pv_func_t pv_callback);
+
+int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, int32_t* score,
     const move_t* move_history, int len_move_history, int depth, pv_func_t pv_callback);
 
 /**
