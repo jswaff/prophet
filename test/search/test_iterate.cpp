@@ -29,7 +29,6 @@ TEST(search_test, iterate_from_initial_pos)
     memset(&opts, 0, sizeof(iterator_options_t));
     opts.early_exit_ok = false;
     opts.max_depth = 3;
-    opts.post_mode = false;
 
     iterator_context_t ctx;
     ctx.pos = &pos;
@@ -72,7 +71,6 @@ TEST(search_test, iterate_from_mating_position)
     memset(&opts, 0, sizeof(iterator_options_t));
     opts.early_exit_ok = false;
     opts.max_depth = 3;
-    opts.post_mode = false;
 
     iterator_context_t ctx;
     ctx.pos = &pos;
@@ -105,7 +103,6 @@ TEST(search_test, iterator_always_produces_move)
     memset(&opts, 0, sizeof(iterator_options_t));
     opts.early_exit_ok = false;
     opts.max_depth = 3;
-    opts.post_mode = false;
 
     iterator_context_t ctx;
     ctx.pos = &pos;

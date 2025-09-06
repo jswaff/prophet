@@ -3,6 +3,7 @@ project(prophetlib VERSION 5.1 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 set(EXE_NAME prophet)
 
 # options
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(BUILD_TEST_EXECUTABLE "Build test executable" OFF)
 option(WITH_AVX "Build with AVX intrinsics" ON)
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
@@ -29,7 +30,7 @@ set(INSTALL_GTEST OFF)
 FetchContent_MakeAvailable(googletest)
 
 # build library
-add_library(${PROJECT_NAME} SHARED)
+add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE
         src/cleanup.c
