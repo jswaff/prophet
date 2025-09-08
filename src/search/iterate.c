@@ -34,23 +34,24 @@ extern move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
 static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
-    position_t* pos, int max_depth, pv_func_t pv_callback);
+    position_t* pos, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback);
 static void print_search_summary(uint32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
 
 
 int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score, const char *fen,
-    int max_depth, pv_func_t pv_callback)
+    bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback)
 {
     /* set up the position */
     position_t pos;
     if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
 
-    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, max_depth, pv_callback);
+    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, early_exit_ok, max_depth, max_time_ms, pv_callback);
 }
 
 int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
-    const move_t* move_history, int len_move_history, int max_depth, pv_func_t pv_callback)
+    const move_t* move_history, int len_move_history, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms,
+    pv_func_t pv_callback)
 {
     /* set up the position */
     position_t pos;
@@ -61,7 +62,7 @@ int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, uint32
         apply_move(&pos, mv, uptr);
     }
 
-    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, max_depth, pv_callback);
+    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, early_exit_ok, max_depth, max_time_ms, pv_callback);
 }
 
 /**
@@ -181,20 +182,17 @@ move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* o
 }
 
 static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
-    position_t* pos, int max_depth, pv_func_t pv_callback)
+    position_t* pos, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback)
 {
     int retval = 0;
 
     /* set up the options */
     iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
     memset(opts, 0, sizeof(iterator_options_t));
-//    opts->early_exit_ok = !fixed_time_per_move;
-//    opts->max_depth = max_depth;
-//    opts->max_time_ms = max_time_ms;
 
-    opts->early_exit_ok = false;
+    opts->early_exit_ok = early_exit_ok;
     opts->max_depth = max_depth;
-    opts->max_time_ms = 0;
+    opts->max_time_ms = max_time_ms;
     opts->pv_callback = pv_callback;
     opts->print_summary = false;
 

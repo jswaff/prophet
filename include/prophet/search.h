@@ -81,10 +81,11 @@ move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* o
     stats_t *stats);
 
 int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score, const char *fen,
-    int max_depth, pv_func_t pv_callback);
+    bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback);
 
 int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
-    const move_t* move_history, int len_move_history, int max_depth, pv_func_t pv_callback);
+    const move_t* move_history, int len_move_history, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms,
+    pv_func_t pv_callback);
 
 /**
  * \brief Search the position to until it is "quiet".
