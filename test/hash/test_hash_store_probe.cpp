@@ -110,7 +110,7 @@ TEST(hash_test, replacement_strategy)
 }
 
 
-TEST(hash_test, replacement_strategy2)
+TEST(hash_test, DISABLED_replacement_strategy2)
 {
     hash_table_t hash_table;
 

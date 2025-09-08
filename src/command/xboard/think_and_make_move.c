@@ -96,7 +96,7 @@ static void* iterate_wrapper(void* UNUSED(arg))
     if (xboard_post_mode) {
         opts->pv_callback = print_pv2;
     }
-    opts->print_summary = true;
+    opts->print_summary = xboard_post_mode;
 
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
     ctx->pos = (position_t*)malloc(sizeof(position_t));
