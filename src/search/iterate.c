@@ -33,24 +33,24 @@ extern bool volatile skip_time_checks;
 extern move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
-static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, position_t* pos, int depth,
-    pv_func_t pv_callback);
-static void print_search_summary(int32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats);
+static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
+    position_t* pos, int max_depth, pv_func_t pv_callback);
+static void print_search_summary(uint32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats);
 static bool best_at_top(move_t* start, move_t* end);
 
 
-int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen, int depth,
-    pv_func_t pv_callback)
+int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score, const char *fen,
+    int max_depth, pv_func_t pv_callback)
 {
     /* set up the position */
     position_t pos;
     if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
 
-    return iterate_from_position(stats, pv, pv_length, score, &pos, depth, pv_callback);
+    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, max_depth, pv_callback);
 }
 
-int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, int32_t* score,
-    const move_t* move_history, int len_move_history, int depth, pv_func_t pv_callback)
+int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
+    const move_t* move_history, int len_move_history, int max_depth, pv_func_t pv_callback)
 {
     /* set up the position */
     position_t pos;
@@ -61,19 +61,21 @@ int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, int32_
         apply_move(&pos, mv, uptr);
     }
 
-    return iterate_from_position(stats, pv, pv_length, score, &pos, depth, pv_callback);
+    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, max_depth, pv_callback);
 }
 
 /**
  * \brief Search the position using iterative deepening. 
  * 
- * \param score         the score returned from searching
+ * \param depth         pointer to variable to record depth achieved by search
+ * \param score         pointer to variable to record score returned by search
  * \param opts          the options structure
  * \pram ctx            the context for this search iterator
  *
  * \return the principal variation
  */ 
-move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterator_context_t* ctx, stats_t* stats)
+move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* opts, const iterator_context_t* ctx,
+    stats_t* stats)
 {
     move_line_t pv; pv.n = 0;
     *score = 0;
@@ -112,13 +114,13 @@ move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterat
 
     /* prepare to search */
     memset(&last_pv, 0, sizeof(move_line_t));
-    uint32_t depth = 0;
+    *depth = 0;
     hash_age++;
 
     /* search using iterative deepening */
     bool stop_iterator = false;
     do {
-        ++depth;
+        ++(*depth);
 
         /* set up the search */
         int32_t alpha_bound = -CHECKMATE;
@@ -126,7 +128,7 @@ move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterat
         move_line_t search_pv; search_pv.n = 0;
 
         /* start the search */
-        *score = search(ctx->pos, &search_pv, depth, alpha_bound, beta_bound,
+        *score = search(ctx->pos, &search_pv, *depth, alpha_bound, beta_bound,
             ctx->move_stack, ctx->undo_stack, stats, &search_opts);
 
         /* If the search returned a PV, we can use it since the last iteration's PV was tried first */
@@ -141,7 +143,7 @@ move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterat
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
         if (opts->pv_callback) {
-            opts->pv_callback(&(pv.mv[0]), pv.n, depth, *score, elapsed, stats->nodes);
+            opts->pv_callback(&(pv.mv[0]), pv.n, *depth, *score, elapsed, stats->nodes);
         }
 
         /* if the search discovered a checkmate, stop. */
@@ -150,12 +152,12 @@ move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterat
         }
 
         /* if the search has reached the max user defined  depth, stop */
-        if (opts->max_depth > 0 && depth >= opts->max_depth) {
+        if (opts->max_depth > 0 && *depth >= opts->max_depth) {
             stop_iterator = true;
         }
 
         /* if we've hit the max system defined depth, stop */
-        if (depth >= MAX_ITERATIONS) {
+        if (*depth >= MAX_ITERATIONS) {
             stop_iterator = true;
         }
 
@@ -172,22 +174,26 @@ move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterat
 
     /* print the search summary */
     if (opts->print_summary) {
-        print_search_summary(depth, *score, search_opts.start_time, stats);
+        print_search_summary(*depth, *score, search_opts.start_time, stats);
     }
 
     return pv;
 }
 
-static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, position_t* pos, int depth,
-    pv_func_t pv_callback)
+static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
+    position_t* pos, int max_depth, pv_func_t pv_callback)
 {
     int retval = 0;
 
     /* set up the options */
     iterator_options_t* opts = (iterator_options_t*)malloc(sizeof(iterator_options_t));
     memset(opts, 0, sizeof(iterator_options_t));
-    opts->early_exit_ok = false; /* TODO: if not fixed time per move */
-    opts->max_depth = depth;
+//    opts->early_exit_ok = !fixed_time_per_move;
+//    opts->max_depth = max_depth;
+//    opts->max_time_ms = max_time_ms;
+
+    opts->early_exit_ok = false;
+    opts->max_depth = max_depth;
     opts->max_time_ms = 0;
     opts->pv_callback = pv_callback;
     opts->print_summary = false;
@@ -200,7 +206,7 @@ static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, int
 
     memset(stats, 0, sizeof(stats_t));
 
-    move_line_t pv_line = iterate(score, opts, ctx, stats);
+    move_line_t pv_line = iterate(depth, score, opts, ctx, stats);
 
     /* copy the PV into the return structure */
     memcpy(pv, pv_line.mv, sizeof(move_t) * pv_line.n);
@@ -214,7 +220,7 @@ static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, int
     return retval;
 }
 
-static void print_search_summary(int32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats)
+static void print_search_summary(uint32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats)
 {
     plog("\n");
     plog("# depth: %d, score: %d\n", last_depth, score);

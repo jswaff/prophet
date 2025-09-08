@@ -107,8 +107,9 @@ static void* iterate_wrapper(void* UNUSED(arg))
     stats_t stats;
     memset(&stats, 0, sizeof(stats_t));
 
+    uint32_t depth;
     int32_t score;
-    move_line_t pv = iterate(&score, opts, ctx, &stats);
+    move_line_t pv = iterate(&depth, &score, opts, ctx, &stats);
 
     free(ctx->pos);
     free(ctx);

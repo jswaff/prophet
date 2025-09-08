@@ -38,10 +38,11 @@ TEST(search_test, iterate_from_initial_pos)
     stats_t stats;
     memset(&stats, 0, sizeof(stats_t));
 
+    uint32_t depth;
     int32_t score;
     move_line_t pv;
     stop_search = false;
-    pv = iterate(&score, &opts, &ctx, &stats);
+    pv = iterate(&depth, &score, &opts, &ctx, &stats);
 
 
     ASSERT_GE(pv.n, 3);
@@ -80,10 +81,11 @@ TEST(search_test, iterate_from_mating_position)
     stats_t stats;
     memset(&stats, 0, sizeof(stats_t));
 
+    uint32_t depth;
     int32_t score;
     move_line_t pv;
     stop_search = false;
-    pv = iterate(&score, &opts, &ctx, &stats);
+    pv = iterate(&depth, &score, &opts, &ctx, &stats);
 
 
     ASSERT_EQ(pv.n, 1);
@@ -112,10 +114,11 @@ TEST(search_test, iterator_always_produces_move)
     stats_t stats;
     memset(&stats, 0, sizeof(stats_t));
 
+    uint32_t depth;
     int32_t score;
     move_line_t pv;
     stop_search = true;
-    pv = iterate(&score, &opts, &ctx, &stats);
+    pv = iterate(&depth, &score, &opts, &ctx, &stats);
 
     ASSERT_EQ(pv.n, 1);
     ASSERT_TRUE(is_legal_move(pv.mv[0], &pos));

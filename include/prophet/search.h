@@ -69,20 +69,22 @@ typedef struct {
 /**
  * \brief Search the position using iterative deepening. 
  * 
- * \param score         the score returned from searching
+ * \param depth         pointer to variable to record depth achieved by search
+ * \param score         pointer to variable to record score returned by search
  * \param opts          the options structure
  * \param ctx           the context for this search iterator
  * \param stats         a stats structure to record the search statistics
  *
  * \return the principal variation
  */ 
-move_line_t iterate(int32_t* score, const iterator_options_t* opts, const iterator_context_t* ctx, stats_t *stats);
+move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* opts, const iterator_context_t* ctx,
+    stats_t *stats);
 
-int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, int32_t* score, const char *fen,
-    int depth, pv_func_t pv_callback);
+int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score, const char *fen,
+    int max_depth, pv_func_t pv_callback);
 
-int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, int32_t* score,
-    const move_t* move_history, int len_move_history, int depth, pv_func_t pv_callback);
+int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
+    const move_t* move_history, int len_move_history, int max_depth, pv_func_t pv_callback);
 
 /**
  * \brief Search the position to until it is "quiet".
