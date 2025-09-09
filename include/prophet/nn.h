@@ -13,7 +13,7 @@ extern "C" {
  * 
  * \return 0 on successful execution, and non-zero on failure
  */
-int load_neural_network(const char* weights_file);
+int load_neural_network(const char *weights_file);
 
 
 /**
@@ -25,7 +25,7 @@ int load_neural_network(const char* weights_file);
  *
  * \return the score.
  */
-int32_t nn_eval_from_fen(const char* fen);
+int32_t nn_eval_from_fen(const char *fen);
 
 
 /* make this header C++ friendly. */

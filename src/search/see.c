@@ -19,6 +19,7 @@ static int32_t score_capture(const position_t* pos, move_t mv);
 static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map);
 static int max(int, int);
 
+
 int32_t see_from_fen(const char *fen, move_t mv) {
     position_t pos;
     set_pos(&pos, fen);
@@ -26,33 +27,16 @@ int32_t see_from_fen(const char *fen, move_t mv) {
 }
 
 
-/**
- * \brief Evaluate a piece for move ordering purposes.
- *
- * Note- this method should not be used for a material evaluation.
- *
- * \param piece         the piece to evaluate
- *
- * \return the score
- */
 int32_t see_eval_piece(int32_t piece)
 {
-    const int32_t pvals[13] = 
-    { 
+    const int32_t pvals[13] = { 
         INF, see_queen_val, see_rook_val, see_bishop_val, see_knight_val, see_pawn_val, 0,
         see_pawn_val, see_knight_val, see_bishop_val, see_rook_val, see_queen_val, INF 
     };
     return pvals[piece+6];
 }
 
-/**
- * \brief Score a move using static exchange analysis (SEE)
- *
- * \param pos           the chess position
- * \param mv            the chess move to score
- * 
- * \return the score
- */
+
 int32_t see(const position_t* pos, move_t mv)
 {
     int32_t score = 0;

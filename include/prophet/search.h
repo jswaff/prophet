@@ -141,14 +141,13 @@ int32_t mvvlva(move_t mv);
 /**
  * \brief Score a move using static exchange analysis (SEE)
  *
- * \param pos           the chess position
+ * \param fen           the chess position
  * \param mv            the chess move to score
  * 
  * \return the score
  */
-int32_t see(const position_t* pos, move_t mv);
-
 int32_t see_from_fen(const char *fen, move_t mv);
+
 
 /**
  * \brief Set the search stop flag

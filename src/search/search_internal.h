@@ -2,17 +2,22 @@
 
 #include "prophet/search.h"
 
+#include "prophet/position.h"
+
+#include <stdbool.h>
+#include <stdint.h>
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
 #endif  
 
 /* piece values for move ordering purposes (not material evaluation) */
-static const int32_t see_pawn_val = 100;
-static const int32_t see_knight_val = 300;
-static const int32_t see_bishop_val = 300;
-static const int32_t see_rook_val = 500;
-static const int32_t see_queen_val = 1000;
+static const int32_t see_pawn_val   =  100;
+static const int32_t see_knight_val =  300;
+static const int32_t see_bishop_val =  300;
+static const int32_t see_rook_val   =  500;
+static const int32_t see_queen_val  = 1000;
 
 enum move_order_stage_t 
 { 
@@ -68,6 +73,16 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
 
 
 /**
+ * \brief Score a move using the MVV/LVA algorithm.
+ *
+ * \param mv            the chess move to score
+ * 
+ * \return the score
+ */
+int32_t mvvlva(move_t mv);
+
+
+/**
  * \brief Evaluate a piece for move ordering purposes.
  *
  * Note- this method should not be used for a material evaluation.
@@ -77,6 +92,17 @@ void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
  * \return the score
  */
 int32_t see_eval_piece(int32_t piece);
+
+
+/**
+ * \brief Score a move using static exchange analysis (SEE)
+ *
+ * \param pos           the chess position
+ * \param mv            the chess move to score
+ * 
+ * \return the score
+ */
+int32_t see(const position_t* pos, move_t mv);
 
 
 /**

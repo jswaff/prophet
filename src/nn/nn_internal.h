@@ -31,7 +31,7 @@ typedef struct {
  * \param pos             a pointer to a chess position
  * \param nn              a pointer to a neural network model
  */
-void populate_accumulators(position_t* pos, const neural_network_t *nn);
+void populate_accumulators(position_t *pos, const neural_network_t *nn);
 
 
 /**
