@@ -1,8 +1,9 @@
 #pragma once
 
-#include <prophet/const.h>
+#include "prophet/const.h"
 #include "prophet/nn.h"
-#include "prophet/position.h"
+
+#include "position/position_internal.h"
 
 #include <stdbool.h>
 #include <stdint.h>
