@@ -137,24 +137,6 @@ void apply_move(position_t* pos, move_t m, undo_t* u);
 void undo_move(position_t* pos, const undo_t* u);
 
 
-/**
- * \brief Determine if a position is drawn by repetition.
- *
- * A position is drawn if it has occurred at least three times.
- *
- * \param pos           a pointer to a chess position
- * \param u             a pointer to the start of an array of undo_t's
- *                      It's expected that the array has at least enough 
- *                      capacity for the position's move count.
- * \param prev_reps     The number of previous repetitions required to 
- *                      declare the current position as a draw.
- *
- * \return true if the position is drawn by repetition, otherwise false.
- */
-bool is_draw_rep(const position_t* pos, const undo_t* u, int prev_reps);
-
-
-
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

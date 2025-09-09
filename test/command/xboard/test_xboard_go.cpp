@@ -29,14 +29,14 @@ TEST(xboard_test, xboard_go)
 	// redirect stdout to a buffer 
 	char buffer[255];
 	memset(buffer, 0, 255);
-	freopen("/dev/null", "a", stdout);
+	ASSERT_EQ(stdout, freopen("/dev/null", "a", stdout));
 	setbuf(stdout, buffer);
 
     int retval = xboard_go("go");
     ASSERT_EQ(0, block_on_search_thread(false)); // wait for search thread to finish
 
     // redirect back
-    freopen("/dev/tty", "a", stdout);
+    ASSERT_EQ(stdout, freopen("/dev/tty", "a", stdout));
 
     ASSERT_EQ(0, retval);
 

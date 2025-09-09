@@ -37,7 +37,7 @@ static const unsigned int CASTLE_ALL    = 0xF;
  *
  * \return a boolean indicating if the positions are equal
  */
-bool pos_equals(const position_t* p1, const position_t* p2, bool strict);
+bool pos_equals(const position_t *p1, const position_t *p2, bool strict);
 
 
 /**
@@ -47,7 +47,7 @@ bool pos_equals(const position_t* p1, const position_t* p2, bool strict);
  * \param piece         the piece to add
  * \param sq            the square to add the piece to
  */
-void add_piece(position_t* p, int32_t piece, square_t sq);
+void add_piece(position_t *p, int32_t piece, square_t sq);
 
 
 /**
@@ -58,7 +58,7 @@ void add_piece(position_t* p, int32_t piece, square_t sq);
  *
  * \return the piece that was removed
  */
-piece_t remove_piece(position_t* p, square_t sq);
+piece_t remove_piece(position_t *p, square_t sq);
 
 
 /**
@@ -71,7 +71,7 @@ piece_t remove_piece(position_t* p, square_t sq);
  *
  * \return a 64 bit hash signature
  */
-uint64_t build_hash_key(const position_t* pos);
+uint64_t build_hash_key(const position_t *pos);
 
 
 /**
@@ -84,7 +84,7 @@ uint64_t build_hash_key(const position_t* pos);
  *
  * \return a 64 bit hash signature
  */
-uint64_t build_pawn_key(const position_t* pos);
+uint64_t build_pawn_key(const position_t *pos);
 
 
 /**
@@ -99,41 +99,41 @@ uint64_t build_pawn_key(const position_t* pos);
  *
  * \return boolean value indicating if the position is consistent
  */
-bool verify_pos(const position_t* pos);
+bool verify_pos(const position_t *pos);
 
-static inline bool can_castle_w(const position_t* pos)
+static inline bool can_castle_w(const position_t *pos)
 {
     return pos->castling_rights & CASTLE_WHITE;
 }
 
-static inline bool can_castle_wk(const position_t* pos) 
+static inline bool can_castle_wk(const position_t *pos) 
 {
     return pos->castling_rights & CASTLE_WK;
 }
 
-static inline bool can_castle_wq(const position_t* pos) 
+static inline bool can_castle_wq(const position_t *pos) 
 {
     return pos->castling_rights & CASTLE_WQ;
 }
 
-static inline bool can_castle_b(const position_t* pos)
+static inline bool can_castle_b(const position_t *pos)
 {
     return pos->castling_rights & CASTLE_BLACK;
 }
 
-static inline bool can_castle_bk(const position_t* pos) 
+static inline bool can_castle_bk(const position_t *pos) 
 {
     return pos->castling_rights & CASTLE_BK;
 }
 
 
-static inline bool can_castle_bq(const position_t* pos) 
+static inline bool can_castle_bq(const position_t *pos) 
 {
     return pos->castling_rights & CASTLE_BQ;
 }
 
 
-static inline bool is_empty_sq(const position_t* pos, square_t sq) 
+static inline bool is_empty_sq(const position_t *pos, square_t sq) 
 {
     return pos->piece[sq] == NO_PIECE;
 }
@@ -145,7 +145,7 @@ static inline color_t opposite_player(color_t player)
 }
 
 
-static inline bool is_draw50(const position_t* pos)
+static inline bool is_draw50(const position_t *pos)
 {
     return pos->fifty_counter >= 100;
 }
@@ -168,7 +168,24 @@ static inline bool is_draw50(const position_t* pos)
  * \return true if the position is drawn by lack of mating material, otherwise 
  * false.
  */
-bool is_lack_of_mating_material(const position_t* pos);
+bool is_lack_of_mating_material(const position_t *pos);
+
+
+/**
+ * \brief Determine if a position is drawn by repetition.
+ *
+ * A position is drawn if it has occurred at least three times.
+ *
+ * \param pos           a pointer to a chess position
+ * \param u             a pointer to the start of an array of undo_t's
+ *                      It's expected that the array has at least enough 
+ *                      capacity for the position's move count.
+ * \param prev_reps     The number of previous repetitions required to 
+ *                      declare the current position as a draw.
+ *
+ * \return true if the position is drawn by repetition, otherwise false.
+ */
+bool is_draw_rep(const position_t *pos, const undo_t *u, int prev_reps);
 
 
 /**
@@ -178,7 +195,7 @@ bool is_lack_of_mating_material(const position_t* pos);
  *
  * \return a veritical mirror of the posiiton.
  */
-position_t position_flip(const position_t* pos);
+position_t position_flip(const position_t *pos);
 
 
 /* make this header C++ friendly. */
