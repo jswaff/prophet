@@ -11,7 +11,7 @@
 #include <string.h>
 
 static int clamp(int val, int min, int max);
-static int my_round(float val);
+static int32_t my_round(float val);
 #if !defined(USE_AVX) || defined(DEBUG_AVX)
 static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2);
 #endif
@@ -19,7 +19,7 @@ static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, in
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-int nn_eval_from_fen(const char *fen) {
+int32_t nn_eval_from_fen(const char *fen) {
     if (!use_neural_network) return 0;
     position_t pos;
     set_pos(&pos, fen);
@@ -36,7 +36,7 @@ int nn_eval_from_fen(const char *fen) {
  *
  * \return the score.
  */
-int nn_eval(const position_t* pos, const neural_network_t* nn) {
+int32_t nn_eval(const position_t* pos, const neural_network_t* nn) {
 
     /* set layer 1 from accumulators */
     int8_t L1[NN_SIZE_L1 * 2];
@@ -80,7 +80,7 @@ int nn_eval(const position_t* pos, const neural_network_t* nn) {
     float wscore = ((float)L2[0]) / (SCALE * SCALE) * 100; /* to centipawns */
     float wr = ((float)L2[1]) / (SCALE * SCALE) * 1000; /* win ratio */
 
-    int y_hat = my_round((0.5 * wscore)  + (0.5 * wr));
+    int32_t y_hat = my_round((0.5 * wscore)  + (0.5 * wr));
 
     return pos->player==WHITE ? y_hat : -y_hat;
 }
@@ -91,8 +91,8 @@ static int clamp(int val, int min, int max) {
     return val;
 }
 
-static int my_round(float val) {
-    if (val > 0) return (int)(val + 0.5);
+static int32_t my_round(float val) {
+    if (val > 0) return (int32_t)(val + 0.5);
     else return (int)(val - 0.5);
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <prophet/const.h>
 #include "prophet/nn.h"
 #include "prophet/position.h"
 
@@ -14,6 +15,15 @@ extern "C" {
 
 static const unsigned int SCALE = 64;
 static const unsigned int THRESHOLD = 127;
+
+
+typedef struct {
+    int16_t W0[768 * NN_SIZE_L1];
+    int16_t B0[NN_SIZE_L1];
+    int8_t W1[NN_SIZE_L1 * 2 * NN_SIZE_L2];
+    int8_t B1[NN_SIZE_L2];
+} neural_network_t;
+
 
 /**
  * \brief Fully populate the NNUE accumulators in a chess position.
@@ -72,6 +82,20 @@ void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neur
  * \return true if the accumulators are equal, otherwise false if they are not
  */
 bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2);
+
+
+/**
+ * \brief Evaluate a chess position for the side to move using a neural network.
+ *
+ * Run a forward pass (inference) using the supplied neural network.
+ * 
+ * \param pos             a pointer to a chess position
+ * \param nn              a pointer to a neural network model
+ *
+ * \return the score.
+ */
+int32_t nn_eval(const position_t* pos, const neural_network_t *nn);
+
 
 
 // make this header C++ friendly.
