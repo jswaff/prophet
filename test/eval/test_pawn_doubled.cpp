@@ -2,6 +2,8 @@
 
 #include "prophet/position.h"
 
+#include "position/position_internal.h"
+
 #include <gtest/gtest.h>
 
 TEST(eval_test, pawn_doubled)

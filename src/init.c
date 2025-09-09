@@ -1,4 +1,4 @@
-#include "prophet/position.h"
+#include "position/position_internal.h"
 
 #include <stdlib.h>
 #include <time.h>

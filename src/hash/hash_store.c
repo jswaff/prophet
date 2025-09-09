@@ -3,20 +3,14 @@
 #include "prophet/hash.h"
 #include "prophet/position.h"
 
+#include "position/position_internal.h"
+
 #include <assert.h>
 #include <stdint.h>
 
 extern hash_table_t htbl;
 extern hash_table_t phtbl;
 
-/**
- * \brief store a value in the hash table
- *
- * \param tbl           a pointer to a hash table
- * \param key           a 64 bit key
- * \param val           the value to store
- *
- */
 void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
 {
     assert(tbl->tbl);
@@ -75,13 +69,6 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
 }
 
 
-/**
- * \brief store a value in the main hash table
- *
- * \param key           a 64 bit key
- * \param val           the value to store
- *
- */
 void store_main_hash_table(const char *fen, uint64_t val) {
     position_t pos;
     set_pos(&pos, fen);
@@ -89,17 +76,6 @@ void store_main_hash_table(const char *fen, uint64_t val) {
 }
 
 
-/**
- * \brief store a value in the pawn hash table
- *
- * Store the value in the hash table, using an "always replace" replacement
- * strategy.  The index in the table is computed by taking the supplied
- * key modulo the table capacity.
- *
- * \param key           a 64 bit key
- * \param val           the value to store
- *
- */
 void store_pawn_hash_table(const char *fen, uint64_t val) {
     position_t pos;
     set_pos(&pos, fen);

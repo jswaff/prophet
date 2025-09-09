@@ -3,6 +3,8 @@
 #include "prophet/const.h"
 #include "prophet/position.h"
 
+#include "position/position_internal.h"
+
 #include <gtest/gtest.h>
 
 TEST(movegen_utils_test, num_legal_moves)

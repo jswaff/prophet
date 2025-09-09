@@ -3,6 +3,7 @@
 #include "prophet/position.h"
 
 #include "nn_internal.h"
+#include "position/position_internal.h"
 
 #include <assert.h>
 #include <immintrin.h>
@@ -26,16 +27,7 @@ int32_t nn_eval_from_fen(const char *fen) {
     return nn_eval(&pos, &neural_network);
 }
 
-/**
- * \brief Evaluate a chess position for the side to move using a neural network.
- *
- * Run a forward pass (inference) using the supplied neural network.
- * 
- * \param pos             a pointer to a chess position
- * \param nn              a pointer to a neural network model
- *
- * \return the score.
- */
+
 int32_t nn_eval(const position_t* pos, const neural_network_t* nn) {
 
     /* set layer 1 from accumulators */
@@ -85,11 +77,13 @@ int32_t nn_eval(const position_t* pos, const neural_network_t* nn) {
     return pos->player==WHITE ? y_hat : -y_hat;
 }
 
+
 static int clamp(int val, int min, int max) {
     if (val < min) return min;
     if (val >= max) return max;
     return val;
 }
+
 
 static int32_t my_round(float val) {
     if (val > 0) return (int32_t)(val + 0.5);

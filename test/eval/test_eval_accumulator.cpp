@@ -3,13 +3,14 @@
 #include "prophet/position.h"
 
 #include "parameters.h"
+#include "position/position_internal.h"
 
 #include <gtest/gtest.h>
 
 #include <stdint.h>
 
 // forward decls
-static void dummy_eval_func(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
+static void dummy_eval_func(const position_t *pos, square_t sq, int32_t *mgscore, int32_t *egscore);
 
 
 TEST(eval_test, eval_accumulator)
@@ -26,8 +27,8 @@ TEST(eval_test, eval_accumulator)
 }
 
 
-static void dummy_eval_func(const position_t* UNUSED(pos), square_t UNUSED(sq), int32_t* mgscore, 
-	int32_t* egscore)
+static void dummy_eval_func(const position_t* UNUSED(pos), square_t UNUSED(sq), int32_t *mgscore, 
+	int32_t *egscore)
 {
 	*mgscore += 3;
 	*egscore += 5;

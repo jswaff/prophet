@@ -3,6 +3,8 @@
 #include "prophet/error_codes.h"
 #include "prophet/position.h"
 
+#include "position/position_internal.h"
+
 #include <gtest/gtest.h>
 
 extern position_t gpos;

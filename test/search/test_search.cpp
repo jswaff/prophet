@@ -6,6 +6,7 @@
 
 #include "parameters.h"
 #include "eval/eval_internal.h"
+#include "position/position_internal.h"
 #include "util/time.h"
 #include "util/string_utils.h"
 
