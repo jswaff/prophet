@@ -21,7 +21,6 @@ extern "C" {
  *
  * \param fen             a chess position
  * \param material_only   if the evaluation should consider material only
- * \param use_pawn_hash   if the pawn hash table should be used
  *
  * \return the score.
  */

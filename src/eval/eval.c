@@ -150,7 +150,6 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
  *
  * \param fen             a chess position
  * \param material_only   if the evaluation should consider material only
- * \param use_pawn_hash   if the pawn hash table should be used
  *
  * \return the score.
  */

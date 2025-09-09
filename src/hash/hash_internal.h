@@ -50,7 +50,7 @@ void clear_hash_table(hash_table_t *tbl);
  * \brief Resize a hash table.  
  *
  * \param tbl           a pointer to hash table
- * \param size          the maximum number of bytes to allocate 
+ * \param max_size      the maximum number of bytes to allocate 
  *
  * \return - 0 on success, or non-zero on failure
  */

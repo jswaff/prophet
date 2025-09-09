@@ -1,6 +1,5 @@
 #include "search_internal.h"
 
-#include "prophet/movegen.h"
 #include "prophet/position.h"
 
 #include "movegen/movegen_internal.h"

@@ -67,7 +67,7 @@ uint64_t get_pawn_hash_hits();
 /**
  * \brief Resize the main hash table.  
  *
- * \param tbl           a pointer to hash table
+ * \param max_size      the maximum number of bytes to allocate 
  *
  * \return - 0 on success, or non-zero on failure
  */
@@ -77,8 +77,8 @@ int resize_main_hash_table(uint64_t max_size);
 /**
  * \brief Resize the pawn hash table.  
  *
- * \param tbl           a pointer to hash table
- *
+* \param max_size      the maximum number of bytes to allocate 
+  *
  * \return - 0 on success, or non-zero on failure
  */
 int resize_pawn_hash_table(uint64_t max_size);

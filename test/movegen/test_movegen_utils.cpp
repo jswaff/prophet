@@ -1,7 +1,6 @@
 #include "movegen/movegen_internal.h"
 
 #include "prophet/const.h"
-#include "prophet/movegen.h"
 #include "prophet/position.h"
 
 #include <gtest/gtest.h>

@@ -389,6 +389,19 @@ bool good_move(const position_t *pos, move_t mv);
 
 
 /**
+ * \brief Test move legality.
+ *
+ * Test that a move is legal in a given position.
+ *
+ * \param mv            the move to test
+ * \param pos           a pointer to a chess position
+ *
+ * \return true if legal, otherwise false
+ */
+bool is_legal_move(move_t mv, const position_t *pos);
+
+
+/**
  * \brief Given position \p pos, is \p player in check?
  *
  * \param pos           a pointer to a chess position
