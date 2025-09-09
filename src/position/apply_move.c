@@ -1,11 +1,11 @@
-#include "prophet/position.h"
+#include "position_internal.h"
 
 #include "prophet/move.h"
+#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "hash/hash_internal.h"
 #include "nn/nn_internal.h"
-#include "position_internal.h"
 #include "square_internal.h"
 
 #include <assert.h>
@@ -19,19 +19,7 @@ static void remove_rook_castling_availability(position_t* p, square_t sq);
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-/**
- * \brief Apply a chess move to a chess position.
- *
- * Apply a move to the position.  The move should be legal (no verification is 
- * performed). Records the information necessary to undo this move to restore 
- * the original position.
- *
- * \param pos           a pointer to a chess position
- * \param m             the move to apply
- * \param u             a pointer to an undo structure to receive the undo 
- *                      information
- */
-void apply_move(position_t* pos, move_t m, undo_t* u)
+void apply_move(position_t *pos, move_t m, undo_t *u)
 {
     assert(pos);
     assert(clear_score(m));

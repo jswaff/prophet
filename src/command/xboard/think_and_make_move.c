@@ -6,6 +6,7 @@
 #include "prophet/movegen.h"
 
 #include "movegen/movegen_internal.h"
+#include "position/position_internal.h"
 #include "search/search_internal.h"
 #include "parameters.h"
 #include "util/output.h"
@@ -45,22 +46,6 @@ static int select_random_move();
 static int make_move_otb(move_t mv);
 
 
-/**
- * \brief Start the engine "thinking"  and (eventually) make a move.
- *
- * If the engine is in random mode, a move will be made immediately.
- * Otherwise, a separate thread will be started and the method will return.
- * Once the thread terminates, the move will be applied to the global
- * position.
- *
- * If the selected move results in the end of the game, the game
- * result is displayed.
- *
- * This method should not be called if the game is already over.
- *
- * \return 0 on successful execution, and non-zero on failure
- *
- */
 int think_and_make_move()
 {
     assert(!endgame_check());

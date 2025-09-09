@@ -3,6 +3,7 @@
 #include "prophet/const.h"
 #include "prophet/error_codes.h"
 
+#include "position/position_internal.h"
 #include "util/string_utils.h"
 
 #include <stdbool.h>
@@ -14,19 +15,8 @@ extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 extern bool xboard_force_mode;
 
-/**
- * \brief Execute the xboard usermove command 
- * 
- * If the move is illegal, print an error message; see the section "Commands 
- * from the engine to xboard". If the move is legal and in turn, make it. If 
- * not in force mode, stop the opponent's clock, start the engine's clock, 
- * start thinking, and eventually make a move. 
- *
- * \param input         the user entered input 
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int xboard_usermove(const char* input)
+
+int xboard_usermove(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("usermove", input, 8)) {

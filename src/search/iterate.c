@@ -1,13 +1,12 @@
 #include "prophet/search.h"
 
 #include "prophet/const.h"
-#include "prophet/movegen.h"
-#include "prophet/position.h"
 #include "prophet/search.h"
 
 #include "search_internal.h"
 #include "hash/hash_internal.h"
 #include "movegen/movegen_internal.h"
+#include "position/position_internal.h"
 #include "util/output.h"
 #include "util/string_utils.h"
 #include "util/time.h"

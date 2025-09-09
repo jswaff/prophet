@@ -110,33 +110,6 @@ void reset_pos(position_t *pos);
 bool set_pos(position_t *pos, const char *fen);
 
 
-/**
- * \brief Apply a chess move to a chess position.
- *
- * Apply a move to the position.  The move should be legal (no verification is 
- * performed). Records the information necessary to undo this move to restore 
- * the original position.
- *
- * \param pos           a pointer to a chess position
- * \param m             the move to apply
- * \param u             a pointer to an undo structure to receive the undo 
- *                      information
- */
-void apply_move(position_t* pos, move_t m, undo_t* u);
-
-
-/**
- * \brief Undo (reverse) a move.
- *
- * The move should be the last move played over the board.  No verification 
- * is done to ensure the position is left in a legal state.
- *
- * \param pos           a pointer to a chess position
- * \param u             a pointer to the undo information
- */
-void undo_move(position_t* pos, const undo_t* u);
-
-
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }

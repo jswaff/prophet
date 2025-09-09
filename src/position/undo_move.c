@@ -1,10 +1,10 @@
-#include "prophet/position.h"
+#include "position_internal.h"
 
 #include "prophet/move.h"
+#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "nn/nn_internal.h"
-#include "position_internal.h"
 
 #include <assert.h>
 #include <stdlib.h>
@@ -12,16 +12,7 @@
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-/**
- * \brief Undo (reverse) a move.
- *
- * The move should be the last move played over the board.  No verification 
- * is done to ensure the position is left in a legal state.
- *
- * \param pos           a pointer to a chess position
- * \param u             a pointer to the undo information
- */
-void undo_move(position_t* p, const undo_t* u)
+void undo_move(position_t *p, const undo_t *u)
 {
     assert(p);
     assert(p->move_counter > 0);

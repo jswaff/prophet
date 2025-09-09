@@ -253,13 +253,20 @@ int xboard_move(const char* input);
 
 
 /**
- * \brief Select a move, and apply it to the game position.  If the game is
- * over, print the result.
+ * \brief Start the engine "thinking"  and (eventually) make a move.
+ *
+ * If the engine is in random mode, a move will be made immediately.
+ * Otherwise, a separate thread will be started and the method will return.
+ * Once the thread terminates, the move will be applied to the global
+ * position.
+ *
+ * If the selected move results in the end of the game, the game
+ * result is displayed.
  *
  * This method should not be called if the game is already over.
  *
- * This initial implementation is synchronous, but future implementations will
- * start a separate thread.
+ * \return 0 on successful execution, and non-zero on failure
+ *
  */
 int think_and_make_move();
 
