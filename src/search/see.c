@@ -1,10 +1,9 @@
-#include "prophet/search.h"
+#include "search_internal.h"
 
 #include "prophet/move.h"
 #include "prophet/position.h"
 #include "prophet/square.h"
 
-#include "search_internal.h"
 #include "bitmap/bitmap.h"
 #include "eval/eval_internal.h"
 #include "movegen/movegen_internal.h"

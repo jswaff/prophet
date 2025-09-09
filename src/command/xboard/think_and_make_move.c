@@ -4,9 +4,9 @@
 #include "prophet/error_codes.h"
 #include "prophet/move.h"
 #include "prophet/movegen.h"
-#include "prophet/search.h"
 
 #include "movegen/movegen_internal.h"
+#include "search/search_internal.h"
 #include "parameters.h"
 #include "util/output.h"
 #include "util/string_utils.h"

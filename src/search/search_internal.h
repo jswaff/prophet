@@ -19,15 +19,14 @@ static const int32_t see_bishop_val =  300;
 static const int32_t see_rook_val   =  500;
 static const int32_t see_queen_val  = 1000;
 
-enum move_order_stage_t 
-{ 
+enum move_order_stage_t { 
    PV, HASH_MOVE, GEN_CAPS, GOOD_CAPTURES_PROMOS, KILLER1, KILLER2, 
    GEN_NONCAPS, NONCAPS, INIT_BAD_CAPTURES, BAD_CAPTURES
 };
 typedef enum move_order_stage_t move_order_stage_t;
 
-typedef struct 
-{
+
+typedef struct {
     move_order_stage_t next_stage;
     move_t* start;
     move_t* end;
@@ -39,6 +38,31 @@ typedef struct
     bool gen_noncaps;
     bool play_badcaps;
 } move_order_dto;
+
+
+typedef struct {
+    pv_func_t pv_callback;
+    uint64_t start_time;
+    uint64_t stop_time;
+    uint64_t nodes_between_time_checks;
+    uint64_t node_count_last_time_check;
+} search_options_t;
+
+
+typedef struct {
+    bool early_exit_ok;
+    uint32_t max_depth;
+    uint32_t max_time_ms;
+    pv_func_t pv_callback;
+    bool print_summary;
+} iterator_options_t;
+
+
+typedef struct {
+    position_t* pos;
+    move_t* move_stack;
+    undo_t* undo_stack;
+} iterator_context_t;
 
 
 /**
@@ -103,6 +127,62 @@ int32_t see_eval_piece(int32_t piece);
  * \return the score
  */
 int32_t see(const position_t* pos, move_t mv);
+
+
+/**
+ * \brief Search the position to until it is "quiet".
+ *
+ * Quiescence search - attempt to obtain a score by searching until the 
+ * position is quiet.
+ *
+ * \param pos           a pointer to a chess position
+ * \param alpha         the lower bound
+ * \param beta          the upper bound
+ * \param move_stack    pre-allocated stack for move generation
+ * \param undo_stack    pre-allocated stack for undo information
+ * \param stats         structure for tracking search stats
+ * \param opts          structure for tracking search options data
+ * 
+ * \return the score
+ */
+int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta, 
+    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
+    search_options_t* opts);
+
+
+/**
+ * \brief Search the position to a fixed depth.
+ *
+ * \param pos           a pointer to a chess position
+ * \param parent_pv     a pointer to the move line that will receive the PV
+ * \param depth         the depth to search to
+ * \param alpha         the lower bound
+ * \param beta          the upper bound
+ * \param move_stack    pre-allocated stack for move generation
+ * \param undo_stack    pre-allocated stack for undo information
+ * \param stats         structure for tracking search stats
+ * \param opts          structure for tracking search options data
+ * 
+ * \return the score
+ */
+int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
+    int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack,
+    stats_t* stats, search_options_t* opts);
+
+
+/**
+ * \brief Search the position using iterative deepening. 
+ * 
+ * \param depth         pointer to variable to record depth achieved by search
+ * \param score         pointer to variable to record score returned by search
+ * \param opts          the options structure
+ * \param ctx           the context for this search iterator
+ * \param stats         a stats structure to record the search statistics
+ *
+ * \return the principal variation
+ */ 
+move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* opts, 
+    const iterator_context_t* ctx, stats_t *stats);
 
 
 /**
