@@ -129,7 +129,7 @@ move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* o
         move_line_t search_pv; search_pv.n = 0;
 
         /* start the search */
-        *score = search(ctx->pos, &search_pv, *depth, alpha_bound, beta_bound,
+        int32_t it_score = search(ctx->pos, &search_pv, *depth, alpha_bound, beta_bound,
             ctx->move_stack, ctx->undo_stack, stats, &search_opts);
 
         /* If the search returned a PV, we can use it since the last iteration's PV was tried first */
@@ -141,6 +141,8 @@ move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* o
             break;
         }
 
+        *score = it_score;
+
         /* print the move line */
         uint64_t elapsed = milli_timer() - search_opts.start_time;
         if (opts->pv_callback) {
@@ -148,7 +150,7 @@ move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* o
         }
 
         /* if the search discovered a checkmate, stop. */
-        if (abs(*score) > (CHECKMATE - 500)) {
+        if (abs(it_score) > (CHECKMATE - 500)) {
             stop_iterator = true;
         }
 
