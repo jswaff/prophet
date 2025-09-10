@@ -3,7 +3,7 @@
 #include "prophet/const.h"
 #include "prophet/error_codes.h"
 
-#include "position/position_internal.h"
+#include "position/position.h"
 #include "util/string_utils.h"
 
 #include <stdbool.h>

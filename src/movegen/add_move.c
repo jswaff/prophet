@@ -3,7 +3,7 @@
 #include "prophet/move.h"
 #include "prophet/piece.h"
 
-#include "position/position_internal.h"
+#include "position/position.h"
 
 #include <assert.h>
 

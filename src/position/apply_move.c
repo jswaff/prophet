@@ -1,11 +1,10 @@
-#include "position_internal.h"
+#include "position.h"
 
 #include "prophet/move.h"
 #include "prophet/square.h"
 
 #include "hash/hash_internal.h"
 #include "nn/nn_internal.h"
-#include "position/position_internal.h"
 #include "square_internal.h"
 
 #include <assert.h>

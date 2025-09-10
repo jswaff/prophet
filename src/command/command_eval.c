@@ -4,7 +4,7 @@
 
 #include "eval/eval_internal.h"
 #include "nn/nn_internal.h"
-#include "position/position_internal.h"
+#include "position/position.h"
 #include "util/output.h"
 
 #include <stdint.h>

@@ -4,7 +4,7 @@
 
 #include "bitmap/bitmap.h"
 #include "movegen/movegen_internal.h"
-#include "position/position_internal.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>

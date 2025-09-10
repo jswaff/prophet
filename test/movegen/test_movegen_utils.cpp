@@ -2,7 +2,7 @@
 
 #include "prophet/const.h"
 
-#include "position/position_internal.h"
+#include "position/position.h"
 
 #include <gtest/gtest.h>
 

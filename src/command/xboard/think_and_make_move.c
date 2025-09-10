@@ -6,7 +6,7 @@
 #include "prophet/movegen.h"
 
 #include "movegen/movegen_internal.h"
-#include "position/position_internal.h"
+#include "position/position.h"
 #include "search/search_internal.h"
 #include "parameters.h"
 #include "util/output.h"

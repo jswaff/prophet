@@ -1,6 +1,6 @@
 #include "search_internal.h"
 
-#include "position/position_internal.h"
+#include "position/position.h"
 
 #include <stdbool.h>
 

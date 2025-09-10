@@ -1,4 +1,4 @@
-#include "position_internal.h"
+#include "position.h"
 
 #include <stdbool.h>
 #include <stdint.h>

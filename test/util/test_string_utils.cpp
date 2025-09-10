@@ -3,7 +3,7 @@
 #include "prophet/const.h"
 #include "prophet/move.h"
 
-#include "position/position_internal.h"
+#include "position/position.h"
 
 #include <gtest/gtest.h>
 
