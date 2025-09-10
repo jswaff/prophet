@@ -12,6 +12,7 @@
 #include "util/time.h"
 
 #include <assert.h>
+#include <inttypes.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -220,7 +221,7 @@ static int iterate_from_position(stats_t* stats, move_t* pv, int* pv_length, uin
 static void print_search_summary(uint32_t last_depth, int32_t score, uint64_t start_time, const stats_t* stats)
 {
     plog("\n");
-    plog("# depth: %d, score: %d\n", last_depth, score);
+    plog("# depth: %" PRIu32 ", score: %" PRId32 "\n", last_depth, score);
 
     /* print node counts */
     uint64_t total_nodes = stats->nodes + stats->qnodes;
