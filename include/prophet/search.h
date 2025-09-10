@@ -48,7 +48,7 @@ typedef struct {
  *
  * \return 0 on success, non-zero on failure
  */ 
-int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score, const char *fen,
+int iterate_from_fen(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score, const char *fen,
     bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback);
 
 
@@ -69,8 +69,8 @@ int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth
  *
  * \return 0 on success, non-zero on failure
  */ 
-int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth, int32_t* score,
-    const move_t* move_history, int len_move_history, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms,
+int iterate_from_move_history(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score,
+    const move_t *move_history, int len_move_history, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms,
     pv_func_t pv_callback);
 
 

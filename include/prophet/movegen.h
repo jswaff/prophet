@@ -26,7 +26,7 @@ extern "C" {
  * \param caps          if capturing moves should be generated
  *
  */
-void generate_moves_from_fen(move_t* m, int* n, const char* fen, bool caps, bool noncaps);
+void generate_moves_from_fen(move_t *m, int *n, const char *fen, bool caps, bool noncaps);
 
 
 // make this header C++ friendly.

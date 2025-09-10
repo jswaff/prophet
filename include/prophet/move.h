@@ -61,7 +61,7 @@ void set_promopiece(move_t* mv, piece_t promo);
  * \param mv            a pointer to an existing move
  * \param promo         the captured piece
  */
-void set_capture(move_t* mv, piece_t captured_piece);
+void set_capture(move_t *mv, piece_t captured_piece);
 
 
 /**
@@ -69,7 +69,7 @@ void set_capture(move_t* mv, piece_t captured_piece);
  *
  * \param  mv           a pointer to an existing move
  */
-void set_epcapture(move_t* mv);
+void set_epcapture(move_t *mv);
 
 
 /**
@@ -77,7 +77,7 @@ void set_epcapture(move_t* mv);
  *
  * \param  mv           a pointer to an existing move
  */
-void set_castle(move_t* mv);
+void set_castle(move_t *mv);
 
 
 /**
@@ -176,7 +176,7 @@ int32_t get_move_score(move_t mv);
  * \param m             a pointer to a move
  * \param score         the score
  */
-void set_move_score(move_t* m, int32_t score);
+void set_move_score(move_t *m, int32_t score);
 
 
 /**

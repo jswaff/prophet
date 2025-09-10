@@ -1,7 +1,5 @@
 #pragma once
 
-#include <prophet/move.h>
-
 #include <stdint.h>
 
 /* make this header C++ friendly. */
