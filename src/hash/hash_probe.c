@@ -3,6 +3,7 @@
 #include "prophet/hash.h"
 
 #include "position/position.h"
+#include "position/square_internal.h"
 
 #include <assert.h>
 #include <stdint.h>

@@ -23,10 +23,48 @@ static const square_t flip_rank[64] =
 };
 
 
+/**
+ * \brief Create bitmap representing a single square
+ * 
+ * \param sq            a square
+ *
+ * \return the bitmap
+ */
 static inline uint64_t square_to_bitmap(int sq)
 {
     return (uint64_t)1 << sq;
 }
+
+
+/**
+ * \brief Get the rank a square occupies.
+ *
+ * \param sq            a square
+ *
+ * \return the rank the square occupies
+ */
+rank_t get_rank(square_t sq);
+
+
+/**
+ * \brief Get the file a square occupies.
+ *
+ * \param sq            a square
+ *
+ * \return the file the square occupies
+ */
+file_t get_file(square_t sq);
+
+
+/**
+ * \brief Get the square that occupies a given rank and file.
+ *
+ * \param rank          a rank
+ * \param file          a file
+ *
+ * \return the square
+ */
+square_t get_square(rank_t rank, file_t file);
 
 
 /**
@@ -201,6 +239,26 @@ square_t southwest(square_t sq);
  * \return the next square
  */
 square_t northwest(square_t sq);
+
+
+/**
+ * \brief Is a square a light colored square?
+ *
+ * \param sq            a square
+ *
+ * \return true if the square is light colored, otherwise false
+ */
+bool is_light_sq(square_t sq);
+
+
+/**
+ * \brief Is a square a dark colored square?
+ *
+ * \param sq            a square
+ *
+ * \return true if the square is dark colored, otherwise false
+ */
+bool is_dark_sq(square_t sq);
 
 
 /**

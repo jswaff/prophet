@@ -1,29 +1,12 @@
 #include "position.h"
 
-#include "prophet/square.h"
-
 #include "bitmap/bitmap.h"
+#include "position/square_internal.h"
 
 #include <stdbool.h>
 #include <stdint.h>
 
-/**
- * \brief Determine if a position is drawn by lack of mating material.
- *
- * From the xboard documentation:
- * Note that (in accordance with FIDE rules) only KK, KNK, KBK and KBKB with 
- * all bishops on the same color can be claimed as draws on the basis of 
- * insufficient mating material. The end-games KNNK, KBKN, KNKN and KBKB with 
- * unlike bishops do have mate positions, and cannot be claimed. Complex draws 
- * based on locked Pawn chains will not be recognized as draws by most 
- * interfaces, so do not claim in such positions, but just offer a draw or play
- * on.
- *
- * \param pos           a pointer to a chess position
- *
- * \return true if the position is drawn by lack of mating material, otherwise 
- * false.
- */
+
 bool is_lack_of_mating_material(const position_t* pos)
 {
     /* if there are any pawns, rooks, or queens on the board, it is not drawn

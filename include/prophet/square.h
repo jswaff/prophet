@@ -1,14 +1,11 @@
 #pragma once
 
-#include <stdbool.h>
-
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
 #endif  
 
-typedef enum  
-{
+typedef enum  {
     A8,B8,C8,D8,E8,F8,G8,H8,
     A7,B7,C7,D7,E7,F7,G7,H7,
     A6,B6,C6,D6,E6,F6,G6,H6,
@@ -25,57 +22,6 @@ typedef enum { RANK_8,RANK_7,RANK_6,RANK_5,RANK_4,RANK_3,RANK_2,RANK_1 } rank_t;
 typedef enum { FILE_A,FILE_B,FILE_C,FILE_D,FILE_E,FILE_F,FILE_G,FILE_H } file_t;
 
 typedef enum { NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST,NODIR } dir_t;
-
-
-/**
- * \brief Get the rank a square occupies.
- *
- * \param sq            a square
- *
- * \return the rank the square occupies
- */
-rank_t get_rank(square_t sq);
-
-
-/**
- * \brief Get the file a square occupies.
- *
- * \param sq            a square
- *
- * \return the file the square occupies
- */
-file_t get_file(square_t sq);
-
-
-/**
- * \brief Get the square that occupies a given rank and file.
- *
- * \param rank          a rank
- * \param file          a file
- *
- * \return the square
- */
-square_t get_square(rank_t rank, file_t file);
-
-/**
- * \brief Is a square a light colored square?
- *
- * \param sq            a square
- *
- * \return true if the square is light colored, otherwise false
- */
-bool is_light_sq(square_t sq);
-
-
-/**
- * \brief Is a square a dark colored square?
- *
- * \param sq            a square
- *
- * \return true if the square is dark colored, otherwise false
- */
-bool is_dark_sq(square_t sq);
-
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
