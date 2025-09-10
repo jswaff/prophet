@@ -1,6 +1,5 @@
 #include "movegen/movegen_internal.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "position/position_internal.h"

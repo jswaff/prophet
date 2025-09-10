@@ -1,7 +1,6 @@
 #include "position_internal.h"
 
 #include "prophet/hash.h"
-#include "prophet/position.h"
 
 #include "bitmap/bitmap.h"
 #include "nn/nn_internal.h"

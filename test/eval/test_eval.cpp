@@ -1,7 +1,5 @@
 #include "prophet/eval.h"
 
-#include "prophet/position.h"
-
 #include "eval/eval_internal.h"
 #include "position/position_internal.h"
 

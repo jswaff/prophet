@@ -1,6 +1,6 @@
 #pragma once
 
-#include "prophet/position.h"
+#include "prophet/move.h"
 #include "prophet/square.h"
 
 #include <stdbool.h>

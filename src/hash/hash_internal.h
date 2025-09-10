@@ -1,6 +1,6 @@
 #pragma once
 
-#include "prophet/position.h"
+#include "position/position_internal.h"
 
 #include <stdbool.h>
 #include <stdint.h>

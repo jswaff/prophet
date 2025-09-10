@@ -3,7 +3,6 @@
 #include "prophet/const.h"
 #include "prophet/error_codes.h"
 #include "prophet/hash.h"
-#include "prophet/position.h"
 
 #include "position/position_internal.h"
 

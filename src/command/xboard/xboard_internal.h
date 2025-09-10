@@ -1,7 +1,5 @@
 #pragma once
 
-#include <prophet/position.h>
-
 #include <stdbool.h>
 
 /* make this header C++ friendly. */

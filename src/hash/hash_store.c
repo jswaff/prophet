@@ -1,7 +1,6 @@
 #include "hash_internal.h"
 
 #include "prophet/hash.h"
-#include "prophet/position.h"
 
 #include "position/position_internal.h"
 

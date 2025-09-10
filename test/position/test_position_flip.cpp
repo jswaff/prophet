@@ -1,7 +1,5 @@
 #include "position/position_internal.h"
 
-#include "prophet/position.h"
-
 #include <gtest/gtest.h>
 
 #include <string.h>

@@ -1,7 +1,6 @@
 #include "command.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/position.h"
 
 #include "movegen/movegen_internal.h"
 #include "util/output.h"

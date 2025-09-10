@@ -1,7 +1,6 @@
 #include "movegen_internal.h"
 
 #include "prophet/piece.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"

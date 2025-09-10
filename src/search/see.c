@@ -1,7 +1,6 @@
 #include "search_internal.h"
 
 #include "prophet/move.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"

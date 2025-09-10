@@ -2,7 +2,6 @@
 
 #include "prophet/const.h"
 #include "prophet/move.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "movegen/movegen_internal.h"

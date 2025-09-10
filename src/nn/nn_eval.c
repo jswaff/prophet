@@ -1,7 +1,5 @@
 #include "prophet/nn.h"
 
-#include "prophet/position.h"
-
 #include "nn_internal.h"
 #include "position/position_internal.h"
 
