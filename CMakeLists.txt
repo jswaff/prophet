@@ -155,7 +155,6 @@ set(public_headers
     include/prophet/movegen.h
     include/prophet/nn.h
     include/prophet/piece.h
-    include/prophet/position.h
     include/prophet/search.h
     include/prophet/square.h
 )
