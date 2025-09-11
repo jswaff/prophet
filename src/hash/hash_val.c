@@ -58,9 +58,11 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth, int32_t sco
     assert((hash_move & 0xFFFFFF) == hash_move);
     val |= hash_move << 26;  
 
+    /* note: leaving 50 and 51 unused since chess4j uses them and hash aging is part of the replacement strategy */
+
     /* fold in an age counter */
     assert(hash_age < 1024);
-    val |= ((uint64_t)hash_age) << 50;
+    val |= ((uint64_t)hash_age) << 52;
 
     return val;
 }
@@ -149,7 +151,7 @@ move_t get_hash_entry_move(uint64_t val)
  */
 uint32_t get_hash_entry_age(uint64_t val)
 {
-    return (val >> 50) & 0x3FF;
+    return (val >> 52) & 0x3FF;
 }
 
 
