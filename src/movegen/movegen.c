@@ -25,7 +25,6 @@
  * \param caps          if capturing moves should be generated
  *
  */
-/* TODO: put fen as first argument */
 void generate_moves_from_fen(move_t* m, int* n, const char* fen, bool caps, bool noncaps) {
     position_t pos;
     set_pos(&pos, fen);
