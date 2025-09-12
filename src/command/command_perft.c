@@ -12,19 +12,8 @@
 
 extern position_t gpos;
 
-/**
- * @brief Execute the perft command.
- * 
- * Command should be in the format "perft D", where D is depth.  The perft is
- * executed iteratively, starting with depth=1 and ending with depth=D.
- * The number of nodes and nodes-per-second are printed to stdout for each
- * iteration.
- *
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int command_perft(const char* input)
+
+int command_perft(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("perft", input, 5)) {

@@ -12,16 +12,7 @@ extern volatile uint32_t max_time_ms;
 extern bool fixed_time_per_move;
 
 
-/**
- * @brief Execute the xboard st command 
- * 
- * Respond to the st TIME command by setting the maximum search time
- *
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_st(const char* input)
+int xboard_st(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("st", input, 2)) {

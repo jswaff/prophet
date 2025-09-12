@@ -16,16 +16,7 @@ extern volatile uint32_t max_time_ms;
 extern double time_control_increment;
 
 
-/**
- * @brief Execute the xboard time command 
- * 
- * Respond to the time command by setting the time remaining.  
- *
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_time(const char* input)
+int xboard_time(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("time", input, 4)) {

@@ -13,20 +13,12 @@ char time_control_base[10];
 double time_control_increment;
 
 
-/**
- * @brief Execute the xboard level command 
- * 
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_level(const char* input)
+int xboard_level(const char *input)
 {
     char* my_input = strdup(input);
 
-    /* keep the original to free the memory allocated by strdup before 
-     * exiting. */
-    char* input_ptr = my_input;
+    /* keep the original to free the memory allocated by strdup before exiting. */
+    char *input_ptr = my_input;
 
     /* verify the command */
     if (0 != strncmp("level ", my_input, 6)) {
@@ -41,7 +33,7 @@ int xboard_level(const char* input)
     }
 
     /* to read the MOVES parameter */
-    char* token = strtok(my_input, " "); /* "level" */
+    char *token = strtok(my_input, " "); /* "level" */
     token = strtok(NULL, " ");
     if (!token) {
         free(input_ptr);

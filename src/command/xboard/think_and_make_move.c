@@ -111,13 +111,6 @@ static void* iterate_wrapper(void* UNUSED(arg))
 }
 
 
-/**
- * @brief Choose a move randomly.
- *
- * Choose a random move from the global chess position and make the move.
- *
- * @return 0 if successful, non-zero on error.
- */
 static int select_random_move()
 {
     /* generate legal moves */
@@ -135,7 +128,7 @@ static int select_random_move()
     /* fetch the move from the stack.  since the list isn't contiguous, (it
      * contains some NO_MOVE entries), so we need to iterate. */
     int i = 0;
-    for (const move_t* mp = moves; mp < endp; mp++) {
+    for (const move_t *mp = moves; mp < endp; mp++) {
         if (*mp != NO_MOVE) {
             if (i == mv_ind) {
                 return make_move_otb(*mp);
@@ -150,13 +143,6 @@ static int select_random_move()
 }
 
 
-/**
- * @brief Make a move over the global game board.
- *
- * @param mv           The move to apply
- *
- * @return 0 if successful, non-zero on error.
- */
 static int make_move_otb(move_t mv)
 {
     if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME) {

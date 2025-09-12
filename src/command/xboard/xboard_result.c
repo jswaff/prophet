@@ -6,14 +6,7 @@
 #include <string.h>
 
 
-/**
- * @brief Execute the xboard result command 
- * 
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_result(const char* input)
+int xboard_result(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("result", input, 6)) {

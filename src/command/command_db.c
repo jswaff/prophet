@@ -11,16 +11,8 @@
 
 extern position_t gpos;
 
-/**
- * @brief Execute the db (drawboard) command.
- *
- * Draw the board to stdout.
- *
- * @param input         the user entered input
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int command_db(const char* input)
+
+int command_db(const char *input)
 {
     /* verify the command */
     if (0 != strcmp("db", input)) {

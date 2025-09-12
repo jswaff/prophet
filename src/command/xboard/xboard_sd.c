@@ -8,16 +8,8 @@
 
 extern volatile uint32_t max_depth;
 
-/**
- * @brief Execute the xboard sd command 
- * 
- * Respond to the sd DEPTH command by setting the maximum search depth.  
- *
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_sd(const char* input)
+
+int xboard_sd(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("sd", input, 2)) {

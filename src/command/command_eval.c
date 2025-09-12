@@ -14,16 +14,8 @@ extern neural_network_t neural_network;
 extern bool use_neural_network;
 extern position_t gpos;
 
-/**
- * @brief Execute the eval command.
- * 
- * Evaluate the current position and print the score.
- *
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int command_eval(const char* input)
+
+int command_eval(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("eval", input, 4)) {

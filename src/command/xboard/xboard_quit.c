@@ -7,14 +7,7 @@
 #include <string.h>
 
 
-/**
- * @brief Execute the xboard quit command
- * 
- * @param input         the user entered input
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_quit(const char* input)
+int xboard_quit(const char *input)
 {
     /* verify the command */
     if (0 != strcmp("exit", input) && 0 != strcmp("quit", input)) {

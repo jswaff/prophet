@@ -7,14 +7,8 @@
 
 extern bool xboard_post_mode;
 
-/**
- * @brief Execute the xboard nopost command 
- * 
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_nopost(const char* input)
+
+int xboard_nopost(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("nopost", input, 6)) {

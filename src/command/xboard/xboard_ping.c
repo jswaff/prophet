@@ -7,16 +7,8 @@
 #include <stdbool.h>
 #include <string.h>
 
-/**
- * @brief Execute the xboard ping command 
- * 
- * Respond to the ping N command with a pong N.  
- *
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_ping(const char* input)
+
+int xboard_ping(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("ping", input, 4)) {

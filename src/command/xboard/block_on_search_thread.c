@@ -12,16 +12,6 @@ extern bool search_thread_running;
 extern pthread_mutex_t search_lock;
 
 
-/**
- * @brief Block on an active search thread.
- * 
- * Performs a join on any running search thread.  If the stop parameter
- * is true the search is forcefully stopped.
- *
- * @param stop          stop the search thread  
- *
- * @return 0 on successful execution, and non-zero on failure
- */
 int block_on_search_thread(bool stop)
 {
     pthread_mutex_lock(&search_lock);

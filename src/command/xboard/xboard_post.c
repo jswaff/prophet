@@ -7,14 +7,8 @@
 
 bool xboard_post_mode = true;
 
-/**
- * @brief Execute the xboard post command 
- * 
- * @param input         the user entered input 
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int xboard_post(const char* input)
+
+int xboard_post(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("post", input, 4)) {
