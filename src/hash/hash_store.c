@@ -37,15 +37,16 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
         }
     }
 
+    /* 9/12/25: disabled hash aging in replacement strategy.  Tests show it loses a few elo. */
     /* otherwise, if any entry is from a previous search, overwrite it. */
-    if (selected_slot == -1) {
+    /*if (selected_slot == -1) {
         for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++) {
             if (get_hash_entry_age(he->val[i]) < get_hash_entry_age(val)) {
                 selected_slot = i;
                 break;
             }
         }
-    }
+    }*/
 
     /* otherwise, select the entry with the lowest depth */
     if (selected_slot == -1) {
