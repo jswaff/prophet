@@ -17,15 +17,7 @@ extern uint64_t pawn_hash_size;
 extern uint32_t num_random_starting_moves;
 
 
-/**
- * @brief Parse command line options.
- * 
- * @param argc          number of arguments
- * @param argv          list of arguments
- *
- * @return 0 on successful execution, and non-zero on failure
- */
-int commandline_process_options(int argc, char* argv[])
+int commandline_process_options(int argc, char *argv[])
 {
 
     /* specify options */

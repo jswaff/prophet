@@ -6,13 +6,12 @@ extern "C" {
 #endif  
 
 
-
 /**
  * @brief Load eval properties
  *
  * @return 0 on successful execution, and non-zero on failure
  */
-int commandline_load_properties(const char* props_file);
+int commandline_load_properties(const char *props_file);
 
 
 /**
@@ -29,7 +28,7 @@ void commandline_print_usage();
  *
  * @return 0 on successful execution, and non-zero on failure
  */
-int commandline_process_options(int argc, char* argv[]);
+int commandline_process_options(int argc, char *argv[]);
 
 
 /* make this header C++ friendly. */

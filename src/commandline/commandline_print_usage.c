@@ -3,9 +3,6 @@
 #include "util/output.h"
 
 
-/**
- * @brief Print command line options.
- */
 void commandline_print_usage()
 {
     out(stdout, "Usage: prophet [l] [-r N] [-d N] [-h N] [-p N] [-e FILE] [-n FILE]\n");
