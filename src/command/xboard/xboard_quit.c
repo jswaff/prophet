@@ -8,11 +8,11 @@
 
 
 /**
- * \brief Execute the xboard quit command
+ * @brief Execute the xboard quit command
  * 
- * \param input         the user entered input
+ * @param input         the user entered input
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_quit(const char* input)
 {

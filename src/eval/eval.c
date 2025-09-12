@@ -139,7 +139,7 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
 
 
 /**
- * \brief Evaluate a chess position for the side to move.
+ * @brief Evaluate a chess position for the side to move.
  *
  * Performs a static analysis of a chess position.  The score is primarily
  * influenced by material counts, but it also takes into account several
@@ -148,10 +148,10 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
  *
  * This method will not detect end-of-game scenarios such as checkmate.
  *
- * \param fen             a chess position
- * \param material_only   if the evaluation should consider material only
+ * @param fen             a chess position
+ * @param material_only   if the evaluation should consider material only
  *
- * \return the score.
+ * @return the score.
  */
 int32_t eval_from_fen(const char *fen, bool material_only) {
     position_t pos;
@@ -161,7 +161,7 @@ int32_t eval_from_fen(const char *fen, bool material_only) {
 
 
 /**
- * \brief Evaluate a chess position for the side to move.
+ * @brief Evaluate a chess position for the side to move.
  *
  * Performs a static analysis of a chess position.  The score is primarily
  * influenced by material counts, but it also takes into account several
@@ -170,11 +170,11 @@ int32_t eval_from_fen(const char *fen, bool material_only) {
  *
  * This method will not detect end-of-game scenarios such as checkmate.
  *
- * \param pos             a pointer to a chess position
- * \param material_only   if the evaluation should consider material only
- * \param use_pawn_hash   if the pawn hash table should be used
+ * @param pos             a pointer to a chess position
+ * @param material_only   if the evaluation should consider material only
+ * @param use_pawn_hash   if the pawn hash table should be used
  *
- * \return the score.
+ * @return the score.
  */
 int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash)
 {

@@ -10,11 +10,11 @@ static int32_t mvvlva_promo(move_t mv);
 
 
 /**
- * \brief Score a move using the MVV/LVA algorithm.
+ * @brief Score a move using the MVV/LVA algorithm.
  *
- * \param mv            the chess move to score
+ * @param mv            the chess move to score
  * 
- * \return the score
+ * @return the score
  */
 int32_t mvvlva(move_t mv)
 {

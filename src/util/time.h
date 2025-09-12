@@ -9,9 +9,9 @@ extern "C" {
 
 
 /**
- * \brief Return the number of milliseconds since epoch.
+ * @brief Return the number of milliseconds since epoch.
  *
- * \return the number of milliseconds since epoch
+ * @return the number of milliseconds since epoch
  */
 uint64_t milli_timer();
 

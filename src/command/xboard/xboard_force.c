@@ -9,15 +9,15 @@ bool xboard_force_mode;
 
 
 /**
- * \brief Execute the xboard force command 
+ * @brief Execute the xboard force command 
  * 
  * Set the engine to play neither color ("force mode"). Stop clocks. The engine
  * should check that moves received in force mode are legal and made in the 
  * proper turn, but should not think, ponder, or make moves of its own.
  *
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_force(const char* input)
 {

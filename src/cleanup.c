@@ -1,5 +1,3 @@
-#include "prophet/hash.h"
-
 #include "util/output.h"
 
 bool cleanup_done = false;
@@ -7,11 +5,6 @@ bool cleanup_done = false;
 extern void free_hash_tables();
 
 
-/**
- * \brief Cleanup and exit
- *
- * \return 0 on successful execution, and non-zero on failure.
- */
 int cleanup()
 {
     if (!cleanup_done) {

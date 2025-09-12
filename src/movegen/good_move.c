@@ -21,12 +21,12 @@ static bool verify_good_move(const position_t* pos, move_t mv);
 #endif 
 
 /**
- * \brief Determine if a move is "good" (pseudo-legal) in a given position.
+ * @brief Determine if a move is "good" (pseudo-legal) in a given position.
  *
- * \param pos           a pointer to a chess position 
- * \param mv            the move to test
+ * @param pos           a pointer to a chess position 
+ * @param mv            the move to test
  * 
- * \return true if the move is good, otherwise false
+ * @return true if the move is good, otherwise false
  */
 bool good_move(const position_t* pos, move_t mv)
 {

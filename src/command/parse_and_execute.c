@@ -10,14 +10,14 @@
 
 
 /**
- * \brief Parse the user input into a command and execute the command.
+ * @brief Parse the user input into a command and execute the command.
  *
  * Note that failure to execute a command does not yield an error return code.
  *
- * \param input         the user entered input
- * \param exit_status   pointer to boolean to receive exit status
+ * @param input         the user entered input
+ * @param exit_status   pointer to boolean to receive exit status
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int parse_and_execute(const char* input, bool* exit_status)
 {

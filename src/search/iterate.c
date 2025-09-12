@@ -67,14 +67,14 @@ int iterate_from_move_history(stats_t* stats, move_t* pv, int* pv_length, uint32
 }
 
 /**
- * \brief Search the position using iterative deepening. 
+ * @brief Search the position using iterative deepening. 
  * 
- * \param depth         pointer to variable to record depth achieved by search
- * \param score         pointer to variable to record score returned by search
- * \param opts          the options structure
+ * @param depth         pointer to variable to record depth achieved by search
+ * @param score         pointer to variable to record score returned by search
+ * @param opts          the options structure
  * \pram ctx            the context for this search iterator
  *
- * \return the principal variation
+ * @return the principal variation
  */ 
 move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* opts, const iterator_context_t* ctx,
     stats_t* stats)

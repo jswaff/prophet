@@ -14,11 +14,11 @@ double time_control_increment;
 
 
 /**
- * \brief Execute the xboard level command 
+ * @brief Execute the xboard level command 
  * 
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_level(const char* input)
 {

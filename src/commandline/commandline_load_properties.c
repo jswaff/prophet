@@ -90,9 +90,9 @@ struct eval_weight_table_entry eval_weight_table[] = {
 };
 
 /**
- * \brief Load eval properties
+ * @brief Load eval properties
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int commandline_load_properties(const char* props_file)
 {

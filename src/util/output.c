@@ -18,10 +18,6 @@ static pthread_mutex_t output_mutex;
 static FILE* logfile = 0;
 
 
-/**
- * \brief Initialize logging.
- *
- */
 void init_logging()
 {
     if (logging_enabled && !logfile) {
@@ -30,10 +26,6 @@ void init_logging()
 }
 
 
-/**
- * \brief Close the logfile.
- *
- */
 void close_logfile() 
 {
     if (logfile) {
@@ -42,13 +34,7 @@ void close_logfile()
 }
 
 
-/**
- * \brief Write an error message to stderr.
- *
- * \param format        formatted string, followed by variable length
- *                      list of arguments.
- */
-void error(const char* format, ...)
+void error(const char *format, ...)
 {
     pthread_mutex_lock(&error_mutex);
     va_list args;
@@ -59,13 +45,7 @@ void error(const char* format, ...)
 }
 
 
-/**
- * \brief Write a message to stdout and the logfile.
- *
- * \param format        formatted string, followed by variable length
- *                      list of arguments.
- */
-void plog(const char* format, ...)
+void plog(const char *format, ...)
 {
     pthread_mutex_lock(&output_mutex);
 
@@ -85,14 +65,7 @@ void plog(const char* format, ...)
 }
 
 
-/**
- * \brief Write a message to a stream.
- *
- * \param stream        the stream to write to
- * \param format        formatted string, followed by variable length
- *                      list of arguments.
- */
-void out(FILE* stream, const char* format, ...)
+void out(FILE *stream, const char *format, ...)
 {
     pthread_mutex_lock(&output_mutex);
     va_list args;
@@ -103,7 +76,7 @@ void out(FILE* stream, const char* format, ...)
 }
 
 
-void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
+void print_pv(move_line_t *pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
 {
     char* pv_buf = move_line_to_str(pv);
     uint64_t time_centis = elapsed / 10;
@@ -112,7 +85,7 @@ void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, u
 }
 
 
-void print_pv2(move_t* pv, int num_pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
+void print_pv2(move_t *pv, int num_pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
 {
     move_line_t move_line;
     move_line.n = num_pv;

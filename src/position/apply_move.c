@@ -100,7 +100,7 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
 }
 
 /**
- * \brief Add the moving piece to the destination square and apply special rules.
+ * @brief Add the moving piece to the destination square and apply special rules.
  *
  * The moving piece is added to the destination square.
  *
@@ -113,8 +113,8 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
  *    - The king square is updated.
  *    - If it's a castle, the rook is moved.
  *
- * \param pos           a pointer to a chess position
- * \param m             a move being applied to the position
+ * @param pos           a pointer to a chess position
+ * @param m             a move being applied to the position
  */
 static void add_piece_to_destination(position_t* p, move_t m)
 {

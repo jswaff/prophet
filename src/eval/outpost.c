@@ -13,13 +13,13 @@
 static uint64_t bb_outpost[64][2];
 
 /**
- * \brief Determine if a square is an outpost.
+ * @brief Determine if a square is an outpost.
  *
- * \param pos           a pointer to a chess position
- * \param pawn_sq       the square
- * \param white_pov     whether to examine from white's POV
+ * @param pos           a pointer to a chess position
+ * @param pawn_sq       the square
+ * @param white_pov     whether to examine from white's POV
  *
- * \return true if the square is an outpost, otherwise false.
+ * @return true if the square is an outpost, otherwise false.
  */
 bool outpost(const position_t* pos, square_t sq, bool white_pov)
 {
@@ -31,7 +31,7 @@ bool outpost(const position_t* pos, square_t sq, bool white_pov)
 }
 
 /**
- * \brief Initialize the outpost function.
+ * @brief Initialize the outpost function.
  */
 void init_outpost()
 {

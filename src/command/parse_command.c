@@ -59,7 +59,7 @@ struct function_table_entry function_table[] = {
 };
 
 /**
- * \brief Parse a command
+ * @brief Parse a command
  * 
  * Parse the user input and attempt to map it to a command.  Note that failure
  * to map the input to a command does not generate a failure return code.  In 
@@ -70,11 +70,11 @@ struct function_table_entry function_table[] = {
  * it's pretty minimal and wouldn't be hard to refactor if support for another
  * protocol were added in the future.
  *
- * \param cmd           pointer to structure to receive parsed command
- * \param input         buffer containing command to be parsed
- * \param exit_status   pointer to boolean to receive exit status
+ * @param cmd           pointer to structure to receive parsed command
+ * @param input         buffer containing command to be parsed
+ * @param exit_status   pointer to boolean to receive exit status
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
 {

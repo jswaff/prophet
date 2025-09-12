@@ -9,7 +9,7 @@ static int32_t eval_phase(const position_t* pos);
 
 
 /**
- * \brief Calculate a tapered score.
+ * @brief Calculate a tapered score.
  *
  * Given a "middle game score", an "end game score", calculate a blended
  * score in the range [mg, eg] depending on how much material is on the
@@ -18,11 +18,11 @@ static int32_t eval_phase(const position_t* pos);
  * few or no major/minor pieces will be weighted towards the end game
  * score.
 
- * \param pos           a pointer to a chess position
- * \param mg_score      the middle game score
- * \param eg_score      the end game score
+ * @param pos           a pointer to a chess position
+ * @param mg_score      the middle game score
+ * @param eg_score      the end game score
  *
- * \return the tapered score
+ * @return the tapered score
  */
 int32_t eval_taper(const position_t* pos, int32_t mg_score, int32_t eg_score)
 {

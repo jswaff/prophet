@@ -42,19 +42,19 @@ static square_t apply_null_move(position_t* pos);
 static void undo_null_move(position_t* pos, square_t ep_sq);
 
 /**
- * \brief Search the position to a fixed depth.
+ * @brief Search the position to a fixed depth.
  *
- * \param pos           a pointer to a chess position
- * \param parent_pv     a pointer to the move line that will receive the PV
- * \param depth         the depth to search to
- * \param alpha         the lower bound
- * \param beta          the upper bound
- * \param move_stack    pre-allocated stack for move generation
- * \param undo_stack    pre-allocated stack for undo information
- * \param stats         structure for tracking search stats
- * \param opts          structure for tracking search options data
+ * @param pos           a pointer to a chess position
+ * @param parent_pv     a pointer to the move line that will receive the PV
+ * @param depth         the depth to search to
+ * @param alpha         the lower bound
+ * @param beta          the upper bound
+ * @param move_stack    pre-allocated stack for move generation
+ * @param undo_stack    pre-allocated stack for undo information
+ * @param stats         structure for tracking search stats
+ * @param opts          structure for tracking search options data
  * 
- * \return the score
+ * @return the score
  */
 int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
     int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack, 

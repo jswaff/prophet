@@ -12,12 +12,12 @@
 #include <stdint.h>
 
 /**
- * \brief Evaluate a single queen.
+ * @brief Evaluate a single queen.
  *
- * \param pos           a pointer to a chess position
- * \param sq            the square the queen is on
- * \param mgscore       a pointer to the middle game score accumulator
- * \param egscore       a pointer to the endgame score accumulator
+ * @param pos           a pointer to a chess position
+ * @param sq            the square the queen is on
+ * @param mgscore       a pointer to the middle game score accumulator
+ * @param egscore       a pointer to the endgame score accumulator
  *
  */
 void eval_queen(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)

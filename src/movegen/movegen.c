@@ -9,7 +9,7 @@
 
 
 /**
- * \brief Generate a list of pseudo-legal moves.
+ * @brief Generate a list of pseudo-legal moves.
  *
  * It is guaranteed that all legal moves are generated.  However, no 
  * verification is done to determine if a move would leave the current 
@@ -18,11 +18,11 @@
  * It is assumed that the move stack contains enough storage for all moves 
  * generated.
  *
- * \param m             the start of a pre-allocated move stack
- * \param n             the method will record the number of elements used in the stack
- * \param fen           a chess position
- * \param noncaps       if non-capturing moves should be generated
- * \param caps          if capturing moves should be generated
+ * @param m             the start of a pre-allocated move stack
+ * @param n             the method will record the number of elements used in the stack
+ * @param fen           a chess position
+ * @param noncaps       if non-capturing moves should be generated
+ * @param caps          if capturing moves should be generated
  *
  */
 void generate_moves_from_fen(move_t* m, int* n, const char* fen, bool caps, bool noncaps) {
@@ -35,7 +35,7 @@ void generate_moves_from_fen(move_t* m, int* n, const char* fen, bool caps, bool
 
 
 /**
- * \brief Generate a list of pseudo-legal moves.
+ * @brief Generate a list of pseudo-legal moves.
  *
  * It is guaranteed that all legal moves are generated.  However, no 
  * verification is done to determine if a move would leave the current 
@@ -44,12 +44,12 @@ void generate_moves_from_fen(move_t* m, int* n, const char* fen, bool caps, bool
  * It is assumed that the move stack contains enough storage for all moves 
  * generated.
  *
- * \param m             the start of a pre-allocated move stack
- * \param pos           a pointer to a chess position
- * \param noncaps       if non-capturing moves should be generated
- * \param caps          if capturing moves should be generated
+ * @param m             the start of a pre-allocated move stack
+ * @param pos           a pointer to a chess position
+ * @param noncaps       if non-capturing moves should be generated
+ * @param caps          if capturing moves should be generated
  *
- * \return a move pointer one greater than the last move produced
+ * @return a move pointer one greater than the last move produced
  */
 move_t* gen_pseudo_legal_moves(move_t* m, const position_t* pos, bool caps, bool noncaps)
 {
@@ -66,7 +66,7 @@ move_t* gen_pseudo_legal_moves(move_t* m, const position_t* pos, bool caps, bool
 }
 
 /**
- * \brief Generate a list of legal moves.
+ * @brief Generate a list of legal moves.
  *
  * A complete list of strictly legal moves.
  *
@@ -76,12 +76,12 @@ move_t* gen_pseudo_legal_moves(move_t* m, const position_t* pos, bool caps, bool
  *
  * Note this method is significantly slower than generating pseudo-legal moves!
  *
- * \param m             the start of a pre-allocated move stack.
- * \param pos           a pointer to a chess position
- * \param noncaps       if non-capturing moves should be generated
- * \param caps          if capturing moves should be generated
+ * @param m             the start of a pre-allocated move stack.
+ * @param pos           a pointer to a chess position
+ * @param noncaps       if non-capturing moves should be generated
+ * @param caps          if capturing moves should be generated
  *
- * \return a move pointer one greater than the last move produced
+ * @return a move pointer one greater than the last move produced
  */
 move_t* gen_legal_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 {

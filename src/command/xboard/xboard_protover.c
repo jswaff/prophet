@@ -7,13 +7,13 @@
 #include <string.h>
 
 /**
- * \brief Execute the xboard protover command 
+ * @brief Execute the xboard protover command 
  * 
  * Respond to the protover command by printing a list of supported features.  
  *
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_protover(const char* input)
 {

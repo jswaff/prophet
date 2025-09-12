@@ -12,13 +12,13 @@
 extern position_t gpos;
 
 /**
- * \brief Execute the db (drawboard) command.
+ * @brief Execute the db (drawboard) command.
  *
  * Draw the board to stdout.
  *
- * \param input         the user entered input
+ * @param input         the user entered input
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int command_db(const char* input)
 {

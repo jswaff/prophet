@@ -4,17 +4,17 @@
 #include <stdint.h>
 
 /**
- * \brief Test two positions for equality
+ * @brief Test two positions for equality
  *
  * In strict mode, each member must be equal.  In non-strict mode, that is 
  * relaxed somewhat - the fifty move counter and move counter are not required 
  * to be equal.
  *
- * \param p1            a pointer to a chess position
- * \param p2            a pointer to a second chess position
- * \param strict        strict mode
+ * @param p1            a pointer to a chess position
+ * @param p2            a pointer to a second chess position
+ * @param strict        strict mode
  *
- * \return a boolean indicating if the positions are equal
+ * @return a boolean indicating if the positions are equal
  */
 bool pos_equals(const position_t* p1, const position_t* p2, bool strict)
 {

@@ -13,9 +13,9 @@ extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 
 
 /**
- * \brief Check for an end-of-game condition and print RESULT if appropriate.
+ * @brief Check for an end-of-game condition and print RESULT if appropriate.
  *
- * \return true if the game is over, false otherwise.
+ * @return true if the game is over, false otherwise.
  */
 bool endgame_check()
 {

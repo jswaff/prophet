@@ -26,18 +26,18 @@ static void init_magic_numbers();
 static void init_moves_database();
 
 /**
- * \brief Generate pseudo-legal rook moves
+ * @brief Generate pseudo-legal rook moves
  *
  * Moves are placed contiguously beginning at the memory location pointed to 
  * by \p m. It is assumed there is enough memory allocated to contain all 
  * generated moves.
  *
- * \param m             a pointer to a move stack
- * \param p             a pointer to a chess position
- * \param caps          whether capturing moves should be generated
- * \param noncaps       whether noncapturing moves should be generated
+ * @param m             a pointer to a move stack
+ * @param p             a pointer to a chess position
+ * @param caps          whether capturing moves should be generated
+ * @param noncaps       whether noncapturing moves should be generated
  *
- * \return move pointer one greater than the last move added
+ * @return move pointer one greater than the last move added
  */
 move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 {
@@ -71,12 +71,12 @@ move_t* gen_rook_moves_from_sq(move_t* m, const position_t* p, square_t from, bo
 }
 
 /**
- * \brief Get rook moves.
+ * @brief Get rook moves.
  *
- * \param p             a pointer to a chess position
- * \param from          the square the rook is moving from
+ * @param p             a pointer to a chess position
+ * @param from          the square the rook is moving from
  *
- * \return the squares the rook can move to
+ * @return the squares the rook can move to
  */
 uint64_t get_rook_moves(const position_t* p, square_t from)
 {

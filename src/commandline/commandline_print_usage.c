@@ -4,7 +4,7 @@
 
 
 /**
- * \brief Print command line options.
+ * @brief Print command line options.
  */
 void commandline_print_usage()
 {

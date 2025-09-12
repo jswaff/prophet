@@ -112,11 +112,11 @@ static void* iterate_wrapper(void* UNUSED(arg))
 
 
 /**
- * \brief Choose a move randomly.
+ * @brief Choose a move randomly.
  *
  * Choose a random move from the global chess position and make the move.
  *
- * \return 0 if successful, non-zero on error.
+ * @return 0 if successful, non-zero on error.
  */
 static int select_random_move()
 {
@@ -151,11 +151,11 @@ static int select_random_move()
 
 
 /**
- * \brief Make a move over the global game board.
+ * @brief Make a move over the global game board.
  *
- * \param mv           The move to apply
+ * @param mv           The move to apply
  *
- * \return 0 if successful, non-zero on error.
+ * @return 0 if successful, non-zero on error.
  */
 static int make_move_otb(move_t mv)
 {

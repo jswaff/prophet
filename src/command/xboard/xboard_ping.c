@@ -8,13 +8,13 @@
 #include <string.h>
 
 /**
- * \brief Execute the xboard ping command 
+ * @brief Execute the xboard ping command 
  * 
  * Respond to the ping N command with a pong N.  
  *
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_ping(const char* input)
 {

@@ -16,12 +16,12 @@ void set_skip_time_checks_flag(bool skip) {
 }
 
 /**
- * \brief Determine if the search should be stopped on time.
+ * @brief Determine if the search should be stopped on time.
  *
- * \param opts          structure for tracking search options data
- * \param stats         structure for tracking search stats
+ * @param opts          structure for tracking search options data
+ * @param stats         structure for tracking search stats
  *
- * \return true if the search should be stopped, othwerwise false
+ * @return true if the search should be stopped, othwerwise false
  */
 bool stop_search_on_time(search_options_t* opts, const stats_t* stats)
 {

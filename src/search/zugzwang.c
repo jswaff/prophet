@@ -5,11 +5,11 @@
 #include <stdbool.h>
 
 /**
- * \brief - Determine if a position is zugzwang
+ * @brief - Determine if a position is zugzwang
  *
- * \param pos           a pointer to a chess position
+ * @param pos           a pointer to a chess position
  *
- * \return - true if the position is zugzwang, otherwise false.
+ * @return - true if the position is zugzwang, otherwise false.
  */
 bool zugzwang(const position_t* pos) 
 {

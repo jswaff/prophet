@@ -13,12 +13,12 @@
 
 
 /**
- * \brief Determine if a pawn is doubled.
+ * @brief Determine if a pawn is doubled.
  *
- * \param pos           a pointer to a chess position
- * \param pawn_sq       the pawn square
+ * @param pos           a pointer to a chess position
+ * @param pawn_sq       the pawn square
  *
- * \return true if the pawn is doubled, otherwise false.
+ * @return true if the pawn is doubled, otherwise false.
  */
 bool pawn_doubled(const position_t* pos, square_t pawn_sq)
 {

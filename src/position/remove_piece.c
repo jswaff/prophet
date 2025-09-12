@@ -9,12 +9,12 @@
 #include <stdint.h>
 
 /**
- * \brief Remove a piece from a chess position
+ * @brief Remove a piece from a chess position
  *
- * \param p             a pointer to a chess position
- * \param sq            the square to remove the piece from
+ * @param p             a pointer to a chess position
+ * @param sq            the square to remove the piece from
  *
- * \return the piece that was removed
+ * @return the piece that was removed
  */
 piece_t remove_piece(position_t* p,square_t sq)
 {

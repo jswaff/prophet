@@ -10,12 +10,12 @@
 
 
 /**
- * \brief Determine if a pawn supports a sq.
+ * @brief Determine if a pawn supports a sq.
  *
- * \param pos           a pointer to a chess position
- * \param sq            the square in question
+ * @param pos           a pointer to a chess position
+ * @param sq            the square in question
  *
- * \return true if a friendly pawn supports, otherwise false.
+ * @return true if a friendly pawn supports, otherwise false.
  */ 
 bool pawn_supports(const position_t* pos, square_t sq)
 {

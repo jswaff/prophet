@@ -8,12 +8,12 @@
 #include <stdint.h>
 
 /**
- * \brief Evaluate king safety for one side of the board.
+ * @brief Evaluate king safety for one side of the board.
  *
- * \param pos           a pointer to a chess position
- * \param wtm           white to move?
+ * @param pos           a pointer to a chess position
+ * @param wtm           white to move?
  *
- * \return a score of the king safety for the player specified.
+ * @return a score of the king safety for the player specified.
  */
 int32_t eval_king_safety(const position_t* pos, bool wtm)
 {

@@ -66,15 +66,15 @@ typedef struct {
 
 
 /**
- * \brief Reset a chess position to the initial position.
+ * @brief Reset a chess position to the initial position.
  *
- * \param pos           a pointer to the chess position to reset
+ * @param pos           a pointer to the chess position to reset
  */
 void reset_pos(position_t *pos);
 
 
 /**
- * \brief Set a chess position
+ * @brief Set a chess position
  *
  * From : http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
  * A FEN record contains six fields. The separator between fields is a space. 
@@ -113,115 +113,115 @@ void reset_pos(position_t *pos);
  *
  * If an error is encountered, the position remains unchanged.
  * 
- * \param pos           a pointer to the chess position to set
- * \param fen           the FEN description of the position
+ * @param pos           a pointer to the chess position to set
+ * @param fen           the FEN description of the position
  *
- * \return true if successful, false otherwise
+ * @return true if successful, false otherwise
  */
 bool set_pos(position_t *pos, const char *fen);
 
 
 /**
- * \brief Test two positions for equality
+ * @brief Test two positions for equality
  *
  * In strict mode, each member must be equal.  In non-strict mode, that is 
  * relaxed somewhat - the fifty move counter and move counter are not required 
  * to be equal.
  *
- * \param p1            a pointer to a chess position
- * \param p2            a pointer to a second chess position
- * \param strict        strict mode
+ * @param p1            a pointer to a chess position
+ * @param p2            a pointer to a second chess position
+ * @param strict        strict mode
  *
- * \return a boolean indicating if the positions are equal
+ * @return a boolean indicating if the positions are equal
  */
 bool pos_equals(const position_t *p1, const position_t *p2, bool strict);
 
 
 /**
- * \brief Add a piece to a chess position
+ * @brief Add a piece to a chess position
  *
- * \param p             a pointer to a chess position
- * \param piece         the piece to add
- * \param sq            the square to add the piece to
+ * @param p             a pointer to a chess position
+ * @param piece         the piece to add
+ * @param sq            the square to add the piece to
  */
 void add_piece(position_t *p, int32_t piece, square_t sq);
 
 
 /**
- * \brief Remove a piece from a chess position
+ * @brief Remove a piece from a chess position
  *
- * \param p             a pointer to a chess position
- * \param sq            the square to remove the piece from
+ * @param p             a pointer to a chess position
+ * @param sq            the square to remove the piece from
  *
- * \return the piece that was removed
+ * @return the piece that was removed
  */
 piece_t remove_piece(position_t *p, square_t sq);
 
 
 /**
- * \brief Apply a chess move to a chess position.
+ * @brief Apply a chess move to a chess position.
  *
  * Apply a move to the position.  The move should be legal (no verification is 
  * performed). Records the information necessary to undo this move to restore 
  * the original position.
  *
- * \param pos           a pointer to a chess position
- * \param m             the move to apply
- * \param u             a pointer to an undo structure to receive the undo 
+ * @param pos           a pointer to a chess position
+ * @param m             the move to apply
+ * @param u             a pointer to an undo structure to receive the undo 
  *                      information
  */
 void apply_move(position_t *pos, move_t m, undo_t *u);
 
 
 /**
- * \brief Undo (reverse) a move.
+ * @brief Undo (reverse) a move.
  *
  * The move should be the last move played over the board.  No verification 
  * is done to ensure the position is left in a legal state.
  *
- * \param pos           a pointer to a chess position
- * \param u             a pointer to the undo information
+ * @param pos           a pointer to a chess position
+ * @param u             a pointer to the undo information
  */
 void undo_move(position_t *pos, const undo_t *u);
 
 
 /**
- * \brief Create a 64 bit hash signature of a chess position
+ * @brief Create a 64 bit hash signature of a chess position
  *
  * Note this is not a fast operation.  It would be more performant to 
  * incrementally update the hash signature as moves are made on the board.
  *
- * \param pos           a pointer to a chess position
+ * @param pos           a pointer to a chess position
  *
- * \return a 64 bit hash signature
+ * @return a 64 bit hash signature
  */
 uint64_t build_hash_key(const position_t *pos);
 
 
 /**
- * \brief Create a 64 bit hash signature of the pawns in a chess position.
+ * @brief Create a 64 bit hash signature of the pawns in a chess position.
  *
  * Note this is not a fast operation.  It would be more performant to 
  * incrementally update the hash signature as pawn moves are made on the board.
  *
- * \param pos           a pointer to a chess position
+ * @param pos           a pointer to a chess position
  *
- * \return a 64 bit hash signature
+ * @return a 64 bit hash signature
  */
 uint64_t build_pawn_key(const position_t *pos);
 
 
 /**
- * \brief Verify the internal consistency of a position.
+ * @brief Verify the internal consistency of a position.
  *
  * This would most commonly be used as a runtime check when in debug mode.
  *
  * All errors found are logged.  Execution is not stopped on the first error 
  * found.
  *
- * \param pos           a pointer to the position to verify
+ * @param pos           a pointer to the position to verify
  *
- * \return boolean value indicating if the position is consistent
+ * @return boolean value indicating if the position is consistent
  */
 bool verify_pos(const position_t *pos);
 
@@ -276,7 +276,7 @@ static inline bool is_draw50(const position_t *pos)
 
 
 /**
- * \brief Determine if a position is drawn by lack of mating material.
+ * @brief Determine if a position is drawn by lack of mating material.
  *
  * From the xboard documentation:
  * Note that (in accordance with FIDE rules) only KK, KNK, KBK and KBKB with 
@@ -287,37 +287,37 @@ static inline bool is_draw50(const position_t *pos)
  * interfaces, so do not claim in such positions, but just offer a draw or play
  * on.
  *
- * \param pos           a pointer to a chess position
+ * @param pos           a pointer to a chess position
  *
- * \return true if the position is drawn by lack of mating material, otherwise 
+ * @return true if the position is drawn by lack of mating material, otherwise 
  * false.
  */
 bool is_lack_of_mating_material(const position_t *pos);
 
 
 /**
- * \brief Determine if a position is drawn by repetition.
+ * @brief Determine if a position is drawn by repetition.
  *
  * A position is drawn if it has occurred at least three times.
  *
- * \param pos           a pointer to a chess position
- * \param u             a pointer to the start of an array of undo_t's
+ * @param pos           a pointer to a chess position
+ * @param u             a pointer to the start of an array of undo_t's
  *                      It's expected that the array has at least enough 
  *                      capacity for the position's move count.
- * \param prev_reps     The number of previous repetitions required to 
+ * @param prev_reps     The number of previous repetitions required to 
  *                      declare the current position as a draw.
  *
- * \return true if the position is drawn by repetition, otherwise false.
+ * @return true if the position is drawn by repetition, otherwise false.
  */
 bool is_draw_rep(const position_t *pos, const undo_t *u, int prev_reps);
 
 
 /**
- * \brief Flip a position vertically.
+ * @brief Flip a position vertically.
  *
- * \param pos           a pointer to a chess position
+ * @param pos           a pointer to a chess position
  *
- * \return a veritical mirror of the posiiton.
+ * @return a veritical mirror of the posiiton.
  */
 position_t position_flip(const position_t *pos);
 

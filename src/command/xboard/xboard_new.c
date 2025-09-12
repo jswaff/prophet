@@ -20,7 +20,7 @@ extern uint32_t random_moves_counter;
 
 
 /**
- * \brief Execute the xboard new command 
+ * @brief Execute the xboard new command 
  * 
  * Reset the board to the standard chess starting position. Set White on move. 
  * Leave force mode and set the engine to play Black. Associate the engine's 
@@ -29,9 +29,9 @@ extern uint32_t random_moves_counter;
  * Stop clocks. Do not ponder on this move, even if pondering is on. Remove any
  * search depth limit previously set by the sd command.  
  *
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_new(const char* input)
 {

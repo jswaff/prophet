@@ -4,15 +4,15 @@
 #include <stdint.h>
 
 /**
- * \brief Build a hash value.
+ * @brief Build a hash value.
  *
- * \param entry_type    the type of hash entry
- * \param depth         the depth of the search backing the score
- * \param score         the score to hash
- * \param mv            the move
- * \param hash_age      age counter
+ * @param entry_type    the type of hash entry
+ * @param depth         the depth of the search backing the score
+ * @param score         the score to hash
+ * @param mv            the move
+ * @param hash_age      age counter
  *
- * \return - the encoded value
+ * @return - the encoded value
  */
 uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth, int32_t score, move_t mv, uint32_t hash_age)
 {
@@ -68,12 +68,12 @@ uint64_t build_hash_val(hash_entry_type_t entry_type, int32_t depth, int32_t sco
 }
 
 /**
- * \brief Build a pawn hash value.
+ * @brief Build a pawn hash value.
  *
- * \param mg_score      the middle game score to hash
- * \param eg_score      the end game score to hash
+ * @param mg_score      the middle game score to hash
+ * @param eg_score      the end game score to hash
  *
- * \return - the encoded value
+ * @return - the encoded value
  */
 uint64_t build_pawn_hash_val(int32_t mg_score, int32_t eg_score)
 {
@@ -90,11 +90,11 @@ uint64_t build_pawn_hash_val(int32_t mg_score, int32_t eg_score)
 }
 
 /**
- * \brief Get the hash entry type
+ * @brief Get the hash entry type
  *
- * \param val           the hashed value
+ * @param val           the hashed value
  *
- * \return - the hash entry type
+ * @return - the hash entry type
  */
 hash_entry_type_t get_hash_entry_type(uint64_t val) 
 {
@@ -103,11 +103,11 @@ hash_entry_type_t get_hash_entry_type(uint64_t val)
 
 
 /**
- * \brief Get the hash entry depth
+ * @brief Get the hash entry depth
  *
- * \param val           the hashed value
+ * @param val           the hashed value
  *
- * \return - the hash entry depth
+ * @return - the hash entry depth
  */
 int32_t get_hash_entry_depth(uint64_t val) 
 {
@@ -116,11 +116,11 @@ int32_t get_hash_entry_depth(uint64_t val)
 
 
 /**
- * \brief Get the hash entry score
+ * @brief Get the hash entry score
  *
- * \param val           the hashed value
+ * @param val           the hashed value
  *
- * \return - the hash entry score
+ * @return - the hash entry score
  */
 int32_t get_hash_entry_score(uint64_t val) 
 {
@@ -130,11 +130,11 @@ int32_t get_hash_entry_score(uint64_t val)
 
 
 /**
- * \brief Get the hash entry move
+ * @brief Get the hash entry move
  *
- * \param val           the hashed value
+ * @param val           the hashed value
  *
- * \return - the hash entry move
+ * @return - the hash entry move
  */
 move_t get_hash_entry_move(uint64_t val) 
 {
@@ -143,11 +143,11 @@ move_t get_hash_entry_move(uint64_t val)
 
 
 /**
- * \brief Get the hash entry age
+ * @brief Get the hash entry age
  *
- * \param val           the hashed value
+ * @param val           the hashed value
  *
- * \return - the hash entry age
+ * @return - the hash entry age
  */
 uint32_t get_hash_entry_age(uint64_t val)
 {
@@ -156,11 +156,11 @@ uint32_t get_hash_entry_age(uint64_t val)
 
 
 /**
- * \brief Get the middle game score from a pawn hash value
+ * @brief Get the middle game score from a pawn hash value
  *
- * \param val           the hashed value
+ * @param val           the hashed value
  *
- * \return - the middle game score
+ * @return - the middle game score
  */
 int32_t get_pawn_hash_entry_mg_score(uint64_t val)
 {
@@ -169,11 +169,11 @@ int32_t get_pawn_hash_entry_mg_score(uint64_t val)
 
 
 /**
- * \brief Get the end game score from a pawn hash value
+ * @brief Get the end game score from a pawn hash value
  *
- * \param val           the hashed value
+ * @param val           the hashed value
  *
- * \return - the end game score
+ * @return - the end game score
  */
 int32_t get_pawn_hash_entry_eg_score(uint64_t val)
 {

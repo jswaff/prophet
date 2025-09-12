@@ -23,16 +23,16 @@ static bool verify_hash_keys(const position_t* pos);
 static bool verify_nnue_accumulators(const position_t* pos);
 
 /**
- * \brief Verify the internal consistency of a position.
+ * @brief Verify the internal consistency of a position.
  *
  * This would most commonly be used as a runtime check when in debug mode.
  *
  * All errors found are logged.  Execution is not stopped on the first error 
  * found.
  *
- * \param pos       a pointer to the position to verify
+ * @param pos       a pointer to the position to verify
  *
- * \return boolean value indicating if the position is consistent
+ * @return boolean value indicating if the position is consistent
  */
 bool verify_pos(const position_t* pos)
 {

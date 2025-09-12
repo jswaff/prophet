@@ -4,12 +4,12 @@
 
 
 /**
- * \brief Evaluate the position's "material type".
+ * @brief Evaluate the position's "material type".
  *
- * \param pos           a pointer to a chess position
- * \param draw_flag     a pointer to an integer to set the IMMEDIATE_DRAW flag
+ * @param pos           a pointer to a chess position
+ * @param draw_flag     a pointer to an integer to set the IMMEDIATE_DRAW flag
  *
- * \return the material type
+ * @return the material type
  */
 material_type_t eval_material_type(const position_t* pos, int* draw_flag)
 {

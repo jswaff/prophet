@@ -8,11 +8,11 @@
 extern bool xboard_post_mode;
 
 /**
- * \brief Execute the xboard nopost command 
+ * @brief Execute the xboard nopost command 
  * 
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_nopost(const char* input)
 {

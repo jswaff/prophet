@@ -4,7 +4,7 @@
 
 
 /**
- * \brief Initialize the zobrist keys
+ * @brief Initialize the zobrist keys
  *
  */
 void init_zkeys() {

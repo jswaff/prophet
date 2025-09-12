@@ -14,14 +14,14 @@
 static uint64_t bb_passed[64][2];
 
 /**
- * \brief Determine if a pawn is passed.
+ * @brief Determine if a pawn is passed.
  *
  * An passed pawn is a pawn that no enemy pawn can stop from queening.
  *
- * \param pos           a pointer to a chess position
- * \param pawn_sq       the pawn square
+ * @param pos           a pointer to a chess position
+ * @param pawn_sq       the pawn square
  *
- * \return true if the pawn is passed, otherwise false.
+ * @return true if the pawn is passed, otherwise false.
  */
 bool pawn_passed(const position_t* pos, square_t pawn_sq)
 {
@@ -38,7 +38,7 @@ bool pawn_passed(const position_t* pos, square_t pawn_sq)
 
 
 /**
- * \brief Initialize the pawn_passed function.
+ * @brief Initialize the pawn_passed function.
  */
 void init_pawn_passed()
 {

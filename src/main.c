@@ -8,15 +8,8 @@
 
 extern int cleanup();
 
-/**
- * \brief Main entry point.
- *
- * \param argc          number of arguments
- * \param argv          list of arguments
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int main(int argc, char* argv[])
+
+int main(int argc, char *argv[])
 {
     int retval = 0;
 
@@ -34,7 +27,7 @@ int main(int argc, char* argv[])
     }
 
     /* welcome message, indicates initialization was successful */
-    plog("Hello!  This is the Prophet Chess Engine, version 5.1-dev.\n\n");
+    plog("Hello!  This is the Prophet Chess Engine, version 5.1.\n\n");
 
     retval = command_loop();
 

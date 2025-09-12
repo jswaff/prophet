@@ -13,13 +13,13 @@ extern bool fixed_time_per_move;
 
 
 /**
- * \brief Execute the xboard st command 
+ * @brief Execute the xboard st command 
  * 
  * Respond to the st TIME command by setting the maximum search time
  *
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_st(const char* input)
 {

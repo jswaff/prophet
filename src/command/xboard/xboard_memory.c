@@ -13,11 +13,11 @@ extern hash_table_t htbl;
 extern hash_table_t phtbl;
 
 /**
- * \brief Execute the xboard memory command 
+ * @brief Execute the xboard memory command 
  * 
- * \param input         the user entered input 
+ * @param input         the user entered input 
  *
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int xboard_memory(const char* input)
 {

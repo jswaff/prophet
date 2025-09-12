@@ -11,18 +11,18 @@
 #include <stdint.h>
 
 /**
- * \brief Generate pseudo-legal queen moves
+ * @brief Generate pseudo-legal queen moves
  *
  * Moves are placed contiguously beginning at the memory location pointed to 
  * by \p m. It is assumed there is enough memory allocated to contain all 
  * generated moves.
  *
- * \param m             a pointer to a move stack
- * \param p             a pointer to a chess position
- * \param caps          whether capturing moves should be generated
- * \param noncaps       whether noncapturing moves should be generated
+ * @param m             a pointer to a move stack
+ * @param p             a pointer to a chess position
+ * @param caps          whether capturing moves should be generated
+ * @param noncaps       whether noncapturing moves should be generated
  *
- * \return move pointer one greater than the last move added
+ * @return move pointer one greater than the last move added
  */
 move_t* gen_queen_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 {
@@ -56,12 +56,12 @@ move_t* gen_queen_moves_from_sq(move_t* m, const position_t* p, square_t from, b
 }
 
 /**
- * \brief Get queen moves.
+ * @brief Get queen moves.
  *
- * \param p             a pointer to a chess position
- * \param from          the square the queen is moving from
+ * @param p             a pointer to a chess position
+ * @param from          the square the queen is moving from
  *
- * \return the squares the queen can move to
+ * @return the squares the queen can move to
  */
 uint64_t get_queen_moves(const position_t* p, square_t from)
 {

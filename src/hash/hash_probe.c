@@ -21,10 +21,10 @@ extern hash_table_t phtbl;
  * is found, either the "hits" or "collisions" counter is incremented depending
  * on whether the full key comparison check passed.
  *
- * \param tbl           a pointer to a hash table 
- * \param key           a 64 bit key
+ * @param tbl           a pointer to a hash table 
+ * @param key           a 64 bit key
  *
- * \return - the stored value, or null if there is no value.
+ * @return - the stored value, or null if there is no value.
  */
 uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
 {
@@ -49,7 +49,7 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
 
 
 /**
- * \brief Probe the main hash table
+ * @brief Probe the main hash table
  *
  * Probe the main hash table.  The index used is computed by taking the
  * key argument modulo the table capacity.
@@ -58,9 +58,9 @@ uint64_t probe_hash(hash_table_t *tbl, uint64_t key)
  * is found, either the "hits" or "collisions" counter is incremented depending
  * on whether the full key comparison check passed.
  *
- * \param key           a 64 bit key
+ * @param key           a 64 bit key
  *
- * \return - the stored value, or null if there is no value.
+ * @return - the stored value, or null if there is no value.
  */
 uint64_t probe_main_hash_table(const char *fen) {
     position_t pos;
@@ -70,7 +70,7 @@ uint64_t probe_main_hash_table(const char *fen) {
 
 
 /**
- * \brief Probe the pawn hash table
+ * @brief Probe the pawn hash table
  *
  * Probe the pawn hash table.  The index used is computed by taking the
  * key argument modulo the table capacity.
@@ -79,9 +79,9 @@ uint64_t probe_main_hash_table(const char *fen) {
  * is found, either the "hits" or "collisions" counter is incremented depending
  * on whether the full key comparison check passed.
  *
- * \param key           a 64 bit key
+ * @param key           a 64 bit key
  *
- * \return - the stored value, or null if there is no value.
+ * @return - the stored value, or null if there is no value.
  */
 uint64_t probe_pawn_hash_table(const char *fen) {
     position_t pos;

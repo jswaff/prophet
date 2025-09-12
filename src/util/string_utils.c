@@ -12,23 +12,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-/**
- * \brief Convert a string to a move.
- *
- * The string should have length four, except for castling moves, which should
- * have a length of five.  SAN notation is not supported.  Proper formatting
- * is two characters for the source square, followed by two characters for the
- * destination square, followed by an optional promotion piece.
- * Examples: e2e4, e7e8q, e1g1
- *
- * Note, this routine does NOT validate move legality.
- *
- * \param str_mv        the string to convert
- * \param pos           the chess position the move applies to
- * 
- * \return the move if valid, or NO_MOVE on failure
- */
-move_t str_to_move(const char* str_mv, const position_t* pos)
+
+move_t str_to_move(const char *str_mv, const position_t *pos)
 {
     /* sanity check the size of the string */
     if (strlen(str_mv) < 4 || strlen(str_mv) > 5) {
@@ -89,18 +74,8 @@ move_t str_to_move(const char* str_mv, const position_t* pos)
     return NO_MOVE;
 }
 
-/**
- * \brief Convert a string to a square.
- *
- * The string should have a length of two.  The first character should be a 
- * letter A-H (lower or upper),and the second a number 1-8.  E.g. A1, b2, e3 
- * are all valid.
- *
- * \param str_sq        the string to convert
- *
- * \return the square if valid, or NO_SQUARE on failure
- */
-square_t str_to_sq(const char* str_sq)
+
+square_t str_to_sq(const char *str_sq)
 {
     if (strlen(str_sq) != 2) {
         return NO_SQUARE;
@@ -126,18 +101,7 @@ square_t str_to_sq(const char* str_sq)
     return (square_t)sq;
 }
 
-/**
- * \brief Convert a move to a string.
- *
- * Returns a pointer to a null-terminated string.  The returned pointer must be
- * passed to free to avoid a memory leak.
- *
- * If an error occurs, a null pointer is returned.
- *
- * \param mv            the move to convert
- *
- * \return a null terminated string
- */
+
 char* move_to_str(move_t mv)
 {
     if (NO_MOVE == mv) {
@@ -174,19 +138,7 @@ char* move_to_str(move_t mv)
 }
 
 
-/**
- * \brief Convert a move line to a string.
- *
- * Returns a pointer to a null-terminated string.  The returned pointer must be
- * passed to free to avoid a memory leak.
- *
- * If an error occurs, a null pointer is returned.
- *
- * \param mv_line       the move to convert
- *
- * \return a null terminated string
- */
-char* move_line_to_str(const move_line_t* mv_line)
+char* move_line_to_str(const move_line_t *mv_line)
 {
     /* an empty line is a valid line. */
     if (mv_line->n == 0) {
@@ -232,18 +184,6 @@ char* move_line_to_str(const move_line_t* mv_line)
 }
 
 
-/**
- * \brief Convert a square to a string.
- *
- * Returns a pointer to a null-terminated string.  The returned pointer must be
- * passed to free to avoid a memory leak.
- *
- * If an error occurs, a null pointer is returned.
- *
- * \param sq            the square to convert
- *
- * \return a null terminated string
- */ 
 char* sq_to_str(square_t sq)
 {
     if (sq < 0 || sq > 63)
@@ -258,19 +198,8 @@ char* sq_to_str(square_t sq)
     return buf;
 }
 
-/**
- * \brief Convert a position into a string.
- *
- * Returns a pointer to a null-terminated string.  The returned pointer must be
- * passed to free to avoid a memory leak.
- *
- * If an error occurs, a null pointer is returned.
- *
- * \param pos           a pointer to a chess position
- *
- * \return a null terminated byte string
- */
-char* pos_to_str(const position_t* pos)
+
+char* pos_to_str(const position_t *pos)
 {
     char* buf = (char*)malloc(255 * sizeof(char));
 
@@ -340,18 +269,7 @@ char* pos_to_str(const position_t* pos)
     return buf;
 }
 
-/**
- * \brief Convert a bitmap into a string.
- *
- * Returns a pointer to a null-terminated string.  The returned pointer must be
- * passed to free to avoid a memory leak.
- *
- * If an error occurs, a null pointer is returned.
- *
- * \param val           a 64 bit word (bitmap)
- *
- * \return a null terminated byte string
- */
+
 char* bitmap_to_str(uint64_t val)
 {
     char* buf = (char*)malloc(73 * sizeof(char));
