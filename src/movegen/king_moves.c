@@ -13,23 +13,9 @@
 
 static uint64_t king_moves[64];
 
-static move_t* add_castle(move_t* m, square_t from, square_t to);
+static move_t* add_castle(move_t *m, square_t from, square_t to);
 
-/**
- * @brief Generate pseudo-legal king moves
- *
- * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m.  It is assumed there is enough memory allocated to contain all 
- * generated moves.
- *
- * @param m             a pointer to a move stack
- * @param p             a pointer to a chess position
- * @param caps          whether capturing moves should be generated
- * @param noncaps       whether noncapturing moves should be generated
- *
- * @return move pointer one greater than the last move added
- */
-move_t* gen_king_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
+move_t* gen_king_moves(move_t *m, const position_t *p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 
@@ -38,8 +24,8 @@ move_t* gen_king_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
     return gen_king_moves_from_sq(m, p, sq, caps, noncaps);
 }
 
-move_t* gen_king_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+
+move_t* gen_king_moves_from_sq(move_t *m, const position_t *p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
@@ -89,19 +75,14 @@ move_t* gen_king_moves_from_sq(
     return m;
 }
 
-/**
- * @brief Get king moves.
- *
- * @param from          the square the king is moving from
- *
- * @return the squares the king can move to
- */
+
 uint64_t get_king_moves(square_t from)
 {
     return king_moves[from];
 }
 
-static move_t* add_castle(move_t* m, square_t from, square_t to)
+
+static move_t* add_castle(move_t *m, square_t from, square_t to)
 {
     *m = to_move(KING, from, to);
     set_castle(m);
@@ -110,6 +91,7 @@ static move_t* add_castle(move_t* m, square_t from, square_t to)
 
     return m;
 }
+
 
 void init_king_movegen()
 {

@@ -109,8 +109,7 @@ static void init_occupiers_and_blockers()
         for (uint32_t i=0; i<num_variations; i++) {
             occupiers[sq][i] = blockers[sq][i] = 0;
 
-            /* map the index to an occupancy variation.  the idea is that each 
-             * bit in the index maps to a bit in the mask. */
+            /* map the index to an occupancy variation.  each bit in the index maps to a bit in the mask. */
             uint32_t index = i;
             while (index) {
                 uint32_t index_bit = get_lsb(index);
@@ -118,8 +117,7 @@ static void init_occupiers_and_blockers()
                 index ^= 1 << index_bit;
             }
 
-            /* create the blocker - that's the first occupied square in every 
-             * direction. */
+            /* create the blocker - that's the first occupied square in every direction. */
             square_t to = northeast((square_t)sq);
             while (to != NO_SQUARE) {
                 if (occupiers[sq][i] & square_to_bitmap(to)) {
@@ -195,11 +193,9 @@ static void init_magic_numbers()
             }
         } while (fail);
 
-        /* at this point we have a magic number for this square that has the 
-         * property: for all combinations of occupiers (interior squares 
-         * reachable from this square), we can derive an index.  Any other 
-         * combination of occupiers that maps to the same index has the same 
-         * "blocker set". */
+        /* at this point we have a magic number for this square that has the property: for all combinations of 
+         * occupiers (interior squares reachable from this square), we can derive an index.  Any other combination 
+         * of occupiers that maps to the same index has the same "blocker set". */
         magic_numbers[sq] = magic;
         magic_numbers_shift[sq] = magic_shift;
     }

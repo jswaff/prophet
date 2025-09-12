@@ -13,22 +13,14 @@
 #include <stdint.h>
 
 
-static bool good_pawn_move(const position_t* pos, square_t from_sq, 
-    square_t to_sq, int32_t captured, bool is_ep);
+static bool good_pawn_move(const position_t *pos, square_t from_sq, square_t to_sq, int32_t captured, bool is_ep);
 
 #ifndef NDEBUG
-static bool verify_good_move(const position_t* pos, move_t mv);
+static bool verify_good_move(const position_t *pos, move_t mv);
 #endif 
 
-/**
- * @brief Determine if a move is "good" (pseudo-legal) in a given position.
- *
- * @param pos           a pointer to a chess position 
- * @param mv            the move to test
- * 
- * @return true if the move is good, otherwise false
- */
-bool good_move(const position_t* pos, move_t mv)
+
+bool good_move(const position_t *pos, move_t mv)
 {
     bool retval = false;
 
@@ -143,8 +135,7 @@ exit:
 }
 
 
-static bool good_pawn_move(const position_t* pos, square_t from_sq, 
-    square_t to_sq, int32_t captured_piece, bool is_ep)
+static bool good_pawn_move(const position_t *pos, square_t from_sq, square_t to_sq, int32_t captured_piece, bool is_ep)
 {
     if (captured_piece==NO_PIECE) {
         if (pos->piece[to_sq] != NO_PIECE) {
@@ -198,10 +189,10 @@ static bool good_pawn_move(const position_t* pos, square_t from_sq,
 }
 
 #ifndef NDEBUG
-static bool verify_good_move(const position_t* pos, move_t mv)
+static bool verify_good_move(const position_t *pos, move_t mv)
 {
     move_t moves[MAX_MOVES_PER_PLY];
-    move_t* endp = gen_pseudo_legal_moves(moves, pos, true, true);
+    move_t *endp = gen_pseudo_legal_moves(moves, pos, true, true);
     return move_list_contains(mv, moves, endp);
 }
 #endif

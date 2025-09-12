@@ -30,7 +30,7 @@ void num_moves_in_list(const move_t *startp, const move_t *endp, int *caps, int 
 {
     *caps = 0; *noncaps = 0;
 
-    for (const move_t* mp=startp; mp<endp; mp++) {
+    for (const move_t *mp=startp; mp<endp; mp++) {
         if (*mp != 0) {
             if (is_capture(*mp) || get_promopiece(*mp)) {
                 (*caps)++;
@@ -81,7 +81,7 @@ bool is_legal_move(move_t mv, const position_t *pos)
 
 bool move_list_contains(move_t mv, const move_t *start, const move_t *end)
 {
-    for (const move_t* mp=start; mp<end; mp++) {
+    for (const move_t *mp=start; mp<end; mp++) {
         if (clear_score(*mp) == clear_score(mv)) {
             return true;
         }

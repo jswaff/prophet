@@ -25,21 +25,8 @@ static void init_occupiers_and_blockers();
 static void init_magic_numbers();
 static void init_moves_database();
 
-/**
- * @brief Generate pseudo-legal rook moves
- *
- * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m. It is assumed there is enough memory allocated to contain all 
- * generated moves.
- *
- * @param m             a pointer to a move stack
- * @param p             a pointer to a chess position
- * @param caps          whether capturing moves should be generated
- * @param noncaps       whether noncapturing moves should be generated
- *
- * @return move pointer one greater than the last move added
- */
-move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
+
+move_t* gen_rook_moves(move_t *m, const position_t *p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_rooks : p->black_rooks;
@@ -53,7 +40,8 @@ move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
     return m;
 }
 
-move_t* gen_rook_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+
+move_t* gen_rook_moves_from_sq(move_t *m, const position_t *p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
@@ -70,15 +58,8 @@ move_t* gen_rook_moves_from_sq(move_t* m, const position_t* p, square_t from, bo
     return m;
 }
 
-/**
- * @brief Get rook moves.
- *
- * @param p             a pointer to a chess position
- * @param from          the square the rook is moving from
- *
- * @return the squares the rook can move to
- */
-uint64_t get_rook_moves(const position_t* p, square_t from)
+
+uint64_t get_rook_moves(const position_t *p, square_t from)
 {
     assert(p);
     assert(from >= A8 && from <= H1);
@@ -92,6 +73,7 @@ uint64_t get_rook_moves(const position_t* p, square_t from)
 
     return rook_moves[from][magic_ind];
 }
+
 
 static void init_rook_masks()
 {
@@ -115,6 +97,7 @@ static void init_rook_masks()
         }
     }
 }
+
 
 static void init_occupiers_and_blockers()
 {
@@ -174,6 +157,7 @@ static void init_occupiers_and_blockers()
     }
 }
 
+
 static void init_magic_numbers()
 {
     for (uint32_t sq=0; sq<64; sq++) {
@@ -212,15 +196,14 @@ static void init_magic_numbers()
             }
         } while (fail);
 
-        /* at this point we have a magic number for this square that has the 
-         * property: for all combinations of occupiers (interior squares 
-         * reachable from this square), we can derive an index.  Any other 
-         * combination of occupiers that maps to the same index has the same 
-         * "blocker set". */
+        /* at this point we have a magic number for this square that has the property: for all combinations of 
+         * occupiers (interior squares reachable from this square), we can derive an index.  Any other 
+         * combination of occupiers that maps to the same index has the same "blocker set". */
         magic_numbers[sq] = magic;
         magic_numbers_shift[sq] = magic_shift;
     }
 }
+
 
 static void init_moves_database()
 {

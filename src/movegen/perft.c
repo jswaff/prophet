@@ -16,7 +16,7 @@ uint64_t perft(position_t *pos, uint32_t depth)
     move_t moves[MAX_MOVES_PER_PLY];
     undo_t u;
 
-    move_t* endp = gen_legal_moves(moves, pos, true, true);
+    move_t *endp = gen_legal_moves(moves, pos, true, true);
 
     if (depth == 1) {
         int caps; int noncaps;
@@ -24,7 +24,7 @@ uint64_t perft(position_t *pos, uint32_t depth)
         return caps + noncaps;
     }
 
-    for (move_t* mp=moves; mp<endp; mp++) {
+    for (move_t *mp=moves; mp<endp; mp++) {
         if (*mp==0) continue; /* move purged as illegal */
         apply_move(pos, *mp, &u);
         nodes += perft(pos, depth-1);

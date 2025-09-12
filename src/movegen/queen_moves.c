@@ -10,21 +10,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/**
- * @brief Generate pseudo-legal queen moves
- *
- * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m. It is assumed there is enough memory allocated to contain all 
- * generated moves.
- *
- * @param m             a pointer to a move stack
- * @param p             a pointer to a chess position
- * @param caps          whether capturing moves should be generated
- * @param noncaps       whether noncapturing moves should be generated
- *
- * @return move pointer one greater than the last move added
- */
-move_t* gen_queen_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
+
+move_t* gen_queen_moves(move_t *m, const position_t *p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_queens : p->black_queens;
@@ -38,7 +25,8 @@ move_t* gen_queen_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
     return m;
 }
 
-move_t* gen_queen_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+
+move_t* gen_queen_moves_from_sq(move_t *m, const position_t *p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
@@ -55,15 +43,8 @@ move_t* gen_queen_moves_from_sq(move_t* m, const position_t* p, square_t from, b
     return m;
 }
 
-/**
- * @brief Get queen moves.
- *
- * @param p             a pointer to a chess position
- * @param from          the square the queen is moving from
- *
- * @return the squares the queen can move to
- */
-uint64_t get_queen_moves(const position_t* p, square_t from)
+
+uint64_t get_queen_moves(const position_t *p, square_t from)
 {
     return get_rook_moves(p, from) | get_bishop_moves(p, from);
 }
