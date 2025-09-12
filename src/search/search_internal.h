@@ -73,14 +73,13 @@ typedef struct {
  *                      move
  * @param mo            the move ordering context
  *
- * @return true if a move has been selected, or false if there are no
- *    further moves.
+ * @return true if a move has been selected, or false if there are no further moves
  */
-bool next(const position_t* pos, move_t** m, move_order_dto* mo);
+bool next(const position_t *pos, move_t **m, move_order_dto *mo);
 
 
 /**
- * @brief Initialize move ordering
+ * @brief Initialize move ordering.
  *
  * @param mo            pointer to the move ordering data structure
  * @param stackptr      pointer to move stack to place new moves on
@@ -91,9 +90,8 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo);
  * @param gen_noncaps   whether to generate non-capturing moves
  * @param play_badcaps  whether to play bad captures 
  */
-void initialize_move_ordering(move_order_dto* mo, move_t* stackptr,
-    move_t pv_move, move_t hash_move, move_t killer1, move_t killer2, 
-    bool gen_noncaps, bool play_badcaps);
+void initialize_move_ordering(move_order_dto *mo, move_t *stackptr, move_t pv_move, move_t hash_move, move_t killer1, 
+    move_t killer2, bool gen_noncaps, bool play_badcaps);
 
 
 /**
@@ -119,21 +117,20 @@ int32_t see_eval_piece(int32_t piece);
 
 
 /**
- * @brief Score a move using static exchange analysis (SEE)
+ * @brief Score a move using static exchange analysis (SEE).
  *
  * @param pos           the chess position
  * @param mv            the chess move to score
  * 
  * @return the score
  */
-int32_t see(const position_t* pos, move_t mv);
+int32_t see(const position_t *pos, move_t mv);
 
 
 /**
  * @brief Search the position to until it is "quiet".
  *
- * Quiescence search - attempt to obtain a score by searching until the 
- * position is quiet.
+ * Quiescence search - attempt to obtain a score by searching until the position is quiet.
  *
  * @param pos           a pointer to a chess position
  * @param alpha         the lower bound
@@ -145,9 +142,8 @@ int32_t see(const position_t* pos, move_t mv);
  * 
  * @return the score
  */
-int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta, 
-    move_t* move_stack, undo_t* undo_stack, stats_t* stats, 
-    search_options_t* opts);
+int32_t qsearch(position_t *pos, int32_t alpha, int32_t beta, move_t *move_stack, undo_t *undo_stack, stats_t *stats, 
+    search_options_t *opts);
 
 
 /**
@@ -165,9 +161,8 @@ int32_t qsearch(position_t* pos, int32_t alpha, int32_t beta,
  * 
  * @return the score
  */
-int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth, 
-    int32_t alpha, int32_t beta, move_t* move_stack, undo_t* undo_stack,
-    stats_t* stats, search_options_t* opts);
+int32_t search(position_t *pos, move_line_t *parent_pv, int32_t depth, int32_t alpha, int32_t beta, move_t *move_stack,
+    undo_t *undo_stack, stats_t *stats, search_options_t *opts);
 
 
 /**
@@ -181,8 +176,8 @@ int32_t search(position_t* pos, move_line_t* parent_pv, int32_t depth,
  *
  * @return the principal variation
  */ 
-move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* opts, 
-    const iterator_context_t* ctx, stats_t *stats);
+move_line_t iterate(uint32_t *depth, int32_t *score, const iterator_options_t *opts, const iterator_context_t *ctx, 
+    stats_t *stats);
 
 
 /**
@@ -193,17 +188,17 @@ move_line_t iterate(uint32_t* depth, int32_t* score, const iterator_options_t* o
  *
  * @return true if the search should be stopped, othwerwise false
  */
-bool stop_search_on_time(search_options_t* opts, const stats_t* stats);
+bool stop_search_on_time(search_options_t *opts, const stats_t *stats);
 
 
 /**
- * @brief - Determine if a position is zugzwang
+ * @brief - Determine if a position is zugzwang.
  *
  * @param pos           a pointer to a chess position
  *
- * @return - true if the position is zugzwang, otherwise false.
+ * @return - true if the position is zugzwang, otherwise false
  */
-bool zugzwang(const position_t* pos);
+bool zugzwang(const position_t *pos);
 
 
 // make this header C++ friendly.
