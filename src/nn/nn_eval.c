@@ -12,11 +12,12 @@
 static int clamp(int val, int min, int max);
 static int32_t my_round(float val);
 #if !defined(USE_AVX) || defined(DEBUG_AVX)
-static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2);
+static void compute_layer2_slow(const neural_network_t *nn, const int8_t *L1, int32_t *L2);
 #endif
 
 extern neural_network_t neural_network;
 extern bool use_neural_network;
+
 
 int32_t nn_eval_from_fen(const char *fen) {
     if (!use_neural_network) return 0;
@@ -26,7 +27,7 @@ int32_t nn_eval_from_fen(const char *fen) {
 }
 
 
-int32_t nn_eval(const position_t* pos, const neural_network_t* nn) {
+int32_t nn_eval(const position_t *pos, const neural_network_t *nn) {
 
     /* set layer 1 from accumulators */
     int8_t L1[NN_SIZE_L1 * 2];
@@ -89,7 +90,7 @@ static int32_t my_round(float val) {
 }
 
 #if !defined(USE_AVX) || defined(DEBUG_AVX)
-static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2) {
+static void compute_layer2_slow(const neural_network_t *nn, const int8_t *L1, int32_t *L2) {
     for (int i=0;i<NN_SIZE_L2;i++) {
         int32_t sum = nn->B1[i];
         for (int j=0;j<NN_SIZE_L1*2;j++) {

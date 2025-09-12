@@ -11,26 +11,21 @@
 #include <string.h>
 
 /* forward decls */
-static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t* nn,
-                          nnue_accumulator_t* acc);
+static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t *nn,
+                          nnue_accumulator_t *acc);
 #if !defined(USE_AVX) || defined(DEBUG_AVX)
-static void nn_move_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+static void nn_move_piece_helper_slow(const neural_network_t *nn, nnue_accumulator_t *acc,
                                       int from_feature_w, int to_feature_w,
                                       int from_feature_b, int to_feature_b);
-static void nn_add_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+static void nn_add_piece_helper_slow(const neural_network_t *nn, nnue_accumulator_t *acc,
                                      int feature_w, int feature_b);
-static void nn_remove_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+static void nn_remove_piece_helper_slow(const neural_network_t *nn, nnue_accumulator_t *acc,
                                         int feature_w, int feature_b);
 #endif
 static inline int get_nnue_piece_type(int piece_type);
 
-/**
- * @brief Fully populate the NNUE accumulators in a chess position.
- * 
- * @param pos             a pointer to a chess position
- * @param nn              a pointer to a neural network model
- */
-void populate_accumulators(position_t* pos, const neural_network_t* nn) {
+
+void populate_accumulators(position_t *pos, const neural_network_t *nn) {
 
     /* initialize with bias weights */
     for (int i=0;i<NN_SIZE_L1;i++) {
@@ -53,20 +48,9 @@ void populate_accumulators(position_t* pos, const neural_network_t* nn) {
     nn_add_piece(KING, BLACK, pos->black_king, nn, &pos->nnue_accumulator);
 }
 
-/**
- * @brief Incrementally update the NNUE accumulators when a piece is moved.
- * 
- * This is equivalent to calling nn_remove_piece(from) followed by nn_add_piece(to).
- * 
- * @param piece           the piece type
- * @param piece_color     the color of the moving piece
- * @param from            the square the piece is moving from
- * @param to              the square the piece is moving to
- * @param nn              a pointer to a neural network model
- * @param acc             a pointer to the NNUE accumulators to update
- */
-void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t to, const neural_network_t* nn,
-        nnue_accumulator_t* acc)
+
+void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t to, const neural_network_t *nn,
+        nnue_accumulator_t *acc)
 {
     int nnue_piece_type = get_nnue_piece_type(piece);
     int nnue_piece_color = !piece_color;
@@ -114,17 +98,10 @@ void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t t
 
 }
 
-/**
- * @brief Incrementally update the NNUE accumulators when a piece is being added.
- * 
- * @param piece           the piece type
- * @param piece_color     the color of the moving piece
- * @param sq              the square the piece is being added to
- * @param nn              a pointer to a neural network model
- * @param acc             a pointer to the NNUE accumulators to update
- */
-void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t* nn, nnue_accumulator_t* acc) {
 
+void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t *nn, 
+                  nnue_accumulator_t *acc) 
+{
     int nnue_piece_type = get_nnue_piece_type(piece);
     int nnue_piece_color = !piece_color;
 
@@ -164,16 +141,9 @@ void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_
 
 }
 
-/**
- * @brief Incrementally update the NNUE accumulators when a piece is being removed.
- * 
- * @param piece           the piece type
- * @param piece_color     the color of the moving piece
- * @param sq              the square the piece is being removed from
- * @param nn              a pointer to a neural network model
- * @param acc             a pointer to the NNUE accumulators to update
- */
-void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t* nn, nnue_accumulator_t* acc)
+
+void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t* nn, 
+                     nnue_accumulator_t* acc)
 {
     int nnue_piece_type = get_nnue_piece_type(piece);
     int nnue_piece_color = !piece_color;
@@ -213,15 +183,8 @@ void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neur
 #endif /* USE_AVX */
 }
 
-/**
- * @brief Utility method to testing if two accumulators are equal.
- * 
- * @param acc1            a pointer to the first accumulator
- * @param acc2            a pointer to the second accumulator
- * 
- * @return true if the accumulators are equal, otherwise false if they are not
- */
-bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2) {
+
+bool accumulators_equal(const nnue_accumulator_t *acc1, const nnue_accumulator_t *acc2) {
     for (int i=0;i<2;i++) {
         for (int j=0;j<NN_SIZE_L1;j++) {
             if ((*acc1)[i][j] != (*acc2)[i][j]) return false;
@@ -230,8 +193,9 @@ bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t
     return true;
 }
 
-static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t* nn,
-    nnue_accumulator_t* acc) 
+
+static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, const neural_network_t *nn,
+                          nnue_accumulator_t *acc) 
 {
     while (piece_map) {
         square_t sq = (square_t)get_lsb(piece_map);
@@ -240,8 +204,9 @@ static void nn_add_pieces(int piece_type, int piece_color, uint64_t piece_map, c
     }
 }
 
+
 #if !defined(USE_AVX) || defined(DEBUG_AVX)
-static void nn_move_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+static void nn_move_piece_helper_slow(const neural_network_t *nn, nnue_accumulator_t *acc,
                                       int from_feature_w, int to_feature_w,
                                       int from_feature_b, int to_feature_b)
 {
@@ -253,7 +218,8 @@ static void nn_move_piece_helper_slow(const neural_network_t* nn, nnue_accumulat
     }
 }
 
-static void nn_add_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+
+static void nn_add_piece_helper_slow(const neural_network_t *nn, nnue_accumulator_t *acc,
                                      int feature_w, int feature_b)
 {
     for (int i=0;i<NN_SIZE_L1;i++) {
@@ -262,7 +228,8 @@ static void nn_add_piece_helper_slow(const neural_network_t* nn, nnue_accumulato
     }
 }
 
-static void nn_remove_piece_helper_slow(const neural_network_t* nn, nnue_accumulator_t* acc,
+
+static void nn_remove_piece_helper_slow(const neural_network_t *nn, nnue_accumulator_t *acc,
                                         int feature_w, int feature_b)
 {
     for (int i=0;i<NN_SIZE_L1;i++) {
@@ -271,6 +238,7 @@ static void nn_remove_piece_helper_slow(const neural_network_t* nn, nnue_accumul
     }
 }
 #endif
+
 
 static inline int get_nnue_piece_type(int piece_type) {
     return abs(piece_type) - 1;

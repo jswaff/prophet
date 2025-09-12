@@ -47,8 +47,9 @@ void populate_accumulators(position_t *pos, const neural_network_t *nn);
  * @param nn              a pointer to a neural network model
  * @param acc             a pointer to the NNUE accumulators to update
  */
-void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t to, const neural_network_t* nn,
-                   nnue_accumulator_t* acc);
+void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t to, const neural_network_t *nn,
+                   nnue_accumulator_t *acc);
+
 
 /**
  * @brief Incrementally update the NNUE accumulators when a piece is being added.
@@ -59,7 +60,8 @@ void nn_move_piece(piece_t piece, color_t piece_color, square_t from, square_t t
  * @param nn              a pointer to a neural network model
  * @param acc             a pointer to the NNUE accumulators to update
  */
-void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t* nn, nnue_accumulator_t* acc);
+void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t *nn, 
+                  nnue_accumulator_t *acc);
 
 
 /**
@@ -71,7 +73,8 @@ void nn_add_piece(piece_t piece, color_t piece_color, square_t sq, const neural_
  * @param nn              a pointer to a neural network model
  * @param acc             a pointer to the NNUE accumulators to update
  */
-void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t* nn, nnue_accumulator_t* acc);
+void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neural_network_t *nn, 
+                     nnue_accumulator_t *acc);
 
 
 /**
@@ -82,7 +85,7 @@ void nn_remove_piece(piece_t piece, color_t piece_color, square_t sq, const neur
  * 
  * @return true if the accumulators are equal, otherwise false if they are not
  */
-bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t* acc2);
+bool accumulators_equal(const nnue_accumulator_t *acc1, const nnue_accumulator_t *acc2);
 
 
 /**
@@ -95,8 +98,7 @@ bool accumulators_equal(const nnue_accumulator_t* acc1, const nnue_accumulator_t
  *
  * @return the score.
  */
-int32_t nn_eval(const position_t* pos, const neural_network_t *nn);
-
+int32_t nn_eval(const position_t *pos, const neural_network_t *nn);
 
 
 // make this header C++ friendly.
