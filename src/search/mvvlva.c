@@ -1,4 +1,4 @@
-#include "prophet/search.h"
+#include "search_internal.h"
 
 #include "prophet/move.h"
 

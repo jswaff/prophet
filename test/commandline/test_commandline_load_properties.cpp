@@ -2,9 +2,9 @@
 
 #include "prophet/error_codes.h"
 #include "prophet/hash.h"
-#include "prophet/position.h"
 
 #include "eval/eval_internal.h"
+#include "position/position.h"
 
 #include <gtest/gtest.h>
 
@@ -13,7 +13,7 @@ extern position_t gpos;
 
 TEST(commandline_test, commandline_eval_props_invalid_file)
 {
-    EXPECT_EQ(P4_ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE, 
+    EXPECT_EQ(ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE, 
     	commandline_load_properties("bla"));
 }
 

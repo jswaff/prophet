@@ -1,6 +1,5 @@
 #include "eval_internal.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "position/square_internal.h"

@@ -1,25 +1,16 @@
 #include "movegen_internal.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>
 
 
-/**
- * \brief Given position \p pos, is square \p sq attacked by \p player?
- *
- * \param pos           a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return boolean indicating if there is an attack
- */
-bool attacked(const position_t* pos, square_t sq, color_t player)
+bool attacked(const position_t *pos, square_t sq, color_t player)
 {
     assert(pos);
     assert(sq >= A8 && sq <= H1);
@@ -41,17 +32,7 @@ bool attacked(const position_t* pos, square_t sq, color_t player)
 }
 
 
-/**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
- * bishops?
- *
- * \param p             a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return boolean indicating if there is an attack
- */
-bool attacked_by_bishop(const position_t* p, square_t sq, color_t player)
+bool attacked_by_bishop(const position_t *p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -60,16 +41,8 @@ bool attacked_by_bishop(const position_t* p, square_t sq, color_t player)
     return get_bishop_moves(p, sq) & (player==WHITE ? p->white_bishops : p->black_bishops);
 }
 
-/**
- * \brief Given position \p p, is square \p sq attacked by \p player 's king?
- *
- * \param p             a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return boolean indicating if there is an attack
- */
-bool attacked_by_king(const position_t* p, square_t sq, color_t player)
+
+bool attacked_by_king(const position_t *p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -78,17 +51,8 @@ bool attacked_by_king(const position_t* p, square_t sq, color_t player)
     return get_king_moves(sq) &  square_to_bitmap(player==WHITE ? p->white_king : p->black_king);
 }
 
-/**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
- * knights?
- *
- * \param p             a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return boolean indicating if there is an attack
- */
-bool attacked_by_knight(const position_t* p, square_t sq, color_t player)
+
+bool attacked_by_knight(const position_t *p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -97,17 +61,8 @@ bool attacked_by_knight(const position_t* p, square_t sq, color_t player)
     return get_knight_moves(sq) & (player==WHITE ? p->white_knights : p->black_knights);
 }
 
-/**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
- * pawns?
- *
- * \param p             a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return boolean indicating if there is an attack
- */
-bool attacked_by_pawn(const position_t* p, square_t sq, color_t player)
+
+bool attacked_by_pawn(const position_t *p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -120,17 +75,8 @@ bool attacked_by_pawn(const position_t* p, square_t sq, color_t player)
     }
 }
 
-/**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
- * queens?
- *
- * \param p             a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return boolean indicating if there is an attack
- */
-bool attacked_by_queen(const position_t* p, square_t sq, color_t player)
+
+bool attacked_by_queen(const position_t *p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);
@@ -139,17 +85,8 @@ bool attacked_by_queen(const position_t* p, square_t sq, color_t player)
     return get_queen_moves(p, sq) & (player==WHITE ? p->white_queens : p->black_queens);
 }
 
-/**
- * \brief Given position \p p, is square \p sq attacked by one of \p player 's 
- * rooks?
- *
- * \param p             a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return boolean indicating if there is an attack
- */
-bool attacked_by_rook(const position_t* p, square_t sq, color_t player)
+
+bool attacked_by_rook(const position_t *p, square_t sq, color_t player)
 {
     assert(p);
     assert(sq >= A8 && sq <= H1);

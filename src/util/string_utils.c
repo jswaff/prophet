@@ -2,13 +2,13 @@
 
 #include "prophet/const.h"
 #include "prophet/move.h"
-#include "prophet/movegen.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
-#include "position/position_internal.h"
+#include "movegen/movegen_internal.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -207,8 +207,8 @@ char* move_line_to_str(const move_line_t* mv_line)
     /* allow for trailing spaces but all but the last move, and a null
        terminator after the last move */
     total_len += mv_line->n;
-
-    char* buf = (char*)malloc(total_len);
+    assert(total_len < 1000);
+    char* buf = (char*)malloc((uint32_t)total_len); /* the cast to convince the compiler this is OK */
 
     /* copy the moves to the line buffer */
     size_t offset = 0;

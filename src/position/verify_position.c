@@ -1,6 +1,5 @@
-#include "position_internal.h"
+#include "position.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "nn/nn_internal.h"

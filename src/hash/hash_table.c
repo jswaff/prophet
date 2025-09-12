@@ -1,6 +1,7 @@
-#include "prophet/hash.h"
+#include "hash_internal.h"
 
 #include "prophet/error_codes.h"
+#include "prophet/hash.h"
 
 #include "util/output.h"
 
@@ -22,10 +23,7 @@ hash_table_t phtbl;
 static int init_hash_table(hash_table_t *tbl, uint64_t max_size);
 static void set_capacity(hash_table_t *tbl, uint64_t max_size);
 
-/**
- * \brief Clear a hash table
- *
- */
+
 void clear_hash_table(hash_table_t *tbl)
 {
     memset(tbl->tbl, 0, tbl->capacity * sizeof(hash_entry_t));
@@ -35,10 +33,16 @@ void clear_hash_table(hash_table_t *tbl)
 }
 
 
-/**
- * \brief Clear all hash tables
- *
- */
+void clear_main_hash_table() {
+    clear_hash_table(&htbl);
+}
+
+
+void clear_pawn_hash_table() {
+    clear_hash_table(&phtbl);
+}
+
+
 void clear_hash_tables()
 {
     clear_hash_table(&htbl);
@@ -46,13 +50,36 @@ void clear_hash_tables()
 }
 
 
-/**
- * \brief Initialize all hash tables
- *
- * Allocates memory for hash tables and sets the capacity.
- *
- * \return - 0 on success, or non-zero on failure
- */
+uint64_t get_main_hash_collisions() {
+    return htbl.collisions;
+}
+
+
+uint64_t get_main_hash_probes() {
+    return htbl.probes;
+}
+
+
+uint64_t get_main_hash_hits() {
+    return htbl.hits;
+}
+
+
+uint64_t get_pawn_hash_collisions() {
+    return phtbl.collisions;
+}
+
+
+uint64_t get_pawn_hash_probes() {
+    return phtbl.probes;
+}
+
+
+uint64_t get_pawn_hash_hits() {
+    return phtbl.hits;
+}
+
+
 int init_hash_tables()
 {
     int retval = init_hash_table(&htbl, hash_size);
@@ -63,10 +90,6 @@ int init_hash_tables()
 }
 
 
-/**
- * \brief Free the memory allocated to each hash table
- *
- */
 void free_hash_tables()
 {
     plog("# freeing hash tables\n");
@@ -77,14 +100,6 @@ void free_hash_tables()
 }
 
 
-/**
- * \brief Resize a hash table.  
- *
- * \param tbl           a pointer to hash table
- * \param size          the maximum number of bytes to allocate 
- *
- * \return - 0 on success, or non-zero on failure
- */
 int resize_hash_table(hash_table_t *tbl, uint64_t max_size)
 {    
     assert(tbl->tbl);
@@ -92,7 +107,7 @@ int resize_hash_table(hash_table_t *tbl, uint64_t max_size)
 
     hash_entry_t* new_table_ptr = (hash_entry_t*)realloc(tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
     if (NULL == new_table_ptr) {
-        return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
+        return ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
     }
     tbl->tbl = new_table_ptr;
     clear_hash_table(tbl);    
@@ -100,6 +115,17 @@ int resize_hash_table(hash_table_t *tbl, uint64_t max_size)
     /* success */
     return 0;
 }
+
+
+int resize_main_hash_table(uint64_t max_size) {
+    return resize_hash_table(&htbl, max_size);
+}
+
+
+int resize_pawn_hash_table(uint64_t max_size) {
+    return resize_hash_table(&phtbl, max_size);
+}
+
 
 /**
  * \brief Initialize a hash table.  
@@ -115,7 +141,7 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
 
     tbl->tbl = (hash_entry_t*)malloc(tbl->capacity * sizeof(hash_entry_t));
     if (NULL == tbl->tbl) {
-        return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
+        return ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
     }
     clear_hash_table(tbl);    
 
@@ -123,6 +149,7 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
     /* success */
     return 0;
 }
+
 
 /**
  * \brief Set the capacity and mask for a hash table.
@@ -136,7 +163,6 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
  * \param max_size      the maximum number of bytes to allocate 
  *
  */
-
 static void set_capacity(hash_table_t *tbl, uint64_t max_size)
 {
     assert(max_size > 0);

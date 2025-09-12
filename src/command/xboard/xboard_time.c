@@ -29,18 +29,18 @@ int xboard_time(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("time", input, 4)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
     if (strlen(input) < 6) {
-        return P4_ERROR_CMD_XBOARD_TIME_MISSING_PARAMETER;
+        return ERROR_CMD_XBOARD_TIME_MISSING_PARAMETER;
     }
 
     /* attempt to read the time remaining parameter */
     int32_t time_remaining;
     if (1 != sscanf(input + 5, "%d", &time_remaining)) {
-        return P4_ERROR_CMD_XBOARD_TIME_MISSING_PARAMETER;
+        return ERROR_CMD_XBOARD_TIME_MISSING_PARAMETER;
     }
 
     /* set the time remaining - centis to millis */

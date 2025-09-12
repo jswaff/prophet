@@ -23,13 +23,13 @@ int command_loop()
 
     char* input = (char*)malloc(MAX_INPUT_SZ);
     if (NULL == input) {
-        return P4_ERROR_CMD_INPUT_BUFFER;
+        return ERROR_CMD_INPUT_BUFFER;
     }
 
     bool exit_status;
     do {
         if (fgets(input, MAX_INPUT_SZ, stdin) == NULL) {
-            retval = P4_ERROR_CMD_FGETS_FAILURE;
+            retval = ERROR_CMD_FGETS_FAILURE;
             goto cleanup;
         }
 

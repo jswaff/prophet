@@ -1,6 +1,6 @@
 #include "search/search_internal.h"
 
-#include "prophet/position.h"
+#include "position/position.h"
 
 #include <gtest/gtest.h>
 

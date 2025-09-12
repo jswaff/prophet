@@ -1,8 +1,14 @@
 #include "output.h"
 
-#include <stdbool.h>
-#include <stdio.h>
+#include "prophet/move.h"
+
+#include "string_utils.h"
+
 #include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 
 bool logging_enabled = false;
@@ -94,4 +100,24 @@ void out(FILE* stream, const char* format, ...)
     vfprintf(stream, format, args);
     va_end(args);
     pthread_mutex_unlock(&output_mutex);
+}
+
+
+void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
+{
+    char* pv_buf = move_line_to_str(pv);
+    uint64_t time_centis = elapsed / 10;
+    plog("%2d %5d %5llu %7llu %s\n", depth, score, time_centis, num_nodes, pv_buf);
+    free(pv_buf);
+}
+
+
+void print_pv2(move_t* pv, int num_pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
+{
+    move_line_t move_line;
+    move_line.n = num_pv;
+    for (int i=0;i<num_pv && i<MAX_PLY;i++) { 
+        move_line.mv[i] = *(pv+i);
+    }
+    print_pv(&move_line, depth, score, elapsed, num_nodes);
 }

@@ -2,6 +2,8 @@
 
 #include "prophet/error_codes.h"
 
+#include "position/position.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
@@ -14,13 +16,13 @@ extern uint32_t max_time_ms;
 
 TEST(xboard_test, xboard_time_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_time("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_time("bla"));
 }
 
 
 TEST(xboard_test, xboard_time_missing_parameter)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_TIME_MISSING_PARAMETER, xboard_time("time"));
+    EXPECT_EQ(ERROR_CMD_XBOARD_TIME_MISSING_PARAMETER, xboard_time("time"));
 }
 
 

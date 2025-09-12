@@ -1,8 +1,7 @@
 #include "nn_internal.h"
 
-#include "prophet/position.h"
-
 #include "bitmap/bitmap.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>

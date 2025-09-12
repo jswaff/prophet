@@ -1,9 +1,9 @@
 #include "movegen_internal.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 #include "util/prng.h"
 
@@ -25,21 +25,8 @@ static void init_occupiers_and_blockers();
 static void init_magic_numbers();
 static void init_moves_database();
 
-/**
- * \brief Generate pseudo-legal bishop moves
- *
- * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m.  It is assumed there is enough memory allocated to contain all 
- * generated moves.
- *
- * \param m             a pointer to a move stack
- * \param p             a pointer to a chess position
- * \param caps          whether capturing moves should be generated
- * \param noncaps       whether noncapturing moves should be generated
- *
- * \return move pointer one greater than the last move added
- */
-move_t* gen_bishop_moves(move_t* m, const position_t* p, bool caps, bool noncaps) 
+
+move_t* gen_bishop_moves(move_t *m, const position_t *p, bool caps, bool noncaps) 
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_bishops : p->black_bishops;
@@ -53,7 +40,8 @@ move_t* gen_bishop_moves(move_t* m, const position_t* p, bool caps, bool noncaps
     return m;
 }
 
-move_t* gen_bishop_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps) 
+
+move_t* gen_bishop_moves_from_sq(move_t *m, const position_t *p, square_t from, bool caps, bool noncaps) 
 {
     assert(m);
     assert(p);
@@ -70,15 +58,8 @@ move_t* gen_bishop_moves_from_sq(move_t* m, const position_t* p, square_t from, 
     return m;
 }
 
-/**
- * \brief Get bishop moves.
- *
- * \param p             a pointer to a chess position
- * \param from          The square the bishop is moving from
- *
- * \return the squares the bishop can move to
- */
-uint64_t get_bishop_moves(const position_t* p, square_t from)
+
+uint64_t get_bishop_moves(const position_t *p, square_t from)
 {
     assert(p);
     assert(from >= A8 && from <= H1);
@@ -92,6 +73,7 @@ uint64_t get_bishop_moves(const position_t* p, square_t from)
 
     return bishop_moves[from][magic_ind];
 }
+
 
 static void init_bishop_masks()
 {
@@ -114,6 +96,7 @@ static void init_bishop_masks()
 
     }
 }
+
 
 static void init_occupiers_and_blockers()
 {
@@ -173,6 +156,7 @@ static void init_occupiers_and_blockers()
     }
 }
 
+
 static void init_magic_numbers()
 {
     for (uint32_t sq=0; sq<64; sq++) {
@@ -221,6 +205,7 @@ static void init_magic_numbers()
     }
 }
 
+
 static void init_moves_database()
 {
     for (uint32_t sq=0; sq<64; sq++) {
@@ -239,6 +224,7 @@ static void init_moves_database()
         }
     }
 }
+
 
 void init_bishop_movegen()
 {

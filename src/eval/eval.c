@@ -1,11 +1,11 @@
 #include "prophet/eval.h"
 
-#include "prophet/hash.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "eval_internal.h"
 #include "bitmap/bitmap.h"
+#include "hash/hash_internal.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>
@@ -136,6 +136,29 @@ int32_t king_pst_eg[64] = {
 #ifndef NDEBUG
 static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t eg_score);
 #endif
+
+
+/**
+ * \brief Evaluate a chess position for the side to move.
+ *
+ * Performs a static analysis of a chess position.  The score is primarily
+ * influenced by material counts, but it also takes into account several
+ * well known heuristics, such as king safety, passed pawns, isolated
+ * pawns, rooks on open files, and several others.  
+ *
+ * This method will not detect end-of-game scenarios such as checkmate.
+ *
+ * \param fen             a chess position
+ * \param material_only   if the evaluation should consider material only
+ *
+ * \return the score.
+ */
+int32_t eval_from_fen(const char *fen, bool material_only) {
+    position_t pos;
+    set_pos(&pos, fen);
+    return eval(&pos, material_only, false);
+}
+
 
 /**
  * \brief Evaluate a chess position for the side to move.
@@ -268,3 +291,4 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
     return mg_score==my_mg_score && eg_score==my_eg_score;
 }
 #endif
+

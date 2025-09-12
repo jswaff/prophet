@@ -3,7 +3,8 @@
 #include "prophet/const.h"
 #include "prophet/error_codes.h"
 #include "prophet/hash.h"
-#include "prophet/position.h"
+
+#include "position/position.h"
 
 #include <stdbool.h>
 #include <string.h>
@@ -36,7 +37,7 @@ int xboard_new(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("new", input)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int retval = block_on_search_thread(true);

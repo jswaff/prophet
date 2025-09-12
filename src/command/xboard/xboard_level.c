@@ -31,13 +31,13 @@ int xboard_level(const char* input)
     /* verify the command */
     if (0 != strncmp("level ", my_input, 6)) {
         free(input_ptr);
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
     if (strlen(my_input) < 11) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;
     }
 
     /* to read the MOVES parameter */
@@ -45,7 +45,7 @@ int xboard_level(const char* input)
     token = strtok(NULL, " ");
     if (!token) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
     }
     time_control_moves = atoi(token);
 
@@ -55,7 +55,7 @@ int xboard_level(const char* input)
     token = strtok(NULL, " ");
     if (!token) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
     }
     int token_len = strlen(token);
     if (token_len > 10) token_len = 10;
@@ -66,7 +66,7 @@ int xboard_level(const char* input)
     token = strtok(NULL, " ");
     if (!token) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
     }
     time_control_increment = atof(token);
     

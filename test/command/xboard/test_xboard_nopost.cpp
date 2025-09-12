@@ -9,7 +9,7 @@ extern bool xboard_post_mode;
 
 TEST(xboard_test, xboard_nopost_incorrect_cmd)
 {
-    ASSERT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_nopost("bla"));
+    ASSERT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_nopost("bla"));
 }
 
 TEST(xboard_test, xboard_nopost)

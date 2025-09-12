@@ -2,7 +2,8 @@
 
 #include "prophet/const.h"
 #include "prophet/move.h"
-#include "prophet/position.h"
+
+#include "position/position.h"
 
 #include <gtest/gtest.h>
 

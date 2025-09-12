@@ -1,9 +1,8 @@
-#include "prophet/position.h"
+#include "position.h"
 
 #include "prophet/square.h"
 
 #include "nn/nn_internal.h"
-#include "position_internal.h"
 #include "square_internal.h"
 
 #include <assert.h>

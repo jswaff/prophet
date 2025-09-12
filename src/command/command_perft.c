@@ -1,7 +1,6 @@
 #include "command.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/position.h"
 
 #include "movegen/movegen_internal.h"
 #include "util/output.h"
@@ -29,14 +28,14 @@ int command_perft(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("perft", input, 5)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int depth;
 
     /* advance the base command pointer past the "perft " substring */
     if (1 != sscanf(input + 6, "%d", &depth)) {
-        return P4_ERROR_CMD_PERFT_DEPTH;
+        return ERROR_CMD_PERFT_DEPTH;
     }
 
 

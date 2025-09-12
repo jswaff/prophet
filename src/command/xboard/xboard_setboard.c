@@ -1,8 +1,8 @@
 #include "xboard_internal.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/position.h"
 
+#include "position/position.h"
 #include "util/output.h"
 
 #include <string.h>
@@ -21,7 +21,7 @@ int xboard_setboard(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("setboard", input, 8)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain a valid FEN? The shortest possible
@@ -30,13 +30,13 @@ int xboard_setboard(const char* input)
      * in addition to the command itself.
      */
     if (strlen(input) < 32) {
-        return P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN;   
+        return ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN;   
     }
 
     /* set the board */
     if (!set_pos(&gpos, input + 9)) {
         plog("tellusererror Illegal position\n");
-        return P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN;
+        return ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN;
     }
 
     /* clear the undo information */

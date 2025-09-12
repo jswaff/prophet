@@ -1,20 +1,15 @@
+#include "hash_internal.h"
+
 #include "prophet/hash.h"
+
+#include "position/position.h"
 
 #include <assert.h>
 #include <stdint.h>
 
-/**
- * \brief store a value in the hash table
- *
- * Store the value in the hash table, using an "always replace" replacement
- * strategy.  The index in the table is computed by taking the supplied
- * key modulo the table capacity.
- *
- * \param tbl           a pointer to a hash table 
- * \param key           a 64 bit key
- * \param val           the value to store
- *
- */
+extern hash_table_t htbl;
+extern hash_table_t phtbl;
+
 void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
 {
     assert(tbl->tbl);
@@ -42,15 +37,16 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
         }
     }
 
+    /* 9/12/25: disabled hash aging in replacement strategy.  Tests show it loses a few elo. */
     /* otherwise, if any entry is from a previous search, overwrite it. */
-    if (selected_slot == -1) {
+    /*if (selected_slot == -1) {
         for (int i=0; i<NUM_HASH_SLOTS_PER_BUCKET; i++) {
             if (get_hash_entry_age(he->val[i]) < get_hash_entry_age(val)) {
                 selected_slot = i;
                 break;
             }
         }
-    }
+    }*/
 
     /* otherwise, select the entry with the lowest depth */
     if (selected_slot == -1) {
@@ -69,4 +65,18 @@ void store_hash_entry(const hash_table_t *tbl, uint64_t key, uint64_t val)
 
     he->key[selected_slot] = key;
     he->val[selected_slot] = val;
+}
+
+
+void store_main_hash_table(const char *fen, uint64_t val) {
+    position_t pos;
+    set_pos(&pos, fen);
+    store_hash_entry(&htbl, pos.hash_key, val);
+}
+
+
+void store_pawn_hash_table(const char *fen, uint64_t val) {
+    position_t pos;
+    set_pos(&pos, fen);
+    store_hash_entry(&phtbl, pos.pawn_key, val);
 }

@@ -1,6 +1,7 @@
 #include "prophet/const.h"
-#include "prophet/hash.h"
-#include "prophet/position.h"
+
+#include "hash/hash_internal.h"
+#include "position/position.h"
 
 /* the game position, or global position */
 position_t gpos;

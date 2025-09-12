@@ -3,6 +3,7 @@ project(prophetlib VERSION 5.1 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 set(EXE_NAME prophet)
 
 # options
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 option(WITH_AVX "Build with AVX intrinsics" ON)
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
@@ -70,7 +71,6 @@ target_sources(${PROJECT_NAME}
         src/command/xboard/xboard_time.c
         src/command/xboard/xboard_undo.c
         src/command/xboard/xboard_usermove.c
-        src/commandline/commandline_load_network.c
         src/commandline/commandline_load_properties.c
         src/commandline/commandline_print_usage.c
         src/commandline/commandline_process_options.c
@@ -113,6 +113,7 @@ target_sources(${PROJECT_NAME}
         src/movegen/perft.c
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
+        src/nn/load_network.c
         src/nn/nn_eval.c
         src/nn/neural_network.c
         src/nn/nnue_accumulators.c
@@ -136,7 +137,7 @@ target_sources(${PROJECT_NAME}
         src/search/qsearch.c
         src/search/search.c
         src/search/see.c
-        src/search/stop_search_on_time.c
+        src/search/stop.c
         src/search/zugzwang.c
         src/util/output.c
         src/util/prng.c
@@ -149,11 +150,11 @@ set(public_headers
     include/prophet/error_codes.h
     include/prophet/eval.h
     include/prophet/hash.h
+    include/prophet/init.h
     include/prophet/move.h
     include/prophet/movegen.h
     include/prophet/nn.h
     include/prophet/piece.h
-    include/prophet/position.h
     include/prophet/search.h
     include/prophet/square.h
 )
@@ -273,7 +274,6 @@ if(BUILD_TEST_EXECUTABLE)
             test/command/xboard/test_xboard_time.cpp
             test/command/xboard/test_xboard_undo.cpp
             test/command/xboard/test_xboard_usermove.cpp
-            test/commandline/test_commandline_load_network.cpp
             test/commandline/test_commandline_load_properties.cpp
             test/eval/test_eval_accumulator.cpp
             test/eval/test_eval_bishop.cpp
@@ -310,6 +310,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/movegen/test_perft.cpp
             test/movegen/test_queen_moves.cpp
             test/movegen/test_rook_moves.cpp
+            test/nn/test_load_network.cpp
             test/position/test_add_piece.cpp
             test/position/test_apply_move.cpp
             test/position/test_draw50.cpp

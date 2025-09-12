@@ -29,7 +29,7 @@ int block_on_search_thread(bool stop)
         if (stop) stop_search = true;
         int retval = pthread_join(search_thread, NULL);
         if (0 != retval) {
-            return P4_ERROR_THREAD_JOIN_FAILURE;
+            return ERROR_THREAD_JOIN_FAILURE;
         }
         search_thread_running = false;
     }

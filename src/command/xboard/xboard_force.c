@@ -23,7 +23,7 @@ int xboard_force(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("force", input)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     xboard_force_mode = true;

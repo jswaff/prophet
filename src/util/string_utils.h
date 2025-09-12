@@ -1,6 +1,6 @@
 #pragma once
 
-#include "prophet/position.h"
+#include "position/position.h"
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

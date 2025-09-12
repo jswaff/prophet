@@ -1,24 +1,14 @@
 #include "movegen_internal.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
-#include "position/position_internal.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <stdint.h>
 
-/**
- * \brief Given position \p pos, get a bitmap of all pieces of color \p player
- * that are attacking square \p sq.
- *
- * \param pos           a pointer to a chess position
- * \param sq            the square in question
- * \param player        the attacking player
- *
- * \return bitmap of all attacking squares
- */
-uint64_t attackers(const position_t* pos, square_t sq, color_t player)
+
+uint64_t attackers(const position_t *pos, square_t sq, color_t player)
 {
     uint64_t attackers_map = 0;
 

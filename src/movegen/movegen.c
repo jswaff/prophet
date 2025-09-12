@@ -1,13 +1,38 @@
 #include "prophet/movegen.h"
 
-#include "prophet/position.h"
-
 #include "movegen_internal.h"
-#include "position/position_internal.h"
+#include "position/position.h"
 
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
+
+
+/**
+ * \brief Generate a list of pseudo-legal moves.
+ *
+ * It is guaranteed that all legal moves are generated.  However, no 
+ * verification is done to determine if a move would leave the current 
+ * player's king in check.
+ *
+ * It is assumed that the move stack contains enough storage for all moves 
+ * generated.
+ *
+ * \param m             the start of a pre-allocated move stack
+ * \param n             the method will record the number of elements used in the stack
+ * \param fen           a chess position
+ * \param noncaps       if non-capturing moves should be generated
+ * \param caps          if capturing moves should be generated
+ *
+ */
+void generate_moves_from_fen(move_t* m, int* n, const char* fen, bool caps, bool noncaps) {
+    position_t pos;
+    set_pos(&pos, fen);
+
+    move_t* mp = gen_pseudo_legal_moves(m, &pos, caps, noncaps);
+    *n = (mp - m);
+}
+
 
 /**
  * \brief Generate a list of pseudo-legal moves.

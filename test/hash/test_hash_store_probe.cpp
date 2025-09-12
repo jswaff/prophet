@@ -1,4 +1,4 @@
-#include "prophet/hash.h"
+#include "hash/hash_internal.h"
 
 #include <gtest/gtest.h>
 
@@ -109,8 +109,8 @@ TEST(hash_test, replacement_strategy)
 
 }
 
-
-TEST(hash_test, replacement_strategy2)
+/* hash aging in the replacement strategy is disabled for now. */
+TEST(hash_test, DISABLED_replacement_strategy2)
 {
     hash_table_t hash_table;
 

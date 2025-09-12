@@ -27,7 +27,7 @@ int parse_and_execute(const char* input, bool* exit_status)
     user_command_t* user_cmd = (user_command_t*)malloc(sizeof(user_command_t));
 
     if (NULL == user_cmd) {
-        return P4_ERROR_CMD_USER_CMD_BUFFER;
+        return ERROR_CMD_USER_CMD_BUFFER;
     }
 
     /* clear the structure */
