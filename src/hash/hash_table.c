@@ -127,14 +127,6 @@ int resize_pawn_hash_table(uint64_t max_size) {
 }
 
 
-/**
- * @brief Initialize a hash table.  
- *
- * @param tbl           a pointer to hash table
- * @param max_size      the maximum number of bytes to allocate 
- *
- * @return - 0 on success, or non-zero on failure
- */
 static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
 {
     set_capacity(tbl, max_size);
@@ -151,18 +143,6 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
 }
 
 
-/**
- * @brief Set the capacity and mask for a hash table.
- *
- * The capacity is set to the largest possible power of 2 to remain within the max_size.
- * Since the capacity is a power of 2, the mask will be capacity - 1, which are guaranteed
- * to be consecutive low order bits.  The mask can be applied to the hash key to quickly
- * determine the proper bucket.
- *
- * @param tbl           a pointer to hash table
- * @param max_size      the maximum number of bytes to allocate 
- *
- */
 static void set_capacity(hash_table_t *tbl, uint64_t max_size)
 {
     assert(max_size > 0);
