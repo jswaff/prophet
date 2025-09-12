@@ -99,9 +99,7 @@ bool next(const position_t *pos, move_t **m, move_order_dto *mo)
 
     if (mo->next_stage == KILLER1) {
         mo->next_stage = KILLER2;
-        if (mo->killer1 != mo->pv_move && mo->killer1 != mo->hash_move &&
-            good_move(pos, mo->killer1))
-        {
+        if (mo->killer1 != mo->pv_move && mo->killer1 != mo->hash_move && good_move(pos, mo->killer1)) {
             assert(!is_capture(mo->killer1));
             *m = &mo->killer1;
             return true;
@@ -125,7 +123,7 @@ bool next(const position_t *pos, move_t **m, move_order_dto *mo)
             mo->current = mo->end;
             mo->end = gen_pseudo_legal_moves(mo->current, pos, false, true);
             /* remove any moves already tried */
-            for (move_t* mp=mo->current; mp<mo->end; mp++) {
+            for (move_t *mp=mo->current; mp<mo->end; mp++) {
                 if (*mp==mo->pv_move || *mp==mo->hash_move || 
                     *mp==mo->killer1 || *mp==mo->killer2)
                 {
@@ -149,7 +147,7 @@ bool next(const position_t *pos, move_t **m, move_order_dto *mo)
 
     if (mo->play_badcaps) {
         if (mo->next_stage == INIT_BAD_CAPTURES) {
-            for (move_t* mp=mo->start; mp<mo->end; mp++) {
+            for (move_t *mp=mo->start; mp<mo->end; mp++) {
                 /* remove everything except captures with losing scores */
                 bool losing_capture = is_capture(*mp) && get_move_score(*mp) < 0;
                 if (!losing_capture) {
@@ -160,9 +158,7 @@ bool next(const position_t *pos, move_t **m, move_order_dto *mo)
             mo->next_stage = BAD_CAPTURES;
         }
 
-        /* now just go back through the list playing the best option we have.  
-        *  Implementation note: advancing the pointer to the next non-null move is not necessary.  It is only here to 
-        *  match the method used in chess4j, so the search trees are equal.  TODO : is this still true? */
+        /* now just go back through the list playing the best option we have. */
         move_t* nextp = next_nonnull_move(mo->current, mo->end);
         if (nextp) {
             mo->current = nextp;
@@ -213,7 +209,7 @@ static void swap_moves(move_t *mv1, move_t *mv2)
 
 static move_t* next_nonnull_move(move_t *start, move_t *end)
 {
-    for (move_t* mp=start;mp<end; mp++) {
+    for (move_t *mp=start;mp<end; mp++) {
         if (*mp != 0) {
             return mp;
         }
