@@ -16,16 +16,7 @@
 static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
-/**
- * @brief Evaluate a single rook.
- *
- * @param pos           a pointer to a chess position
- * @param sq            the square the rook is on
- * @param mgscore       a pointer to the middle game score accumulator
- * @param egscore       a pointer to the endgame score accumulator
- *
- */
-void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
+void eval_rook(const position_t *pos, square_t sq, int32_t *mgscore, int32_t *egscore)
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK);
 
@@ -48,19 +39,7 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
 }
 
 
-/**
- * @brief Evaluate a square for an open or half open file.
- *
- * An open file is defined as a file with no pawns.  A half open file is 
- * defined as a file with no friendly pawns, but at least one enemy pawn.
- *
- * @param pos           a pointer to a chess position
- * @param sq            the square the rook is on
- * @param mgscore       a pointer to the middle game score accumulator
- * @param egscore       a pointer to the endgame score accumulator
- *
- */ 
-static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
+static void eval_rook_open_file(const position_t *pos, square_t sq, int32_t *mgscore, int32_t *egscore)
 {
     uint64_t friendly_pawns, enemy_pawns /*, friendly_rooks */;
     bool wtm = is_white_piece(pos->piece[sq]);

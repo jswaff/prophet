@@ -8,16 +8,7 @@
 #include <stdint.h>
 
 
-/**
- * @brief Evaluate a single knight.
- *
- * @param pos           a pointer to a chess position
- * @param sq            the square the knight is on
- * @param mgscore       a pointer to the middle game score accumulator
- * @param egscore       a pointer to the endgame score accumulator
- *
- */
-void eval_knight(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
+void eval_knight(const position_t *pos, square_t sq, int32_t *mgscore, int32_t *egscore)
 {
     assert(pos->piece[sq] == KNIGHT || pos->piece[sq] == -KNIGHT);
 

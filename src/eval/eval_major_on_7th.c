@@ -11,19 +11,7 @@
 #include <stdint.h>
 
 
-/**
- * @brief Evaluate a connected major on the 7th rank.
- *
- * A major piece is a rook or a queen.  For black, the "7th rank" is the
- * "2nd rank".
- *
- * @param pos           a pointer to a chess position
- * @param sq            the square the major piece is on
- * @param mgscore       a pointer to the middle game score accumulator
- * @param egscore       a pointer to the endgame score accumulator
- *
- */
-void eval_major_on_7th(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
+void eval_major_on_7th(const position_t *pos, square_t sq, int32_t *mgscore, int32_t *egscore)
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK
         || pos->piece[sq] == QUEEN || pos->piece[sq] == -QUEEN);

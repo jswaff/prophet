@@ -12,15 +12,7 @@
 #include <stdint.h>
 
 
-/**
- * @brief Determine if a pawn is doubled.
- *
- * @param pos           a pointer to a chess position
- * @param pawn_sq       the pawn square
- *
- * @return true if the pawn is doubled, otherwise false.
- */
-bool pawn_doubled(const position_t* pos, square_t pawn_sq)
+bool pawn_doubled(const position_t *pos, square_t pawn_sq)
 {
     assert(pos->piece[pawn_sq] == PAWN || pos->piece[pawn_sq] == -PAWN);
 
@@ -29,9 +21,7 @@ bool pawn_doubled(const position_t* pos, square_t pawn_sq)
 
     if (is_white_piece(pos->piece[pawn_sq])) {
         return file_mask & pos->white_pawns;
-    } 
-    else /* black pawn */
-    {
+    } else { /* black pawn */
         return file_mask & pos->black_pawns;
     }
 }
