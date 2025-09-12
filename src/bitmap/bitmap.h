@@ -9,11 +9,12 @@
 extern "C" {
 #endif  
 
+
 /**
-* \brief Count the number of bits set in a 64 bit value.
-*
-* \return the number of bits set
-*/
+ * \brief Count the number of bits set in a 64 bit value.
+ *
+ * \return the number of bits set
+ */
 uint32_t popcnt(uint64_t val);
 
 
@@ -30,6 +31,7 @@ uint32_t popcnt(uint64_t val);
  * \return the bit position of the least significant bit
  */
 uint32_t get_lsb(uint64_t val);
+
 
 /**
  * \brief Isolate a single bit in a 64 bit value.
@@ -51,6 +53,7 @@ uint32_t get_lsb(uint64_t val);
  */
 uint64_t isolate_bit(uint64_t val, uint32_t index);
 
+
 /**
  * \brief Create a bitmap representation of a file (8 squares).
  *
@@ -60,7 +63,16 @@ uint64_t isolate_bit(uint64_t val, uint32_t index);
  */
 uint64_t file_to_bitmap(file_t f);
 
+
+/**
+ * \brief Create a bitmap representation of every square EXCEPT those on a file.
+ *
+ * \param f             a file
+ *
+ * \return a bitmap representation of the complement of the file
+ */
 uint64_t not_file_to_bitmap(file_t f);
+
 
 /**
  * \brief Create a bitmap representation of a rank (8 squares).
@@ -71,13 +83,22 @@ uint64_t not_file_to_bitmap(file_t f);
  */
 uint64_t rank_to_bitmap(rank_t r);
 
+
+/**
+ * \brief Create a bitmap representation of every square EXCEPT those on a rank.
+ *
+ * \param f             a file
+ *
+ * \return a bitmap representation of the complement of the rank
+ */
 uint64_t not_rank_to_bitmap(rank_t r);
+
 
 /**
  * \brief Return a bitmap representing a ray.
  *
  * Constructs a bitmap representing the sequence of squares starting from
- * \p sq, in the direction of \p dir, to the edge of the board.
+ * sq, in the direction of dir, to the edge of the board.
  *
  * \param sq            the starting square
  * \param dir           the direction to travel in

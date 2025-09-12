@@ -11,17 +11,6 @@
 static uint64_t bb_rays[64][8];
 
 
-/**
- * \brief Return a bitmap representing a ray.
- *
- * Constructs a bitmap representing the sequence of squares starting from
- * \p sq, in the direction of \p dir, to the edge of the board.
- *
- * \param sq            the starting square
- * \param dir           the direction to travel in
- *
- * \return a bitmap representation of the ray
- */
 uint64_t ray(square_t sq, dir_t dir)
 {
     assert(sq >= 0);
@@ -30,9 +19,7 @@ uint64_t ray(square_t sq, dir_t dir)
     return bb_rays[sq][dir];
 }
 
-/**
- * \brief Initialize the bitmap ray function.
- */
+
 void init_bitmap_ray()
 {
     memset(bb_rays, 0, sizeof(uint64_t) * 64 * 8);
