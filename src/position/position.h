@@ -77,8 +77,7 @@ void reset_pos(position_t *pos);
  * @brief Set a chess position
  *
  * From : http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
- * A FEN record contains six fields. The separator between fields is a space. 
- * The fields are:
+ * A FEN record contains six fields. The separator between fields is a space. The fields are:
  *
  *  1. Piece placement (from white's perspective). Each rank is described, 
  *     starting with rank 8 and ending with rank 1; within each rank, the 
@@ -122,11 +121,10 @@ bool set_pos(position_t *pos, const char *fen);
 
 
 /**
- * @brief Test two positions for equality
+ * @brief Test two positions for equality.
  *
- * In strict mode, each member must be equal.  In non-strict mode, that is 
- * relaxed somewhat - the fifty move counter and move counter are not required 
- * to be equal.
+ * In strict mode, each member must be equal.  In non-strict mode, that is relaxed somewhat - the fifty move counter 
+ * and move counter are not required to be equal.
  *
  * @param p1            a pointer to a chess position
  * @param p2            a pointer to a second chess position
@@ -138,7 +136,7 @@ bool pos_equals(const position_t *p1, const position_t *p2, bool strict);
 
 
 /**
- * @brief Add a piece to a chess position
+ * @brief Add a piece to a chess position.
  *
  * @param p             a pointer to a chess position
  * @param piece         the piece to add
@@ -148,7 +146,7 @@ void add_piece(position_t *p, int32_t piece, square_t sq);
 
 
 /**
- * @brief Remove a piece from a chess position
+ * @brief Remove a piece from a chess position.
  *
  * @param p             a pointer to a chess position
  * @param sq            the square to remove the piece from
@@ -161,9 +159,8 @@ piece_t remove_piece(position_t *p, square_t sq);
 /**
  * @brief Apply a chess move to a chess position.
  *
- * Apply a move to the position.  The move should be legal (no verification is 
- * performed). Records the information necessary to undo this move to restore 
- * the original position.
+ * Apply a move to the position.  The move should be legal (no verification is performed). Records the information 
+ * necessary to undo this move to restore the original position.
  *
  * @param pos           a pointer to a chess position
  * @param m             the move to apply
@@ -176,8 +173,8 @@ void apply_move(position_t *pos, move_t m, undo_t *u);
 /**
  * @brief Undo (reverse) a move.
  *
- * The move should be the last move played over the board.  No verification 
- * is done to ensure the position is left in a legal state.
+ * The move should be the last move played over the board.  No verification is done to ensure the position is left in 
+ * a legal state.
  *
  * @param pos           a pointer to a chess position
  * @param u             a pointer to the undo information
@@ -188,8 +185,8 @@ void undo_move(position_t *pos, const undo_t *u);
 /**
  * @brief Create a 64 bit hash signature of a chess position
  *
- * Note this is not a fast operation.  It would be more performant to 
- * incrementally update the hash signature as moves are made on the board.
+ * Note this is not a fast operation.  It would be more performant to incrementally update the hash signature as moves 
+ * are made on the board.
  *
  * @param pos           a pointer to a chess position
  *
@@ -201,8 +198,8 @@ uint64_t build_hash_key(const position_t *pos);
 /**
  * @brief Create a 64 bit hash signature of the pawns in a chess position.
  *
- * Note this is not a fast operation.  It would be more performant to 
- * incrementally update the hash signature as pawn moves are made on the board.
+ * Note this is not a fast operation.  It would be more performant to incrementally update the hash signature as pawn 
+ * moves are made on the board.
  *
  * @param pos           a pointer to a chess position
  *
@@ -216,8 +213,7 @@ uint64_t build_pawn_key(const position_t *pos);
  *
  * This would most commonly be used as a runtime check when in debug mode.
  *
- * All errors found are logged.  Execution is not stopped on the first error 
- * found.
+ * All errors found are logged.  Execution is not stopped on the first error found.
  *
  * @param pos           a pointer to the position to verify
  *
@@ -225,25 +221,30 @@ uint64_t build_pawn_key(const position_t *pos);
  */
 bool verify_pos(const position_t *pos);
 
+
 static inline bool can_castle_w(const position_t *pos)
 {
     return pos->castling_rights & CASTLE_WHITE;
 }
+
 
 static inline bool can_castle_wk(const position_t *pos) 
 {
     return pos->castling_rights & CASTLE_WK;
 }
 
+
 static inline bool can_castle_wq(const position_t *pos) 
 {
     return pos->castling_rights & CASTLE_WQ;
 }
 
+
 static inline bool can_castle_b(const position_t *pos)
 {
     return pos->castling_rights & CASTLE_BLACK;
 }
+
 
 static inline bool can_castle_bk(const position_t *pos) 
 {

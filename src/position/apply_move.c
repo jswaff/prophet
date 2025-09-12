@@ -10,10 +10,10 @@
 #include <assert.h>
 #include <stdlib.h>
 
-static piece_t remove_captured_piece(position_t* p, move_t m);
-static void add_piece_to_destination(position_t* p, move_t m);
-static void remove_castling_availability(position_t* p, move_t mv);
-static void remove_rook_castling_availability(position_t* p, square_t sq);
+static piece_t remove_captured_piece(position_t *p, move_t m);
+static void add_piece_to_destination(position_t *p, move_t m);
+static void remove_castling_availability(position_t *p, move_t mv);
+static void remove_rook_castling_availability(position_t *p, square_t sq);
 
 extern neural_network_t neural_network;
 extern bool use_neural_network;
@@ -75,7 +75,7 @@ void apply_move(position_t *pos, move_t m, undo_t *u)
     assert(verify_pos(pos));
 }
 
-static piece_t remove_captured_piece(position_t* p, move_t m)
+static piece_t remove_captured_piece(position_t *p, move_t m)
 {
     assert(is_capture(m));
     piece_t captured;
@@ -99,6 +99,7 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
     return captured;
 }
 
+
 /**
  * @brief Add the moving piece to the destination square and apply special rules.
  *
@@ -116,7 +117,7 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
  * @param pos           a pointer to a chess position
  * @param m             a move being applied to the position
  */
-static void add_piece_to_destination(position_t* p, move_t m)
+static void add_piece_to_destination(position_t *p, move_t m)
 {
     square_t from_sq = get_from_sq(m), to_sq = get_to_sq(m);
     int32_t piece = p->piece[from_sq];
@@ -182,7 +183,8 @@ static void add_piece_to_destination(position_t* p, move_t m)
     }
 }
 
-static void remove_castling_availability(position_t* p, move_t mv)
+
+static void remove_castling_availability(position_t *p, move_t mv)
 {
     /* clear current castling rights from hash key */
     p->hash_key ^= zkeys.casting_rights[p->castling_rights];
@@ -214,7 +216,8 @@ static void remove_castling_availability(position_t* p, move_t mv)
     p->hash_key ^= zkeys.casting_rights[p->castling_rights];
 }
 
-static void remove_rook_castling_availability(position_t* p, square_t sq)
+
+static void remove_rook_castling_availability(position_t *p, square_t sq)
 {
     switch (sq) {
         case A1:

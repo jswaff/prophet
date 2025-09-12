@@ -7,10 +7,9 @@
 #include <stdint.h>
 
 
-bool is_lack_of_mating_material(const position_t* pos)
+bool is_lack_of_mating_material(const position_t *pos)
 {
-    /* if there are any pawns, rooks, or queens on the board, it is not drawn
-     * for lack of material. */
+    /* if there are any pawns, rooks, or queens on the board, it is not drawn for lack of material. */
     if (pos->piece_counts[BLACK][PAWN] || pos->piece_counts[WHITE][PAWN]
       || pos->piece_counts[BLACK][ROOK] || pos->piece_counts[WHITE][ROOK]
       || pos->piece_counts[BLACK][QUEEN] || pos->piece_counts[WHITE][QUEEN])
@@ -25,8 +24,7 @@ bool is_lack_of_mating_material(const position_t* pos)
     uint32_t num_black_bishops = pos->piece_counts[BLACK][BISHOP];
     uint32_t num_bishops = num_white_bishops + num_black_bishops;
 
-    /* if there are any knights at all, this must be a KNK ending to be a 
-     * draw. */
+    /* if there are any knights at all, this must be a KNK ending to be a draw. */
     if (num_knights > 1) {
         return false;
     }   
@@ -40,8 +38,7 @@ bool is_lack_of_mating_material(const position_t* pos)
     } 
 
     /* are there opposing bishops on different color squares? - not a draw */
-    if (num_white_bishops == 1 && num_black_bishops == 1)
-    {
+    if (num_white_bishops == 1 && num_black_bishops == 1) {
         uint32_t w_sq = get_lsb(pos->white_bishops);
         uint32_t b_sq = get_lsb(pos->black_bishops);
 

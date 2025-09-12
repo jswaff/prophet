@@ -15,7 +15,7 @@ extern neural_network_t neural_network;
 extern bool use_neural_network;
 
 
-void reset_pos(position_t* pos)
+void reset_pos(position_t *pos)
 {
     assert(pos != 0);
 
@@ -23,12 +23,12 @@ void reset_pos(position_t* pos)
 }
 
 
-bool set_pos(position_t* pos, const char* fen)
+bool set_pos(position_t *pos, const char *fen)
 {
-    char* my_fen = strdup(fen), *fen_part;
+    char *my_fen = strdup(fen), *fen_part;
     /* keep the original to free the memory allocated by strdup before 
      * exiting. */
-    char* fen_ptr = my_fen; 
+    char *fen_ptr = my_fen; 
     int32_t sq = A8;
 
     /* create a copy of the position in case of an error. */
