@@ -9,21 +9,21 @@ extern "C" {
 
 
 /**
- * \brief Load neural network weights file
+ * @brief Load neural network weights file.
  * 
- * \return 0 on successful execution, and non-zero on failure
+ * @return 0 on successful execution, and non-zero on failure
  */
 int load_neural_network(const char *weights_file);
 
 
 /**
- * \brief Evaluate a chess position for the side to move using a neural network.
+ * @brief Evaluate a chess position for the side to move using a neural network.
  *
  * Run a forward pass (inference) using the previously loaded neural network.
  * 
- * \param fen             a pointer to a chess position
+ * @param fen             a pointer to a chess position
  *
- * \return the score.
+ * @return the score
  */
 int32_t nn_eval_from_fen(const char *fen);
 

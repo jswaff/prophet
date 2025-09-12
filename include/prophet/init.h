@@ -7,9 +7,9 @@ extern "C" {
 
 
 /**
- * \brief Initialize the program.
+ * @brief Initialize the program.
  *
- * \return 0 on successful execution, and non-zero on failure.
+ * @return 0 on successful execution, and non-zero on failure
  */
 int init();
 

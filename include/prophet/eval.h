@@ -10,19 +10,18 @@ extern "C" {
 
 
 /**
- * \brief Evaluate a chess position for the side to move.
+ * @brief Evaluate a chess position for the side to move.
  *
- * Performs a static analysis of a chess position.  The score is primarily
- * influenced by material counts, but it also takes into account several
- * well known heuristics, such as king safety, passed pawns, isolated
- * pawns, rooks on open files, and several others.  
+ * Performs a static analysis of a chess position.  The score is primarily influenced by material counts, but it also 
+ * takes into account several well known heuristics, such as king safety, passed pawns, isolated pawns, rooks on open 
+ * files, and several others.  
  *
  * This method will not detect end-of-game scenarios such as checkmate.
  *
- * \param fen             a chess position
- * \param material_only   if the evaluation should consider material only
+ * @param fen             a chess position
+ * @param material_only   if the evaluation should consider material only
  *
- * \return the score.
+ * @return the score
  */
 int32_t eval_from_fen(const char *fen, bool material_only);
 
