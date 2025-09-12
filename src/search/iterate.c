@@ -1,6 +1,7 @@
 #include "prophet/search.h"
 
 #include "prophet/const.h"
+#include "prophet/error_codes.h"
 #include "prophet/search.h"
 
 #include "search_internal.h"
@@ -44,7 +45,7 @@ int iterate_from_fen(stats_t* stats, move_t* pv, int* pv_length, uint32_t* depth
 {
     /* set up the position */
     position_t pos;
-    if (!set_pos(&pos, fen)) return 1; /* TODO: error code */
+    if (!set_pos(&pos, fen)) return ERROR_API_INVALID_FEN;
 
     return iterate_from_position(stats, pv, pv_length, depth, score, &pos, early_exit_ok, max_depth, max_time_ms, pv_callback);
 }

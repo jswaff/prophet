@@ -210,6 +210,13 @@ extern "C" {
 #define ERROR_CMDLINE_NN_FILE_PARSE_FAILURE             0x502
 
 
+/**
+ * \brief This error is thrown by the API when the FEN is invalid
+ */
+#define ERROR_API_INVALID_FEN                           0x600
+
+
+
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
