@@ -37,7 +37,7 @@ int xboard_new(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("new", input)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int retval = block_on_search_thread(true);

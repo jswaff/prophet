@@ -23,18 +23,18 @@ int xboard_memory(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("memory ", input, 7)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
     if (strlen(input) < 8) {
-        return P4_ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
+        return ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
     }
 
     /* attempt to read the SIZE parameter */
     uint32_t size_mb;
     if (1 != sscanf(input + 7,  "%u", &size_mb)) {
-        return P4_ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
+        return ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
     }
 
     plog("# memory: %u mb; per table: %u mb\n", size_mb, size_mb/2);

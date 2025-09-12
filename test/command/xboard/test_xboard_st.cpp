@@ -12,7 +12,7 @@ extern bool fixed_time_per_move;
 
 TEST(xboard_test, xboard_st_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_st("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_st("bla"));
 }
 
 TEST(xboard_test, xboard_st)

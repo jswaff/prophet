@@ -9,7 +9,7 @@ extern bool xboard_force_mode;
 
 TEST(xboard_test, xboard_force_incorrect_cmd)
 {
-    ASSERT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_force("bla"));
+    ASSERT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_force("bla"));
 }
 
 TEST(xboard_test, xboard_force)

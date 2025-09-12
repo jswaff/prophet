@@ -19,25 +19,25 @@ int xboard_protover(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("protover", input, 8)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
     if (strlen(input) < 10) {
-        return P4_ERROR_CMD_XBOARD_PROTOVER_MISSING_N;   
+        return ERROR_CMD_XBOARD_PROTOVER_MISSING_N;   
     }
 
     int n;
 
     /* advance the base command pointer past the "protover " substring */
     if (1 != sscanf(input + 9, "%d", &n)) {
-        return P4_ERROR_CMD_XBOARD_PROTOVER_MISSING_N;
+        return ERROR_CMD_XBOARD_PROTOVER_MISSING_N;
     }
 
     /* this program support protocol version 2 and higher */
     /*if (n < 2)
     {
-        return P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED;
+        return ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED;
     }*/
 
     /* print the features that are supported and not supported */

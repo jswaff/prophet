@@ -60,7 +60,7 @@ int think_and_make_move()
         stop_search = false;
         retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
         if (0 != retval) {
-            return P4_ERROR_THREAD_CREATION_FAILURE;
+            return ERROR_THREAD_CREATION_FAILURE;
         }
         search_thread_running = true;
         pthread_mutex_unlock(&search_lock); 
@@ -160,7 +160,7 @@ static int select_random_move()
 static int make_move_otb(move_t mv)
 {
     if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME) {
-        return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
+        return ERROR_GUNDO_INDEX_UB_VIOLATION;
     }
 
     apply_move(&gpos, mv, gundos + gpos.move_counter);

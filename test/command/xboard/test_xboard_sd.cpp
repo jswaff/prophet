@@ -10,7 +10,7 @@ extern uint32_t max_depth;
 
 TEST(xboard_test, xboard_sd_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_sd("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_sd("bla"));
 }
 
 TEST(xboard_test, xboard_sd)

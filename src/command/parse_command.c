@@ -84,7 +84,7 @@ int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
     /* set the command */
     cmd->cmd = strdup(input);
     if (NULL == cmd->cmd) {
-        return P4_ERROR_CMD_PARSE_CMD_COPY;
+        return ERROR_CMD_PARSE_CMD_COPY;
     }    
 
     /* set the function */

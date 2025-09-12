@@ -107,7 +107,7 @@ int resize_hash_table(hash_table_t *tbl, uint64_t max_size)
 
     hash_entry_t* new_table_ptr = (hash_entry_t*)realloc(tbl->tbl, tbl->capacity * sizeof(hash_entry_t));
     if (NULL == new_table_ptr) {
-        return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
+        return ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
     }
     tbl->tbl = new_table_ptr;
     clear_hash_table(tbl);    
@@ -141,7 +141,7 @@ static int init_hash_table(hash_table_t *tbl, uint64_t max_size)
 
     tbl->tbl = (hash_entry_t*)malloc(tbl->capacity * sizeof(hash_entry_t));
     if (NULL == tbl->tbl) {
-        return P4_ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
+        return ERROR_HASH_MEMORY_ALLOCATION_FAILURE;
     }
     clear_hash_table(tbl);    
 

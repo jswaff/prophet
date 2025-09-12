@@ -24,7 +24,7 @@ int xboard_go(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("go", input)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     xboard_force_mode = false;

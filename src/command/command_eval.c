@@ -27,7 +27,7 @@ int command_eval(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("eval", input, 4)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int32_t score = eval(&gpos, false, false);

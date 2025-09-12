@@ -7,7 +7,7 @@
 
 TEST(xboard_test, command_exit_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_quit("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_quit("bla"));
 }
 
 TEST(xboard_test, command_exit)

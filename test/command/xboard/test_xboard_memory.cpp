@@ -13,7 +13,7 @@ extern hash_table_t phtbl;
 
 TEST(xboard_test, xboard_memory_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_memory("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_memory("bla"));
 }
 
 TEST(xboard_test, xboard_memory)

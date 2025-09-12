@@ -71,7 +71,7 @@ int commandline_process_options(int argc, char* argv[])
                 return load_neural_network(optarg);
             default:
                 commandline_print_usage();
-                return P4_ERROR_INVALID_COMMAND_LINE_OPTION;
+                return ERROR_INVALID_COMMAND_LINE_OPTION;
         }
     }
 

@@ -17,7 +17,7 @@ extern uint32_t volatile hash_age;
 
 TEST(xboard_test, xboard_new_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_new("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_new("bla"));
 }
 
 TEST(xboard_test, xboard_new)

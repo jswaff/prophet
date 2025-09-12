@@ -16,7 +16,7 @@ int xboard_move_now(const char* input)
 {
     /* verify the command */
     if (0 != strcmp("?", input)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     return block_on_search_thread(true);

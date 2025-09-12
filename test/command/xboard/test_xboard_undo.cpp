@@ -10,7 +10,7 @@ extern position_t gpos;
 
 TEST(xboard_test, xboard_undo_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_undo("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_undo("bla"));
 }
 
 TEST(xboard_test, xboard_undo)
@@ -34,6 +34,6 @@ TEST(xboard_test, xboard_undo)
     EXPECT_EQ(0, xboard_undo("undo"));
 
     // attempting another undo would be an error
-    EXPECT_EQ(P4_ERROR_GUNDO_INDEX_LB_VIOLATION, xboard_undo("undo"));
+    EXPECT_EQ(ERROR_GUNDO_INDEX_LB_VIOLATION, xboard_undo("undo"));
 }
 

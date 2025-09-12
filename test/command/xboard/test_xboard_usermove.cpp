@@ -16,19 +16,19 @@ extern bool xboard_post_mode;
 
 TEST(xboard_test, xboard_usermove_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_usermove("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_usermove("bla"));
 }
 
 TEST(xboard_test, xboard_usermove_missing_move)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE, 
         xboard_usermove("usermove"));
 
 }
 
 TEST(xboard_test, xboard_usermove_junk_move)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove bla"));
 
 }
@@ -37,7 +37,7 @@ TEST(xboard_test, xboard_usermove_invalid_move)
 {
     EXPECT_EQ(0, xboard_new("new"));
     EXPECT_EQ(0, xboard_force("force"));
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove e3e4"));
 }
 
@@ -45,7 +45,7 @@ TEST(xboard_test, xboard_usermove_illegal_move)
 {
     EXPECT_EQ(0, xboard_new("new"));
     EXPECT_EQ(0, xboard_force("force"));
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove a7a5"));
 }
 

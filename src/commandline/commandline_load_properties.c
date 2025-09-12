@@ -105,7 +105,7 @@ int commandline_load_properties(const char* props_file)
 
     fp = fopen(props_file, "r");
     if (fp == NULL) {
-        return P4_ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE;
+        return ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE;
     }
 
     int nprops = sizeof(eval_weight_table) / sizeof(struct eval_weight_table_entry);

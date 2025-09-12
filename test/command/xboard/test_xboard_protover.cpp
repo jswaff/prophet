@@ -7,18 +7,18 @@
 
 TEST(xboard_test, xboard_protover_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_protover("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_protover("bla"));
 }
 
 TEST(xboard_test, xboard_protover_missing_n)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_PROTOVER_MISSING_N, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_PROTOVER_MISSING_N, 
         xboard_protover("protover"));
 }
 
 /*TEST(xboard_test, xboard_protover_unsupported_version)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_PROTOVER_UNSUPPORTED, 
         xboard_protover("protover 1"));
 }*/
 

@@ -15,11 +15,11 @@ int xboard_remove(const char *input)
 {
     /* verify the command */
     if (0 != strcmp("remove", input)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     if (gpos.move_counter < 2) {
-        return P4_ERROR_GUNDO_INDEX_LB_VIOLATION;
+        return ERROR_GUNDO_INDEX_LB_VIOLATION;
     }
 
     undo_move(&gpos, gundos + gpos.move_counter - 1);

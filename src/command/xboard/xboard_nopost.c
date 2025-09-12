@@ -18,7 +18,7 @@ int xboard_nopost(const char* input)
 {
     /* verify the command */
     if (0 != strncmp("nopost", input, 6)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     xboard_post_mode = false;

@@ -9,12 +9,12 @@
 
 TEST(xboard_test, xboard_ping_incorrect_cmd)
 {
-    ASSERT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_ping("bla"));
+    ASSERT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_ping("bla"));
 }
 
 TEST(xboard_test, xboard_ping_missing_n)
 {
-    ASSERT_EQ(P4_ERROR_CMD_XBOARD_PING_MISSING_N, xboard_ping("ping"));
+    ASSERT_EQ(ERROR_CMD_XBOARD_PING_MISSING_N, xboard_ping("ping"));
 }
 
 TEST(xboard_test, xboard_ping)
