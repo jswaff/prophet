@@ -53,8 +53,30 @@ void plog(const char* format, ...);
 void out(FILE* stream, const char* format, ...);
 
 
+/**
+ * \brief Write a move line to stdout and the logfile
+ * 
+ * \param pv            the move line
+ * \param depth         the depth searched
+ * \param score         the score
+ * \param elapsed       the time elapsed, in ms
+ * \param num_nodes     the number of nodes visited
+ */
 void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes);
+
+
+/**
+ * \brief Write a move line to stdout and the logfile
+ * 
+ * \param pv            a pointer to the start of an array of moves
+ * \param num_pv        the number of moves to print
+ * \param depth         the depth searched
+ * \param score         the score
+ * \param elapsed       the time elapsed, in ms
+ * \param num_nodes     the number of nodes visited
+ */
 void print_pv2(move_t* pv, int num_pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes);
+
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus

@@ -102,7 +102,16 @@ void out(FILE* stream, const char* format, ...)
     pthread_mutex_unlock(&output_mutex);
 }
 
-/* TODO: This is a temporary adaptor */
+
+void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
+{
+    char* pv_buf = move_line_to_str(pv);
+    uint64_t time_centis = elapsed / 10;
+    plog("%2d %5d %5llu %7llu %s\n", depth, score, time_centis, num_nodes, pv_buf);
+    free(pv_buf);
+}
+
+
 void print_pv2(move_t* pv, int num_pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
 {
     move_line_t move_line;
@@ -111,12 +120,4 @@ void print_pv2(move_t* pv, int num_pv, int32_t depth, int32_t score, uint64_t el
         move_line.mv[i] = *(pv+i);
     }
     print_pv(&move_line, depth, score, elapsed, num_nodes);
-}
-
-void print_pv(move_line_t* pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
-{
-    char* pv_buf = move_line_to_str(pv);
-    uint64_t time_centis = elapsed / 10;
-    plog("%2d %5d %5llu %7llu %s\n", depth, score, time_centis, num_nodes, pv_buf);
-    free(pv_buf);
 }
