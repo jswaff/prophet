@@ -258,7 +258,7 @@ static int32_t search_helper(position_t *pos, move_line_t *parent_pv, bool first
             set_parent_pv(parent_pv, *mp, &pv);
             if (ply == 0 && opts->pv_callback) {
                 uint64_t elapsed = milli_timer() - opts->start_time;
-                opts->pv_callback(&(parent_pv->mv[0]), parent_pv->n, depth, score, elapsed, stats->nodes);
+                opts->pv_callback(&(parent_pv->mv[0]), parent_pv->n, depth, false, score, elapsed, stats->nodes);
             }
         }
     }

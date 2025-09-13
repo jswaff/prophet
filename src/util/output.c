@@ -2,6 +2,7 @@
 
 #include "prophet/move.h"
 
+#include "parameters.h"
 #include "string_utils.h"
 
 #include <stdarg.h>
@@ -85,7 +86,8 @@ void print_pv(move_line_t *pv, int32_t depth, int32_t score, uint64_t elapsed, u
 }
 
 
-void print_pv2(move_t *pv, int num_pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes)
+void print_pv2(move_t *pv, int num_pv, int32_t depth, bool UNUSED(final_for_depth), int32_t score, uint64_t elapsed, 
+    uint64_t num_nodes)
 {
     move_line_t move_line;
     move_line.n = num_pv;
