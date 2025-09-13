@@ -53,11 +53,13 @@ void out(FILE *stream, const char *format, ...);
  * 
  * @param pv            the move line
  * @param depth         the depth searched
+ * @param final_for_depth if the PV is the final for this depth
  * @param score         the score
  * @param elapsed       the time elapsed, in ms
  * @param num_nodes     the number of nodes visited
  */
-void print_pv(move_line_t *pv, int32_t depth, int32_t score, uint64_t elapsed, uint64_t num_nodes);
+void print_pv(move_line_t *pv, int32_t depth, bool final_for_depth, int32_t score, uint64_t elapsed, 
+    uint64_t num_nodes);
 
 
 /**
