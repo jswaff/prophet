@@ -156,8 +156,6 @@ static void set_capacity(hash_table_t *tbl, uint64_t max_size)
     }
     tbl->capacity /= 2;
 
-    uint64_t actual_size = tbl->capacity * sizeof(hash_entry_t);
-
     /* set the mask for determining the proper bucket given a key */
     tbl->mask = tbl->capacity - 1;    
 }
