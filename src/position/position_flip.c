@@ -1,9 +1,8 @@
-#include "prophet/position.h"
+#include "position.h"
 
 #include "prophet/square.h"
 
 #include "nn/nn_internal.h"
-#include "position_internal.h"
 #include "square_internal.h"
 
 #include <assert.h>
@@ -13,14 +12,8 @@
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-/**
- * \brief Flip a position vertically.
- *
- * \param pos           a pointer to a chess position
- *
- * \return a veritical mirror of the posiiton.
- */
-position_t position_flip(const position_t* pos)
+
+position_t position_flip(const position_t *pos)
 {
     position_t flipped;
     memset(&flipped, 0, sizeof(position_t));

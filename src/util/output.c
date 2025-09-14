@@ -1,8 +1,14 @@
 #include "output.h"
 
-#include <stdbool.h>
-#include <stdio.h>
+#include "prophet/move.h"
+
+#include "string_utils.h"
+
 #include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 
 bool logging_enabled = false;
@@ -12,10 +18,6 @@ static pthread_mutex_t output_mutex;
 static FILE* logfile = 0;
 
 
-/**
- * \brief Initialize logging.
- *
- */
 void init_logging()
 {
     if (logging_enabled && !logfile) {
@@ -24,10 +26,6 @@ void init_logging()
 }
 
 
-/**
- * \brief Close the logfile.
- *
- */
 void close_logfile() 
 {
     if (logfile) {
@@ -36,13 +34,7 @@ void close_logfile()
 }
 
 
-/**
- * \brief Write an error message to stderr.
- *
- * \param format        formatted string, followed by variable length
- *                      list of arguments.
- */
-void error(const char* format, ...)
+void error(const char *format, ...)
 {
     pthread_mutex_lock(&error_mutex);
     va_list args;
@@ -53,13 +45,7 @@ void error(const char* format, ...)
 }
 
 
-/**
- * \brief Write a message to stdout and the logfile.
- *
- * \param format        formatted string, followed by variable length
- *                      list of arguments.
- */
-void plog(const char* format, ...)
+void plog(const char *format, ...)
 {
     pthread_mutex_lock(&output_mutex);
 
@@ -79,14 +65,7 @@ void plog(const char* format, ...)
 }
 
 
-/**
- * \brief Write a message to a stream.
- *
- * \param stream        the stream to write to
- * \param format        formatted string, followed by variable length
- *                      list of arguments.
- */
-void out(FILE* stream, const char* format, ...)
+void out(FILE *stream, const char *format, ...)
 {
     pthread_mutex_lock(&output_mutex);
     va_list args;
@@ -94,4 +73,27 @@ void out(FILE* stream, const char* format, ...)
     vfprintf(stream, format, args);
     va_end(args);
     pthread_mutex_unlock(&output_mutex);
+}
+
+
+void print_pv(move_line_t *pv, int32_t depth, bool final_for_depth, int32_t score, uint64_t elapsed, 
+    uint64_t num_nodes)
+{
+    char* pv_buf = move_line_to_str(pv);
+    uint64_t time_centis = elapsed / 10;
+    char dchar = final_for_depth ? '.' : ' ';
+    plog("%2d%c%5d %5llu %7llu %s\n", depth, dchar, score, time_centis, num_nodes, pv_buf);
+    free(pv_buf);
+}
+
+
+void print_pv2(move_t *pv, int num_pv, int32_t depth, bool final_for_depth, int32_t score, uint64_t elapsed, 
+    uint64_t num_nodes)
+{
+    move_line_t move_line;
+    move_line.n = num_pv;
+    for (int i=0;i<num_pv && i<MAX_PLY;i++) { 
+        move_line.mv[i] = *(pv+i);
+    }
+    print_pv(&move_line, depth, final_for_depth, score, elapsed, num_nodes);
 }

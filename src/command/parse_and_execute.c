@@ -9,17 +9,7 @@
 #include <string.h>
 
 
-/**
- * \brief Parse the user input into a command and execute the command.
- *
- * Note that failure to execute a command does not yield an error return code.
- *
- * \param input         the user entered input
- * \param exit_status   pointer to boolean to receive exit status
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int parse_and_execute(const char* input, bool* exit_status)
+int parse_and_execute(const char *input, bool *exit_status)
 {
     int retval = 0;
     *exit_status = false;
@@ -27,7 +17,7 @@ int parse_and_execute(const char* input, bool* exit_status)
     user_command_t* user_cmd = (user_command_t*)malloc(sizeof(user_command_t));
 
     if (NULL == user_cmd) {
-        return P4_ERROR_CMD_USER_CMD_BUFFER;
+        return ERROR_CMD_USER_CMD_BUFFER;
     }
 
     /* clear the structure */
@@ -44,7 +34,6 @@ int parse_and_execute(const char* input, bool* exit_status)
         /* Note - this error message is part of the xboard protocol.  If 
          * another protocol is added in the future, push this into a protocol
          * specific error handler. */
-        /* TODO: translate error code to text descriptions */
         plog("Error (invocation failed with code %d): %s\n", cmd_retval, input);
     }
 

@@ -1,10 +1,12 @@
+#include "search/search_internal.h"
+
+#include "prophet/const.h"
+#include "prophet/hash.h"
 #include "prophet/search.h"
 
-#include <prophet/const.h>
-#include <prophet/eval.h>
-#include <prophet/hash.h>
-
 #include "parameters.h"
+#include "eval/eval_internal.h"
+#include "position/position.h"
 #include "util/time.h"
 #include "util/string_utils.h"
 

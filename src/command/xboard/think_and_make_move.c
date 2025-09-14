@@ -4,9 +4,10 @@
 #include "prophet/error_codes.h"
 #include "prophet/move.h"
 #include "prophet/movegen.h"
-#include "prophet/search.h"
 
 #include "movegen/movegen_internal.h"
+#include "position/position.h"
+#include "search/search_internal.h"
 #include "parameters.h"
 #include "util/output.h"
 #include "util/string_utils.h"
@@ -45,22 +46,6 @@ static int select_random_move();
 static int make_move_otb(move_t mv);
 
 
-/**
- * \brief Start the engine "thinking"  and (eventually) make a move.
- *
- * If the engine is in random mode, a move will be made immediately.
- * Otherwise, a separate thread will be started and the method will return.
- * Once the thread terminates, the move will be applied to the global
- * position.
- *
- * If the selected move results in the end of the game, the game
- * result is displayed.
- *
- * This method should not be called if the game is already over.
- *
- * \return 0 on successful execution, and non-zero on failure
- *
- */
 int think_and_make_move()
 {
     assert(!endgame_check());
@@ -75,7 +60,7 @@ int think_and_make_move()
         stop_search = false;
         retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
         if (0 != retval) {
-            return P4_ERROR_THREAD_CREATION_FAILURE;
+            return ERROR_THREAD_CREATION_FAILURE;
         }
         search_thread_running = true;
         pthread_mutex_unlock(&search_lock); 
@@ -93,8 +78,10 @@ static void* iterate_wrapper(void* UNUSED(arg))
     opts->early_exit_ok = !fixed_time_per_move;
     opts->max_depth = max_depth;
     opts->max_time_ms = max_time_ms;
-    opts->post_mode = xboard_post_mode;
-    opts->clear_hash_each_search = false;
+    if (xboard_post_mode) {
+        opts->pv_callback = print_pv2;
+    }
+    opts->print_summary = xboard_post_mode;
 
     iterator_context_t* ctx = (iterator_context_t*)malloc(sizeof(iterator_context_t));
     ctx->pos = (position_t*)malloc(sizeof(position_t));
@@ -102,7 +89,12 @@ static void* iterate_wrapper(void* UNUSED(arg))
     ctx->move_stack = moves;
     ctx->undo_stack = gundos;
 
-    move_line_t pv = iterate(opts, ctx);
+    stats_t stats;
+    memset(&stats, 0, sizeof(stats_t));
+
+    uint32_t depth;
+    int32_t score;
+    move_line_t pv = iterate(&depth, &score, opts, ctx, &stats);
 
     free(ctx->pos);
     free(ctx);
@@ -119,13 +111,6 @@ static void* iterate_wrapper(void* UNUSED(arg))
 }
 
 
-/**
- * \brief Choose a move randomly.
- *
- * Choose a random move from the global chess position and make the move.
- *
- * \return 0 if successful, non-zero on error.
- */
 static int select_random_move()
 {
     /* generate legal moves */
@@ -143,7 +128,7 @@ static int select_random_move()
     /* fetch the move from the stack.  since the list isn't contiguous, (it
      * contains some NO_MOVE entries), so we need to iterate. */
     int i = 0;
-    for (const move_t* mp = moves; mp < endp; mp++) {
+    for (const move_t *mp = moves; mp < endp; mp++) {
         if (*mp != NO_MOVE) {
             if (i == mv_ind) {
                 return make_move_otb(*mp);
@@ -158,17 +143,10 @@ static int select_random_move()
 }
 
 
-/**
- * \brief Make a move over the global game board.
- *
- * \param mv           The move to apply
- *
- * \return 0 if successful, non-zero on error.
- */
 static int make_move_otb(move_t mv)
 {
     if (gpos.move_counter >= MAX_HALF_MOVES_PER_GAME) {
-        return P4_ERROR_GUNDO_INDEX_UB_VIOLATION;
+        return ERROR_GUNDO_INDEX_UB_VIOLATION;
     }
 
     apply_move(&gpos, mv, gundos + gpos.move_counter);

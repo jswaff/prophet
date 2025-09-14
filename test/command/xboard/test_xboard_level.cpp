@@ -15,12 +15,12 @@ extern double time_control_increment;
 
 TEST(xboard_test, xboard_level_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_level("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_level("bla"));
 }
 
 TEST(xboard_test, xboard_level_missing_parameter)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM, xboard_level("level 0    2"));
+    EXPECT_EQ(ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM, xboard_level("level 0    2"));
 }
 
 

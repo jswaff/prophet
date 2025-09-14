@@ -1,10 +1,10 @@
 #include "command.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/eval.h"
-#include "prophet/nn.h"
-#include "prophet/position.h"
 
+#include "eval/eval_internal.h"
+#include "nn/nn_internal.h"
+#include "position/position.h"
 #include "util/output.h"
 
 #include <stdint.h>
@@ -14,20 +14,12 @@ extern neural_network_t neural_network;
 extern bool use_neural_network;
 extern position_t gpos;
 
-/**
- * \brief Execute the eval command.
- * 
- * Evaluate the current position and print the score.
- *
- * \param input         the user entered input 
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int command_eval(const char* input)
+
+int command_eval(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("eval", input, 4)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     int32_t score = eval(&gpos, false, false);

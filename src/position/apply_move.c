@@ -1,37 +1,24 @@
-#include "prophet/position.h"
+#include "position.h"
 
-#include "prophet/hash.h"
 #include "prophet/move.h"
 #include "prophet/square.h"
 
+#include "hash/hash_internal.h"
 #include "nn/nn_internal.h"
-#include "position_internal.h"
 #include "square_internal.h"
 
 #include <assert.h>
 #include <stdlib.h>
 
-static piece_t remove_captured_piece(position_t* p, move_t m);
-static void add_piece_to_destination(position_t* p, move_t m);
-static void remove_castling_availability(position_t* p, move_t mv);
-static void remove_rook_castling_availability(position_t* p, square_t sq);
+static piece_t remove_captured_piece(position_t *p, move_t m);
+static void add_piece_to_destination(position_t *p, move_t m);
+static void remove_castling_availability(position_t *p, move_t mv);
+static void remove_rook_castling_availability(position_t *p, square_t sq);
 
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-/**
- * \brief Apply a chess move to a chess position.
- *
- * Apply a move to the position.  The move should be legal (no verification is 
- * performed). Records the information necessary to undo this move to restore 
- * the original position.
- *
- * \param pos           a pointer to a chess position
- * \param m             the move to apply
- * \param u             a pointer to an undo structure to receive the undo 
- *                      information
- */
-void apply_move(position_t* pos, move_t m, undo_t* u)
+void apply_move(position_t *pos, move_t m, undo_t *u)
 {
     assert(pos);
     assert(clear_score(m));
@@ -88,7 +75,7 @@ void apply_move(position_t* pos, move_t m, undo_t* u)
     assert(verify_pos(pos));
 }
 
-static piece_t remove_captured_piece(position_t* p, move_t m)
+static piece_t remove_captured_piece(position_t *p, move_t m)
 {
     assert(is_capture(m));
     piece_t captured;
@@ -112,8 +99,9 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
     return captured;
 }
 
+
 /**
- * \brief Add the moving piece to the destination square and apply special rules.
+ * @brief Add the moving piece to the destination square and apply special rules.
  *
  * The moving piece is added to the destination square.
  *
@@ -126,10 +114,10 @@ static piece_t remove_captured_piece(position_t* p, move_t m)
  *    - The king square is updated.
  *    - If it's a castle, the rook is moved.
  *
- * \param pos           a pointer to a chess position
- * \param m             a move being applied to the position
+ * @param pos           a pointer to a chess position
+ * @param m             a move being applied to the position
  */
-static void add_piece_to_destination(position_t* p, move_t m)
+static void add_piece_to_destination(position_t *p, move_t m)
 {
     square_t from_sq = get_from_sq(m), to_sq = get_to_sq(m);
     int32_t piece = p->piece[from_sq];
@@ -139,8 +127,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
     switch (piece) {
         case PAWN:
             p->fifty_counter = 0;
-            /* TODO: create a north(from, num_ranks) */
-            if (to_sq == north(north(from_sq))) {
+            if (to_sq == north2(from_sq)) {
                 p->ep_sq = north(from_sq);
                 p->hash_key ^= zkeys.ep[p->ep_sq];
             } else if (get_rank(to_sq) == RANK_8) {
@@ -151,7 +138,7 @@ static void add_piece_to_destination(position_t* p, move_t m)
             break;
         case -PAWN:
             p->fifty_counter = 0;
-            if (to_sq == south(south(from_sq))) {
+            if (to_sq == south2(from_sq)) {
                 p->ep_sq = south(from_sq);
                 p->hash_key ^= zkeys.ep[p->ep_sq];
             } else if (get_rank(to_sq) == RANK_1) {
@@ -163,7 +150,6 @@ static void add_piece_to_destination(position_t* p, move_t m)
         case KING:
             p->white_king = to_sq;
             /* move rook if this is a castle */
-            /* TODO: faster approach to detecting castle */
             if (from_sq == E1) {
                 if (to_sq == G1) {
                     assert(is_castle(m));
@@ -197,7 +183,8 @@ static void add_piece_to_destination(position_t* p, move_t m)
     }
 }
 
-static void remove_castling_availability(position_t* p, move_t mv)
+
+static void remove_castling_availability(position_t *p, move_t mv)
 {
     /* clear current castling rights from hash key */
     p->hash_key ^= zkeys.casting_rights[p->castling_rights];
@@ -229,7 +216,8 @@ static void remove_castling_availability(position_t* p, move_t mv)
     p->hash_key ^= zkeys.casting_rights[p->castling_rights];
 }
 
-static void remove_rook_castling_availability(position_t* p, square_t sq)
+
+static void remove_rook_castling_availability(position_t *p, square_t sq)
 {
     switch (sq) {
         case A1:

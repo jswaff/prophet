@@ -1,8 +1,8 @@
 #include "xboard_internal.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/hash.h"
 
+#include "hash/hash_internal.h"
 #include "util/output.h"
 
 #include <stdint.h>
@@ -12,29 +12,23 @@
 extern hash_table_t htbl;
 extern hash_table_t phtbl;
 
-/**
- * \brief Execute the xboard memory command 
- * 
- * \param input         the user entered input 
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int xboard_memory(const char* input)
+
+int xboard_memory(const char *input)
 {
     /* verify the command */
     if (0 != strncmp("memory ", input, 7)) {
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
     if (strlen(input) < 8) {
-        return P4_ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
+        return ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
     }
 
     /* attempt to read the SIZE parameter */
     uint32_t size_mb;
     if (1 != sscanf(input + 7,  "%u", &size_mb)) {
-        return P4_ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
+        return ERROR_CMD_XBOARD_MEMORY_MISSING_SIZE;
     }
 
     plog("# memory: %u mb; per table: %u mb\n", size_mb, size_mb/2);

@@ -1,30 +1,18 @@
 #include "search_internal.h"
 
-#include "prophet/movegen.h"
-#include "prophet/position.h"
-
 #include "movegen/movegen_internal.h"
+#include "position/position.h"
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 
-static move_t* index_best_capture(move_t* start, move_t* end);
-static void swap_moves(move_t* mv1, move_t* mv2);
-static move_t* next_nonnull_move(move_t* start, move_t* end);
+static move_t* index_best_capture(move_t *start, move_t *end);
+static void swap_moves(move_t *mv1, move_t *mv2);
+static move_t* next_nonnull_move(move_t *start, move_t *end);
 
-/**
- * \brief Determine the next move to play.
- *
- * \param pos           the chess position 
- * \param m             pointer to a move pointer to be set to the selected
- *                      move
- * \param mo            the move ordering context
- *
- * \return true if a move has been selected, or false if there are no
- *    further moves.
- */
-bool next(const position_t* pos, move_t** m, move_order_dto* mo)
+
+bool next(const position_t *pos, move_t **m, move_order_dto *mo)
 {
     if (mo->next_stage == PV) {
         mo->next_stage = HASH_MOVE;
@@ -66,7 +54,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
     }
 
     if (mo->next_stage == GOOD_CAPTURES_PROMOS) {
-        move_t* bestcap = index_best_capture(mo->current, mo->end);
+        move_t *bestcap = index_best_capture(mo->current, mo->end);
         while (bestcap) {
             assert(*bestcap);
             assert(get_piece(*bestcap) != NO_PIECE);
@@ -111,9 +99,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 
     if (mo->next_stage == KILLER1) {
         mo->next_stage = KILLER2;
-        if (mo->killer1 != mo->pv_move && mo->killer1 != mo->hash_move &&
-            good_move(pos, mo->killer1))
-        {
+        if (mo->killer1 != mo->pv_move && mo->killer1 != mo->hash_move && good_move(pos, mo->killer1)) {
             assert(!is_capture(mo->killer1));
             *m = &mo->killer1;
             return true;
@@ -137,7 +123,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             mo->current = mo->end;
             mo->end = gen_pseudo_legal_moves(mo->current, pos, false, true);
             /* remove any moves already tried */
-            for (move_t* mp=mo->current; mp<mo->end; mp++) {
+            for (move_t *mp=mo->current; mp<mo->end; mp++) {
                 if (*mp==mo->pv_move || *mp==mo->hash_move || 
                     *mp==mo->killer1 || *mp==mo->killer2)
                 {
@@ -161,7 +147,7 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 
     if (mo->play_badcaps) {
         if (mo->next_stage == INIT_BAD_CAPTURES) {
-            for (move_t* mp=mo->start; mp<mo->end; mp++) {
+            for (move_t *mp=mo->start; mp<mo->end; mp++) {
                 /* remove everything except captures with losing scores */
                 bool losing_capture = is_capture(*mp) && get_move_score(*mp) < 0;
                 if (!losing_capture) {
@@ -172,14 +158,11 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
             mo->next_stage = BAD_CAPTURES;
         }
 
-        /* now just go back through the list playing the best option we have 
-         * Implementation note: advancing the pointer to the next non-null move is not
-         * necessary.  It is only here to match the method used in chess4j, so the
-         * search trees are equal. */
+        /* now just go back through the list playing the best option we have. */
         move_t* nextp = next_nonnull_move(mo->current, mo->end);
         if (nextp) {
             mo->current = nextp;
-            move_t* best_bad_cap = index_best_capture(mo->current, mo->end);
+            move_t *best_bad_cap = index_best_capture(mo->current, mo->end);
             if (best_bad_cap) {
                 assert(is_capture(*best_bad_cap));
                 assert(get_promopiece(*best_bad_cap)==NO_PIECE);
@@ -196,12 +179,12 @@ bool next(const position_t* pos, move_t** m, move_order_dto* mo)
 }
 
 
-static move_t* index_best_capture(move_t* start, move_t* end)
+static move_t* index_best_capture(move_t *start, move_t *end)
 {
-    move_t* bestp = 0;
+    move_t *bestp = 0;
     int32_t bestscore = -INF;
 
-    for (move_t* mp=start; mp<end; mp++) {
+    for (move_t *mp=start; mp<end; mp++) {
         if (*mp != 0) {
             assert(is_capture(*mp) || get_promopiece(*mp) != NO_PIECE);
             int32_t score = get_move_score(*mp);
@@ -215,16 +198,18 @@ static move_t* index_best_capture(move_t* start, move_t* end)
     return bestp;
 }
 
-static void swap_moves(move_t* mv1, move_t* mv2)
+
+static void swap_moves(move_t *mv1, move_t *mv2)
 {
     move_t tmp_mv = *mv2;
     *mv2 = *mv1;
     *mv1 = tmp_mv;
 }
 
-static move_t* next_nonnull_move(move_t* start, move_t* end)
+
+static move_t* next_nonnull_move(move_t *start, move_t *end)
 {
-    for (move_t* mp=start;mp<end; mp++) {
+    for (move_t *mp=start;mp<end; mp++) {
         if (*mp != 0) {
             return mp;
         }

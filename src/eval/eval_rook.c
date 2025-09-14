@@ -1,11 +1,11 @@
 #include "eval_internal.h"
 
 #include "prophet/piece.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
 #include "movegen/movegen_internal.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>
@@ -16,21 +16,12 @@
 static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore);
 
 
-/**
- * \brief Evaluate a single rook.
- *
- * \param pos           a pointer to a chess position
- * \param sq            the square the rook is on
- * \param mgscore       a pointer to the middle game score accumulator
- * \param egscore       a pointer to the endgame score accumulator
- *
- */
-void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
+void eval_rook(const position_t *pos, square_t sq, int32_t *mgscore, int32_t *egscore)
 {
     assert(pos->piece[sq] == ROOK || pos->piece[sq] == -ROOK);
 
     uint64_t empty_squares = ~(pos->white_pieces | pos->black_pieces);
-    uint32_t mobility = popcnt(get_rook_moves(pos, sq, empty_squares));
+    uint32_t mobility = popcnt(get_rook_moves(pos, sq) & empty_squares);
     uint32_t mobility_mg = rook_mobility_mg[mobility];
     uint32_t mobility_eg = rook_mobility_eg[mobility];
 
@@ -48,19 +39,7 @@ void eval_rook(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* eg
 }
 
 
-/**
- * \brief Evaluate a square for an open or half open file.
- *
- * An open file is defined as a file with no pawns.  A half open file is 
- * defined as a file with no friendly pawns, but at least one enemy pawn.
- *
- * \param pos           a pointer to a chess position
- * \param sq            the square the rook is on
- * \param mgscore       a pointer to the middle game score accumulator
- * \param egscore       a pointer to the endgame score accumulator
- *
- */ 
-static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgscore, int32_t* egscore)
+static void eval_rook_open_file(const position_t *pos, square_t sq, int32_t *mgscore, int32_t *egscore)
 {
     uint64_t friendly_pawns, enemy_pawns /*, friendly_rooks */;
     bool wtm = is_white_piece(pos->piece[sq]);
@@ -76,7 +55,7 @@ static void eval_rook_open_file(const position_t* pos, square_t sq, int32_t* mgs
 
     uint64_t file_mask = sq_to_file_bitmap(sq);
     if (!(file_mask & friendly_pawns)) {
-        /*uint64_t rook_file_moves = get_rook_moves(pos, sq, sq_to_file_bitmap(sq));*/
+        /*uint64_t rook_file_moves = get_rook_moves(pos, sq) & sq_to_file_bitmap(sq);*/
         if (file_mask & enemy_pawns) {
             if (wtm) {
                 *mgscore += rook_half_open_file_mg;

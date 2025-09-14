@@ -1,12 +1,8 @@
-#include "prophet/hash.h"
+#include "hash_internal.h"
 
 #include "util/prng.h"
 
 
-/**
- * \brief Initialize the zobrist keys
- *
- */
 void init_zkeys() {
 
     for (int i=0;i<2;i++) { 

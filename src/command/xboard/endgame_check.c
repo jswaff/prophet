@@ -1,10 +1,9 @@
 #include "xboard_internal.h"
 
 #include "prophet/const.h"
-#include "prophet/position.h"
 
 #include "movegen/movegen_internal.h"
-#include "position/position_internal.h"
+#include "position/position.h"
 #include "util/output.h"
 
 #include <stdbool.h>
@@ -13,14 +12,9 @@ extern position_t gpos;
 extern undo_t gundos[MAX_HALF_MOVES_PER_GAME];
 
 
-/**
- * \brief Check for an end-of-game condition and print RESULT if appropriate.
- *
- * \return true if the game is over, false otherwise.
- */
 bool endgame_check()
 {
-    char* result = 0;
+    char *result = 0;
 
     /* if the game is over by rule, print the result */
     if (is_checkmate(&gpos)) {

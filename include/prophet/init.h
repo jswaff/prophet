@@ -1,22 +1,22 @@
 #pragma once
 
-#include <stdint.h>
-
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 extern "C" {
-#endif  
+#endif   
 
 
 /**
- * @brief Return the number of milliseconds since epoch.
+ * @brief Initialize the program.
  *
- * @return the number of milliseconds since epoch
+ * @return 0 on successful execution, and non-zero on failure
  */
-uint64_t milli_timer();
+int init();
+
 
 
 /* make this header C++ friendly. */
 #ifdef     __cplusplus
 }
 #endif  
+

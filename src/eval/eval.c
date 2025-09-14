@@ -1,11 +1,11 @@
 #include "prophet/eval.h"
 
-#include "prophet/hash.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "eval_internal.h"
 #include "bitmap/bitmap.h"
+#include "hash/hash_internal.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>
@@ -134,26 +134,18 @@ int32_t king_pst_eg[64] = {
 };
 
 #ifndef NDEBUG
-static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t eg_score);
+static bool verify_pawn_scores(const position_t *pos, int32_t mg_score, int32_t eg_score);
 #endif
 
-/**
- * \brief Evaluate a chess position for the side to move.
- *
- * Performs a static analysis of a chess position.  The score is primarily
- * influenced by material counts, but it also takes into account several
- * well known heuristics, such as king safety, passed pawns, isolated
- * pawns, rooks on open files, and several others.
- *
- * This method will not detect end-of-game scenarios such as checkmate.
- *
- * \param pos             a pointer to a chess position
- * \param material_only   if the evaluation should consider material only
- * \param use_pawn_hash   if the pawn hash table should be used
- *
- * \return the score.
- */
-int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash)
+
+int32_t eval_from_fen(const char *fen, bool material_only) {
+    position_t pos;
+    set_pos(&pos, fen);
+    return eval(&pos, material_only, false);
+}
+
+
+int32_t eval(const position_t *pos, bool material_only, bool use_pawn_hash)
 {
     /* establish a baseline score using material, from white's perspective. */
     int32_t mat_score =
@@ -166,9 +158,8 @@ int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash)
         return pos->player == WHITE ? mat_score : -mat_score;
     }
 
-    /* evaluate for a draw.  positions that are drawn by rule are immediately
-     * returned.  Others that are "drawish" are further evaluated but later
-     * tapered down.
+    /* evaluate for a draw.  positions that are drawn by rule are immediately returned.  Others that are "drawish" are 
+    * further evaluated but later tapered down.
      */
     int immediate_draw = 0;
     material_type_t mt = eval_material_type(pos, &immediate_draw);
@@ -240,9 +231,8 @@ int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash)
     eval_king(pos, pos->black_king, &mg_score, &eg_score);
 
 
-    /* calculate a score between [mg_score, eg_score], weighted by the
-     * amount of material on the board.  then use the draw factor to pull
-     * the score towards a draw. */
+    /* calculate a score between [mg_score, eg_score], weighted by the amount of material on the board.  then use the 
+     * draw factor to pull the score towards a draw. */
     int32_t tapered_score = eval_taper(pos, mg_score, eg_score) / draw_factor;
 
 
@@ -251,7 +241,7 @@ int32_t eval(const position_t* pos, bool material_only, bool use_pawn_hash)
 }
 
 #ifndef NDEBUG
-static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t eg_score)
+static bool verify_pawn_scores(const position_t *pos, int32_t mg_score, int32_t eg_score)
 {
     int32_t my_mg_score = 0;
     int32_t my_eg_score = 0;
@@ -268,3 +258,4 @@ static bool verify_pawn_scores(const position_t* pos, int32_t mg_score, int32_t 
     return mg_score==my_mg_score && eg_score==my_eg_score;
 }
 #endif
+

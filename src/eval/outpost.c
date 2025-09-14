@@ -1,26 +1,19 @@
 #include "eval_internal.h"
 
 #include "prophet/piece.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "position/position.h"
+#include "position/square_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>
 
 static uint64_t bb_outpost[64][2];
 
-/**
- * \brief Determine if a square is an outpost.
- *
- * \param pos           a pointer to a chess position
- * \param pawn_sq       the square
- * \param white_pov     whether to examine from white's POV
- *
- * \return true if the square is an outpost, otherwise false.
- */
-bool outpost(const position_t* pos, square_t sq, bool white_pov)
+
+bool outpost(const position_t *pos, square_t sq, bool white_pov)
 {
     if (white_pov) {
         return !(bb_outpost[sq][WHITE] & pos->black_pawns);
@@ -29,9 +22,7 @@ bool outpost(const position_t* pos, square_t sq, bool white_pov)
     }
 }
 
-/**
- * \brief Initialize the outpost function.
- */
+
 void init_outpost()
 {
     for (int i=0; i<64; i++) {

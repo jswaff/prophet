@@ -1,7 +1,8 @@
 #include "command/xboard/xboard_internal.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/position.h"
+
+#include "position/position.h"
 
 #include <gtest/gtest.h>
 
@@ -11,14 +12,14 @@ extern position_t gpos;
 
 TEST(xboard_test, xboard_setboard_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_setboard("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_setboard("bla"));
 }
 
 
 TEST(xboard_test, xboard_setboard_missing_fen)
 {
     EXPECT_EQ(
-        P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN, 
+        ERROR_CMD_XBOARD_USERMOVE_MISSING_FEN, 
         xboard_setboard("setboard bla"));
 }
 
@@ -29,7 +30,7 @@ TEST(xboard_test, xboard_setboard_invalid_fen)
 
     // no kings
     EXPECT_EQ(
-        P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN,
+        ERROR_CMD_XBOARD_USERMOVE_INVALID_FEN,
         xboard_setboard("setboard 8/pppppppp/8/8/8/8/8/8 w KQkq 0 1"));
 
     // position should be initial position

@@ -1,8 +1,7 @@
 #include "prophet/nn.h"
 
-#include "prophet/position.h"
-
 #include "nn_internal.h"
+#include "position/position.h"
 
 #include <assert.h>
 #include <immintrin.h>
@@ -11,22 +10,24 @@
 #include <string.h>
 
 static int clamp(int val, int min, int max);
-static int my_round(float val);
+static int32_t my_round(float val);
 #if !defined(USE_AVX) || defined(DEBUG_AVX)
-static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2);
+static void compute_layer2_slow(const neural_network_t *nn, const int8_t *L1, int32_t *L2);
 #endif
 
-/**
- * \brief Evaluate a chess position for the side to move using a neural network.
- *
- * Run a forward pass (inference) using the supplied neural network.
- * 
- * \param pos             a pointer to a chess position
- * \param nn              a pointer to a neural network model
- *
- * \return the score.
- */
-int nn_eval(const position_t* pos, const neural_network_t* nn) {
+extern neural_network_t neural_network;
+extern bool use_neural_network;
+
+
+int32_t nn_eval_from_fen(const char *fen) {
+    if (!use_neural_network) return 0;
+    position_t pos;
+    set_pos(&pos, fen);
+    return nn_eval(&pos, &neural_network);
+}
+
+
+int32_t nn_eval(const position_t *pos, const neural_network_t *nn) {
 
     /* set layer 1 from accumulators */
     int8_t L1[NN_SIZE_L1 * 2];
@@ -70,10 +71,11 @@ int nn_eval(const position_t* pos, const neural_network_t* nn) {
     float wscore = ((float)L2[0]) / (SCALE * SCALE) * 100; /* to centipawns */
     float wr = ((float)L2[1]) / (SCALE * SCALE) * 1000; /* win ratio */
 
-    int y_hat = my_round((0.5 * wscore)  + (0.5 * wr));
+    int32_t y_hat = my_round((0.5 * wscore)  + (0.5 * wr));
 
     return pos->player==WHITE ? y_hat : -y_hat;
 }
+
 
 static int clamp(int val, int min, int max) {
     if (val < min) return min;
@@ -81,13 +83,14 @@ static int clamp(int val, int min, int max) {
     return val;
 }
 
-static int my_round(float val) {
-    if (val > 0) return (int)(val + 0.5);
+
+static int32_t my_round(float val) {
+    if (val > 0) return (int32_t)(val + 0.5);
     else return (int)(val - 0.5);
 }
 
 #if !defined(USE_AVX) || defined(DEBUG_AVX)
-static void compute_layer2_slow(const neural_network_t* nn, const int8_t* L1, int32_t* L2) {
+static void compute_layer2_slow(const neural_network_t *nn, const int8_t *L1, int32_t *L2) {
     for (int i=0;i<NN_SIZE_L2;i++) {
         int32_t sum = nn->B1[i];
         for (int j=0;j<NN_SIZE_L1*2;j++) {

@@ -9,8 +9,7 @@
 #include <string.h>
 
 /* structure mapping a property to a variable */
-struct eval_weight_table_entry
-{
+struct eval_weight_table_entry {
     const char *property_name;
     int32_t* val_ptr;
 };
@@ -89,23 +88,19 @@ struct eval_weight_table_entry eval_weight_table[] = {
     {"KING_PST_EG", &king_pst_eg[0]}
 };
 
-/**
- * \brief Load eval properties
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int commandline_load_properties(const char* props_file)
+
+int commandline_load_properties(const char *props_file)
 {
-    FILE* fp;
-    char* line = NULL;
-    char* line_buffer = NULL;
-    char* val_buffer = NULL;
+    FILE *fp;
+    char *line = NULL;
+    char *line_buffer = NULL;
+    char *val_buffer = NULL;
     size_t len = 0;
     int read;
 
     fp = fopen(props_file, "r");
     if (fp == NULL) {
-        return P4_ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE;
+        return ERROR_CMDLINE_PROPERTIES_FILE_OPEN_FAILURE;
     }
 
     int nprops = sizeof(eval_weight_table) / sizeof(struct eval_weight_table_entry);

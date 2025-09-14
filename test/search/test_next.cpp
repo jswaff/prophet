@@ -2,10 +2,9 @@
 
 #include "prophet/const.h"
 #include "prophet/move.h"
-#include "prophet/movegen.h"
-#include "prophet/position.h"
 
 #include "movegen/movegen_internal.h"
+#include "position/position.h"
 #include "search/search_internal.h"
 
 #include <gtest/gtest.h>

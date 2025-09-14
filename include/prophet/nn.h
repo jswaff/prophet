@@ -1,8 +1,5 @@
 #pragma once
 
-#include <prophet/const.h>
-#include <prophet/position.h>
-
 #include <stdint.h>
 
 /* make this header C++ friendly. */
@@ -11,24 +8,24 @@ extern "C" {
 #endif
 
 
-typedef struct {
-    int16_t W0[768 * NN_SIZE_L1];
-    int16_t B0[NN_SIZE_L1];
-    int8_t W1[NN_SIZE_L1 * 2 * NN_SIZE_L2];
-    int8_t B1[NN_SIZE_L2];
-} neural_network_t;
+/**
+ * @brief Load neural network weights file.
+ * 
+ * @return 0 on successful execution, and non-zero on failure
+ */
+int load_neural_network(const char *weights_file);
+
 
 /**
- * \brief Evaluate a chess position for the side to move using a neural network.
+ * @brief Evaluate a chess position for the side to move using a neural network.
  *
- * Run a forward pass (inference) using the supplied neural network.
+ * Run a forward pass (inference) using the previously loaded neural network.
  * 
- * \param pos             a pointer to a chess position
- * \param nn              a pointer to a neural network model
+ * @param fen             a pointer to a chess position
  *
- * \return the score.
+ * @return the score
  */
-int nn_eval(const position_t* pos, const neural_network_t *nn);
+int32_t nn_eval_from_fen(const char *fen);
 
 
 /* make this header C++ friendly. */

@@ -1,4 +1,4 @@
-#include "prophet/hash.h"
+#include "hash/hash_internal.h"
 
 #include "prophet/const.h"
 #include "prophet/move.h"

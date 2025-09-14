@@ -1,7 +1,8 @@
 #include "command/xboard/xboard_internal.h"
 
 #include "prophet/error_codes.h"
-#include "prophet/position.h"
+
+#include "position/position.h"
 
 #include <gtest/gtest.h>
 
@@ -15,19 +16,19 @@ extern bool xboard_post_mode;
 
 TEST(xboard_test, xboard_usermove_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_usermove("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_usermove("bla"));
 }
 
 TEST(xboard_test, xboard_usermove_missing_move)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_MISSING_MOVE, 
         xboard_usermove("usermove"));
 
 }
 
 TEST(xboard_test, xboard_usermove_junk_move)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove bla"));
 
 }
@@ -36,7 +37,7 @@ TEST(xboard_test, xboard_usermove_invalid_move)
 {
     EXPECT_EQ(0, xboard_new("new"));
     EXPECT_EQ(0, xboard_force("force"));
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove e3e4"));
 }
 
@@ -44,7 +45,7 @@ TEST(xboard_test, xboard_usermove_illegal_move)
 {
     EXPECT_EQ(0, xboard_new("new"));
     EXPECT_EQ(0, xboard_force("force"));
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_USERMOVE_INVALID_MOVE, 
         xboard_usermove("usermove a7a5"));
 }
 
@@ -68,14 +69,14 @@ TEST(xoard_test, xboard_usermove_not_force_mode)
     // redirect stdout to a buffer 
     char buffer[255];
     memset(buffer, 0, 255);
-    freopen("/dev/null", "a", stdout);
+    ASSERT_EQ(stdout, freopen("/dev/null", "a", stdout));
     setbuf(stdout, buffer);
 
     int retval = xboard_usermove("usermove e2e4");
     ASSERT_EQ(0, block_on_search_thread(false)); // wait for search thread to finish
 
     // redirect back
-    freopen("/dev/tty", "a", stdout);
+    ASSERT_EQ(stdout, freopen("/dev/tty", "a", stdout));
 
     ASSERT_EQ(0, retval);
 
@@ -100,13 +101,13 @@ TEST(xboard_test, xboard_usermove_move_ends_game)
     // redirect stdout to a buffer 
     char buffer[255];
     memset(buffer, 0, 255);
-    freopen("/dev/null", "a", stdout);
+    ASSERT_EQ(stdout, freopen("/dev/null", "a", stdout));
     setbuf(stdout, buffer);
 
     int retval = xboard_usermove("usermove d8h4");
 
     // redirect back
-    freopen("/dev/tty", "a", stdout);
+    ASSERT_EQ(stdout, freopen("/dev/tty", "a", stdout));
 
     ASSERT_EQ(0, retval);
     EXPECT_EQ(0, strcmp("0-1 {Black mates}\n", buffer));

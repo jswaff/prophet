@@ -1,52 +1,41 @@
-#include "prophet/search.h"
+#include "search_internal.h"
 
 #include "prophet/move.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
-#include "search_internal.h"
 #include "bitmap/bitmap.h"
 #include "eval/eval_internal.h"
 #include "movegen/movegen_internal.h"
-#include "position/position_internal.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>
 #include <stdint.h>
 
 /* forward decls */
-static int32_t score_capture(const position_t* pos, move_t mv);
-static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map);
+static int32_t score_capture(const position_t *pos, move_t mv);
+static int32_t find_least_valuable(const position_t *pos, uint64_t attackers_map);
 static int max(int, int);
 
-/**
- * \brief Evaluate a piece for move ordering purposes.
- *
- * Note- this method should not be used for a material evaluation.
- *
- * \param piece         the piece to evaluate
- *
- * \return the score
- */
+
+int32_t see_from_fen(const char *fen, move_t mv) {
+    position_t pos;
+    set_pos(&pos, fen);
+    return see(&pos, mv);
+}
+
+
 int32_t see_eval_piece(int32_t piece)
 {
-    const int32_t pvals[13] = 
-    { 
+    const int32_t pvals[13] = { 
         INF, see_queen_val, see_rook_val, see_bishop_val, see_knight_val, see_pawn_val, 0,
         see_pawn_val, see_knight_val, see_bishop_val, see_rook_val, see_queen_val, INF 
     };
     return pvals[piece+6];
 }
 
-/**
- * \brief Score a move using static exchange analysis (SEE)
- *
- * \param pos           the chess position
- * \param mv            the chess move to score
- * 
- * \return the score
- */
-int32_t see(const position_t* pos, move_t mv)
+
+int32_t see(const position_t *pos, move_t mv)
 {
     int32_t score = 0;
 
@@ -60,7 +49,7 @@ int32_t see(const position_t* pos, move_t mv)
 }
 
 
-static int32_t score_capture(const position_t* pos, move_t mv) 
+static int32_t score_capture(const position_t *pos, move_t mv) 
 {
     square_t from_sq = get_from_sq(mv);
     square_t to_sq = get_to_sq(mv);
@@ -85,9 +74,7 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     int32_t attacked_piece_val = see_eval_piece(current_piece);
 
     while(1) {
-        /* fold in any xray attackers behind the current piece, in the direction of 
-         * to -> current sq 
-         */
+        /* fold in any xray attackers behind the current piece, in the direction of to -> current sq */
         if (current_piece != KNIGHT && current_piece != -KNIGHT &&
             current_piece != KING && current_piece != -KING)
         {
@@ -95,12 +82,11 @@ static int32_t score_capture(const position_t* pos, move_t mv)
             assert(xray_dir != NODIR);
             uint64_t targets = ray(current_sq, xray_dir);
             uint64_t xrays;
-            if (xray_dir==NORTH || xray_dir==EAST || xray_dir==SOUTH || xray_dir==WEST)
-            {
-                xrays = get_rook_moves(pos, current_sq, targets) &
+            if (xray_dir==NORTH || xray_dir==EAST || xray_dir==SOUTH || xray_dir==WEST) {
+                xrays = get_rook_moves(pos, current_sq) & targets &
                     (pos->white_rooks | pos->white_queens | pos->black_rooks | pos->black_queens);
             } else {
-                xrays = get_bishop_moves(pos, current_sq, targets) &
+                xrays = get_bishop_moves(pos, current_sq) & targets &
                     (pos->white_bishops | pos->white_queens | pos->black_bishops | pos->black_queens);
             }
             if (xrays & pos->white_pieces) {
@@ -138,12 +124,14 @@ static int32_t score_capture(const position_t* pos, move_t mv)
     return scores[0];
 }
 
+
 static inline int max(int a, int b)
 {
     return a >= b ? a : b;
 }
 
-static int32_t find_least_valuable(const position_t* pos, uint64_t attackers_map)
+
+static int32_t find_least_valuable(const position_t *pos, uint64_t attackers_map)
 {
     int32_t lv_sq = NO_SQUARE;
     int32_t lv_score = 0;

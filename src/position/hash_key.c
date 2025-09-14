@@ -1,10 +1,9 @@
-#include "position_internal.h"
+#include "position.h"
 
-#include "prophet/hash.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "hash/hash_internal.h"
 #include "position/square_internal.h"
 
 #include <assert.h>
@@ -12,17 +11,7 @@
 #include <stdint.h>
 
 
-/**
- * \brief Create a 64 bit hash signature of a chess position
- *
- * Note this is not a fast operation.  It would be more performant to 
- * incrementally update the hash signature as moves are made on the board.
- *
- * \param pos           a pointer to a chess position
- *
- * \return a 64 bit hash signature
- */
-uint64_t build_hash_key(const position_t* pos)
+uint64_t build_hash_key(const position_t *pos)
 {
     uint64_t hkey = 0;
 
@@ -51,17 +40,8 @@ uint64_t build_hash_key(const position_t* pos)
     return hkey;
 }
 
-/**
- * \brief Create a 64 bit hash signature of the pawns in a chess position.
- *
- * Note this is not a fast operation.  It would be more performant to 
- * incrementally update the hash signature as pawn moves are made on the board.
- *
- * \param pos           a pointer to a chess position
- *
- * \return a 64 bit hash signature
- */
-uint64_t build_pawn_key(const position_t* pos)
+
+uint64_t build_pawn_key(const position_t *pos)
 {
     uint64_t pkey = 0;
 

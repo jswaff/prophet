@@ -1,6 +1,5 @@
-#include "position_internal.h"
+#include "position.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "nn/nn_internal.h"
@@ -15,26 +14,15 @@
 extern neural_network_t neural_network;
 extern bool use_neural_network;
 
-static bool verify_pos_kings(const position_t* pos);
-static bool verify_pos_ep(const position_t* pos);
-static bool verify_piece_counts(const position_t* pos);
-static bool verify_bitmaps(const position_t* pos);
-static bool verify_castling_rights(const position_t* pos);
-static bool verify_hash_keys(const position_t* pos);
-static bool verify_nnue_accumulators(const position_t* pos);
+static bool verify_pos_kings(const position_t *pos);
+static bool verify_pos_ep(const position_t *pos);
+static bool verify_piece_counts(const position_t *pos);
+static bool verify_bitmaps(const position_t *pos);
+static bool verify_castling_rights(const position_t *pos);
+static bool verify_hash_keys(const position_t *pos);
+static bool verify_nnue_accumulators(const position_t *pos);
 
-/**
- * \brief Verify the internal consistency of a position.
- *
- * This would most commonly be used as a runtime check when in debug mode.
- *
- * All errors found are logged.  Execution is not stopped on the first error 
- * found.
- *
- * \param pos       a pointer to the position to verify
- *
- * \return boolean value indicating if the position is consistent
- */
+
 bool verify_pos(const position_t* pos)
 {
     assert(pos);
@@ -47,8 +35,7 @@ bool verify_pos(const position_t* pos)
     }
 
     if (pos->fifty_counter > pos->move_counter) {
-        error("fifty counter (%d) greater than move counter (%d).",
-            pos->fifty_counter, pos->move_counter);
+        error("fifty counter (%d) greater than move counter (%d).", pos->fifty_counter, pos->move_counter);
         retval = false;
     }
 
@@ -83,7 +70,8 @@ bool verify_pos(const position_t* pos)
     return retval;
 }
 
-static bool verify_pos_kings(const position_t* pos)
+
+static bool verify_pos_kings(const position_t *pos)
 {
     bool retval = true;
 
@@ -104,8 +92,7 @@ static bool verify_pos_kings(const position_t* pos)
     }
 
     if (wkingsq != pos->white_king) {
-        error("wkingsq incorrect.  should be: %d, but was: %d\n", 
-            wkingsq, pos->white_king);
+        error("wkingsq incorrect.  should be: %d, but was: %d\n", wkingsq, pos->white_king);
         retval = false;
     }
 
@@ -126,15 +113,15 @@ static bool verify_pos_kings(const position_t* pos)
     }
 
     if (bkingsq != pos->black_king) {
-        error("bkingsq incorrect.  should be: %d, but was: %d\n", bkingsq, 
-            pos->black_king);
+        error("bkingsq incorrect.  should be: %d, but was: %d\n", bkingsq, pos->black_king);
         retval = false;
     }
 
     return retval;
 }
 
-static bool verify_pos_ep(const position_t* pos)
+
+static bool verify_pos_ep(const position_t *pos)
 {
     bool retval = true;
 
@@ -146,8 +133,7 @@ static bool verify_pos_ep(const position_t* pos)
                 retval = false;
             }
             if (pos->piece[pos->ep_sq-8] != PAWN) {
-                error("ep_sq is %d, player is BLACK - should be white pawn "
-                      "above ep\n");
+                error("ep_sq is %d, player is BLACK - should be white pawn above ep\n");
                 retval = false;
             }
         } else { 
@@ -157,8 +143,7 @@ static bool verify_pos_ep(const position_t* pos)
                 retval = false;
             }
             if (pos->piece[pos->ep_sq+8] != -PAWN) {
-                error("ep_sq is %d, player is WHITE - should be black pawn "
-                      "below ep\n");
+                error("ep_sq is %d, player is WHITE - should be black pawn below ep\n");
                 retval = false;
             }
         }
@@ -167,15 +152,14 @@ static bool verify_pos_ep(const position_t* pos)
     return retval;
 }
 
-static bool verify_piece_counts(const position_t* pos)
+
+static bool verify_piece_counts(const position_t *pos)
 {
     bool retval = true;
 
 
-    uint32_t num_wpawns = 0, num_wrooks = 0, num_wknights = 0, 
-        num_wbishops = 0, num_wqueens = 0;
-    uint32_t num_bpawns = 0, num_brooks = 0, num_bknights = 0, 
-        num_bbishops = 0, num_bqueens = 0;
+    uint32_t num_wpawns = 0, num_wrooks = 0, num_wknights = 0, num_wbishops = 0, num_wqueens = 0;
+    uint32_t num_bpawns = 0, num_brooks = 0, num_bknights = 0, num_bbishops = 0, num_bqueens = 0;
 
     for (int32_t sq=0; sq<64; sq++) {
         if (pos->piece[sq]==PAWN) {
@@ -202,88 +186,75 @@ static bool verify_piece_counts(const position_t* pos)
     }
 
     if (num_wpawns != pos->piece_counts[WHITE][PAWN]) {
-        error("incorrect wpawn count: %d.  found: %d\n", 
-            pos->piece_counts[WHITE][PAWN], num_wpawns);
+        error("incorrect wpawn count: %d.  found: %d\n", pos->piece_counts[WHITE][PAWN], num_wpawns);
         retval = false;
     }
 
     if (num_bpawns != pos->piece_counts[BLACK][PAWN]) {
-        error("incorrect bpawn count: %d.  found: %d\n", 
-            pos->piece_counts[BLACK][PAWN], num_bpawns);
+        error("incorrect bpawn count: %d.  found: %d\n", pos->piece_counts[BLACK][PAWN], num_bpawns);
         retval = false;
     }
 
     if (num_wknights != pos->piece_counts[WHITE][KNIGHT]) {
-        error("incorrect wknight count: %d.  found: %d\n", 
-            pos->piece_counts[WHITE][KNIGHT], num_wknights);
+        error("incorrect wknight count: %d.  found: %d\n", pos->piece_counts[WHITE][KNIGHT], num_wknights);
         retval = false;
     }
 
     if (num_bknights != pos->piece_counts[BLACK][KNIGHT]) {
-        error("incorrect bknight count: %d.  found: %d\n", 
-            pos->piece_counts[BLACK][KNIGHT], num_bknights);
+        error("incorrect bknight count: %d.  found: %d\n", pos->piece_counts[BLACK][KNIGHT], num_bknights);
         retval = false;
     }
 
     if (num_wbishops != pos->piece_counts[WHITE][BISHOP]) {
-        error("incorrect wbishop count: %d.  found: %d\n", 
-            pos->piece_counts[WHITE][BISHOP], num_wbishops);
+        error("incorrect wbishop count: %d.  found: %d\n", pos->piece_counts[WHITE][BISHOP], num_wbishops);
         retval = false;
     }
 
     if (num_bbishops != pos->piece_counts[BLACK][BISHOP]) {
-        error("incorrect bbishop count: %d.  found: %d\n", 
-            pos->piece_counts[BLACK][BISHOP], num_bbishops);
+        error("incorrect bbishop count: %d.  found: %d\n", pos->piece_counts[BLACK][BISHOP], num_bbishops);
         retval = false;
     }
 
     if (num_wrooks != pos->piece_counts[WHITE][ROOK]) {
-        error("incorrect wrook count: %d.  found: %d\n", 
-            pos->piece_counts[WHITE][ROOK], num_wrooks);
+        error("incorrect wrook count: %d.  found: %d\n", pos->piece_counts[WHITE][ROOK], num_wrooks);
         retval = false;
     }
 
     if (num_brooks != pos->piece_counts[BLACK][ROOK]) {
-        error("incorrect brook count: %d.  found: %d\n", 
-            pos->piece_counts[BLACK][ROOK], num_brooks);
+        error("incorrect brook count: %d.  found: %d\n", pos->piece_counts[BLACK][ROOK], num_brooks);
         retval = false;
     }
 
     if (num_wqueens != pos->piece_counts[WHITE][QUEEN]) {
-        error("incorrect wqueen count: %d.  found: %d\n", 
-            pos->piece_counts[WHITE][QUEEN], num_wqueens);
+        error("incorrect wqueen count: %d.  found: %d\n", pos->piece_counts[WHITE][QUEEN], num_wqueens);
         retval = false;
     }
 
     if (num_bqueens != pos->piece_counts[BLACK][QUEEN]) {
-        error("incorrect bqueen count: %d.  found: %d\n", 
-            pos->piece_counts[BLACK][QUEEN], num_bqueens);
+        error("incorrect bqueen count: %d.  found: %d\n", pos->piece_counts[BLACK][QUEEN], num_bqueens);
         retval = false;
     }
 
     if (pos->piece_counts[WHITE][KING] != 1U) {
-        error("incorrect wking count: %d\n", 
-            pos->piece_counts[WHITE][KING]);
+        error("incorrect wking count: %d\n", pos->piece_counts[WHITE][KING]);
         retval = false;
     }
 
     if (pos->piece_counts[BLACK][KING] != 1U) {
-        error("incorrect bking count: %d\n", 
-            pos->piece_counts[BLACK][KING]);
+        error("incorrect bking count: %d\n", pos->piece_counts[BLACK][KING]);
         retval = false;
     }
 
     return retval;
 }
 
-static bool verify_bitmaps(const position_t* pos)
+
+static bool verify_bitmaps(const position_t *pos)
 {
     bool retval = true;
 
-    uint64_t bb_wpawns = 0, bb_wrooks = 0, bb_wknights = 0, bb_wbishops = 0, 
-        bb_wqueens = 0, bb_wpieces = 0;
-    uint64_t bb_bpawns = 0, bb_brooks = 0, bb_bknights = 0, bb_bbishops = 0, 
-        bb_bqueens = 0, bb_bpieces = 0;
+    uint64_t bb_wpawns = 0, bb_wrooks = 0, bb_wknights = 0, bb_wbishops = 0, bb_wqueens = 0, bb_wpieces = 0;
+    uint64_t bb_bpawns = 0, bb_brooks = 0, bb_bknights = 0, bb_bbishops = 0, bb_bqueens = 0, bb_bpieces = 0;
 
     for (int32_t sq=0; sq<64; sq++) {
         uint64_t bb_sq = square_to_bitmap(sq);
@@ -381,7 +352,8 @@ static bool verify_bitmaps(const position_t* pos)
     return retval;
 }
 
-static bool verify_castling_rights(const position_t* pos)
+
+static bool verify_castling_rights(const position_t *pos)
 {
     bool retval = true;
 
@@ -429,7 +401,8 @@ static bool verify_castling_rights(const position_t* pos)
     return retval;
 }
 
-static bool verify_hash_keys(const position_t* pos)
+
+static bool verify_hash_keys(const position_t *pos)
 {
     bool retval = true;
 
@@ -446,7 +419,8 @@ static bool verify_hash_keys(const position_t* pos)
     return retval;
 }
 
-static bool verify_nnue_accumulators(const position_t* pos)
+
+static bool verify_nnue_accumulators(const position_t *pos)
 {
     bool retval = true;
 

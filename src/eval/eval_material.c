@@ -1,20 +1,13 @@
 #include "eval_internal.h"
 
-#include "prophet/position.h"
+#include "position/position.h"
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 
-/**
- * \brief Evaluate the position's non-pawn material.
- *
- * \param pos           a pointer to a chess position
- * \param for_white     whether the returned value should be for white
- *
- * \return the score.
- */
-int32_t eval_nonpawn_material(const position_t* pos, bool for_white)
+
+int32_t eval_nonpawn_material(const position_t *pos, bool for_white)
 {
     int color = for_white ? WHITE : BLACK;
 
@@ -24,14 +17,10 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white)
     int num_rooks = pos->piece_counts[color][ROOK];
     int num_queens = pos->piece_counts[color][QUEEN];
 
-    /* raise the knight's value 1/16 for each pawn above 5, and lower for each
-     * pawn below 5.
-     */
+    /* raise the knight's value 1/16 for each pawn above 5, and lower for each pawn below 5. */
     int32_t knight_adj = (num_pawns - 5) * knight_kaufman_adj;
 
-    /* lower the rook's value 1/8 for each pawn above 5, and raise for each
-     * pawn below 5.
-     */
+    /* lower the rook's value 1/8 for each pawn above 5, and raise for each pawn below 5. */
     int32_t rook_adj = (num_pawns - 5) * rook_kaufman_adj;
 
     return num_rooks * (rook_val + rook_adj) +
@@ -41,18 +30,9 @@ int32_t eval_nonpawn_material(const position_t* pos, bool for_white)
 }
 
 
-/**
- * \brief Evaluate the position's pawn material.
- *
- * \param pos           a pointer to a chess position
- * \param for_white     whether the returned value should be for white
- *
- * \return the score.
- */
-int32_t eval_pawn_material(const position_t* pos, bool for_white)
+int32_t eval_pawn_material(const position_t *pos, bool for_white)
 {
     int color = for_white ? WHITE : BLACK;
 
     return pos->piece_counts[color][PAWN] * pawn_val;
 }
-

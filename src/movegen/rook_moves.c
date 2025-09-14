@@ -1,9 +1,9 @@
 #include "movegen_internal.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 #include "util/prng.h"
 
@@ -11,8 +11,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/* TODO: this is wasteful.  use a one dimensional array and precompute the 
- * offset for each square. */
 static uint64_t rook_moves[64][4096]; /* 4096 = 2^12.  12=max bits for mask */
 
 static uint64_t rook_masks[64]; /* reachable interior squares */
@@ -27,21 +25,8 @@ static void init_occupiers_and_blockers();
 static void init_magic_numbers();
 static void init_moves_database();
 
-/**
- * \brief Generate pseudo-legal rook moves
- *
- * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m. It is assumed there is enough memory allocated to contain all 
- * generated moves.
- *
- * \param m             a pointer to a move stack
- * \param p             a pointer to a chess position
- * \param caps          whether capturing moves should be generated
- * \param noncaps       whether noncapturing moves should be generated
- *
- * \return move pointer one greater than the last move added
- */
-move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
+
+move_t* gen_rook_moves(move_t *m, const position_t *p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_rooks : p->black_rooks;
@@ -55,13 +40,14 @@ move_t* gen_rook_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
     return m;
 }
 
-move_t* gen_rook_moves_from_sq(move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+
+move_t* gen_rook_moves_from_sq(move_t *m, const position_t *p, square_t from, bool caps, bool noncaps)
 {
     assert(m);
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t rook_moves = get_rook_moves(p, from, get_target_squares(p, caps, noncaps));
+    uint64_t rook_moves = get_rook_moves(p, from) & get_target_squares(p, caps, noncaps);
 
     while (rook_moves) {
         square_t sq = (square_t)get_lsb(rook_moves);
@@ -72,17 +58,8 @@ move_t* gen_rook_moves_from_sq(move_t* m, const position_t* p, square_t from, bo
     return m;
 }
 
-/**
- * \brief Get rook moves.
- *
- * \param p             a pointer to a chess position
- * \param from          the square the rook is moving from
- * \param targets       target squares
- *
- * \return the subset of target squares the rook can move to
- */
-uint64_t get_rook_moves(
-    const position_t* p, square_t from, uint64_t targets)
+
+uint64_t get_rook_moves(const position_t *p, square_t from)
 {
     assert(p);
     assert(from >= A8 && from <= H1);
@@ -94,8 +71,9 @@ uint64_t get_rook_moves(
     uint64_t occupied = (p->black_pieces | p->white_pieces) & rook_masks[from];
     int magic_ind = (occupied * magic_numbers[from]) >> magic_numbers_shift[from];
 
-    return rook_moves[from][magic_ind] & targets;
+    return rook_moves[from][magic_ind];
 }
+
 
 static void init_rook_masks()
 {
@@ -119,6 +97,7 @@ static void init_rook_masks()
         }
     }
 }
+
 
 static void init_occupiers_and_blockers()
 {
@@ -178,6 +157,7 @@ static void init_occupiers_and_blockers()
     }
 }
 
+
 static void init_magic_numbers()
 {
     for (uint32_t sq=0; sq<64; sq++) {
@@ -216,15 +196,14 @@ static void init_magic_numbers()
             }
         } while (fail);
 
-        /* at this point we have a magic number for this square that has the 
-         * property: for all combinations of occupiers (interior squares 
-         * reachable from this square), we can derive an index.  Any other 
-         * combination of occupiers that maps to the same index has the same 
-         * "blocker set". */
+        /* at this point we have a magic number for this square that has the property: for all combinations of 
+         * occupiers (interior squares reachable from this square), we can derive an index.  Any other 
+         * combination of occupiers that maps to the same index has the same "blocker set". */
         magic_numbers[sq] = magic;
         magic_numbers_shift[sq] = magic_shift;
     }
 }
+
 
 static void init_moves_database()
 {

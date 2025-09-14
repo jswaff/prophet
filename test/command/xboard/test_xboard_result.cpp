@@ -7,12 +7,12 @@
 
 TEST(xboard_test, xboard_result_incorrect_cmd)
 {
-    EXPECT_EQ(P4_ERROR_CMD_INCORRECT_COMMAND, xboard_result("bla"));
+    EXPECT_EQ(ERROR_CMD_INCORRECT_COMMAND, xboard_result("bla"));
 }
 
 TEST(xboard_test, xboard_result_missing_result)
 {
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_RESULT_MISSING_RESULT,
+    EXPECT_EQ(ERROR_CMD_XBOARD_RESULT_MISSING_RESULT,
         xboard_result("result"));
 }
 
@@ -28,6 +28,6 @@ TEST(xboard_test, xboard_result_invalid_result)
 
     EXPECT_EQ(0, xboard_result("result 1/2-1/2 {with some comment}"));
 
-    EXPECT_EQ(P4_ERROR_CMD_XBOARD_RESULT_INVALID_RESULT, 
+    EXPECT_EQ(ERROR_CMD_XBOARD_RESULT_INVALID_RESULT, 
         xboard_result("result bla"));
 }

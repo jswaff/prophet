@@ -1,24 +1,10 @@
-#include "position_internal.h"
-
-#include "prophet/position.h"
+#include "position.h"
 
 #include <stdbool.h>
 #include <stdint.h>
 
-/**
- * \brief Test two positions for equality
- *
- * In strict mode, each member must be equal.  In non-strict mode, that is 
- * relaxed somewhat - the fifty move counter and move counter are not required 
- * to be equal.
- *
- * \param p1            a pointer to a chess position
- * \param p2            a pointer to a second chess position
- * \param strict        strict mode
- *
- * \return a boolean indicating if the positions are equal
- */
-bool pos_equals(const position_t* p1, const position_t* p2, bool strict)
+
+bool pos_equals(const position_t *p1, const position_t *p2, bool strict)
 {
     for (int32_t sq=0; sq<64; sq++) {
         if (p1->piece[sq] != p2->piece[sq]) {

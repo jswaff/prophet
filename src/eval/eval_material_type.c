@@ -1,17 +1,9 @@
 #include "eval_internal.h"
 
-#include "prophet/position.h"
+#include "position/position.h"
 
 
-/**
- * \brief Evaluate the position's "material type".
- *
- * \param pos           a pointer to a chess position
- * \param draw_flag     a pointer to an integer to set the IMMEDIATE_DRAW flag
- *
- * \return the material type
- */
-material_type_t eval_material_type(const position_t* pos, int* draw_flag)
+material_type_t eval_material_type(const position_t *pos, int *draw_flag)
 {
     int num_white_pawns = pos->piece_counts[WHITE][PAWN];
     int num_white_knights = pos->piece_counts[WHITE][KNIGHT];

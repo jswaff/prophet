@@ -8,18 +8,6 @@ static uint32_t get_lsb_slow(uint64_t val);
 static uint32_t lsb[65536];
 
 
-/**
- * \brief Get the least significant bit set in a 64 bit value.
- *
- * The index is 0 based, with the LSB having an index of 0 and the MSB an 
- * index of 63.
- *
- * It is an error to call this function with a value of 0.
- *
- * \param val           the 64 bit value
- *
- * \return the bit position of the least significant bit
- */
 uint32_t get_lsb(uint64_t val)
 {
     assert(val > 0);
@@ -47,6 +35,7 @@ uint32_t get_lsb(uint64_t val)
 #endif
 }
 
+
 static uint32_t get_lsb_slow(uint64_t val)
 {
     assert(val > 0);
@@ -61,9 +50,6 @@ static uint32_t get_lsb_slow(uint64_t val)
 }
 
 
-/**
- * \brief Initialize the bitmap lsb functions.
- */
 void init_bitmap_lsb()
 {
     lsb[0] = 0;

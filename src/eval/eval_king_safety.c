@@ -1,21 +1,14 @@
 #include "eval_internal.h"
 
-#include "prophet/position.h"
-
 #include "bitmap/bitmap.h"
+#include "position/position.h"
+#include "position/square_internal.h"
 
 #include <stdbool.h>
 #include <stdint.h>
 
-/**
- * \brief Evaluate king safety for one side of the board.
- *
- * \param pos           a pointer to a chess position
- * \param wtm           white to move?
- *
- * \return a score of the king safety for the player specified.
- */
-int32_t eval_king_safety(const position_t* pos, bool wtm)
+
+int32_t eval_king_safety(const position_t *pos, bool wtm)
 {
     int32_t score = 0;
 

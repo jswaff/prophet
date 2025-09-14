@@ -1,34 +1,24 @@
 #include "movegen_internal.h"
 
 #include "prophet/piece.h"
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 
+static uint64_t pawn_attacks_w[64];
+static uint64_t pawn_attacks_b[64];
+
 static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t captured_piece, bool epcapture);
 static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t promopiece, piece_t captured_piece);
 
-/**
- * \brief Generate pseudo-legal pawn moves
- *
- * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m. It is assumed there is enough memory allocated to contain all 
- * generated moves.
- *
- * \param m             a pointer to a move stack
- * \param p             a pointer to a chess position
- * \param caps          whether capturing moves should be generated
- * \param noncaps       whether noncapturing moves should be generated
- *
- * \return move pointer one greater than the last move added
- */
-move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
+
+move_t* gen_pawn_moves(move_t *m, const position_t *p, bool caps, bool noncaps)
 {
     assert(caps || noncaps);
 
@@ -42,7 +32,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             if (p->ep_sq != NO_SQUARE) targets |= square_to_bitmap(p->ep_sq);
 
             /* attacks west */
-            pmap = ((p->white_pawns & ~file_to_bitmap(FILE_A)) >> 9) & targets;
+            pmap = ((p->white_pawns & not_file_to_bitmap(FILE_A)) >> 9) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -51,7 +41,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             }
 
             /* attacks east */
-            pmap = ((p->white_pawns & ~file_to_bitmap(FILE_H)) >> 7) & targets;
+            pmap = ((p->white_pawns & not_file_to_bitmap(FILE_H)) >> 7) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -70,7 +60,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 
         /* pawn pushes less promotions */
         if (noncaps) {
-            pmap = ((p->white_pawns & ~rank_to_bitmap(RANK_7)) >> 8) & ~all_pieces;
+            pmap = ((p->white_pawns & not_rank_to_bitmap(RANK_7)) >> 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, south(sq), sq, NO_PIECE, false);
@@ -86,7 +76,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             if (p->ep_sq != NO_SQUARE) targets |= square_to_bitmap(p->ep_sq);
 
             /* attacks west */
-            pmap = ((p->black_pawns & ~file_to_bitmap(FILE_A)) << 7) & targets;
+            pmap = ((p->black_pawns & not_file_to_bitmap(FILE_A)) << 7) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -95,7 +85,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
             }
 
             /* attacks west */
-            pmap = ((p->black_pawns & ~file_to_bitmap(FILE_H)) << 9) & targets;
+            pmap = ((p->black_pawns & not_file_to_bitmap(FILE_H)) << 9) & targets;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 piece_t captured = sq==p->ep_sq ? PAWN : (piece_t)p->piece[sq];
@@ -114,7 +104,7 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
 
         /* pawn pushes less promotions */
         if (noncaps) {
-            pmap = ((p->black_pawns & ~rank_to_bitmap(RANK_2)) << 8) & ~all_pieces;
+            pmap = ((p->black_pawns & not_rank_to_bitmap(RANK_2)) << 8) & ~all_pieces;
             while (pmap) {
                 square_t sq = (square_t)get_lsb(pmap);
                 m = add_pawn_move(m, north(sq), sq, NO_PIECE, false);
@@ -129,22 +119,16 @@ move_t* gen_pawn_moves(move_t* m, const position_t* p, bool caps, bool noncaps)
     return m;
 }
 
-/**
- * \brief Add a pawn move to a move list.
- *
- * If the move is a capture then the capture flag is set.  If it is a promotion 
- * then four moves are added.
- *
- * \param m             pointer to a move stack
- * \param from          the square the pawn is moving from
- * \param to            the square the pawn is moving to
- * \param captured_piece   the captured piece.  May be NO_PIECE if not a 
- *                      capture.
- * \param epcapture     if the move is an en-passant capture
- *
- * \return move pointer one greater than the last move added.
- */
-static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t captured_piece, bool epcapture)
+
+uint64_t get_pawn_attacks(square_t from, color_t player)
+{
+    assert(from >= A8 && from <= H1);
+
+    return player==WHITE ? pawn_attacks_w[from] : pawn_attacks_b[from];
+}
+
+
+static move_t* add_pawn_move(move_t*m, square_t from, square_t to, piece_t captured_piece, bool epcapture)
 {
     rank_t r = get_rank(to);
 
@@ -169,21 +153,7 @@ static move_t* add_pawn_move(move_t* m, square_t from, square_t to, piece_t capt
 }
 
 
-/**
- * \brief Add a pawn promotion to a move list.
- *
- * If the move is a capture then the capture flag is set.
- *
- * \param m             tointer to a move stack
- * \param from          the square the pawn is moving from
- * \param to            the square the pawn is moving to
- * \param promopiece    the piece to promote the pawn to : Q/R/B/N
- * \param captured_piece   the captured piece.  May be NO_PIECE if not a 
- *                      capture.
- *
- * \return move pointer one greater than the last move added
- */
-static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t promopiece, piece_t captured_piece)
+static move_t* add_promotion(move_t *m, square_t from, square_t to, piece_t promopiece, piece_t captured_piece)
 {
     *m = to_move(PAWN, from, to);
 
@@ -194,4 +164,34 @@ static move_t* add_promotion(move_t* m, square_t from, square_t to, piece_t prom
     ++m;
 
     return m;
+}
+
+
+void init_pawn_movegen()
+{
+    for (int i=0; i<64; i++) {
+        square_t sq = (square_t)i;
+        pawn_attacks_w[i] = 0;
+        pawn_attacks_b[i] = 0;
+
+        file_t f = get_file(sq);
+        rank_t r = get_rank(sq);
+
+        if (f > FILE_A) {
+            if (r > RANK_8) {
+                pawn_attacks_w[i] = square_to_bitmap(northwest(sq));
+            }
+            if (r < RANK_1) {
+                pawn_attacks_b[i] = square_to_bitmap(southwest(sq));
+            }
+        }
+        if (f < FILE_H) {
+            if (r > RANK_8) {
+                pawn_attacks_w[i] |= square_to_bitmap(northeast(sq));
+            }
+            if (r < RANK_1) {
+                pawn_attacks_b[i] |= square_to_bitmap(southeast(sq));
+            }
+        }
+    }
 }

@@ -1,35 +1,35 @@
 cmake_minimum_required(VERSION 3.17)
-project(prophetlib VERSION 4.4 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
+project(prophetlib VERSION 5.1 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
+set(EXE_NAME prophet)
 
-# Provide option to control test executable build
-option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
-
-# Provide option to users on which library version to build
+# options
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
-
+option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 option(WITH_AVX "Build with AVX intrinsics" ON)
-if(WITH_AVX)
-    add_definitions(-DUSE_AVX)
-endif()
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
+
+if(WITH_AVX)
+    add_compile_definitions(USE_AVX)
+    add_compile_options(-mavx2 -mbmi2) # an assumption
+    set(EXE_NAME ${EXE_NAME}-avx2)
+endif()
 if (DEBUG_AVX)
-    add_definitions(-DDEBUG_AVX)
+    add_compile_definitions(DEBUG_AVX)
 endif()
 
 # Google Test libs
 enable_testing()
 include(FetchContent)
 FetchContent_Declare(
- googletest
- URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
+    googletest 
+    URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
 )
 set(INSTALL_GTEST OFF)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # build library
-# TODO - many of these not necessary for the library
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE
@@ -71,7 +71,6 @@ target_sources(${PROJECT_NAME}
         src/command/xboard/xboard_time.c
         src/command/xboard/xboard_undo.c
         src/command/xboard/xboard_usermove.c
-        src/commandline/commandline_load_network.c
         src/commandline/commandline_load_properties.c
         src/commandline/commandline_print_usage.c
         src/commandline/commandline_process_options.c
@@ -114,6 +113,7 @@ target_sources(${PROJECT_NAME}
         src/movegen/perft.c
         src/movegen/queen_moves.c
         src/movegen/rook_moves.c
+        src/nn/load_network.c
         src/nn/nn_eval.c
         src/nn/neural_network.c
         src/nn/nnue_accumulators.c
@@ -137,7 +137,7 @@ target_sources(${PROJECT_NAME}
         src/search/qsearch.c
         src/search/search.c
         src/search/see.c
-        src/search/stop_search_on_time.c
+        src/search/stop.c
         src/search/zugzwang.c
         src/util/output.c
         src/util/prng.c
@@ -145,10 +145,27 @@ target_sources(${PROJECT_NAME}
         src/util/time.c
 )
 
-# Compiler options
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -fno-common -fPIC -flto -march=native")
-#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -00 -g")
-#set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
+set(public_headers
+    include/prophet/const.h
+    include/prophet/error_codes.h
+    include/prophet/eval.h
+    include/prophet/hash.h
+    include/prophet/init.h
+    include/prophet/move.h
+    include/prophet/movegen.h
+    include/prophet/nn.h
+    include/prophet/piece.h
+    include/prophet/search.h
+    include/prophet/square.h
+)
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -flto")
 message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")
 message("CMAKE_C_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")
 message("CMAKE_C_FLAGS_RELEASE is ${CMAKE_C_FLAGS_RELEASE}")
@@ -163,6 +180,21 @@ target_include_directories(${PROJECT_NAME}
         # where external projects will look for the library's public headers
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
+set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
+set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${PROJECT_VERSION})
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+# add executable with a dependency on the library
+add_executable(${EXE_NAME})
+target_sources(${EXE_NAME}
+    PRIVATE
+        src/main.c
+)
+target_include_directories(${EXE_NAME} PUBLIC "include/")
+target_link_libraries(${EXE_NAME} PRIVATE ${PROJECT_NAME})
 
 # note that it is not CMAKE_INSTALL_PREFIX we are checking here
 if(DEFINED CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -183,34 +215,6 @@ else()
         "Current value: ${CMAKE_INSTALL_PREFIX}"
     )
 endif()
-set(public_headers
-    include/prophet/const.h
-    include/prophet/error_codes.h
-    include/prophet/eval.h
-    include/prophet/hash.h
-    include/prophet/move.h
-    include/prophet/movegen.h
-    include/prophet/nn.h
-    include/prophet/piece.h
-    include/prophet/position.h
-    include/prophet/search.h
-    include/prophet/square.h
-)
-set_property(TARGET ${PROJECT_NAME} PROPERTY PUBLIC_HEADER "${public_headers}")
-set_property(TARGET ${PROJECT_NAME} PROPERTY DEBUG_POSTFIX "d")
-set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${PROJECT_VERSION})
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
-set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-
-# add executable with a dependency on the library
-add_executable(prophet)
-target_sources(prophet
-    PRIVATE
-        src/main.c
-)
-target_include_directories(prophet PUBLIC "include/")
-target_link_libraries(prophet PRIVATE prophetlib)
-
 
 # install
 include(GNUInstallDirs)
@@ -235,18 +239,6 @@ write_basic_package_version_file(
     VERSION "${version}"
     COMPATIBILITY AnyNewerVersion
 )
-
-# create config file
-#configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-#    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-#    INSTALL_DESTINATION cmake
-#)
-# install config files
-#install(FILES
-#    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-#    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-#    DESTINATION cmake
-#)
 
 
 if(BUILD_TEST_EXECUTABLE)
@@ -282,7 +274,6 @@ if(BUILD_TEST_EXECUTABLE)
             test/command/xboard/test_xboard_time.cpp
             test/command/xboard/test_xboard_undo.cpp
             test/command/xboard/test_xboard_usermove.cpp
-            test/commandline/test_commandline_load_network.cpp
             test/commandline/test_commandline_load_properties.cpp
             test/eval/test_eval_accumulator.cpp
             test/eval/test_eval_bishop.cpp
@@ -319,6 +310,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/movegen/test_perft.cpp
             test/movegen/test_queen_moves.cpp
             test/movegen/test_rook_moves.cpp
+            test/nn/test_load_network.cpp
             test/position/test_add_piece.cpp
             test/position/test_apply_move.cpp
             test/position/test_draw50.cpp

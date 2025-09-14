@@ -10,8 +10,7 @@
 
 
 /* structure mapping a command to a function */
-struct function_table_entry
-{
+struct function_table_entry {
     const char *name;
     cmd_func_t cmd_func;
 };
@@ -58,25 +57,8 @@ struct function_table_entry function_table[] = {
     {"perft", command_perft}
 };
 
-/**
- * \brief Parse a command
- * 
- * Parse the user input and attempt to map it to a command.  Note that failure
- * to map the input to a command does not generate a failure return code.  In 
- * this case the input is mapped to the no-op command.
- *
- * Implementation note: for the most part the commands specific to XBoard are 
- * isolated in the xboard folder.  Some of the XBoard logic has leaked up, but
- * it's pretty minimal and wouldn't be hard to refactor if support for another
- * protocol were added in the future.
- *
- * \param cmd           pointer to structure to receive parsed command
- * \param input         buffer containing command to be parsed
- * \param exit_status   pointer to boolean to receive exit status
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
+
+int parse_command(user_command_t *cmd, const char *input, bool *exit_status)
 {
     int retval = 0;
     *exit_status = false;
@@ -84,7 +66,7 @@ int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
     /* set the command */
     cmd->cmd = strdup(input);
     if (NULL == cmd->cmd) {
-        return P4_ERROR_CMD_PARSE_CMD_COPY;
+        return ERROR_CMD_PARSE_CMD_COPY;
     }    
 
     /* set the function */
@@ -113,8 +95,7 @@ int parse_command(user_command_t* cmd, const char* input, bool* exit_status)
 
 done:
 
-    /* special case - if the command was mapped to the exit handler, set the
-     * exit_status flag. */
+    /* special case - if the command was mapped to the exit handler, set the exit_status flag. */
     if (cmd->cmd_func == xboard_quit) {
         *exit_status = true;
     }

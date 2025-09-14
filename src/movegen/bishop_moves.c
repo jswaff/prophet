@@ -1,9 +1,9 @@
 #include "movegen_internal.h"
 
-#include "prophet/position.h"
 #include "prophet/square.h"
 
 #include "bitmap/bitmap.h"
+#include "position/position.h"
 #include "position/square_internal.h"
 #include "util/prng.h"
 
@@ -25,22 +25,8 @@ static void init_occupiers_and_blockers();
 static void init_magic_numbers();
 static void init_moves_database();
 
-/**
- * \brief Generate pseudo-legal bishop moves
- *
- * Moves are placed contiguously beginning at the memory location pointed to 
- * by \p m.  It is assumed there is enough memory allocated to contain all 
- * generated moves.
- *
- * \param m             a pointer to a move stack
- * \param p             a pointer to a chess position
- * \param caps          whether capturing moves should be generated
- * \param noncaps       whether noncapturing moves should be generated
- *
- * \return move pointer one greater than the last move added
- */
-move_t* gen_bishop_moves(
-    move_t* m, const position_t* p, bool caps, bool noncaps)
+
+move_t* gen_bishop_moves(move_t *m, const position_t *p, bool caps, bool noncaps) 
 {
     assert(caps || noncaps);
     uint64_t pmap = p->player==WHITE ? p->white_bishops : p->black_bishops;
@@ -54,14 +40,14 @@ move_t* gen_bishop_moves(
     return m;
 }
 
-move_t* gen_bishop_moves_from_sq(
-    move_t* m, const position_t* p, square_t from, bool caps, bool noncaps)
+
+move_t* gen_bishop_moves_from_sq(move_t *m, const position_t *p, square_t from, bool caps, bool noncaps) 
 {
     assert(m);
     assert(p);
     assert(from >= A8 && from <= H1);
 
-    uint64_t bishop_moves =  get_bishop_moves(p, from, get_target_squares(p, caps, noncaps));
+    uint64_t bishop_moves =  get_bishop_moves(p, from) & get_target_squares(p, caps, noncaps);
 
     while (bishop_moves) {
         square_t sq = (square_t)get_lsb(bishop_moves);
@@ -72,17 +58,8 @@ move_t* gen_bishop_moves_from_sq(
     return m;
 }
 
-/**
- * \brief Get bishop moves.
- *
- * \param p             a pointer to a chess position
- * \param from          The square the bishop is moving from
- * \param targets       target squares
- *
- * \return the subset of target squares the bishop can move to
- */
-uint64_t get_bishop_moves(
-    const position_t* p, square_t from, uint64_t targets)
+
+uint64_t get_bishop_moves(const position_t *p, square_t from)
 {
     assert(p);
     assert(from >= A8 && from <= H1);
@@ -94,8 +71,9 @@ uint64_t get_bishop_moves(
     uint64_t occupied = (p->black_pieces | p->white_pieces) & bishop_masks[from];
     int magic_ind = (occupied * magic_numbers[from]) >> magic_numbers_shift[from];
 
-    return bishop_moves[from][magic_ind] & targets;
+    return bishop_moves[from][magic_ind];
 }
+
 
 static void init_bishop_masks()
 {
@@ -119,6 +97,7 @@ static void init_bishop_masks()
     }
 }
 
+
 static void init_occupiers_and_blockers()
 {
     for (uint32_t sq=0; sq<64; sq++) {
@@ -130,8 +109,7 @@ static void init_occupiers_and_blockers()
         for (uint32_t i=0; i<num_variations; i++) {
             occupiers[sq][i] = blockers[sq][i] = 0;
 
-            /* map the index to an occupancy variation.  the idea is that each 
-             * bit in the index maps to a bit in the mask. */
+            /* map the index to an occupancy variation.  each bit in the index maps to a bit in the mask. */
             uint32_t index = i;
             while (index) {
                 uint32_t index_bit = get_lsb(index);
@@ -139,8 +117,7 @@ static void init_occupiers_and_blockers()
                 index ^= 1 << index_bit;
             }
 
-            /* create the blocker - that's the first occupied square in every 
-             * direction. */
+            /* create the blocker - that's the first occupied square in every direction. */
             square_t to = northeast((square_t)sq);
             while (to != NO_SQUARE) {
                 if (occupiers[sq][i] & square_to_bitmap(to)) {
@@ -177,7 +154,7 @@ static void init_occupiers_and_blockers()
     }
 }
 
-/* TODO: this method identical to rooks */
+
 static void init_magic_numbers()
 {
     for (uint32_t sq=0; sq<64; sq++) {
@@ -216,15 +193,14 @@ static void init_magic_numbers()
             }
         } while (fail);
 
-        /* at this point we have a magic number for this square that has the 
-         * property: for all combinations of occupiers (interior squares 
-         * reachable from this square), we can derive an index.  Any other 
-         * combination of occupiers that maps to the same index has the same 
-         * "blocker set". */
+        /* at this point we have a magic number for this square that has the property: for all combinations of 
+         * occupiers (interior squares reachable from this square), we can derive an index.  Any other combination 
+         * of occupiers that maps to the same index has the same "blocker set". */
         magic_numbers[sq] = magic;
         magic_numbers_shift[sq] = magic_shift;
     }
 }
+
 
 static void init_moves_database()
 {
@@ -244,6 +220,7 @@ static void init_moves_database()
         }
     }
 }
+
 
 void init_bishop_movegen()
 {

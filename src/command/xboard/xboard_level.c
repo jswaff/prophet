@@ -13,39 +13,31 @@ char time_control_base[10];
 double time_control_increment;
 
 
-/**
- * \brief Execute the xboard level command 
- * 
- * \param input         the user entered input 
- *
- * \return 0 on successful execution, and non-zero on failure
- */
-int xboard_level(const char* input)
+int xboard_level(const char *input)
 {
     char* my_input = strdup(input);
 
-    /* keep the original to free the memory allocated by strdup before 
-     * exiting. */
-    char* input_ptr = my_input;
+    /* keep the original to free the memory allocated by strdup before exiting. */
+    char *input_ptr = my_input;
 
     /* verify the command */
     if (0 != strncmp("level ", my_input, 6)) {
         free(input_ptr);
-        return P4_ERROR_CMD_INCORRECT_COMMAND;
+        return ERROR_CMD_INCORRECT_COMMAND;
     }
 
     /* is the command long enough to contain an argument? */
     if (strlen(my_input) < 11) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;
     }
 
     /* to read the MOVES parameter */
-    char* token = strtok(my_input, " "); /* "level" */
+    char *token = strtok(my_input, " "); /* "level" */
     token = strtok(NULL, " ");
     if (!token) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
     }
     time_control_moves = atoi(token);
 
@@ -55,7 +47,7 @@ int xboard_level(const char* input)
     token = strtok(NULL, " ");
     if (!token) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
     }
     int token_len = strlen(token);
     if (token_len > 10) token_len = 10;
@@ -66,7 +58,7 @@ int xboard_level(const char* input)
     token = strtok(NULL, " ");
     if (!token) {
         free(input_ptr);
-        return P4_ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
+        return ERROR_CMD_XBOARD_LEVEL_MISSING_PARAM;   
     }
     time_control_increment = atof(token);
     
