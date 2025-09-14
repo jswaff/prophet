@@ -147,10 +147,7 @@ static void set_capacity(hash_table_t *tbl, uint64_t max_size)
 {
     assert(max_size > 0);
 
-    plog("# max hash size: %"PRIu64" bytes\n", max_size);
-    plog("# hash entry size: %u bytes\n", sizeof(hash_entry_t));
     uint64_t max_entries = max_size / sizeof(hash_entry_t);
-    plog("# max hash entries: %"PRIu64"\n", max_entries);
 
     /* find the largest power of 2 that is <= size */
     tbl->capacity = 1;
@@ -160,8 +157,6 @@ static void set_capacity(hash_table_t *tbl, uint64_t max_size)
     tbl->capacity /= 2;
 
     uint64_t actual_size = tbl->capacity * sizeof(hash_entry_t);
-    plog("# actual hash size: %"PRIu64" bytes\n", actual_size);
-    plog("# actual hash entries: %"PRIu64"\n", tbl->capacity);
 
     /* set the mask for determining the proper bucket given a key */
     tbl->mask = tbl->capacity - 1;    
