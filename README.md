@@ -46,7 +46,7 @@ The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5
 5.1
 
 * changed neural network architecture to 2x(768->384)->2
-* factor quantization error into network training
+* factored quantization error into network training
 * moved several functions that should be internal out of public headers
 * lots of code cleanup
 
