@@ -13,13 +13,13 @@ Although Prophet is a fully functional chess engine, I tend to use it more as a 
 By default, Prophet still uses a hand crafted evaluation.  You can enable a neural network based evaluation using the 'n' command line parameter.
 
 ```
-./prophet -n nn-24-q.txt 
+./prophet -n nn-32-q.txt 
 ```
 
 You should see a confirmation that the network was loaded:
 
 ```
-loading neural network from nn-24-q.txt
+loading neural network from nn-32-q.txt
 ```
 
 The supplied network weights were trained using [chess-trainer](https://github.com/jswaff/chess-trainer).  chess-trainer is a Pytorch based trainer I wrote, with some influence from David Carteau's excellent [Cerebrum library](https://github.com/david-carteau/cerebrum).  The inference code within Prophet (particularly the intrinsics) were used almost verbatim.  Thank you David!
@@ -41,9 +41,16 @@ You may be able to compile Prophet on other POSIX compliant operating systems, b
 
 ## How Strong is it?
 
-The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 4.3 to be rated at 2480.  Prophet 5.0 should be around 100 ELO stronger according to my testing. 
+The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.0 to be rated at 2648.  Prophet 5.1 should be around 90 ELO stronger according to my testing. 
 
 ## Release Notes
+
+5.1
+
+* changed neural network architecture to 2x(768->384)->2
+* factor quantization error into network training
+* moved several functions that should be internal out of public headers
+* lots of code cleanup
 
 5.0
 
