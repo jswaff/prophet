@@ -8,7 +8,7 @@ Prophet is a chess playing program written in C.  Technically it's a chess engin
 
 ## Using a Neural Network
 
-By default, Prophet still uses a hand crafted evaluation.  You can enable a neural network based evaluation using the 'n' command line parameter.
+By default, Prophet still uses a handcrafted evaluation.  You can enable a neural network based evaluation using the 'n' command line parameter.
 
 ```
 ./prophet -n nn-32-q.txt 
