@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(prophetlib VERSION 5.1 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
+project(prophetlib VERSION 5.2 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 set(EXE_NAME prophet)
 
 # options
