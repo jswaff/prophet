@@ -82,7 +82,9 @@ static int32_t search_helper(position_t *pos, move_line_t *parent_pv, bool first
     }
 
     /* time check */
-    if (!skip_time_checks && stop_search_on_time(opts, stats)) {
+    if ((!skip_time_checks && stop_search_on_time(opts, stats)) || 
+        (opts->node_limit>0 && stats->nodes + stats->qnodes >= opts->node_limit)) 
+    {
         stop_search = true;
         return 0;
     }

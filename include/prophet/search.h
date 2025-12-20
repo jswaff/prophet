@@ -44,12 +44,13 @@ typedef struct {
  * @param early_exit_ok whether it is OK for the search to terminate early
  * @param max_depth     the maximum depth to search
  * @param max_time_ms   the maximum time in milliseconds to search
+ * @param max_nodes     the maximum number of nodes to search
  * @param pv_callback   a callback function to invoke when the principal variation is updated
  *
  * @return 0 on success, non-zero on failure
  */ 
 int iterate_from_fen(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score, const char *fen,
-    bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback);
+    bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, uint64_t max_nodes, pv_func_t pv_callback);
 
 
 /**
@@ -65,13 +66,14 @@ int iterate_from_fen(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth
  * @param early_exit_ok whether it is OK for the search to terminate early
  * @param max_depth     the maximum depth to search
  * @param max_time_ms   the maximum time in milliseconds to search
+ * @param max_nodes     the maximum number of nodes to search
  * @param pv_callback   a callback function to invoke when the principal variation is updated
  *
  * @return 0 on success, non-zero on failure
  */ 
 int iterate_from_move_history(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score,
     const move_t *move_history, int len_move_history, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms,
-    pv_func_t pv_callback);
+    uint64_t max_nodes, pv_func_t pv_callback);
 
 
 /**
