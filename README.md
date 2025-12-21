@@ -22,6 +22,16 @@ loading neural network from nn-32-q.txt
 
 The supplied network weights were trained using [chess-trainer](https://github.com/jswaff/chess-trainer).  chess-trainer is a Pytorch based trainer I wrote, with some influence from David Carteau's excellent [Cerebrum library](https://github.com/david-carteau/cerebrum).  The inference code within Prophet (particularly the intrinsics) were used almost verbatim.  Thank you David!
 
+## Configuring Hash Tables
+
+You can control the main hash table and pawn hash table sizes (in MB) using the 'h' and 'p' command line parameters.
+
+```
+./prophet -h 256 -p 32
+```
+
+This sets a 256 MB main hash table and a 32 MB pawn hash table.
+Defaults are 64 MB for the main hash table and 8 MB for the pawn hash table.
 
 ## Building from Source
 
