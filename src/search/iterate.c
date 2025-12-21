@@ -35,25 +35,26 @@ extern move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
 
 /* forward decls */
 static int iterate_from_position(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score,
-    position_t *pos, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback);
+    position_t *pos, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, uint64_t max_nodes, pv_func_t pv_callback);
 static void print_search_summary(uint32_t last_depth, int32_t score, uint64_t start_time, const stats_t *stats);
 static bool best_at_top(move_t *start, move_t *end);
 
 
 int iterate_from_fen(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score, const char *fen,
-    bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback)
+    bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, uint64_t max_nodes, pv_func_t pv_callback)
 {
     /* set up the position */
     position_t pos;
     if (!set_pos(&pos, fen)) return ERROR_API_INVALID_FEN;
 
-    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, early_exit_ok, max_depth, max_time_ms, pv_callback);
+    return iterate_from_position(stats, pv, pv_length, depth, score, &pos, early_exit_ok, max_depth, max_time_ms, max_nodes, 
+        pv_callback);
 }
 
 
 int iterate_from_move_history(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score,
     const move_t *move_history, int len_move_history, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms,
-    pv_func_t pv_callback)
+    uint64_t max_nodes, pv_func_t pv_callback)
 {
     /* set up the position */
     position_t pos;
@@ -65,7 +66,7 @@ int iterate_from_move_history(stats_t *stats, move_t *pv, int *pv_length, uint32
     }
 
     return iterate_from_position(stats, pv, pv_length, depth, score, &pos, early_exit_ok, max_depth, max_time_ms, 
-        pv_callback);
+        max_nodes, pv_callback);
 }
 
 
@@ -105,6 +106,9 @@ move_line_t iterate(uint32_t *depth, int32_t *score, const iterator_options_t *o
         if (opts->max_time_ms < 1000) {
             search_opts.nodes_between_time_checks /= 10;   
         }
+    }
+    if (opts->max_nodes) {
+        search_opts.node_limit = opts->max_nodes;
     }
 
     /* prepare to search */
@@ -179,7 +183,7 @@ move_line_t iterate(uint32_t *depth, int32_t *score, const iterator_options_t *o
 
 
 static int iterate_from_position(stats_t *stats, move_t *pv, int *pv_length, uint32_t *depth, int32_t *score,
-    position_t *pos, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, pv_func_t pv_callback)
+    position_t *pos, bool early_exit_ok, uint32_t max_depth, uint32_t max_time_ms, uint64_t max_nodes, pv_func_t pv_callback)
 {
     int retval = 0;
 
@@ -190,6 +194,7 @@ static int iterate_from_position(stats_t *stats, move_t *pv, int *pv_length, uin
     opts->early_exit_ok = early_exit_ok;
     opts->max_depth = max_depth;
     opts->max_time_ms = max_time_ms;
+    opts->max_nodes = max_nodes;
     opts->pv_callback = pv_callback;
     opts->print_summary = false;
 

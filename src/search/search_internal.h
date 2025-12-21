@@ -46,6 +46,7 @@ typedef struct {
     uint64_t stop_time;
     uint64_t nodes_between_time_checks;
     uint64_t node_count_last_time_check;
+    uint64_t node_limit;
 } search_options_t;
 
 
@@ -53,6 +54,7 @@ typedef struct {
     bool early_exit_ok;
     uint32_t max_depth;
     uint32_t max_time_ms;
+    uint64_t max_nodes;
     pv_func_t pv_callback;
     bool print_summary;
 } iterator_options_t;
