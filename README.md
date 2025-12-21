@@ -33,6 +33,10 @@ You can control the main hash table and pawn hash table sizes (in MB) using the 
 This sets a 256 MB main hash table and a 32 MB pawn hash table.
 Defaults are 64 MB for the main hash table and 8 MB for the pawn hash table.
 
+## Developer API
+
+Public API documentation lives in `docs/API.md`.
+
 ## Building from Source
 
 Binaries are provided for Linux and Windows based systems, but if you want to build Prophet from source, you'll need a Linux based environment with gcc/g++ and cmake.  If you have the proper build tools, just do:
