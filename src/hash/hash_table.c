@@ -86,7 +86,13 @@ int init_hash_tables()
     if (0 != retval) {
         return retval;
     }
-    return init_hash_table(&phtbl, pawn_hash_size);
+    retval = init_hash_table(&phtbl, pawn_hash_size);
+    if (0 != retval) {
+        free(htbl.tbl);
+        htbl.tbl = NULL;
+        return retval;
+    }
+    return 0;
 }
 
 
