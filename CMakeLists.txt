@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.17)
 project(prophetlib VERSION 5.2 DESCRIPTION "Prophet Chess" LANGUAGES C CXX)
 set(EXE_NAME prophet)
 
+#set(CMAKE_C_STANDARD 11)
+#set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+
 # options
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
@@ -10,7 +14,12 @@ option(DEBUG_AVX "Debug AVX intrinsics" OFF)
 
 if(WITH_AVX)
     add_compile_definitions(USE_AVX)
-    add_compile_options(-mavx2 -mbmi2) # an assumption
+    # assume avx2
+    if(MSVC)
+        add_compile_options(/arch:AVX2)
+    else()
+        add_compile_options(-mavx2 -mbmi2)
+    endif()
     set(EXE_NAME ${EXE_NAME}-avx2)
 endif()
 if (DEBUG_AVX)
@@ -26,7 +35,9 @@ FetchContent_Declare(
 )
 set(INSTALL_GTEST OFF)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
-#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+if(MSVC)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
 FetchContent_MakeAvailable(googletest)
 
 # build library
@@ -140,8 +151,11 @@ target_sources(${PROJECT_NAME}
         src/search/stop.c
         src/search/zugzwang.c
         src/util/output.c
+        src/util/posix_compat.c
         src/util/prng.c
         src/util/string_utils.c
+        src/util/getopt_compat.c
+        src/util/thread_compat.c
         src/util/time.c
 )
 
@@ -163,9 +177,13 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -flto")
+if(MSVC)
+    add_compile_options(/W4 /WX)
+else()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra")
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -flto")
+endif()
 message("CMAKE_C_FLAGS is ${CMAKE_C_FLAGS}")
 message("CMAKE_C_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")
 message("CMAKE_C_FLAGS_RELEASE is ${CMAKE_C_FLAGS_RELEASE}")
