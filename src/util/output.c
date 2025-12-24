@@ -9,17 +9,23 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
+#include "thread_compat.h"
 
 bool logging_enabled = false;
 
-static pthread_mutex_t error_mutex;
-static pthread_mutex_t output_mutex;
+static prophet_mutex_t error_mutex;
+static prophet_mutex_t output_mutex;
 static FILE* logfile = 0;
+static bool mutexes_initialized = false;
 
 
 void init_logging()
 {
+    if (!mutexes_initialized) {
+        prophet_mutex_init(&error_mutex);
+        prophet_mutex_init(&output_mutex);
+        mutexes_initialized = true;
+    }
     if (logging_enabled && !logfile) {
         logfile = fopen("prophet.log", "w");
     }
@@ -36,18 +42,18 @@ void close_logfile()
 
 void error(const char *format, ...)
 {
-    pthread_mutex_lock(&error_mutex);
+    prophet_mutex_lock(&error_mutex);
     va_list args;
     va_start(args, format);
     vfprintf(stderr, format, args);
     va_end(args);
-    pthread_mutex_unlock(&error_mutex);
+    prophet_mutex_unlock(&error_mutex);
 }
 
 
 void plog(const char *format, ...)
 {
-    pthread_mutex_lock(&output_mutex);
+    prophet_mutex_lock(&output_mutex);
 
     va_list stdout_args;
     va_start(stdout_args, format);
@@ -61,18 +67,18 @@ void plog(const char *format, ...)
         va_end(log_args);
     }
 
-    pthread_mutex_unlock(&output_mutex);
+    prophet_mutex_unlock(&output_mutex);
 }
 
 
 void out(FILE *stream, const char *format, ...)
 {
-    pthread_mutex_lock(&output_mutex);
+    prophet_mutex_lock(&output_mutex);
     va_list args;
     va_start(args, format);
     vfprintf(stream, format, args);
     va_end(args);
-    pthread_mutex_unlock(&output_mutex);
+    prophet_mutex_unlock(&output_mutex);
 }
 
 

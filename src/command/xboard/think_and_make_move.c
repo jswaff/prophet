@@ -13,7 +13,7 @@
 #include "util/string_utils.h"
 
 #include <assert.h>
-#include <pthread.h>
+#include "util/thread_compat.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -34,21 +34,33 @@ extern bool xboard_force_mode;
 /* local variables */
 uint32_t num_random_starting_moves;
 uint32_t random_moves_counter;
-pthread_t search_thread;
+prophet_thread_t search_thread;
 bool search_thread_running = false;
-pthread_mutex_t search_lock;
+prophet_mutex_t search_lock;
 move_t moves[MAX_PLY * MAX_MOVES_PER_PLY];
+static bool search_lock_initialized = false;
 
 
 /* forward decls */
 static void* iterate_wrapper(void* arg);
 static int select_random_move();
 static int make_move_otb(move_t mv);
+void ensure_xboard_threading_initialized();
+
+
+void ensure_xboard_threading_initialized()
+{
+    if (!search_lock_initialized) {
+        prophet_mutex_init(&search_lock);
+        search_lock_initialized = true;
+    }
+}
 
 
 int think_and_make_move()
 {
     assert(!endgame_check());
+    ensure_xboard_threading_initialized();
 
     int retval;
     if (random_moves_counter > 0) {
@@ -56,14 +68,14 @@ int think_and_make_move()
         retval = select_random_move();
         random_moves_counter--;
     } else {
-        pthread_mutex_lock(&search_lock); 
+        prophet_mutex_lock(&search_lock);
         stop_search = false;
-        retval = pthread_create(&search_thread, NULL, iterate_wrapper, NULL);
+        retval = prophet_thread_create(&search_thread, iterate_wrapper, NULL);
         if (0 != retval) {
             return ERROR_THREAD_CREATION_FAILURE;
         }
         search_thread_running = true;
-        pthread_mutex_unlock(&search_lock); 
+        prophet_mutex_unlock(&search_lock);
     }
 
 
@@ -103,7 +115,7 @@ static void* iterate_wrapper(void* UNUSED(arg))
     if (!xboard_force_mode) {
         int retval = make_move_otb(pv.mv[0]);
         if (0 != retval) {
-            pthread_exit(&retval);
+            return (void*)(intptr_t)retval;
         }
     }
 

@@ -5,7 +5,11 @@
 
 #include "util/output.h"
 
+#ifdef _WIN32
+#include "util/getopt_compat.h"
+#else
 #include <getopt.h>
+#endif
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h>
