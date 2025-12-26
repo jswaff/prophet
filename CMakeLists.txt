@@ -12,6 +12,10 @@ option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 option(WITH_AVX "Build with AVX intrinsics" ON)
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
 
+if(MSVC)
+    set(BUILD_TEST_EXECUTABLE OFF CACHE BOOL "Build test executable" FORCE)
+endif()
+
 if(WITH_AVX)
     add_compile_definitions(USE_AVX)
     # assume avx2

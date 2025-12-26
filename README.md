@@ -49,7 +49,17 @@ make install
 
 If all went well, the 'prophet' and 'prophet_test' binaries will be in the build folder.
 
-You may be able to compile Prophet on other POSIX compliant operating systems, but I haven't tried it.  If you'd like to build a Windows binary, Cygwin does work, but native Windows builds are not currently supported.  I plan to investigate this in the future.
+For native Windows builds with MSVC, use a Visual Studio Developer Command Prompt:
+
+```
+mkdir build && cd build
+cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --config Release
+```
+
+The MSVC build disables the test executable by default. The resulting binary will be in a configuration subfolder like `build/Release/`.
+
+You may be able to compile Prophet on other POSIX compliant operating systems, but I haven't tried it.
 
 ## How Strong is it?
 
