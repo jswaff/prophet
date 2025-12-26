@@ -39,7 +39,9 @@ Public API documentation lives in `docs/API.md`.
 
 ## Building from Source
 
-Binaries are provided for Linux and Windows based systems, but if you want to build Prophet from source, you'll need a Linux based environment with gcc/g++ and cmake.  If you have the proper build tools, just do:
+Binaries are provided for Linux and Windows based systems, but if you want to build Prophet from source, you'll need either a Linux environment with gcc/g++ or Windows with MSVC. 
+
+For Linux:
 
 ```
 mkdir build && cd build
@@ -47,9 +49,9 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make install
 ```
 
-If all went well, the 'prophet' and 'prophet_test' binaries will be in the build folder.
+If all went well, the binary will be in the build folder.
 
-For native Windows builds with MSVC, use a Visual Studio Developer Command Prompt:
+For Windows, use a Visual Studio Developer Command Prompt:
 
 ```
 mkdir build && cd build
@@ -57,9 +59,7 @@ cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release ..
 cmake --build . --config Release
 ```
 
-The MSVC build disables the test executable by default. The resulting binary will be in a configuration subfolder like `build/Release/`.
-
-You may be able to compile Prophet on other POSIX compliant operating systems, but I haven't tried it.
+The resulting binary will be in build/Release.
 
 ## How Strong is it?
 
