@@ -2,6 +2,24 @@
 
 #include <string.h>
 
+static const char* null_device_path()
+{
+#ifdef _WIN32
+    return "NUL";
+#else
+    return "/dev/null";
+#endif
+}
+
+static const char* tty_device_path()
+{
+#ifdef _WIN32
+    return "CON";
+#else
+    return "/dev/tty";
+#endif
+}
+
 int stdout_capture_begin(stdout_capture_t* cap, char* buffer, size_t size)
 {
     if (!cap || !buffer || size == 0) {
@@ -14,12 +32,12 @@ int stdout_capture_begin(stdout_capture_t* cap, char* buffer, size_t size)
 
 #ifdef _WIN32
     FILE* new_stdout = NULL;
-    if (freopen_s(&new_stdout, "NUL", "a", stdout) != 0) {
+    if (freopen_s(&new_stdout, null_device_path(), "a", stdout) != 0) {
         return -1;
     }
     cap->new_stdout = new_stdout;
 #else
-    if (freopen("/dev/null", "a", stdout) != stdout) {
+    if (freopen(null_device_path(), "a", stdout) != stdout) {
         return -1;
     }
 #endif
@@ -39,11 +57,11 @@ int stdout_capture_end(stdout_capture_t* cap)
     }
 
 #ifdef _WIN32
-    if (freopen_s(&cap->new_stdout, "CON", "a", stdout) != 0) {
+    if (freopen_s(&cap->new_stdout, tty_device_path(), "a", stdout) != 0) {
         return -1;
     }
 #else
-    if (freopen("/dev/tty", "a", stdout) != stdout) {
+    if (freopen(tty_device_path(), "a", stdout) != stdout) {
         return -1;
     }
 #endif

@@ -11,6 +11,7 @@ option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 option(WITH_AVX "Build with AVX intrinsics" ON)
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
+set(RESOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test/resources" CACHE STRING "Path to test resources")
 
 
 if(WITH_AVX)
@@ -357,6 +358,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/util/test_prng.cpp
             test/util/test_string_utils.cpp
             test/util/stdout_capture.cpp
+            test/util/test_paths.cpp
     )
 
     # Compiler options
@@ -367,6 +369,7 @@ if(BUILD_TEST_EXECUTABLE)
     )
     target_link_libraries(prophet_test PRIVATE ${PROJECT_NAME})
     target_link_libraries(prophet_test PRIVATE gtest_main)
+    target_compile_definitions(prophet_test PRIVATE RESOURCE_DIR="${RESOURCE_DIR}")
     set_property(TARGET prophet_test PROPERTY CXX_STANDARD 17)
     include(GoogleTest)
     gtest_discover_tests(prophet_test
