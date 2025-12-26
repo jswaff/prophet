@@ -2,6 +2,8 @@
 
 #include "prophet/error_codes.h"
 
+#include "util/stdout_capture.h"
+
 #include <gtest/gtest.h>
 
 #include <string.h>
@@ -21,14 +23,14 @@ TEST(xboard_test, xboard_ping)
 {
 	// redirect stdout to a buffer 
 	char buffer[255];
-	memset(buffer, 0, 255);
-	ASSERT_EQ(stdout, freopen("/dev/null", "a", stdout));
-	setbuf(stdout, buffer);
+	memset(buffer, 0, sizeof(buffer));
+    stdout_capture_t capture;
+    ASSERT_EQ(0, stdout_capture_begin(&capture, buffer, sizeof(buffer)));
 
 	int retval = xboard_ping("ping 1337");
 
     // redirect back
-    ASSERT_EQ(stdout, freopen("/dev/tty", "a", stdout));
+    ASSERT_EQ(0, stdout_capture_end(&capture));
 
     ASSERT_EQ(0, retval);
 

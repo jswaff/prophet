@@ -4,6 +4,8 @@
 
 #include "position/position.h"
 
+#include "util/stdout_capture.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
@@ -68,15 +70,15 @@ TEST(xoard_test, xboard_usermove_not_force_mode)
 
     // redirect stdout to a buffer 
     char buffer[255];
-    memset(buffer, 0, 255);
-    ASSERT_EQ(stdout, freopen("/dev/null", "a", stdout));
-    setbuf(stdout, buffer);
+    memset(buffer, 0, sizeof(buffer));
+    stdout_capture_t capture;
+    ASSERT_EQ(0, stdout_capture_begin(&capture, buffer, sizeof(buffer)));
 
     int retval = xboard_usermove("usermove e2e4");
     ASSERT_EQ(0, block_on_search_thread(false)); // wait for search thread to finish
 
     // redirect back
-    ASSERT_EQ(stdout, freopen("/dev/tty", "a", stdout));
+    ASSERT_EQ(0, stdout_capture_end(&capture));
 
     ASSERT_EQ(0, retval);
 
@@ -100,14 +102,14 @@ TEST(xboard_test, xboard_usermove_move_ends_game)
 
     // redirect stdout to a buffer 
     char buffer[255];
-    memset(buffer, 0, 255);
-    ASSERT_EQ(stdout, freopen("/dev/null", "a", stdout));
-    setbuf(stdout, buffer);
+    memset(buffer, 0, sizeof(buffer));
+    stdout_capture_t capture;
+    ASSERT_EQ(0, stdout_capture_begin(&capture, buffer, sizeof(buffer)));
 
     int retval = xboard_usermove("usermove d8h4");
 
     // redirect back
-    ASSERT_EQ(stdout, freopen("/dev/tty", "a", stdout));
+    ASSERT_EQ(0, stdout_capture_end(&capture));
 
     ASSERT_EQ(0, retval);
     EXPECT_EQ(0, strcmp("0-1 {Black mates}\n", buffer));

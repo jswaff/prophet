@@ -12,9 +12,6 @@ option(BUILD_TEST_EXECUTABLE "Build test executable" ON)
 option(WITH_AVX "Build with AVX intrinsics" ON)
 option(DEBUG_AVX "Debug AVX intrinsics" OFF)
 
-if(MSVC)
-    set(BUILD_TEST_EXECUTABLE OFF CACHE BOOL "Build test executable" FORCE)
-endif()
 
 if(WITH_AVX)
     add_compile_definitions(USE_AVX)
@@ -183,6 +180,7 @@ endif()
 
 if(MSVC)
     add_compile_options(/W4 /WX)
+    add_compile_options($<$<CONFIG:Release>:/O2>)
 else()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
@@ -356,6 +354,7 @@ if(BUILD_TEST_EXECUTABLE)
             test/search/test_zugzwang.cpp
             test/util/test_prng.cpp
             test/util/test_string_utils.cpp
+            test/util/stdout_capture.cpp
     )
 
     # Compiler options

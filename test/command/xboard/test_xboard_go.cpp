@@ -4,6 +4,8 @@
 
 #include "position/position.h"
 
+#include "util/stdout_capture.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
@@ -28,17 +30,17 @@ TEST(xboard_test, xboard_go)
     xboard_post_mode = false;
     max_depth = 1;
 
-	// redirect stdout to a buffer 
-	char buffer[255];
-	memset(buffer, 0, 255);
-	ASSERT_EQ(stdout, freopen("/dev/null", "a", stdout));
-	setbuf(stdout, buffer);
+    // redirect stdout to a buffer
+    char buffer[255];
+    memset(buffer, 0, sizeof(buffer));
+    stdout_capture_t capture;
+    ASSERT_EQ(0, stdout_capture_begin(&capture, buffer, sizeof(buffer)));
 
     int retval = xboard_go("go");
     ASSERT_EQ(0, block_on_search_thread(false)); // wait for search thread to finish
 
     // redirect back
-    ASSERT_EQ(stdout, freopen("/dev/tty", "a", stdout));
+    ASSERT_EQ(0, stdout_capture_end(&capture));
 
     ASSERT_EQ(0, retval);
 
