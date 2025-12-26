@@ -4,14 +4,11 @@
 
 #include "position/position.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
-
-extern bool fixed_time_per_move;
-extern uint32_t time_remaining_millis;
-extern double time_control_increment;
-extern uint32_t max_time_ms;
 
 
 TEST(xboard_test, xboard_time_incorrect_cmd)

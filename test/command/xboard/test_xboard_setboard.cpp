@@ -4,11 +4,12 @@
 
 #include "position/position.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <string.h>
 
-extern position_t gpos;
 
 TEST(xboard_test, xboard_setboard_incorrect_cmd)
 {

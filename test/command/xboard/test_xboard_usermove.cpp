@@ -5,16 +5,12 @@
 #include "position/position.h"
 
 #include "util/stdout_capture.h"
+#include "test_globals.h"
 
 #include <gtest/gtest.h>
 
 #include <stdint.h>
 #include <string.h>
-
-extern position_t gpos;
-extern int32_t max_depth;
-extern bool xboard_force_mode;
-extern bool xboard_post_mode;
 
 TEST(xboard_test, xboard_usermove_incorrect_cmd)
 {

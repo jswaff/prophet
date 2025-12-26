@@ -2,10 +2,9 @@
 
 #include "prophet/error_codes.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
-
-
-extern bool xboard_post_mode;
 
 TEST(xboard_test, xboard_post_incorrect_cmd)
 {

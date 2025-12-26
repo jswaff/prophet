@@ -6,12 +6,12 @@
 #include "movegen/movegen_internal.h"
 #include "position/position.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
 #include <string.h>
-
-extern bool stop_search;
 
 /**
  * More comprehensive iterator tests are in the chess4j project.  We do a simple

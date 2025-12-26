@@ -4,12 +4,11 @@
 
 #include "hash/hash_internal.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
-
-extern hash_table_t htbl;
-extern hash_table_t phtbl;
 
 TEST(xboard_test, xboard_memory_incorrect_cmd)
 {
@@ -18,12 +17,12 @@ TEST(xboard_test, xboard_memory_incorrect_cmd)
 
 TEST(xboard_test, xboard_memory)
 {
-    uint32_t orig_capacity = htbl.capacity;
+    uint64_t orig_capacity = htbl.capacity;
 
     ASSERT_EQ(0, xboard_memory("memory 64"));
 
     // the hash table capacity should have changed
-    EXPECT_NE(0U, htbl.capacity);
+    EXPECT_NE(0ULL, htbl.capacity);
     EXPECT_NE(orig_capacity, htbl.capacity);
 
     uint64_t expected_capacity = (uint64_t)(32 * 1024 * 1024) / sizeof(hash_entry_t);

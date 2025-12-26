@@ -2,12 +2,11 @@
 
 #include "prophet/error_codes.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
-
-extern uint32_t max_time_ms;
-extern bool fixed_time_per_move;
 
 
 TEST(xboard_test, xboard_st_incorrect_cmd)

@@ -6,10 +6,11 @@
 #include "eval/eval_internal.h"
 #include "position/position.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 
-extern position_t gpos;
 
 TEST(commandline_test, commandline_eval_props_invalid_file)
 {

@@ -2,15 +2,12 @@
 
 #include "prophet/error_codes.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
 #include <string.h>
-
-extern bool fixed_time_per_move;
-extern uint32_t time_control_moves;
-extern char time_control_base[10];
-extern double time_control_increment;
 
 
 TEST(xboard_test, xboard_level_incorrect_cmd)

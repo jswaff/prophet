@@ -4,9 +4,10 @@
 
 #include "position/position.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
-extern position_t gpos;
 
 TEST(command_test, command_db_incorrect_cmd)
 {

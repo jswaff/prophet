@@ -2,10 +2,11 @@
 
 #include "prophet/error_codes.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 
-extern bool xboard_force_mode;
 
 TEST(xboard_test, xboard_force_incorrect_cmd)
 {

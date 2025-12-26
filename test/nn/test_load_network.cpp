@@ -2,12 +2,11 @@
 
 #include "nn/nn_internal.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdbool.h>
-
-extern neural_network_t neural_network;
-extern bool use_neural_network;
 
 TEST(nn_test, nn_load_network)
 {
