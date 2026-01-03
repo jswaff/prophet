@@ -3,6 +3,10 @@
 #include <assert.h>
 #include <stdint.h>
 
+#if defined(_MSC_VER)
+#include <intrin.h>
+#endif
+
 static uint32_t get_lsb_slow(uint64_t val);
 
 static uint32_t lsb[65536];
@@ -13,7 +17,15 @@ uint32_t get_lsb(uint64_t val)
     assert(val > 0);
 
 #ifdef USE_AVX
-    return __builtin_ctzll(val);
+#if defined(_MSC_VER)
+    unsigned long idx = 0;
+    _BitScanForward64(&idx, val);
+    return (uint32_t)idx;
+#elif defined(__GNUC__) || defined(__clang__)
+    return (uint32_t)__builtin_ctzll(val);
+#else
+    return get_lsb_slow(val);
+#endif
 #else
     if (val & 0xFFFF) {
         return lsb[(uint32_t)(val & 0xFFFF)];

@@ -6,10 +6,12 @@
 #include "eval/eval_internal.h"
 #include "position/position.h"
 
+#include "test_globals.h"
+#include "util/test_paths.h"
+
 #include <gtest/gtest.h>
 
 
-extern position_t gpos;
 
 TEST(commandline_test, commandline_eval_props_invalid_file)
 {
@@ -19,7 +21,8 @@ TEST(commandline_test, commandline_eval_props_invalid_file)
 
 TEST(commandline_test, commandline_eval_props)
 {
-    ASSERT_EQ(0, commandline_load_properties("../test/resources/test.properties"));
+    std::string props_path = test_resource_path("test.properties");
+    ASSERT_EQ(0, commandline_load_properties(props_path.c_str()));
 
     EXPECT_EQ(100, pawn_val);
     EXPECT_EQ(326, knight_val);

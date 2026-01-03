@@ -2,11 +2,12 @@
 
 #include "prophet/error_codes.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
 
-extern uint32_t max_depth;
 
 TEST(xboard_test, xboard_sd_incorrect_cmd)
 {

@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 {
     int retval = 0;
 
-    setbuf(stdin, NULL);
-    setbuf(stdout, NULL);
+    setvbuf(stdin, NULL, _IONBF, 0);
+    setvbuf(stdout, NULL, _IONBF, 0);
 
     retval = commandline_process_options(argc, argv);
     if (0 != retval) {

@@ -9,11 +9,9 @@
 #include "position/position.h"
 #include "util/time.h"
 #include "util/string_utils.h"
+#include "test_globals.h"
 
 #include <gtest/gtest.h>
-
-extern move_line_t last_pv;
-extern bool stop_search;
 
 TEST(search_test, depth0_no_bounds)
 {
