@@ -37,9 +37,9 @@ FetchContent_Declare(
 )
 set(INSTALL_GTEST OFF)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
-if(MSVC)
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-endif()
+# if(MSVC)
+#     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+# endif()
 FetchContent_MakeAvailable(googletest)
 
 # build library
