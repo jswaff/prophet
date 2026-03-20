@@ -1,168 +1,260 @@
-# Prophet Fresh Analysis
+# Speed Improvement Analysis
 
-This analysis was done from scratch from the repository contents and test run. I did not read `claude_analysis.md` or the previous `codex_analysis.md`.
+Scope:
+- I did not read `claude_analysis.md` or the previous `codex_analysis.md`.
+- I reviewed the engine sources, build setup, and ran one lightweight baseline: `printf 'perft 5\nquit\n' | ./build/prophet-avx2`, which reported depth-5 perft in 323 ms, about 15,017 kn/s.
 
-## Executive Summary
+## Highest-Impact Opportunities
 
-Prophet is a mature C chess engine with a clean modular breakdown, a compact public API, strong move generation and search test coverage, optional NNUE support, and a working CMake-based build. The engine core looks disciplined and well-tested.
+### 1. Stop validating legality by full make/check/unmake on every candidate move
 
-The main weakness I found is not in the chess logic itself, but at the xboard integration boundary. The current test suite passes overwhelmingly in the core engine layers, but 4 xboard-facing tests fail and 2 tests are disabled. That points to a codebase that is fundamentally solid, but currently less reliable in protocol/threaded command handling than in core search/eval/movegen behavior.
+This is the biggest structural cost I found.
 
-## What The Codebase Looks Like
+Relevant code:
+- `src/search/search.c:188-194`
+- `src/search/qsearch.c:60-66`
+- `src/movegen/movegen.c:34-50`
 
-- Language: mostly C, with C++ only for GoogleTest-based tests.
-- Build: modern CMake build, shared/static library support, optional AVX2, bundled GoogleTest fetch.
-- Public surface: small C API in `include/prophet` for initialization, move generation, evaluation, search, hashing, NN loading, and move helpers.
-- Main subsystems:
-  - `src/position`: board state, FEN parsing, apply/undo, draw logic, hash keys.
-  - `src/movegen`: pseudo-legal/legal move generation, attack detection, perft.
-  - `src/search`: iterative deepening, qsearch, PVS-style search, null move pruning, LMR-style reduction, killer moves, TT usage.
-  - `src/eval`: handcrafted evaluation terms.
-  - `src/nn`: optional neural-network evaluation path.
-  - `src/command` and `src/command/xboard`: CLI and xboard protocol handling.
+Today the engine:
+- generates pseudo-legal moves,
+- `apply_move()`s each one,
+- calls `in_check()` to see whether the move was legal,
+- then `undo_move()`s it.
 
-The source footprint is substantial but still approachable: about 19,861 lines across `src`, `include`, and `test`, with 96 files under `test`.
+That is happening:
+- in the main search,
+- in quiescence,
+- and even in `gen_legal_moves()` at the root.
 
-## Strengths
+Why this is expensive:
+- `apply_move()` and `undo_move()` touch a lot of state, including hashes and optional NNUE accumulators.
+- `in_check()` relies on attack generation, including sliding attacks.
+- this amplifies work on every node, not just interesting nodes.
 
-### 1. Strong engine modularity
+Best improvement:
+- add a fast legality filter before make/unmake:
+  - track pinned pieces,
+  - handle king moves with attack masks,
+  - handle en passant legality separately,
+  - or add an evasion generator for check nodes.
 
-The project is organized around clear engine responsibilities rather than around ad hoc files. That matters in a chess engine because it keeps correctness-sensitive code paths isolated: position representation, move generation, search, evaluation, and protocol handling are separated in a way that should be maintainable over time.
+Expected impact:
+- high. This should reduce total node cost materially in both search and qsearch.
 
-### 2. Good test depth where it matters most
+### 2. Avoid calling full `eval()` inside futility pruning
 
-I ran the existing suite with `ctest --output-on-failure` in `build/`.
+Relevant code:
+- `src/search/search.c:175-185`
+- `src/eval/eval.c:150-240`
 
-- 303 tests executed
-- 299 passed
-- 4 failed
-- 2 disabled
+The futility check computes:
+- `eval(pos, true, false)`
 
-The passing coverage is especially strong in:
+Even with `material_only=true`, that still calls multiple helper layers and recomputes material on demand. It is cheaper than full eval, but it is still happening inside a hot move loop.
 
-- move generation
-- perft
-- position apply/undo
-- search basics and mates
-- hash table behavior
-- evaluation terms
-- SEE / move ordering helpers
+Better options:
+- keep an incremental material score in `position_t`,
+- or cache a cheap `static_material` field updated by `apply_move()` / `undo_move()`,
+- or precompute the parent node’s material score once and pass it down.
 
-That is exactly where a chess engine earns trust. The broad pass rate gives real confidence in the internal engine behavior.
+Expected impact:
+- high for low-depth nodes, because this code is inside a pruning condition that runs often.
 
-### 3. Sensible search implementation
+### 3. Rework move ordering to avoid repeated rescans of the capture list
 
-The search code is not toy-level. It includes:
+Relevant code:
+- `src/search/next.c:56-95`
+- `src/search/next.c:148-175`
+- `src/search/next.c:182-198`
 
-- iterative deepening
-- transposition table probing and storage
-- quiescence search
-- null move pruning
-- check extensions
-- killer move heuristics
-- PV ordering
-- late-move reduction style behavior
-- node/time limits
+`next()` repeatedly scans `[current, end)` to find the best capture, then does it again for deferred bad captures. That is effectively a selection-sort style approach in a hot path.
 
-This looks like a practical classical engine core rather than a minimal academic implementation.
+Why this matters:
+- move ordering runs at every node,
+- SEE can already be expensive,
+- repeated linear rescans multiply the cost of large capture lists.
 
-### 4. Public API is narrow and usable
+Better options:
+- score captures once and partition into:
+  - winning/promotions,
+  - neutral,
+  - losing,
+- then partially sort only the winning bucket,
+- or use insertion sort on the small generated list once per stage,
+- or keep separate arrays for good captures / bad captures / quiets.
 
-The public headers are compact and reasonably well documented. For embedding Prophet as a library, the API shape is attractive: initialize once, operate on FEN/move history inputs, get move lists/eval/search outputs, and optionally load an NNUE-style network.
+Expected impact:
+- high to medium, especially in tactical positions and qsearch-heavy searches.
 
-### 5. Neural network support is integrated without overwhelming the design
+### 4. Reduce repeated `good_move()` validation for hash and killer moves
 
-NN support appears optional rather than invasive. The code still preserves a clear handcrafted-eval path, which is useful for testing, portability, and debugging.
+Relevant code:
+- `src/search/next.c:27-33`
+- `src/search/next.c:100-117`
+- `src/movegen/good_move.c:23-135`
 
-## Main Risks And Weak Spots
+Hash and killer moves are validated with `good_move()`, which can call sliding move generators and attack tests for castling. That is reasonable for correctness, but it still adds nontrivial work on hot entry points.
 
-### 1. Xboard integration is the current reliability hotspot
+Ways to improve:
+- store move metadata that lets you reject obviously stale killers faster,
+- keep a lightweight pseudo-legality test specialized for hash/killer validation,
+- avoid revalidating the PV move when it already came from the previous legal PV,
+- consider storing a compact move signature tied to `from`, `to`, and moved piece in TT entries and validating with simpler occupancy checks first.
 
-The only live failures I observed are xboard-related:
+Expected impact:
+- medium. Smaller than legality generation, but still on a very hot path.
 
-- `xboard_test.xboard_go`
-- `xboard_test.xboard_ping`
-- `xboard_test.xboard_usermove_move_ends_game`
-- `xoard_test.xboard_usermove_not_force_mode`
+### 5. Handcrafted eval is fully recomputed at each static-eval site
 
-This is an important pattern. Core engine tests are green, but command/protocol paths that involve stdout behavior, endgame reporting, or background search-thread coordination are not.
+Relevant code:
+- `src/search/qsearch.c:36`
+- `src/eval/eval.c:178-236`
 
-That suggests the highest near-term engineering risk is not move legality or search correctness, but protocol-facing orchestration.
+When NNUE is off, every qsearch stand-pat does a fresh handcrafted evaluation:
+- pawn hash probe,
+- loops over all pawns, knights, bishops, rooks, queens,
+- king eval,
+- tapering.
 
-### 2. Global mutable state is pervasive
+The pawn hash helps, but the rest is still rebuilt from scratch every time.
 
-The engine relies heavily on globals such as:
+Best improvement:
+- add an incremental handcrafted eval accumulator in `position_t`.
 
-- `gpos`
-- `gundos`
-- global move stacks
-- global hash tables
-- global search flags
-- xboard mode flags
+Practical path:
+- first make material and PST terms incremental,
+- keep pawn structure behind the pawn hash as now,
+- leave more complex king-safety terms as recompute-only if needed,
+- compare speed/strength before pushing further.
 
-This is common in chess engines for speed, but it increases coupling and makes protocol/threaded paths more fragile. It also narrows the safety margin for embedding the library in multi-search or multi-session contexts.
+Expected impact:
+- high if handcrafted eval is the main engine mode.
+- lower if NNUE is always on.
 
-### 3. Threaded search integration looks more fragile than the engine core
+## Medium-Impact Opportunities
 
-The xboard path starts background search threads and coordinates them with shared globals and mutexes. Even without fully debugging the failures, the failing test pattern is consistent with integration fragility around:
+### 6. Attack detection likely dominates king-safety and legality checks
 
-- timing of search completion
-- stdout capture/output ordering
-- force-mode transitions
-- endgame result reporting
-- shared-state assumptions across tests
+Relevant code:
+- `src/movegen/attacked.c:13-31`
+- `src/search/search.c:191`
+- `src/search/search.c:197`
+- `src/search/qsearch.c:63`
 
-This area would benefit from tighter ownership of search state and more explicit lifecycle control.
+`attacked()` recomputes sliding attacks with `get_rook_moves()` and `get_bishop_moves()` each time. That is normal, but it gets called in several hot places:
+- legal move verification,
+- check extensions,
+- castling validation.
 
-### 4. Some API paths do minimal defensive checking
+Possible improvements:
+- specialize `in_check()` for the king square rather than routing through general attack helpers everywhere,
+- cache occupancy-derived attack info per node when profitable,
+- or split attack tests into fast non-slider checks first, sliders second.
 
-Examples:
+Expected impact:
+- medium, and it compounds with item 1.
 
-- `generate_moves_from_fen()` calls `set_pos()` but does not surface failure to the caller.
-- `iterate_from_position()` allocates small structs on the heap where stack allocation would be simpler and less failure-prone.
-- cleanup/hash-table code assumes initialization order and uses assertions aggressively.
+### 7. NNUE path still does scalar clamp/pack and float post-processing
 
-None of this looks catastrophic, but it does mean the public API is friendlier for well-formed internal callers than for hostile or highly defensive consumers.
+Relevant code:
+- `src/nn/nn_eval.c:32-75`
 
-### 5. A few disabled tests mean known edge cases remain open
+The AVX2 path accelerates the hidden layer dot product, which is good, but:
+- building `L1` is still scalar,
+- the final score uses float math and rounding,
+- loads are unaligned.
 
-The disabled tests are:
+Possible improvements:
+- vectorize clamp-and-pack for `L1`,
+- store aligned NN weights and accumulators,
+- replace float conversion with fixed-point integer math if it preserves output exactly,
+- benchmark fused handling of both outputs in one pass.
 
-- `eval_test.eval_rook_open_file_supported`
-- `hash_test.replacement_strategy2`
+Expected impact:
+- medium in NNUE mode.
+- low if search overhead dominates more than eval.
 
-Disabled tests are not a crisis, but they usually indicate either unstable expectations or unfinished behavior. In a project this otherwise test-heavy, they stand out.
+### 8. TT replacement is simple and cheap, but probe/store policy may be leaving pruning on the table
 
-## Code Quality Observations
+Relevant code:
+- `src/hash/hash_probe.c:15-33`
+- `src/hash/hash_store.c:13-68`
 
-### Good signs
+This is more of a speed-through-better-hit-rate idea than a raw micro-optimization.
 
-- Consistent subsystem boundaries.
-- Plenty of targeted tests.
-- Reasonable internal naming.
-- Public headers are slimmer than the implementation tree.
-- FEN-based APIs make the library easy to drive externally.
-- CMake build is straightforward and cross-platform minded.
+Observations:
+- probe is lean,
+- replacement is depth-based only,
+- aging-based replacement was disabled.
 
-### Less good signs
+Possible experiments:
+- keep one always-replace slot plus one depth-preferred slot,
+- separate PV/exact entries from bounds,
+- test a two-tier bucket policy rather than pure min-depth replacement.
 
-- Extensive global state makes reuse and concurrency harder.
-- Some internal APIs depend on side effects rather than explicit state passing.
-- xboard code mixes protocol concerns, threading, and engine control flow in a way that is harder to reason about than the core engine modules.
-- Some routines still use heap allocation where stack allocation would likely be cleaner.
+Expected impact:
+- medium if it improves cutoff quality.
+- not guaranteed; this needs A/B testing because it affects strength too.
 
-## Where I’d Focus Next
+## Lower-Impact But Easy Wins
 
-If this were my project, I would prioritize these in order:
+### 9. Remove heap allocation from `iterate_from_position()`
 
-1. Fix the 4 failing xboard tests and treat that boundary as the current regression zone.
-2. Re-enable or retire the 2 disabled tests so the suite reflects true project intent.
-3. Reduce xboard/search shared-state coupling, especially around thread lifecycle and output sequencing.
-4. Tighten public API error handling for invalid FEN and invalid initialization/use order.
-5. Consider gradually introducing a more explicit engine/session context for library-facing workflows.
+Relevant code:
+- `src/search/iterate.c:185-217`
+
+`iterator_options_t` and `iterator_context_t` are allocated with `malloc()` for each API call even though both are tiny and trivially stack-allocatable.
+
+Expected impact:
+- low for long searches,
+- but easy cleanup with zero downside.
+
+### 10. Push the build harder with optional PGO and native tuning
+
+Relevant code:
+- `CMakeLists.txt:17-24`
+- `CMakeLists.txt:182-191`
+
+Current build already has:
+- AVX2/BMI2,
+- LTO,
+- Release mode defaults.
+
+What is still missing:
+- profile-guided optimization,
+- optional `-march=native` or architecture-specific release presets,
+- possibly function/data section tuning if it benchmarks well.
+
+Recommendation:
+- add a `PROFILE_GUIDED` option and benchmark with a realistic search workload,
+- add an opt-in `NATIVE_TUNE` preset for local builds,
+- keep portable release defaults for shipped binaries.
+
+Expected impact:
+- medium if PGO is used,
+- small otherwise.
+
+## Suggested Implementation Order
+
+1. Replace pseudo-legal-plus-verify flow with more direct legality handling.
+2. Remove full/static eval work from futility pruning.
+3. Rework move ordering to avoid repeated capture rescans.
+4. Optimize attack/check detection around king legality.
+5. If handcrafted eval is important, start incremental PST/material evaluation.
+6. Then benchmark NNUE-specific improvements and PGO.
+
+## What I Would Measure Next
+
+- NPS before/after each change on a fixed depth search suite.
+- qnodes as a percentage of total nodes.
+- average legal-move generation cost at root and interior nodes.
+- TT hit rate and fail-high rate after any TT policy changes.
+- NNUE eval throughput separately from full search throughput.
 
 ## Bottom Line
 
-This is a serious engine codebase, not a prototype. The chess core appears robust, and the test results support that. The main issue is that the integration layer around xboard and asynchronous search is currently less trustworthy than the engine underneath it.
-
-If I were evaluating overall health, I’d rate Prophet as strong in engine internals, good in architecture, and currently shaky at the protocol/threaded edge. That is a fixable problem, and it is a much better place to be than having weak movegen/search fundamentals.
+The largest speed gains are most likely to come from cutting node cost in the move/legality path, not from isolated micro-optimizations. The current engine appears reasonably optimized at the build/intrinsics level already, so the best remaining gains are in:
+- legality handling,
+- repeated eval work,
+- move ordering overhead,
+- attack/check computation frequency.
