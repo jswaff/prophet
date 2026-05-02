@@ -149,7 +149,8 @@ char* move_line_to_str(const move_line_t *mv_line)
 
     /* we don't really know in advance how long the string will be.
        get all of the individual move strings and add them up */
-    char* mv_bufs[mv_line->n];
+    char* mv_bufs[MAX_PLY];
+    assert(mv_line->n <= MAX_PLY);
     size_t total_len = 0;
     for (int i=0; i < mv_line->n; i++) {
         mv_bufs[i] = move_to_str(mv_line->mv[i]);

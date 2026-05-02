@@ -22,10 +22,26 @@ loading neural network from nn-32-q.txt
 
 The supplied network weights were trained using [chess-trainer](https://github.com/jswaff/chess-trainer).  chess-trainer is a Pytorch based trainer I wrote, with some influence from David Carteau's excellent [Cerebrum library](https://github.com/david-carteau/cerebrum).  The inference code within Prophet (particularly the intrinsics) were used almost verbatim.  Thank you David!
 
+## Configuring Hash Tables
+
+You can control the main hash table and pawn hash table sizes (in MB) using the 'h' and 'p' command line parameters.
+
+```
+./prophet -h 256 -p 32
+```
+
+This sets a 256 MB main hash table and a 32 MB pawn hash table.
+Defaults are 64 MB for the main hash table and 8 MB for the pawn hash table.
+
+## Developer API
+
+Public API documentation lives in `docs/API.md`.
 
 ## Building from Source
 
-Binaries are provided for Linux and Windows based systems, but if you want to build Prophet from source, you'll need a Linux based environment with gcc/g++ and cmake.  If you have the proper build tools, just do:
+Binaries are provided for Linux and Windows based systems, but if you want to build Prophet from source, you'll need either a Linux environment with gcc/g++ or Windows with MSVC. 
+
+For Linux:
 
 ```
 mkdir build && cd build
@@ -33,9 +49,17 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make install
 ```
 
-If all went well, the 'prophet' and 'prophet_test' binaries will be in the build folder.
+If all went well, the binary will be in the build folder.
 
-You may be able to compile Prophet on other POSIX compliant operating systems, but I haven't tried it.  If you'd like to build a Windows binary, Cygwin does work, but native Windows builds are not currently supported.  I plan to investigate this in the future.
+For Windows, use a Visual Studio Developer Command Prompt:
+
+```
+mkdir build && cd build
+cmake -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --config Release
+```
+
+The resulting binary will be in build/Release.
 
 ## How Strong is it?
 

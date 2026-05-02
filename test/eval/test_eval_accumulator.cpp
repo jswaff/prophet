@@ -28,6 +28,8 @@ TEST(eval_test, eval_accumulator)
 static void dummy_eval_func(const position_t* UNUSED(pos), square_t UNUSED(sq), int32_t *mgscore, 
 	int32_t *egscore)
 {
+	(void)pos;
+	(void)sq;
 	*mgscore += 3;
 	*egscore += 5;
 }

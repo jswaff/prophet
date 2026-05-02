@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 {
     int retval = 0;
 
-    setbuf(stdin, NULL);
-    setbuf(stdout, NULL);
+    setvbuf(stdin, NULL, _IONBF, 0);
+    setvbuf(stdout, NULL, _IONBF, 0);
 
     retval = commandline_process_options(argc, argv);
     if (0 != retval) {
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     }
 
     /* welcome message, indicates initialization was successful */
-    plog("Hello!  This is the Prophet Chess Engine, version 5.1.\n\n");
+    plog("Hello!  This is the Prophet Chess Engine, version 5.2.\n\n");
 
     retval = command_loop();
 

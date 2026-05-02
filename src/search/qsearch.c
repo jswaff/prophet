@@ -24,7 +24,9 @@ int32_t qsearch(position_t *pos, int32_t alpha, int32_t beta, move_t *move_stack
     assert(alpha < beta);
 
     /* time check */
-    if (!skip_time_checks && stop_search_on_time(opts, stats)) {
+    if ((!skip_time_checks && stop_search_on_time(opts, stats)) || 
+        (opts->node_limit>0 && stats->nodes + stats->qnodes >= opts->node_limit)) 
+    {
         stop_search = true;
         return 0;
     }

@@ -157,6 +157,11 @@ static void init_occupiers_and_blockers()
 
 static void init_magic_numbers()
 {
+    enum {
+        BISHOP_MAX_MASK_BITS = 9,
+        BISHOP_MAX_VARIATIONS = 1 << BISHOP_MAX_MASK_BITS
+    };
+
     for (uint32_t sq=0; sq<64; sq++) {
         uint64_t mask = bishop_masks[sq];
         uint32_t num_mask_bits = popcnt(mask);
@@ -166,8 +171,10 @@ static void init_magic_numbers()
         uint32_t magic_shift = 64 - num_mask_bits;
 
         bool fail;
-        bool is_used[num_variations];
-        uint64_t used_by[num_variations];
+        bool is_used[BISHOP_MAX_VARIATIONS];
+        uint64_t used_by[BISHOP_MAX_VARIATIONS];
+
+        assert(num_variations <= BISHOP_MAX_VARIATIONS);
 
         do {
             magic = random64() & random64() & random64(); /* ~ 8 bits */

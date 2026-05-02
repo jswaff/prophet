@@ -4,16 +4,12 @@
 
 #include "position/position.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
 #include <stdint.h>
 #include <string.h>
-
-extern position_t gpos;
-extern bool xboard_force_mode;
-extern int32_t max_depth;
-extern uint32_t volatile hash_age;
-
 
 TEST(xboard_test, xboard_new_incorrect_cmd)
 {

@@ -4,6 +4,10 @@
 
 #include "eval/eval_internal.h"
 
+#ifdef _WIN32
+#include "util/posix_compat.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

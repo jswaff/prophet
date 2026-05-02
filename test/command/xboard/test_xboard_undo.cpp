@@ -4,9 +4,10 @@
 
 #include "position/position.h"
 
+#include "test_globals.h"
+
 #include <gtest/gtest.h>
 
-extern position_t gpos;
 
 TEST(xboard_test, xboard_undo_incorrect_cmd)
 {
@@ -36,4 +37,3 @@ TEST(xboard_test, xboard_undo)
     // attempting another undo would be an error
     EXPECT_EQ(ERROR_GUNDO_INDEX_LB_VIOLATION, xboard_undo("undo"));
 }
-

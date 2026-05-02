@@ -5,10 +5,11 @@
 extern "C" {
 #endif  
 
+
 #ifdef   __GNUC__
-# define UNUSED(x) UNUSED_ ## x __attribute__((__unused__))
+# define UNUSED(x) x __attribute__((__unused__))
 #else
-# define UNUSED(X) UNUSED_ ## x
+# define UNUSED(x) x
 #endif 
 
 /* make this header C++ friendly. */
