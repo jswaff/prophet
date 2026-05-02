@@ -41,31 +41,24 @@ Public API documentation lives in `docs/API.md`.
 
 Binaries are provided for Linux and Windows based systems, but if you want to build Prophet from source, you'll need either a Linux environment with gcc/g++ or Windows with MSVC. 
 
-For Linux:
+Just follow the standard cmake build process:
 
 ```
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make install
-```
-
-If all went well, the binary will be in the build folder.
-
-For Windows, use a Visual Studio Developer Command Prompt:
-
-```
-mkdir build && cd build
-cmake -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release ..
 cmake --build . --config Release
 ```
 
-The resulting binary will be in build/Release.
-
 ## How Strong is it?
 
-The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.0 to be rated at 2648.  Prophet 5.1 should be around 90 ELO stronger according to my testing. 
+The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.1 to be rated at 2702.
 
 ## Release Notes
+
+5.2
+
+* Native Windows build
+
 
 5.1
 
