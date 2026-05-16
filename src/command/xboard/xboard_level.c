@@ -2,6 +2,8 @@
 
 #include "prophet/error_codes.h"
 
+#include "util/posix_compat.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -15,7 +17,7 @@ double time_control_increment;
 
 int xboard_level(const char *input)
 {
-    char* my_input = strdup(input);
+    char* my_input = prophet_strdup(input);
 
     /* keep the original to free the memory allocated by strdup before exiting. */
     char *input_ptr = my_input;

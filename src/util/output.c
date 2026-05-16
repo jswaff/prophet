@@ -18,14 +18,20 @@ static prophet_mutex_t output_mutex;
 static FILE* logfile = 0;
 static bool mutexes_initialized = false;
 
-
-void init_logging()
+static void ensure_mutexes_initialized()
 {
     if (!mutexes_initialized) {
         prophet_mutex_init(&error_mutex);
         prophet_mutex_init(&output_mutex);
         mutexes_initialized = true;
     }
+}
+
+
+void init_logging()
+{
+    ensure_mutexes_initialized();
+
     if (logging_enabled && !logfile) {
         logfile = fopen("prophet.log", "w");
     }
@@ -42,6 +48,7 @@ void close_logfile()
 
 void error(const char *format, ...)
 {
+    ensure_mutexes_initialized();
     prophet_mutex_lock(&error_mutex);
     va_list args;
     va_start(args, format);
@@ -53,6 +60,7 @@ void error(const char *format, ...)
 
 void plog(const char *format, ...)
 {
+    ensure_mutexes_initialized();
     prophet_mutex_lock(&output_mutex);
 
     va_list stdout_args;
@@ -73,6 +81,7 @@ void plog(const char *format, ...)
 
 void out(FILE *stream, const char *format, ...)
 {
+    ensure_mutexes_initialized();
     prophet_mutex_lock(&output_mutex);
     va_list args;
     va_start(args, format);

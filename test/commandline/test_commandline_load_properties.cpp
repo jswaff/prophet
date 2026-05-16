@@ -11,6 +11,13 @@
 
 #include <gtest/gtest.h>
 
+extern "C" {
+extern bool logging_enabled;
+extern uint64_t hash_size;
+extern uint64_t pawn_hash_size;
+extern uint32_t num_random_starting_moves;
+}
+
 
 
 TEST(commandline_test, commandline_eval_props_invalid_file)
@@ -124,4 +131,59 @@ TEST(commandline_test, commandline_eval_props)
 
     // clean up - adjusting eval weights has invalidated the caches.
     clear_hash_tables();
+}
+
+TEST(commandline_test, commandline_process_basic_options)
+{
+    char arg0[] = "prophet";
+    char d_opt[] = "-d";
+    char d_val[] = "4";
+    char *depth_argv[] = {arg0, d_opt, d_val};
+    max_depth = 0;
+    EXPECT_EQ(0, commandline_process_options(3, depth_argv));
+    EXPECT_EQ(4U, max_depth);
+
+    char h_opt[] = "-h";
+    char h_val[] = "16";
+    char *hash_argv[] = {arg0, h_opt, h_val};
+    EXPECT_EQ(0, commandline_process_options(3, hash_argv));
+    EXPECT_EQ(16ULL * 1024ULL * 1024ULL, hash_size);
+
+    char p_opt[] = "-p";
+    char p_val[] = "3";
+    char *pawn_hash_argv[] = {arg0, p_opt, p_val};
+    EXPECT_EQ(0, commandline_process_options(3, pawn_hash_argv));
+    EXPECT_EQ(3ULL * 1024ULL * 1024ULL, pawn_hash_size);
+
+    char r_opt[] = "-r";
+    char r_val[] = "2";
+    char *random_argv[] = {arg0, r_opt, r_val};
+    num_random_starting_moves = 0;
+    EXPECT_EQ(0, commandline_process_options(3, random_argv));
+    EXPECT_EQ(2U, num_random_starting_moves);
+}
+
+TEST(commandline_test, commandline_process_logging_option)
+{
+    char arg0[] = "prophet";
+    char l_opt[] = "-l";
+    char *argv[] = {arg0, l_opt};
+
+    logging_enabled = false;
+    EXPECT_EQ(0, commandline_process_options(2, argv));
+    EXPECT_TRUE(logging_enabled);
+    logging_enabled = false;
+}
+
+TEST(commandline_test, commandline_process_neural_network_option)
+{
+    std::string nn_path = test_resource_path("nn.txt");
+    char arg0[] = "prophet";
+    char n_opt[] = "-n";
+    char *argv[] = {arg0, n_opt, const_cast<char*>(nn_path.c_str())};
+
+    use_neural_network = false;
+    ASSERT_EQ(0, commandline_process_options(3, argv));
+    EXPECT_TRUE(use_neural_network);
+    use_neural_network = false;
 }

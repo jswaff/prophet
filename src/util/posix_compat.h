@@ -1,5 +1,7 @@
 #pragma once
 
+char* prophet_strdup(const char* str);
+
 #ifdef _WIN32
 
 #include <stdio.h>
