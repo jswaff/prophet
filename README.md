@@ -11,13 +11,13 @@ Prophet is a chess playing program written in C.  Technically it's a chess engin
 By default, Prophet still uses a handcrafted evaluation.  You can enable a neural network based evaluation using the 'n' command line parameter.
 
 ```
-./prophet -n nn-32-q.txt 
+./prophet -n nn-52-q.txt 
 ```
 
 You should see a confirmation that the network was loaded:
 
 ```
-loading neural network from nn-32-q.txt
+loading neural network from nn-52-q.txt
 ```
 
 The supplied network weights were trained using [chess-trainer](https://github.com/jswaff/chess-trainer).  chess-trainer is a Pytorch based trainer I wrote, with some influence from David Carteau's excellent [Cerebrum library](https://github.com/david-carteau/cerebrum).  The inference code within Prophet (particularly the intrinsics) were used almost verbatim.  Thank you David!
@@ -51,14 +51,15 @@ cmake --build . --config Release
 
 ## How Strong is it?
 
-The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.1 to be rated at 2702.
+The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.1 to be rated at 2702.  My testing indicates Prophet 5.2 is 33 elo stronger than 5.1.
+
 
 ## Release Notes
 
 5.2
 
+* Improved neural network
 * Native Windows build
-
 
 5.1
 
