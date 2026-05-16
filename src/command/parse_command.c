@@ -3,6 +3,7 @@
 #include "prophet/error_codes.h"
 
 #include "util/output.h"
+#include "util/posix_compat.h"
 #include "xboard/xboard_internal.h"
 
 #include <stdbool.h>
@@ -64,7 +65,7 @@ int parse_command(user_command_t *cmd, const char *input, bool *exit_status)
     *exit_status = false;
 
     /* set the command */
-    cmd->cmd = strdup(input);
+    cmd->cmd = prophet_strdup(input);
     if (NULL == cmd->cmd) {
         return ERROR_CMD_PARSE_CMD_COPY;
     }    

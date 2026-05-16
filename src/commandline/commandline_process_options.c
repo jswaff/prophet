@@ -32,11 +32,13 @@ int commandline_process_options(int argc, char *argv[])
         {"set hash size in mb", required_argument, 0, 'h'},
         {"set pawn hash size in mb", required_argument, 0, 'p'},
         {"eval properties", required_argument, 0, 'e'},
-        {"neural network", required_argument, 0, 'n'}
+        {"neural network", required_argument, 0, 'n'},
+        {0, 0, 0, 0}
     };
 
     int long_index = 0;
     int opt = 0;
+    optind = 1;
     while ((opt = getopt_long(argc, argv, "lr:d:h:p:e:n:", long_options, &long_index)) != -1) {
         switch (opt) {
             case 'l':

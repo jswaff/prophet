@@ -5,6 +5,7 @@
 #include "bitmap/bitmap.h"
 #include "nn/nn_internal.h"
 #include "util/output.h"
+#include "util/posix_compat.h"
 #include "util/string_utils.h"
 
 #include <assert.h>
@@ -25,7 +26,7 @@ void reset_pos(position_t *pos)
 
 bool set_pos(position_t *pos, const char *fen)
 {
-    char *my_fen = strdup(fen), *fen_part;
+    char *my_fen = prophet_strdup(fen), *fen_part;
     /* keep the original to free the memory allocated by strdup before 
      * exiting. */
     char *fen_ptr = my_fen; 
