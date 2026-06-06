@@ -51,7 +51,7 @@ cmake --build . --config Release
 
 ## How Strong is it?
 
-The CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.1 to be rated at 2702.  My testing indicates Prophet 5.2 is 33 elo stronger than 5.1.
+The June 6, 2026 CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.2 to be rated at 2753 (ranked 292).
 
 
 ## Release Notes
