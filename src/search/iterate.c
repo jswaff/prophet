@@ -118,17 +118,51 @@ move_line_t iterate(uint32_t *depth, int32_t *score, const iterator_options_t *o
 
     /* search using iterative deepening */
     bool stop_iterator = false;
+    int aspiration_window_size = see_pawn_val / 3;
     do {
         ++(*depth);
 
         /* set up the search */
-        int32_t alpha_bound = -CHECKMATE;
-        int32_t beta_bound = CHECKMATE;
+        bool use_aspiration_windows = *depth > 2;
+        int32_t alpha_bound = use_aspiration_windows ? *score - aspiration_window_size : -CHECKMATE;
+        if (alpha_bound < -CHECKMATE) alpha_bound = -CHECKMATE;
+        int32_t beta_bound = use_aspiration_windows ? *score + aspiration_window_size : CHECKMATE;
+        if (beta_bound > CHECKMATE) beta_bound = CHECKMATE;
+        int32_t window_size = aspiration_window_size;
         move_line_t search_pv; search_pv.n = 0;
 
         /* start the search */
         int32_t it_score = search(ctx->pos, &search_pv, *depth, alpha_bound, beta_bound,
             ctx->move_stack, ctx->undo_stack, stats, &search_opts);
+
+        /* a failed aspiration window search returns only a bound.  widen the failed side 
+         *  exponentially until the score fits inside the window. 
+         */
+        while (use_aspiration_windows && !stop_search && (it_score <= alpha_bound || it_score >= beta_bound)) {
+            int32_t old_alpha_bound = alpha_bound;
+            int32_t old_beta_bound = beta_bound;
+            window_size *= 2;
+            if (window_size > CHECKMATE) window_size = CHECKMATE;
+            if (it_score <= alpha_bound) {
+                alpha_bound -= window_size;
+                if (alpha_bound < -CHECKMATE) alpha_bound = -CHECKMATE;
+            }
+            else {
+                beta_bound += window_size;
+                if (beta_bound > CHECKMATE) beta_bound = CHECKMATE;
+            }
+
+            /* a legal root position cannot score beyond the mate bounds.  This guard nevertheless
+             * guarantees termination.
+             */
+            if (old_alpha_bound == alpha_bound && old_beta_bound == beta_bound) {
+                break;
+            }
+
+            /* search again */
+            it_score = search(ctx->pos, &search_pv, *depth, alpha_bound, beta_bound,
+                ctx->move_stack, ctx->undo_stack, stats, &search_opts);
+        }
 
         /* If the search returned a PV, we can use it since the last iteration's PV was tried first */
         if (search_pv.n > 0) {
