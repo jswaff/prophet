@@ -123,7 +123,7 @@ move_line_t iterate(uint32_t *depth, int32_t *score, const iterator_options_t *o
         ++(*depth);
 
         /* set up the search */
-        bool use_aspiration_windows = *depth > 2;
+        bool use_aspiration_windows = *depth > 1;
         int32_t alpha_bound = use_aspiration_windows ? *score - aspiration_window_size : -CHECKMATE;
         if (alpha_bound < -CHECKMATE) alpha_bound = -CHECKMATE;
         int32_t beta_bound = use_aspiration_windows ? *score + aspiration_window_size : CHECKMATE;
