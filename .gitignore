@@ -4,5 +4,7 @@
 *.stackdump
 
 build
+build-pgo
+build-baseline
 install
 

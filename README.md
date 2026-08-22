@@ -49,6 +49,43 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build . --config Release
 ```
 
+For a profile-guided optimization build, see the PGO section below instead of the plain steps above.
+
+## Profile-Guided Optimization (PGO)
+
+Prophet's build supports two-pass profile-guided optimization via the `PROFILE_GUIDED` CMake option (`OFF` by default, `GENERATE`, or `USE`). On Linux with GCC or Clang, the easiest way to build a PGO-optimized binary is the provided helper script:
+
+```
+./scripts/build-pgo.sh
+```
+
+This configures and builds an instrumented binary, runs a training workload (perft plus a handful of searches on representative positions) against it, merges the resulting profile data, and rebuilds an optimized binary in `build-pgo/`. Run `./scripts/build-pgo.sh --help` for options (custom FENs, search depth, perft depth, build directory, etc).
+
+### Windows / MSVC PGO
+
+On MSVC, PGO is fully supported by CMake. A PowerShell equivalent of `build-pgo.sh` is provided:
+
+```
+.\scripts\build-pgo.ps1
+```
+
+This does the same instrument -> train -> merge -> optimize workflow as the Linux script, landing the optimized binary in `build-pgo\Release\` (or `build-pgo\` for single-config generators). Run `Get-Help .\scripts\build-pgo.ps1 -Full` for options.
+
+**This script has not been verified against a real MSVC toolchain** (unlike `build-pgo.sh`, which has been run and confirmed end-to-end, including a perft-based correctness check and measured speedup, on GCC). If it doesn't work as expected, particularly around whether the `USE`-mode link step correctly picks up the collected `.pgc` profile data, fall back to the manual steps below and please report back what needed to change:
+
+1. `cmake -B build -DPROFILE_GUIDED=GENERATE`
+2. `cmake --build build --config Release`
+3. Run the resulting `prophet.exe` against a representative workload (piping `perft`, `setboard`, `st`, `sd`, `go` xboard commands via stdin, as `scripts\build-pgo.ps1` does) to produce `.pgc` files next to `prophet.pgd` in the build directory. Always include an `st <seconds>` time control before `go` -- `sd` alone only bounds the number of iterations, not the wall-clock cost of reaching one, so a slow position searched with `sd` alone can run indefinitely.
+4. Merge with `pgomgr /merge` if you ran multiple training sessions (a single run's `.pgc` is picked up automatically on reconfigure).
+5. `cmake -B build -DPROFILE_GUIDED=USE`
+6. `cmake --build build --config Release --clean-first`
+
+To compare a PGO build's perft output and timing against a plain non-PGO build (the same check `compare-pgo-perft.sh` does on Linux):
+
+```
+.\scripts\compare-pgo-perft.ps1
+```
+
 ## How Strong is it?
 
 The June 6, 2026 CCRL Blitz list (https://www.computerchess.org.uk/ccrl/404/) shows Prophet 5.2 to be rated at 2753 (ranked 292).
