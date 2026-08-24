@@ -24,16 +24,38 @@ maintainers know so it can be fixed for everyone.
 Build directory to use (default: build-pgo).
 
 .PARAMETER PerftDepth
-Perft depth for the training run (default: 5).
+Perft depth for the training run (default: 4). Kept shallow on purpose:
+perft is pure move generation with no eval/search/NN involved, and its node
+count would otherwise dwarf everything else being profiled.
 
 .PARAMETER Sd
-Search depth ('sd') per training position (default: 8).
+Search depth ('sd') for one untimed training search per FEN, in addition to
+the timed ones below (default: 8).
 
 .PARAMETER Timeout
-Time-control backstop in seconds ('st'), sent before every 'go' alongside
-'sd' (default: 30). 'sd' alone only bounds the number of iterations, not the
-wall-clock cost of reaching one -- without a time control, a slow/tactical
-position can run 'go' indefinitely and hang the subsequent 'ping'.
+Time-control backstop in seconds ('st'), sent before the untimed 'go'
+alongside 'sd' (default: 30). 'sd' alone only bounds the number of
+iterations, not the wall-clock cost of reaching one -- without a time
+control, a slow/tactical position can run 'go' indefinitely and hang the
+subsequent 'ping'.
+
+.PARAMETER TcInc
+Increment (seconds) used for the timed training searches below, via the
+real 'level'/'time' clock formula rather than a fixed 'st' budget (default:
+0.5). Match this to your target time control's increment so the profile
+reflects real move budgets.
+
+.PARAMETER TimePressureMs
+Simulated clock time remaining (milliseconds) for one timed training search
+per FEN (default: 1000, 300, 60). This is what exercises the mid-search
+time-cutoff path that dominates real play at fast time controls -- without
+it, PGO trains almost entirely on searches that run to full depth, which
+real bullet/blitz moves rarely do. Note the engine's time formula
+(base/25 + increment) is increment-dominated at these magnitudes, so with
+the default TcInc these mostly collapse to a similar per-move budget --
+which is itself a faithful reproduction of a fast increment-based game.
+Pass values matching your own target time control's actual remaining-clock
+range for anything else.
 
 .PARAMETER Fen
 Representative FEN(s) to train on (default: four built-in FENs spanning
@@ -63,9 +85,11 @@ Extra argument(s) passed through to both cmake configure invocations (e.g.
 param(
     [string]$BuildDir = "build-pgo",
     [string]$SourceDir = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path,
-    [int]$PerftDepth = 5,
+    [int]$PerftDepth = 4,
     [int]$Sd = 8,
     [int]$Timeout = 30,
+    [double]$TcInc = 0.5,
+    [int[]]$TimePressureMs = @(),
     [string[]]$Fen = @(),
     [string]$Nn,
     [string]$Config = "Release",
@@ -90,6 +114,9 @@ $DefaultFens = @(
     "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1"
 )
 if ($Fen.Count -eq 0) { $Fen = $DefaultFens }
+
+$DefaultTimePressureMs = @(1000, 300, 60)
+if ($TimePressureMs.Count -eq 0) { $TimePressureMs = $DefaultTimePressureMs }
 
 if (-not (Get-Command cmake -ErrorAction SilentlyContinue)) {
     throw "cmake not found in PATH"
@@ -181,12 +208,27 @@ Write-Host "==> Running training workload against $ExePath"
 $stdinLines = New-Object System.Collections.Generic.List[string]
 $stdinLines.Add("perft $PerftDepth")
 foreach ($f in $Fen) {
+    # one untimed, depth-limited search -- exercises full-depth eval/search
     $stdinLines.Add("new")
     $stdinLines.Add("setboard $f")
     $stdinLines.Add("st $Timeout")
     $stdinLines.Add("sd $Sd")
     $stdinLines.Add("go")
     $stdinLines.Add("ping 1")
+
+    # plus several clock-limited searches using the same 'level'/'time'
+    # formula a real game uses, at a spread of remaining-time values. This
+    # is what makes the mid-search time-cutoff path (the one that actually
+    # fires on most moves at fast time controls) show up in the profile at
+    # all -- the untimed search above never hits it.
+    foreach ($ms in $TimePressureMs) {
+        $stdinLines.Add("new")
+        $stdinLines.Add("setboard $f")
+        $stdinLines.Add("level 0 0:01 $TcInc")
+        $stdinLines.Add("time $([int]($ms / 10))")
+        $stdinLines.Add("go")
+        $stdinLines.Add("ping 1")
+    }
 }
 $stdinLines.Add("quit")
 

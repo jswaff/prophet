@@ -59,7 +59,7 @@ Prophet's build supports two-pass profile-guided optimization via the `PROFILE_G
 ./scripts/build-pgo.sh
 ```
 
-This configures and builds an instrumented binary, runs a training workload (perft plus a handful of searches on representative positions) against it, merges the resulting profile data, and rebuilds an optimized binary in `build-pgo/`. Run `./scripts/build-pgo.sh --help` for options (custom FENs, search depth, perft depth, build directory, etc).
+This configures and builds an instrumented binary, runs a training workload against it, merges the resulting profile data, and rebuilds an optimized binary in `build-pgo/`. The training workload is a shallow perft (kept small so pure move generation doesn't dominate the profile) plus, per representative position, one untimed depth-limited search *and* several clock-limited searches driven by the engine's real time-management formula at a spread of simulated remaining-clock values -- the latter are what make the profile representative of fast time controls, where most real moves are cut short by the clock rather than searched to a fixed depth. Run `./scripts/build-pgo.sh --help` for options (custom FENs, search depth, perft depth, time-control increment/remaining-time points, build directory, etc). If you're training for a specific time control, pass `--tc-inc` and `--time-pressure-ms` matching it.
 
 ### Windows / MSVC PGO
 

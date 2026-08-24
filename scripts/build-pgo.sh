@@ -17,14 +17,18 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 BUILD_DIR="build-pgo"
-PERFT_DEPTH=5
+PERFT_DEPTH=4
 SD=8
 TIMEOUT_SEC=30
+TC_INC=0.5
+TIME_PRESSURE_MS=()
 NN="$SRC_DIR/test/resources/nn.txt"
 JOBS="$(command -v nproc >/dev/null && nproc || echo 4)"
 CLEAN=0
 FENS=()
 CMAKE_ARGS=()
+
+DEFAULT_TIME_PRESSURE_MS=(1000 300 60)
 
 DEFAULT_FENS=(
     "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
@@ -40,14 +44,38 @@ Usage: $(basename "$0") [options]
 Options:
   --build-dir DIR     Build directory to use (default: $BUILD_DIR)
   --source-dir DIR    Path to repo root (default: auto-detected: $SRC_DIR)
-  --perft-depth N     Perft depth for the training run (default: $PERFT_DEPTH)
-  --sd N              Search depth ('sd') per training position (default: $SD)
+  --perft-depth N     Perft depth for the training run (default: $PERFT_DEPTH).
+                      Kept shallow on purpose: perft is pure move generation
+                      with no eval/search/NN involved, and its node count
+                      would otherwise dwarf everything else being profiled.
+  --sd N              Search depth ('sd') for one untimed training search per
+                      FEN, in addition to the timed ones below (default: $SD)
   --timeout N         Time-control backstop in seconds ('st'), sent before
-                      every 'go' alongside 'sd' (default: $TIMEOUT_SEC).
+                      the untimed 'go' alongside 'sd' (default: $TIMEOUT_SEC).
                       'sd' alone only bounds the number of iterations, not
                       the wall-clock cost of reaching one -- without a time
                       control, a slow/tactical position can run 'go'
                       indefinitely and hang the subsequent 'ping'.
+  --tc-inc SEC        Increment (seconds) used for the timed training
+                      searches below, via the real 'level'/'time' clock
+                      formula rather than a fixed 'st' budget (default:
+                      $TC_INC). Match this to your target time control's
+                      increment so the profile reflects real move budgets.
+  --time-pressure-ms MS
+                      Simulated clock time remaining (milliseconds) for one
+                      timed training search per FEN; repeatable. This is
+                      what exercises the mid-search time-cutoff path that
+                      dominates real play at fast time controls -- without
+                      it, PGO trains almost entirely on searches that run to
+                      full depth, which real bullet/blitz moves rarely do.
+                      Note the engine's time formula (base/25 + increment)
+                      is increment-dominated at these magnitudes, so with
+                      the default --tc-inc these mostly collapse to a
+                      similar per-move budget -- which is itself a faithful
+                      reproduction of a fast increment-based game, not a
+                      bug in this script. Pass values matching your own
+                      target time control's actual remaining-clock range
+                      for anything else. (default: ${DEFAULT_TIME_PRESSURE_MS[*]})
   --fen FEN           Representative FEN to train on; repeatable.
                       (default: four built-in FENs - opening, tactical,
                       quiet middlegame, endgame)
@@ -67,6 +95,8 @@ while [[ $# -gt 0 ]]; do
         --perft-depth) PERFT_DEPTH="$2"; shift 2 ;;
         --sd) SD="$2"; shift 2 ;;
         --timeout) TIMEOUT_SEC="$2"; shift 2 ;;
+        --tc-inc) TC_INC="$2"; shift 2 ;;
+        --time-pressure-ms) TIME_PRESSURE_MS+=("$2"); shift 2 ;;
         --fen) FENS+=("$2"); shift 2 ;;
         --nn) NN="$2"; shift 2 ;;
         -j|--jobs) JOBS="$2"; shift 2 ;;
@@ -79,6 +109,9 @@ done
 
 if [[ ${#FENS[@]} -eq 0 ]]; then
     FENS=("${DEFAULT_FENS[@]}")
+fi
+if [[ ${#TIME_PRESSURE_MS[@]} -eq 0 ]]; then
+    TIME_PRESSURE_MS=("${DEFAULT_TIME_PRESSURE_MS[@]}")
 fi
 
 command -v cmake >/dev/null || { echo "error: cmake not found" >&2; exit 1; }
@@ -114,12 +147,27 @@ echo "==> Running training workload against $EXE_PATH"
 {
     echo "perft $PERFT_DEPTH"
     for fen in "${FENS[@]}"; do
+        # one untimed, depth-limited search -- exercises full-depth eval/search
         echo "new"
         echo "setboard $fen"
         echo "st $TIMEOUT_SEC"
         echo "sd $SD"
         echo "go"
         echo "ping 1"
+
+        # plus several clock-limited searches using the same 'level'/'time'
+        # formula a real game uses, at a spread of remaining-time values.
+        # This is what makes the mid-search time-cutoff path (the one that
+        # actually fires on most moves at fast time controls) show up in the
+        # profile at all -- the untimed search above never hits it.
+        for ms in "${TIME_PRESSURE_MS[@]}"; do
+            echo "new"
+            echo "setboard $fen"
+            echo "level 0 0:01 $TC_INC"
+            echo "time $((ms / 10))"
+            echo "go"
+            echo "ping 1"
+        done
     done
     echo "quit"
 } | LLVM_PROFILE_FILE="$BUILD_DIR/pgo-data/prophet-train.profraw" "$EXE_PATH" -n "$NN" >/dev/null

@@ -30,7 +30,7 @@ On Linux/GCC or Clang, use the helper script rather than driving `PROFILE_GUIDED
 
 ```
 ./scripts/build-pgo.sh            # instrument -> train -> merge -> optimized rebuild in build-pgo/
-./scripts/build-pgo.sh --help     # custom FENs, --sd, --perft-depth, --build-dir, etc.
+./scripts/build-pgo.sh --help     # custom FENs, --sd, --perft-depth, --tc-inc/--time-pressure-ms, --build-dir, etc.
 ./scripts/compare-pgo-perft.sh    # sanity-check perft output/timing of a PGO build vs. a plain build
 ```
 
