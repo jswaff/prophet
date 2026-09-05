@@ -34,9 +34,10 @@ On Linux/GCC or Clang, use the helper script rather than driving `PROFILE_GUIDED
 ./scripts/compare-pgo-perft.sh    # sanity-check perft output/timing of a PGO build vs. a plain build
 ```
 
-Windows/MSVC has no scripted PGO helper - see the "Windows / MSVC PGO" section in README.md for the manual
-steps and known gotchas (e.g. always pair `sd` with an `st <seconds>` backstop when training, since `sd`
-alone doesn't bound wall-clock time).
+Windows/MSVC has PowerShell equivalents (`scripts/build-pgo.ps1`, `scripts/compare-pgo-perft.ps1`) but they
+are **unverified against a real MSVC toolchain** - see the "Windows / MSVC PGO" section in README.md for the
+manual fallback steps and known gotchas (e.g. always pair `sd` with an `st <seconds>` backstop when training,
+since `sd` alone doesn't bound wall-clock time).
 
 Manual PGO invocation (GCC/Clang), if not using the script:
 ```
